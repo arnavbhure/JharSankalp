@@ -3,6 +3,7 @@ import { AppShell } from '../components/layout/AppShell';
 import { Landing } from '../pages/Landing';
 import { Login } from '../pages/Login';
 import { Challenges } from '../pages/Challenges';
+import { ChallengeDetail } from '../pages/ChallengeDetail';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -22,10 +23,10 @@ export const router = createBrowserRouter([
       // ── Public / Citizen ──────────────────────────────
       { index: true, element: <Landing /> },
       { path: 'challenges', element: <Challenges /> },
+      { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
       // Phase 3: { path: 'report', element: <ReportChallenge /> },
       // Phase 3: { path: 'my-challenges', element: <MyChallenges /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
-      // Phase 3: { path: 'challenges/:id', element: <ChallengeDetail /> },
 
       // ── Ecosystem ─────────────────────────────────────
       // Phase 6: { path: 'discover', element: <Discover /> },

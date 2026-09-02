@@ -107,7 +107,7 @@ export function ActiveChallengeFeed() {
                 </div>
 
                 <button
-                  onClick={() => navigate('/challenges')}
+                  onClick={() => navigate(`/challenges/${item.id}`)}
                   className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#123B2A] hover:text-[#0D2B1E] group-hover:translate-x-0.5 transition-all cursor-pointer"
                 >
                   <span>View Challenge</span>

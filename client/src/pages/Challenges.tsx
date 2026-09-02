@@ -131,7 +131,7 @@ export function Challenges() {
         {viewMode === 'grid' && !search && selectedCategory === 'All Focus Areas' && (
           <FeaturedChallenge
             challenge={featuredItem}
-            onViewDetails={(c) => setPreviewChallenge(c)}
+            onViewDetails={(c) => navigate(`/challenges/${c.id}`)}
             onJoinCollaboration={(c) => setPreviewChallenge(c)}
           />
         )}
@@ -157,7 +157,7 @@ export function Challenges() {
           /* Map View */
           <ChallengeMap
             challenges={filteredChallenges}
-            onSelectChallenge={(c) => setPreviewChallenge(c)}
+            onSelectChallenge={(c) => navigate(`/challenges/${c.id}`)}
           />
         ) : filteredChallenges.length > 0 ? (
           /* Grid View */
@@ -167,7 +167,7 @@ export function Challenges() {
                 <ChallengeCard
                   key={challenge.id}
                   challenge={challenge}
-                  onViewDetails={(c) => setPreviewChallenge(c)}
+                  onViewDetails={(c) => navigate(`/challenges/${c.id}`)}
                 />
               ))}
             </div>
