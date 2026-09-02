@@ -1,9 +1,11 @@
 import { useAuth } from '../../hooks/useAuth';
 import { UserRole } from '@jharsankalp/shared';
 import { useAuthStore } from '../../stores/authStore';
+import { BrandMark } from '../common/BrandMark';
 import { Bell, Menu, ChevronDown, Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -32,6 +34,8 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
   const { user } = useAuth();
   const setDemoRole = useAuthStore((s) => s.setDemoRole);
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/';
 
   const demoRoles: UserRole[] = [
     UserRole.CITIZEN,
@@ -46,7 +50,7 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-neutral-200 bg-neutral-0 px-4 sm:px-6">
       {/* Left: Brand Identity */}
       <div className="flex items-center gap-3">
-        {showMenuButton && (
+        {showMenuButton && !isLandingPage && (
           <button
             onClick={onMenuToggle}
             className="rounded-sm p-1.5 text-neutral-600 hover:bg-neutral-100 lg:hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-purple"
@@ -55,26 +59,61 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
             <Menu className="h-5 w-5" />
           </button>
         )}
-        <div className="flex items-center gap-2.5">
-          {/* Official JharSankalp Institutional Mark */}
-          <div className="flex h-7 w-7 items-center justify-center rounded-sm bg-brand-purple text-neutral-0 text-caption font-bold tracking-tight">
-            JS
-          </div>
-          <div className="flex flex-col">
+
+        <Link to="/" className="flex items-center gap-2.5 group">
+          {/* Official JharSankalp Geometric BrandMark */}
+          <BrandMark size="sm" />
+          <div className="flex flex-col text-left">
             <div className="flex items-center gap-2">
-              <span className="text-body font-semibold text-neutral-900 tracking-tight leading-none">
+              <span className="text-body font-bold text-neutral-900 tracking-tight leading-none group-hover:text-brand-purple transition-colors">
                 JharSankalp
               </span>
               <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-pill bg-brand-apricot text-[11px] font-semibold text-neutral-900 leading-none">
                 Jharkhand
               </span>
             </div>
-            <span className="hidden md:block text-[11px] text-neutral-400 leading-tight mt-0.5">
+            <span className="hidden md:block text-[11px] text-neutral-500 leading-tight mt-0.5">
               Societal Challenge-to-Impact Exchange
             </span>
           </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Center: Public Landing Navigation (Only visible on landing page for desktop) */}
+      {isLandingPage && (
+        <nav className="hidden xl:flex items-center space-x-6 text-body-sm font-medium text-neutral-600">
+          <a
+            href="#how-it-works"
+            className="hover:text-brand-purple transition-colors"
+          >
+            How It Works
+          </a>
+          <a
+            href="#innovation-map"
+            className="hover:text-brand-purple transition-colors"
+          >
+            Innovation Map
+          </a>
+          <a
+            href="#challenges-feed"
+            className="hover:text-brand-purple transition-colors"
+          >
+            Active Challenges
+          </a>
+          <a
+            href="#ecosystem"
+            className="hover:text-brand-purple transition-colors"
+          >
+            Ecosystem
+          </a>
+          <a
+            href="#impact"
+            className="hover:text-brand-purple transition-colors"
+          >
+            Verified Impact
+          </a>
+        </nav>
+      )}
 
       {/* Right: Role Switcher & User Profile */}
       <div className="flex items-center gap-3">
@@ -97,7 +136,7 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowRoleSwitcher(false)} />
               <div className="absolute right-0 top-full mt-1.5 z-50 w-56 rounded-sm border border-neutral-200 bg-neutral-0 py-1.5 shadow-medium">
-                <div className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 border-b border-neutral-100 mb-1">
+                <div className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 border-b border-neutral-100 mb-1 text-left">
                   Switch User Perspective
                 </div>
                 {demoRoles.map((role) => {

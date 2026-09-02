@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
@@ -9,6 +9,8 @@ import { cn } from '../../lib/utils';
 export function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { isCitizen } = useAuth();
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">
@@ -20,8 +22,8 @@ export function AppShell() {
 
       {/* Body Layout */}
       <div className="flex flex-1 w-full">
-        {/* Role-Specific Sidebar: Hidden on citizen layout on mobile */}
-        {!isCitizen && (
+        {/* Role-Specific Sidebar: Hidden for citizens and on the public landing page */}
+        {!isCitizen && !isLanding && (
           <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         )}
 
@@ -32,9 +34,13 @@ export function AppShell() {
             isCitizen ? 'pb-20 lg:pb-8' : 'pb-8',
           )}
         >
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          {isLanding ? (
             <Outlet />
-          </div>
+          ) : (
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+              <Outlet />
+            </div>
+          )}
         </main>
       </div>
 
