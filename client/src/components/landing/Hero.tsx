@@ -67,7 +67,7 @@ export function Hero() {
               </button>
 
               <button
-                onClick={() => navigate('/report')}
+                onClick={() => navigate('/report-challenge')}
                 className="inline-flex items-center gap-2 rounded-lg border border-[#6B5845]/30 bg-white px-6 py-3.5 text-[15px] font-bold text-[#1D2522] hover:bg-[#F8F6F1] hover:border-[#6B5845]/50 active:scale-[0.98] transition-all shadow-2xs cursor-pointer"
               >
                 <MapPin className="h-4 w-4 text-[#123B2A]" />

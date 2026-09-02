@@ -4,6 +4,7 @@ import { Landing } from '../pages/Landing';
 import { Login } from '../pages/Login';
 import { Challenges } from '../pages/Challenges';
 import { ChallengeDetail } from '../pages/ChallengeDetail';
+import { ReportChallenge } from '../pages/ReportChallenge';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -24,7 +25,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Landing /> },
       { path: 'challenges', element: <Challenges /> },
       { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
-      // Phase 3: { path: 'report', element: <ReportChallenge /> },
+      { path: 'report-challenge', element: <ReportChallenge /> },
+      { path: 'report', element: <ReportChallenge /> },
       // Phase 3: { path: 'my-challenges', element: <MyChallenges /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
 

@@ -16,13 +16,13 @@ export function MobileNav() {
 
   const items: MobileNavItem[] = [
     { label: 'Home', href: '/', icon: Home },
-    { label: 'Report', href: '/report', icon: PlusCircle },
+    { label: 'Report', href: '/report-challenge', icon: PlusCircle },
     { label: 'My Issues', href: '/my-challenges', icon: FileText },
     { label: 'Explore', href: '/challenges', icon: Search },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-neutral-200 bg-neutral-0 lg:hidden shadow-medium">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#EEEAE1] bg-white lg:hidden shadow-md">
       <div className="flex items-center justify-around">
         {items.map((item) => (
           <NavLink
@@ -33,8 +33,8 @@ export function MobileNav() {
               cn(
                 'flex flex-1 flex-col items-center gap-1 py-2 text-caption font-medium transition-colors select-none',
                 isActive
-                  ? 'text-brand-purple font-semibold border-t-2 border-brand-purple -mt-px'
-                  : 'text-neutral-400 hover:text-neutral-800',
+                  ? 'text-[#123B2A] font-bold border-t-2 border-[#123B2A] -mt-px'
+                  : 'text-[#6B5845] hover:text-[#1D2522]',
               )
             }
           >

@@ -43,7 +43,7 @@ export function FinalCTA() {
             {/* Rectangular CTA Buttons */}
             <div className="flex items-center gap-4 flex-wrap pt-2">
               <button
-                onClick={() => navigate('/report')}
+                onClick={() => navigate('/report-challenge')}
                 className="inline-flex items-center gap-2.5 rounded-lg bg-[#123B2A] px-7 py-3.5 text-[15px] font-bold text-white shadow-sm hover:bg-[#0D2B1E] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Submit an Idea</span>

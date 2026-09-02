@@ -33,7 +33,7 @@ export function ChallengeCTA() {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0">
             <button
-              onClick={() => navigate('/report')}
+              onClick={() => navigate('/report-challenge')}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#123B2A] hover:bg-[#0D2B1E] text-white px-6 py-3.5 text-[14.5px] font-bold shadow-sm transition-all active:scale-[0.98] cursor-pointer"
             >
               <span>Share a Problem</span>
@@ -41,7 +41,7 @@ export function ChallengeCTA() {
             </button>
 
             <button
-              onClick={() => navigate('/report')}
+              onClick={() => navigate('/report-challenge')}
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#6B5845]/30 bg-[#F8F6F1] hover:bg-white text-[#1D2522] px-6 py-3.5 text-[14.5px] font-bold transition-all active:scale-[0.98] shadow-2xs cursor-pointer"
             >
               <Send className="h-4 w-4 text-[#123B2A]" />
