@@ -5,6 +5,7 @@ import { Login } from '../pages/Login';
 import { Challenges } from '../pages/Challenges';
 import { ChallengeDetail } from '../pages/ChallengeDetail';
 import { ReportChallenge } from '../pages/ReportChallenge';
+import { MyChallenges } from '../pages/MyChallenges';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
       { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
       { path: 'report-challenge', element: <ReportChallenge /> },
       { path: 'report', element: <ReportChallenge /> },
-      // Phase 3: { path: 'my-challenges', element: <MyChallenges /> },
+      { path: 'my-challenges', element: <MyChallenges /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
 
       // ── Ecosystem ─────────────────────────────────────

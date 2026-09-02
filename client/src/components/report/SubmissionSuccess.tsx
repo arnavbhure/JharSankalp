@@ -1,4 +1,4 @@
-import { CheckCircle2, Home, Compass } from 'lucide-react';
+import { CheckCircle2, Home, Compass, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SubmissionResponse } from '../../types/submission';
 
@@ -120,18 +120,26 @@ export function SubmissionSuccess({ response }: SubmissionSuccessProps) {
       {/* ── Action Buttons ── */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
         <button
-          onClick={() => navigate('/challenges')}
+          onClick={() => navigate('/my-challenges')}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#123B2A] hover:bg-[#0D2B1E] text-white px-6 py-3 text-[14px] font-bold shadow-xs transition-all active:scale-[0.98] cursor-pointer"
         >
-          <Compass className="h-4 w-4 text-[#F5A623]" />
+          <span>Track My Challenge</span>
+          <ArrowRight className="h-4 w-4 text-[#F5A623]" />
+        </button>
+
+        <button
+          onClick={() => navigate('/challenges')}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522] px-6 py-3 text-[14px] font-bold shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+        >
+          <Compass className="h-4 w-4 text-[#6B5845]" />
           <span>Explore Other Challenges</span>
         </button>
 
         <button
           onClick={() => navigate('/')}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522] px-6 py-3 text-[14px] font-bold shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#6B5845] hover:text-[#1D2522] px-5 py-3 text-[14px] font-semibold transition-all cursor-pointer"
         >
-          <Home className="h-4 w-4 text-[#6B5845]" />
+          <Home className="h-4 w-4" />
           <span>Return Home</span>
         </button>
       </div>
