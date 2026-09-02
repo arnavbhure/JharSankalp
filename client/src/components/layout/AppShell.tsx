@@ -6,47 +6,39 @@ import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
 import { cn } from '../../lib/utils';
 
-/**
- * Role-aware application shell.
- *
- * - Citizen:     Mobile-first, minimal layout, bottom nav, no sidebar on mobile
- * - Government:  Desktop sidebar layout, data-rich nav
- * - University:  Sidebar with academic sections
- * - Industry:    Sidebar with opportunity/commitment sections
- * - Admin:       Full sidebar
- */
 export function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { isCitizen } = useAuth();
 
   return (
-    <div className="min-h-screen bg-surface-subtle">
+    <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">
+      {/* Institutional Top Header */}
       <Header
         onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        showMenuButton={!isCitizen || false}
+        showMenuButton={!isCitizen}
       />
 
-      <div className="flex">
-        {/* Sidebar — hidden for citizen on mobile, visible for other roles */}
+      {/* Body Layout */}
+      <div className="flex flex-1 w-full">
+        {/* Role-Specific Sidebar: Hidden on citizen layout on mobile */}
         {!isCitizen && (
           <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         )}
 
-        {/* Main content */}
+        {/* Main Content Area */}
         <main
           className={cn(
-            'flex-1 min-h-[calc(100vh-3.5rem)]',
-            !isCitizen && 'lg:ml-0',
-            isCitizen && 'pb-16 lg:pb-0', // Account for mobile bottom nav
+            'flex-1 min-w-0 transition-all duration-200',
+            isCitizen ? 'pb-20 lg:pb-8' : 'pb-8',
           )}
         >
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <Outlet />
           </div>
         </main>
       </div>
 
-      {/* Mobile bottom nav for citizens */}
+      {/* Citizen Mobile Bottom Navigation */}
       <MobileNav />
     </div>
   );

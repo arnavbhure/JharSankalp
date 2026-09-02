@@ -1,27 +1,40 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
 
-interface CardProps {
+export interface CardProps {
   children: React.ReactNode;
   className?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
-  hover?: boolean;
+  hoverable?: boolean;
+  onClick?: () => void;
 }
 
 const paddingStyles = {
   none: '',
   sm: 'p-3',
   md: 'p-4',
-  lg: 'p-6',
+  lg: 'p-5 sm:p-6',
 };
 
-export function Card({ children, className, padding = 'md', hover = false }: CardProps) {
+/**
+ * Card is reserved for discrete conceptual entities (e.g., Challenge, Organization, Project).
+ * For generic grouping or dashboard sections, prefer `Panel` or structured rows.
+ */
+export function Card({
+  children,
+  className,
+  padding = 'md',
+  hoverable = false,
+  onClick,
+}: CardProps) {
   return (
     <div
+      onClick={onClick}
       className={cn(
-        'rounded border border-ink-200 bg-white',
+        'rounded-sm border border-neutral-200 bg-neutral-0 text-left',
         paddingStyles[padding],
-        hover && 'transition-shadow hover:shadow-sm',
+        hoverable && 'transition-all duration-150 hover:border-neutral-300 hover:shadow-subtle cursor-pointer',
+        onClick && 'cursor-pointer',
         className,
       )}
     >
@@ -30,50 +43,72 @@ export function Card({ children, className, padding = 'md', hover = false }: Car
   );
 }
 
-interface CardHeaderProps {
+export function CardHeader({
+  children,
+  className,
+  action,
+}: {
   children: React.ReactNode;
   className?: string;
   action?: React.ReactNode;
-}
-
-export function CardHeader({ children, className, action }: CardHeaderProps) {
+}) {
   return (
-    <div className={cn('flex items-center justify-between', className)}>
-      <div>{children}</div>
-      {action && <div>{action}</div>}
+    <div className={cn('flex items-start justify-between gap-3', className)}>
+      <div className="space-y-0.5 min-w-0 flex-1">{children}</div>
+      {action && <div className="shrink-0 pt-0.5">{action}</div>}
     </div>
   );
 }
 
-interface CardTitleProps {
+export function CardTitle({
+  children,
+  className,
+  as: Tag = 'h3',
+}: {
   children: React.ReactNode;
   className?: string;
   as?: 'h2' | 'h3' | 'h4';
-}
-
-export function CardTitle({ children, className, as: Tag = 'h3' }: CardTitleProps) {
+}) {
   return (
-    <Tag className={cn('text-base font-semibold text-ink-900', className)}>
+    <Tag className={cn('text-body font-semibold text-neutral-900 leading-snug', className)}>
       {children}
     </Tag>
   );
 }
 
-export function CardDescription({ children, className }: { children: React.ReactNode; className?: string }) {
+export function CardDescription({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <p className={cn('mt-0.5 text-sm text-ink-500', className)}>
+    <p className={cn('text-small text-neutral-600 line-clamp-2 mt-1 leading-normal', className)}>
       {children}
     </p>
   );
 }
 
-export function CardContent({ children, className }: { children: React.ReactNode; className?: string }) {
+export function CardContent({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return <div className={cn('mt-3', className)}>{children}</div>;
 }
 
-export function CardFooter({ children, className }: { children: React.ReactNode; className?: string }) {
+export function CardFooter({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div className={cn('mt-4 flex items-center gap-2 border-t border-ink-100 pt-3', className)}>
+    <div className={cn('mt-4 pt-3 border-t border-neutral-200 flex items-center justify-between text-caption text-neutral-600', className)}>
       {children}
     </div>
   );

@@ -1,76 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────── */
-/* JharSankalp Design System — CSS Custom Properties          */
-/* Semantic tokens for non-Tailwind contexts (§39)            */
+/* JharSankalp Design System — Global CSS Variables           */
 /* ─────────────────────────────────────────────────────────── */
 
 @layer base {
   :root {
-    /* ── Background / Surface ────────────────────────────── */
-    --color-background: #ffffff;
-    --color-surface: #ffffff;
-    --color-surface-subtle: #f8fafc;
-    --color-surface-muted: #f1f5f9;
+    /* ── Official Brand Palette ───────────────────────────── */
+    --deep-purple: #4C1E4F;
+    --khaki-beige: #B5A886;
+    --soft-apricot: #FEE1C7;
+    --vibrant-coral: #FA7E61;
+    --wild-strawberry: #F44174;
 
-    /* ── Text ────────────────────────────────────────────── */
-    --color-text-primary: #0f172a;
-    --color-text-secondary: #475569;
-    --color-text-muted: #94a3b8;
-    --color-text-inverse: #ffffff;
+    /* ── 10-Step Neutral Grayscale System ─────────────────── */
+    --neutral-0: #FFFFFF;
+    --neutral-25: #FCFCFD;
+    --neutral-50: #F8F7F8;
+    --neutral-100: #F2F1F3;
+    --neutral-200: #E7E4E8; /* Primary border */
+    --neutral-300: #D5D0D6; /* Strong border */
+    --neutral-400: #98919A; /* Muted text */
+    --neutral-600: #625A64; /* Secondary text */
+    --neutral-800: #332D35; /* Strong text */
+    --neutral-900: #1D1720; /* Headings */
 
-    /* ── Borders ─────────────────────────────────────────── */
-    --color-border: #e2e8f0;
-    --color-border-strong: #cbd5e1;
-    --color-border-focus: #2563eb;
+    /* ── Semantic Status Colors ───────────────────────────── */
+    --status-success: #15803D;
+    --status-success-bg: #F0FDF4;
+    --status-warning: #B45309;
+    --status-warning-bg: #FFFBEB;
+    --status-danger: #B91C1C;
+    --status-danger-bg: #FEF2F2;
+    --status-info: #4C1E4F;
+    --status-info-bg: #F8F0F9;
 
-    /* ── Primary ─────────────────────────────────────────── */
-    --color-primary: #2563eb;
-    --color-primary-hover: #1d4ed8;
-    --color-primary-subtle: #eff6ff;
-
-    /* ── Secondary ───────────────────────────────────────── */
-    --color-secondary: #0d9488;
-    --color-secondary-hover: #0f766e;
-
-    /* ── Status ──────────────────────────────────────────── */
-    --color-success: #16a34a;
-    --color-success-subtle: #f0fdf4;
-    --color-warning: #d97706;
-    --color-warning-subtle: #fffbeb;
-    --color-danger: #dc2626;
-    --color-danger-subtle: #fef2f2;
-    --color-info: #2563eb;
-    --color-info-subtle: #eff6ff;
-
-    /* ── Spacing ─────────────────────────────────────────── */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-
-    /* ── Radius ──────────────────────────────────────────── */
+    /* ── Radii ────────────────────────────────────────────── */
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 10px;
+    --radius-pill: 9999px;
 
-    /* ── Shadows ─────────────────────────────────────────── */
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.03);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-    --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+    /* ── Shadows ──────────────────────────────────────────── */
+    --shadow-subtle: 0 1px 2px rgba(29, 23, 32, 0.04);
+    --shadow-medium: 0 4px 12px rgba(29, 23, 32, 0.06);
 
-    /* ── Sidebar ─────────────────────────────────────────── */
+    /* ── Layout Dimensions ────────────────────────────────── */
     --sidebar-width: 260px;
     --header-height: 56px;
   }
-
-  /* ── Base Resets ────────────────────────────────────────── */
 
   *,
   *::before,
@@ -86,70 +68,84 @@
 
   body {
     margin: 0;
-    font-family: 'IBM Plex Sans', system-ui, sans-serif;
-    color: var(--color-text-primary);
-    background-color: var(--color-surface-subtle);
-    line-height: 1.6;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    color: var(--neutral-900);
+    background-color: var(--neutral-50);
+    line-height: 1.55;
+    font-size: 0.9375rem; /* 15px */
   }
 
-  /* ── Typography ────────────────────────────────────────── */
-
+  /* ── Editorial Heading Hierarchy ───────────────────────── */
   h1, h2, h3, h4, h5, h6 {
+    color: var(--neutral-900);
     font-weight: 600;
-    line-height: 1.3;
-    color: var(--color-text-primary);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
   }
 
-  h1 { font-size: 1.875rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
-  h4 { font-size: 1.125rem; }
-  h5 { font-size: 1rem; }
-  h6 { font-size: 0.875rem; }
+  h1 { font-size: 2.25rem; font-weight: 700; } /* 36px */
+  h2 { font-size: 1.75rem; }                   /* 28px */
+  h3 { font-size: 1.375rem; }                  /* 22px */
+  h4 { font-size: 1.125rem; }                  /* 18px */
+  h5 { font-size: 1rem; font-weight: 600; }    /* 16px */
+  h6 { font-size: 0.875rem; font-weight: 600; }/* 14px */
 
   p {
-    color: var(--color-text-secondary);
-    line-height: 1.6;
+    color: var(--neutral-600);
+    line-height: 1.55;
   }
 
-  /* ── Focus Ring ────────────────────────────────────────── */
-
+  /* ── Focus Outline (WCAG AA Compliant) ──────────────────── */
   :focus-visible {
-    outline: 2px solid var(--color-border-focus);
+    outline: 2px solid var(--deep-purple);
     outline-offset: 2px;
   }
 
-  /* ── Reduced Motion ────────────────────────────────────── */
+  /* ── Selection ─────────────────────────────────────────── */
+  ::selection {
+    background-color: var(--soft-apricot);
+    color: var(--neutral-900);
+  }
 
+  /* ── Reduced Motion ────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
+      animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      transition-duration: 0.001ms !important;
     }
   }
 }
 
-/* ── Utility Classes ───────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────── */
+/* Domain & Design System Utilities                            */
+/* ─────────────────────────────────────────────────────────── */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  .scrollbar-thin {
+  /* Custom institutional scrollbar */
+  .scrollbar-custom {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-border) transparent;
+    scrollbar-color: var(--neutral-200) transparent;
   }
 
-  .ai-label {
-    @apply inline-flex items-center gap-1 rounded-sm bg-primary-50 px-1.5 py-0.5 text-2xs font-medium text-primary-700;
+  /* AI Decision Support Panel Styling (Subtle apricot + deep purple border) */
+  .ai-decision-panel {
+    background-color: var(--neutral-0);
+    border: 1px solid var(--neutral-200);
+    border-left: 3px solid var(--deep-purple);
   }
 
-  .ai-label::before {
-    content: '✦';
-    font-size: 0.625rem;
+  /* Restrained active navigation item indicator */
+  .nav-item-active {
+    background-color: var(--neutral-100);
+    color: var(--deep-purple);
+    font-weight: 500;
+    border-left: 3px solid var(--deep-purple);
   }
 }

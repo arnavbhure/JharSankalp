@@ -6,21 +6,22 @@ export function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-[60vh] items-center justify-center text-center">
-      <div>
-        <div className="text-6xl font-bold text-ink-200 mb-2">404</div>
-        <h1 className="text-lg font-semibold text-ink-900">Page Not Found</h1>
-        <p className="mt-1 text-sm text-ink-500 max-w-sm mx-auto">
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
+    <div className="flex min-h-[50vh] items-center justify-center text-center px-4">
+      <div className="space-y-3">
+        <div className="text-display font-bold text-neutral-300 font-mono">404</div>
+        <h1 className="text-h2 font-bold text-neutral-900 tracking-tight">Record or Page Not Found</h1>
+        <p className="max-w-md mx-auto text-small text-neutral-600 leading-normal">
+          The requested system route does not exist or has been relocated. Return to the portal overview.
         </p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          leftIcon={<ArrowLeft className="h-4 w-4" />}
-          onClick={() => navigate('/')}
-        >
-          Back to Home
-        </Button>
+        <div className="pt-3">
+          <Button
+            variant="secondary"
+            leftIcon={<ArrowLeft className="h-4 w-4" />}
+            onClick={() => navigate('/')}
+          >
+            Back to Overview
+          </Button>
+        </div>
       </div>
     </div>
   );

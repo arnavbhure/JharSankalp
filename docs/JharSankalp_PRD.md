@@ -2601,4 +2601,12 @@ Jharkhand gets a continuously improving innovation ecosystem where local problem
 
 ---
 
+# FINAL COLOR PALLETE :
+
+--deep-purple: #4C1E4F;
+--khaki-beige: #B5A886;
+--soft-apricot: #FEE1C7;
+--vibrant-coral: #FA7E61;
+--wild-strawberry: #F44174;
+
 **End of PRD**

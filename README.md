@@ -70,6 +70,7 @@ npm run dev
 ```
 
 This starts both:
+
 - **Frontend:** http://localhost:5173
 - **Backend:** http://localhost:4000
 - **Health:** http://localhost:4000/api/v1/health
@@ -78,35 +79,35 @@ This starts both:
 
 All demo accounts use password: `password123`
 
-| Role | Email |
-|------|-------|
-| Citizen | citizen@demo.jharsankalp.in |
-| Government Officer | officer@demo.jharsankalp.in |
-| District Officer | district@demo.jharsankalp.in |
-| State Admin | stateadmin@demo.jharsankalp.in |
-| University Admin | uniadmin@demo.jharsankalp.in |
-| Faculty | faculty@demo.jharsankalp.in |
-| Student | student@demo.jharsankalp.in |
-| Industry | industry@demo.jharsankalp.in |
-| Super Admin | admin@demo.jharsankalp.in |
+| Role               | Email                          |
+| ------------------ | ------------------------------ |
+| Citizen            | citizen@demo.jharsankalp.in    |
+| Government Officer | officer@demo.jharsankalp.in    |
+| District Officer   | district@demo.jharsankalp.in   |
+| State Admin        | stateadmin@demo.jharsankalp.in |
+| University Admin   | uniadmin@demo.jharsankalp.in   |
+| Faculty            | faculty@demo.jharsankalp.in    |
+| Student            | student@demo.jharsankalp.in    |
+| Industry           | industry@demo.jharsankalp.in   |
+| Super Admin        | admin@demo.jharsankalp.in      |
 
 ---
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start both client and server |
-| `npm run dev:client` | Start frontend only |
-| `npm run dev:server` | Start backend only |
-| `npm run build` | Build all packages |
-| `npm run db:generate` | Generate Prisma client |
-| `npm run db:migrate` | Run database migrations |
-| `npm run db:seed` | Seed demo data |
-| `npm run db:studio` | Open Prisma Studio |
-| `npm run db:reset` | Reset database |
-| `npm run lint` | Run ESLint |
-| `npm run format` | Format code with Prettier |
+| Command               | Description                  |
+| --------------------- | ---------------------------- |
+| `npm run dev`         | Start both client and server |
+| `npm run dev:client`  | Start frontend only          |
+| `npm run dev:server`  | Start backend only           |
+| `npm run build`       | Build all packages           |
+| `npm run db:generate` | Generate Prisma client       |
+| `npm run db:migrate`  | Run database migrations      |
+| `npm run db:seed`     | Seed demo data               |
+| `npm run db:studio`   | Open Prisma Studio           |
+| `npm run db:reset`    | Reset database               |
+| `npm run lint`        | Run ESLint                   |
+| `npm run format`      | Format code with Prettier    |
 
 ---
 
@@ -123,23 +124,23 @@ All demo accounts use password: `password123`
 
 ## Implementation Phases
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| 1 | Foundation (repo, UI, backend, schema) | ✅ |
-| 2 | Authentication + RBAC | ⬜ |
-| 3 | Challenge lifecycle | ⬜ |
-| 4 | AI challenge intelligence | ⬜ |
-| 5 | Semantic search + deduplication | ⬜ |
-| 6 | Capability graph + matching | ⬜ |
-| 7 | Commitments + consortium | ⬜ |
-| 8 | Impact contract + project lifecycle | ⬜ |
-| 9 | Pilot + impact verification | ⬜ |
-| 10 | Government analytics + mission | ⬜ |
-| 11 | Realtime + notifications | ⬜ |
-| 12 | SIH demo hardening + UX polish | ⬜ |
+| Phase | Description                            | Status |
+| ----- | -------------------------------------- | ------ |
+| 1     | Foundation (repo, UI, backend, schema) | ✅     |
+| 2     | Authentication + RBAC                  | ⬜     |
+| 3     | Challenge lifecycle                    | ⬜     |
+| 4     | AI challenge intelligence              | ⬜     |
+| 5     | Semantic search + deduplication        | ⬜     |
+| 6     | Capability graph + matching            | ⬜     |
+| 7     | Commitments + consortium               | ⬜     |
+| 8     | Impact contract + project lifecycle    | ⬜     |
+| 9     | Pilot + impact verification            | ⬜     |
+| 10    | Government analytics + mission         | ⬜     |
+| 11    | Realtime + notifications               | ⬜     |
+| 12    | SIH demo hardening + UX polish         | ⬜     |
 
 ---
 
 ## License
 
-Private — Smart India Hackathon 2024
+Private — Smart India Hackathon 2026

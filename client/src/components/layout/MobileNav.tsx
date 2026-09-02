@@ -1,13 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { cn } from '../../lib/utils';
-import {
-  Home,
-  PlusCircle,
-  FileText,
-  Search,
-  type LucideIcon,
-} from 'lucide-react';
+import { Home, PlusCircle, FileText, Search, type LucideIcon } from 'lucide-react';
 
 interface MobileNavItem {
   label: string;
@@ -15,10 +9,6 @@ interface MobileNavItem {
   icon: LucideIcon;
 }
 
-/**
- * Bottom navigation bar for citizen mobile experience.
- * Only rendered when user role is CITIZEN.
- */
 export function MobileNav() {
   const { isCitizen } = useAuth();
 
@@ -32,7 +22,7 @@ export function MobileNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-ink-200 bg-white lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-neutral-200 bg-neutral-0 lg:hidden shadow-medium">
       <div className="flex items-center justify-around">
         {items.map((item) => (
           <NavLink
@@ -41,13 +31,15 @@ export function MobileNav() {
             end={item.href === '/'}
             className={({ isActive }) =>
               cn(
-                'flex flex-1 flex-col items-center gap-0.5 py-2 text-2xs font-medium transition-colors',
-                isActive ? 'text-primary' : 'text-ink-400',
+                'flex flex-1 flex-col items-center gap-1 py-2 text-caption font-medium transition-colors select-none',
+                isActive
+                  ? 'text-brand-purple font-semibold border-t-2 border-brand-purple -mt-px'
+                  : 'text-neutral-400 hover:text-neutral-800',
               )
             }
           >
-            <item.icon className="h-5 w-5" />
-            {item.label}
+            <item.icon className="h-4.5 w-4.5" />
+            <span>{item.label}</span>
           </NavLink>
         ))}
       </div>
