@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AppShell } from '../components/layout/AppShell';
 import { Landing } from '../pages/Landing';
 import { Login } from '../pages/Login';
+import { Challenges } from '../pages/Challenges';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -20,10 +21,10 @@ export const router = createBrowserRouter([
     children: [
       // ── Public / Citizen ──────────────────────────────
       { index: true, element: <Landing /> },
+      { path: 'challenges', element: <Challenges /> },
       // Phase 3: { path: 'report', element: <ReportChallenge /> },
       // Phase 3: { path: 'my-challenges', element: <MyChallenges /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
-      // Phase 3: { path: 'challenges', element: <ChallengeList /> },
       // Phase 3: { path: 'challenges/:id', element: <ChallengeDetail /> },
 
       // ── Ecosystem ─────────────────────────────────────

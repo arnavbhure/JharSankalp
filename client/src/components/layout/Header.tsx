@@ -37,6 +37,7 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const isLandingPage = location.pathname === '/';
+  const isChallengesPage = location.pathname === '/challenges';
 
   const demoRoles: UserRole[] = [
     UserRole.CITIZEN,
@@ -51,7 +52,7 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
     <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-[#EEEAE1] bg-[#F8F6F1] px-4 sm:px-8 shadow-xs select-none transition-all">
       {/* Left: Brand Identity */}
       <div className="flex items-center gap-3">
-        {showMenuButton && !isLandingPage && (
+        {showMenuButton && !isLandingPage && !isChallengesPage && (
           <button
             onClick={onMenuToggle}
             className="rounded-lg p-2 text-[#1D2522] hover:bg-[#EEEAE1] lg:hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#123B2A]"
@@ -90,12 +91,18 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
           )}
         </Link>
 
-        <a
-          href="#challenges-feed"
-          className="py-2 transition-colors hover:text-[#123B2A]"
+        <Link
+          to="/challenges"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            isChallengesPage ? 'text-[#123B2A] font-bold' : '',
+          )}
         >
           Challenges
-        </a>
+          {isChallengesPage && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
 
         <a
           href="#focus-areas"
@@ -137,11 +144,8 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
       <div className="flex items-center gap-3">
         {/* Search Circular Icon Button */}
         <button
-          onClick={() => {
-            const el = document.getElementById('challenges-feed');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-white text-[#1D2522] hover:bg-[#EEEAE1] hover:text-[#123B2A] transition-colors shadow-xs"
+          onClick={() => navigate('/challenges')}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-white text-[#1D2522] hover:bg-[#EEEAE1] hover:text-[#123B2A] transition-colors shadow-xs cursor-pointer"
           aria-label="Search challenges"
         >
           <Search className="h-4 w-4 stroke-[2.2]" />

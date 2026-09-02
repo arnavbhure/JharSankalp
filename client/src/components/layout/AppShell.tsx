@@ -11,6 +11,8 @@ export function AppShell() {
   const { isCitizen } = useAuth();
   const location = useLocation();
   const isLanding = location.pathname === '/';
+  const isChallenges = location.pathname === '/challenges';
+  const isPublicExploration = isLanding || isChallenges;
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">
@@ -22,8 +24,8 @@ export function AppShell() {
 
       {/* Body Layout */}
       <div className="flex flex-1 w-full">
-        {/* Role-Specific Sidebar: Hidden for citizens and on the public landing page */}
-        {!isCitizen && !isLanding && (
+        {/* Role-Specific Sidebar: Hidden for citizens and on public exploration pages */}
+        {!isCitizen && !isPublicExploration && (
           <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         )}
 
@@ -34,7 +36,7 @@ export function AppShell() {
             isCitizen ? 'pb-20 lg:pb-8' : 'pb-8',
           )}
         >
-          {isLanding ? (
+          {isPublicExploration ? (
             <Outlet />
           ) : (
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
