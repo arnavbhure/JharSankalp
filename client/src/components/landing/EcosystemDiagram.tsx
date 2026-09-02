@@ -1,164 +1,170 @@
-import { Users, Building2, GraduationCap, Briefcase, ArrowDown, ShieldCheck } from 'lucide-react';
+import { Users, Building2, GraduationCap, Briefcase } from 'lucide-react';
+import { BrandMark } from '../common/BrandMark';
 
 export function EcosystemDiagram() {
   return (
-    <section id="ecosystem" className="py-14 border-b border-neutral-200 bg-neutral-50 text-left">
+    <section id="ecosystem" className="py-16 border-b border-neutral-200 bg-[#F9F8F9] text-left">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Editorial Header */}
-        <div className="border-b border-neutral-200 pb-5 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span className="text-caption font-mono uppercase tracking-widest text-brand-purple font-semibold">
+        {/* Section Header */}
+        <div className="border-b border-neutral-200 pb-5 mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-brand-purple font-bold">
+              <span className="h-2 w-2 rounded-full bg-brand-coral" />
               Tripartite Operating Model
             </span>
-            <h2 className="text-h2 font-bold text-neutral-900 tracking-tight mt-1">
+            <h2 className="text-h2 sm:text-[2.25rem] font-bold text-neutral-900 tracking-tight">
               One challenge. Four forces working together.
             </h2>
           </div>
           <p className="max-w-md text-small text-neutral-600 leading-normal">
-            JharSankalp replaces isolated departmental interventions with a collaborative pipeline
-            connecting ground truth, public stewardship, laboratory R&D, and manufacturing scale.
+            JharSankalp eliminates departmental silos by synchronizing citizen ground reality,
+            state oversight, university laboratory research, and industrial scale.
           </p>
         </div>
 
-        {/* ── Structural Ecosystem Flow Diagram ──────────────────── */}
-        <div className="max-w-4xl mx-auto space-y-4">
-          {/* Level 1: Ground Problem Identification (Citizen / PRI) */}
-          <div className="p-4 rounded-sm border border-brand-apricot-border bg-brand-apricot-surface text-neutral-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-subtle">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-brand-apricot text-neutral-900">
-                <Users className="h-5 w-5 stroke-[2]" />
+        {/* ── Central Hub & 4 Quadruple-Helix Forces Grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 items-center">
+          {/* ── FORCE 01: Citizens (Soft Apricot Solid Card) ── */}
+          <div className="lg:col-span-5 p-6 rounded-sm border-2 border-brand-apricot-border bg-brand-apricot text-neutral-900 shadow-medium flex flex-col justify-between space-y-4 transition-transform hover:-translate-y-1">
+            <div className="flex items-center justify-between">
+              <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-brand-purple text-brand-apricot shadow-sm">
+                <Users className="h-6 w-6 stroke-[2.2]" />
               </div>
+              <span className="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-pill bg-brand-purple/15 text-brand-purple border border-brand-purple/20">
+                Force 01 · Origin
+              </span>
+            </div>
+
+            <div>
+              <h3 className="text-h3 font-extrabold text-neutral-900 tracking-tight">
+                Citizens & Gram Panchayats
+              </h3>
+              <p className="text-small text-neutral-800 mt-2 leading-relaxed">
+                Observe infrastructural and societal failures on the ground. Submit geotagged photos,
+                voice notes, and local community observations from 24 districts.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-neutral-900/15 flex items-center justify-between text-caption font-bold text-brand-purple">
+              <span>Ground Truth Layer</span>
+              <span>GPS + Voice Verified</span>
+            </div>
+          </div>
+
+          {/* ── FORCE 02: Government (Deep Purple Solid Card) ── */}
+          <div className="lg:col-span-7 p-6 rounded-sm border-2 border-brand-purple-hover bg-brand-purple text-neutral-0 shadow-medium flex flex-col justify-between space-y-4 transition-transform hover:-translate-y-1">
+            <div className="flex items-center justify-between">
+              <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-white/10 text-brand-apricot shadow-sm">
+                <Building2 className="h-6 w-6 stroke-[2.2]" />
+              </div>
+              <span className="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-pill bg-brand-apricot/20 text-brand-apricot border border-brand-apricot/30">
+                Force 02 · Stewardship
+              </span>
+            </div>
+
+            <div>
+              <h3 className="text-h3 font-extrabold text-white tracking-tight">
+                State Government & District Authorities
+              </h3>
+              <p className="text-small text-neutral-0/85 mt-2 leading-relaxed">
+                Triage incoming challenges into three action tracks: <strong>Resolve</strong> (routine), <strong>Research</strong> (academic), or <strong>Innovate</strong> (consortium).
+                Issue funding grants and validate field pilot outcomes.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-white/20 flex items-center justify-between text-caption font-bold text-brand-apricot">
+              <span>Public Governance Layer</span>
+              <span>Impact Contracts & Grants</span>
+            </div>
+          </div>
+
+          {/* ── CENTERPIECE: The JharSankalp Innovation Exchange Core ── */}
+          <div className="lg:col-span-12 p-5 rounded-sm border-2 border-brand-coral bg-white shadow-medium flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-left">
+              <BrandMark size="lg" />
               <div>
-                <span className="text-caption font-mono uppercase font-semibold text-neutral-600">
-                  Force 01 · Origin
+                <span className="text-caption font-mono uppercase text-brand-coral font-bold tracking-wider">
+                  The Coordination Nexus
                 </span>
-                <h3 className="text-body font-bold text-neutral-900">
-                  Citizens, Gram Panchayats & Community Bodies
-                </h3>
-                <p className="text-caption text-neutral-700 mt-0.5">
-                  Observe local failures on the ground and document evidence via voice, photos, and geotagged text.
+                <h4 className="text-h3 font-extrabold text-neutral-900 tracking-tight leading-none mt-0.5">
+                  JharSankalp Orchestration Engine
+                </h4>
+                <p className="text-caption text-neutral-600 mt-1">
+                  Continuously harmonizing: Challenge Intake → AI Triage → Capability Graph → Impact Contract → Ground Pilot → Verified Policy
                 </p>
               </div>
             </div>
-            <div className="shrink-0 text-caption font-medium bg-neutral-0/80 px-2.5 py-1 rounded-sm border border-brand-apricot-border">
-              Problem Intake
+
+            <div className="flex items-center gap-2 flex-wrap text-caption font-mono font-bold">
+              <span className="px-3 py-1 bg-brand-apricot-surface text-brand-purple border border-brand-apricot-border rounded-sm">
+                Intake
+              </span>
+              <span className="text-neutral-400">→</span>
+              <span className="px-3 py-1 bg-brand-purple-subtle text-brand-purple border border-brand-purple-border/30 rounded-sm">
+                Matching
+              </span>
+              <span className="text-neutral-400">→</span>
+              <span className="px-3 py-1 bg-brand-coral-subtle text-brand-coral border border-brand-coral/30 rounded-sm">
+                Consortium
+              </span>
+              <span className="text-neutral-400">→</span>
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-300 rounded-sm">
+                Impact
+              </span>
             </div>
           </div>
 
-          {/* Flow Connector Arrow */}
-          <div className="flex justify-center -my-2 text-brand-purple">
-            <ArrowDown className="h-5 w-5 stroke-[2.5]" />
-          </div>
-
-          {/* Level 2: Institutional Governance & Triage (Government) */}
-          <div className="p-4 rounded-sm border border-brand-purple-border bg-brand-purple text-neutral-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-subtle">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-neutral-0/10 text-brand-apricot">
-                <Building2 className="h-5 w-5 stroke-[2]" />
+          {/* ── FORCE 03: Universities (Khaki Solid Card) ── */}
+          <div className="lg:col-span-7 p-6 rounded-sm border-2 border-brand-khaki-border bg-brand-khaki text-neutral-900 shadow-medium flex flex-col justify-between space-y-4 transition-transform hover:-translate-y-1">
+            <div className="flex items-center justify-between">
+              <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-neutral-900 text-brand-khaki shadow-sm">
+                <GraduationCap className="h-6 w-6 stroke-[2.2]" />
               </div>
-              <div>
-                <span className="text-caption font-mono uppercase font-semibold text-brand-apricot">
-                  Force 02 · Stewardship
-                </span>
-                <h3 className="text-body font-bold text-neutral-0">
-                  State Government & District Administrations
-                </h3>
-                <p className="text-caption text-neutral-0/75 mt-0.5">
-                  Validates action track (Resolve, Research, Innovate), allocates state challenge grants, and monitors impact metrics.
-                </p>
-              </div>
-            </div>
-            <div className="shrink-0 text-caption font-medium bg-neutral-0/20 px-2.5 py-1 rounded-sm border border-neutral-0/20 text-neutral-0">
-              State Triage & Oversight
-            </div>
-          </div>
-
-          {/* Flow Connector Arrow */}
-          <div className="flex justify-center -my-2 text-brand-purple">
-            <ArrowDown className="h-5 w-5 stroke-[2.5]" />
-          </div>
-
-          {/* Level 3: Bilateral Collaborative Consortium (Universities <-> Industry) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 relative">
-            {/* University Column (Khaki Tone) */}
-            <div className="p-4 rounded-sm border border-brand-khaki-border/40 bg-brand-khaki-subtle text-neutral-900 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-0 text-neutral-800 border border-neutral-200">
-                    <GraduationCap className="h-4.5 w-4.5" />
-                  </div>
-                  <span className="text-caption font-mono uppercase font-semibold text-neutral-600">
-                    Force 03 · Knowledge
-                  </span>
-                </div>
-                <h3 className="text-body-sm font-bold text-neutral-900 mt-2">
-                  Universities & Research Labs
-                </h3>
-                <p className="text-caption text-neutral-700 mt-1 leading-normal">
-                  Faculty and student engineering teams contribute specialized laboratories, prototype design, and field testing.
-                </p>
-              </div>
-              <div className="mt-3 pt-2 border-t border-brand-khaki-border/30 text-[11px] text-neutral-600 flex justify-between">
-                <span>BIT Sindri, BIT Mesra, BAU</span>
-                <strong className="text-neutral-900">Lab Capacity</strong>
-              </div>
+              <span className="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-pill bg-neutral-900/15 text-neutral-900 border border-neutral-900/25">
+                Force 03 · Knowledge & R&D
+              </span>
             </div>
 
-            {/* Bilateral Exchange Symbol (Desktop Overlay) */}
-            <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-neutral-0 border border-neutral-300 rounded-full h-7 w-7 items-center justify-center shadow-subtle text-neutral-600">
-              <span className="text-caption font-bold">↔</span>
+            <div>
+              <h3 className="text-h3 font-extrabold text-neutral-900 tracking-tight">
+                Universities & Higher Education Institutions
+              </h3>
+              <p className="text-small text-neutral-900/90 mt-2 leading-relaxed">
+                BIT Sindri, BIT Mesra, BAU, and engineering colleges deploy faculty researchers,
+                student innovators, and specialized testing laboratories to develop functional prototypes.
+              </p>
             </div>
 
-            {/* Industry Column (Coral Accent Tone) */}
-            <div className="p-4 rounded-sm border border-brand-coral/30 bg-brand-coral-subtle text-neutral-900 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-0 text-brand-coral border border-neutral-200">
-                    <Briefcase className="h-4.5 w-4.5" />
-                  </div>
-                  <span className="text-caption font-mono uppercase font-semibold text-brand-coral">
-                    Force 04 · Scale
-                  </span>
-                </div>
-                <h3 className="text-body-sm font-bold text-neutral-900 mt-2">
-                  Industry, MSMEs & Startups
-                </h3>
-                <p className="text-caption text-neutral-700 mt-1 leading-normal">
-                  Publishes physical commitments: IoT hardware, fabrication facilities, manufacturing capacity, and technical mentors.
-                </p>
-              </div>
-              <div className="mt-3 pt-2 border-t border-brand-coral/20 text-[11px] text-neutral-600 flex justify-between">
-                <span>AgriSens, Coal India, MSME Hubs</span>
-                <strong className="text-brand-coral">Scale Commitment</strong>
-              </div>
+            <div className="pt-3 border-t border-neutral-900/20 flex items-center justify-between text-caption font-bold text-neutral-900">
+              <span>Capability Graph Certified</span>
+              <span>Prototyping & Lab Validation</span>
             </div>
           </div>
 
-          {/* Flow Connector Arrow */}
-          <div className="flex justify-center -my-2 text-brand-purple">
-            <ArrowDown className="h-5 w-5 stroke-[2.5]" />
-          </div>
-
-          {/* Level 4: Final Measurable Community Impact */}
-          <div className="p-4 rounded-sm border border-status-success-border bg-status-success-subtle text-neutral-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-status-success text-neutral-0">
-                <ShieldCheck className="h-5 w-5 stroke-[2]" />
+          {/* ── FORCE 04: Industry & MSMEs (Vibrant Coral Solid Card) ── */}
+          <div className="lg:col-span-5 p-6 rounded-sm border-2 border-brand-coral-hover bg-brand-coral text-white shadow-medium flex flex-col justify-between space-y-4 transition-transform hover:-translate-y-1">
+            <div className="flex items-center justify-between">
+              <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-white text-brand-coral shadow-sm">
+                <Briefcase className="h-6 w-6 stroke-[2.2]" />
               </div>
-              <div>
-                <span className="text-caption font-mono uppercase font-semibold text-status-success">
-                  Outcome · Verified Impact
-                </span>
-                <h3 className="text-body font-bold text-neutral-900">
-                  Measurable, Evidence-Backed Ground Transformation
-                </h3>
-                <p className="text-caption text-neutral-700 mt-0.5">
-                  Field pilot outcomes validated by PRI representatives, independent telemetry, and government audit.
-                </p>
-              </div>
+              <span className="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-pill bg-white/20 text-white border border-white/30">
+                Force 04 · Production & Scale
+              </span>
             </div>
-            <div className="shrink-0 text-caption font-semibold text-status-success bg-neutral-0 px-2.5 py-1 rounded-sm border border-status-success-border">
-              Contract Completed
+
+            <div>
+              <h3 className="text-h3 font-extrabold text-white tracking-tight">
+                Industry, Startups & MSMEs
+              </h3>
+              <p className="text-small text-white/90 mt-2 leading-relaxed">
+                Commit manufacturing tooling, IoT sensors, hardware testing rigs, and corporate CSR funding
+                to take laboratory prototypes into robust field mass-production.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-white/25 flex items-center justify-between text-caption font-bold text-brand-apricot">
+              <span>Industrial Execution</span>
+              <span>Physical Hardware Supply</span>
             </div>
           </div>
         </div>

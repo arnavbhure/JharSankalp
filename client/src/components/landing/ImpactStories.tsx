@@ -1,21 +1,21 @@
 import { IMAGES } from '../../config/images';
-import { Badge } from '../ui/Badge';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export function ImpactStories() {
   const navigate = useNavigate();
 
   return (
-    <section id="impact" className="py-14 border-b border-neutral-200 bg-neutral-0 text-left">
+    <section id="impact" className="py-16 border-b border-neutral-200 bg-neutral-0 text-left">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Editorial Section Header */}
-        <div className="border-b border-neutral-200 pb-5 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span className="text-caption font-mono uppercase tracking-widest text-brand-purple font-semibold">
-              Ground Verification
+        {/* Section Header */}
+        <div className="border-b border-neutral-200 pb-5 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-brand-purple font-bold">
+              <span className="h-2 w-2 rounded-full bg-brand-coral" />
+              Verified Field Transformations
             </span>
-            <h2 className="text-h2 font-bold text-neutral-900 tracking-tight mt-1">
+            <h2 className="text-h2 sm:text-[2.25rem] font-bold text-neutral-900 tracking-tight">
               Real outcomes. Measured before and after.
             </h2>
           </div>
@@ -25,86 +25,97 @@ export function ImpactStories() {
           </p>
         </div>
 
-        {/* ── Featured Field Narrative (Murhu Block, Khunti Case) ── */}
-        <div className="rounded-sm border border-neutral-200 bg-neutral-25 overflow-hidden">
+        {/* ── Featured Field Narrative: Khunti Deep Borewell Pilot ── */}
+        <div className="rounded-sm border-2 border-brand-purple bg-brand-purple text-neutral-0 shadow-medium overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            {/* Left 5 Cols: Contextual Field Photography */}
-            <div className="lg:col-span-5 relative aspect-[4/3] lg:aspect-auto bg-neutral-200">
+            {/* Left 5 Cols: Full-Bleed Field Photography with Accent Overlay */}
+            <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-[420px] bg-neutral-900">
               <img
                 src={IMAGES.waterInfrastructure.url}
                 alt={IMAGES.waterInfrastructure.alt}
-                className="h-full w-full object-cover grayscale-[15%] contrast-[1.05]"
+                className="h-full w-full object-cover grayscale-[10%] contrast-[1.1]"
               />
-              <div className="absolute bottom-2 left-2 right-2 bg-neutral-900/80 p-2 text-neutral-0 rounded-xs text-[11px] leading-tight">
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-purple/95 via-brand-purple/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-brand-purple" />
+
+              <div className="absolute bottom-4 left-4 right-4 bg-neutral-900/85 p-3 rounded-xs border border-white/20 text-white text-caption leading-snug">
+                <span className="font-bold text-brand-apricot block uppercase font-mono text-[10px]">
+                  Field Verification Node #KHT-04
+                </span>
                 {IMAGES.waterInfrastructure.caption}
               </div>
             </div>
 
-            {/* Right 7 Cols: Impact Contract Story & Metrics */}
-            <div className="lg:col-span-7 p-6 lg:p-8 flex flex-col justify-between space-y-6">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Badge variant="purple" size="sm">
+            {/* Right 7 Cols: Saturated Impact Contract Story & Metrics */}
+            <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-pill bg-brand-coral text-white text-caption font-bold uppercase tracking-wider font-mono">
                     Impact Contract #IC-2024-001
-                  </Badge>
-                  <span className="text-neutral-300">·</span>
-                  <span className="text-caption font-mono font-medium text-neutral-500">
+                  </span>
+                  <span className="text-white/40">·</span>
+                  <span className="text-caption font-mono font-bold text-brand-apricot">
                     Khunti District · Murhu Block
                   </span>
                 </div>
 
-                <h3 className="text-h3 font-bold text-neutral-900 tracking-tight leading-snug">
-                  Reducing Community Water Pump Downtime from 12 Days to 3.2 Days
+                <h3 className="text-h2 sm:text-[2rem] font-bold text-white tracking-tight leading-snug">
+                  Reducing Community Water Pump Downtime from 12.4 Days to 3.2 Days
                 </h3>
 
-                <p className="text-small text-neutral-600 leading-relaxed">
-                  In 5 tribal hamlets in Murhu block, repeated deep-bore pump breakdown left 2,000 residents
+                <p className="text-body-sm text-neutral-0/85 leading-relaxed">
+                  In 5 tribal hamlets in Murhu block, repeated deep-bore pump breakdowns left 2,000 residents
                   without clean drinking water for up to two weeks per incident. A university-MSME consortium
                   (BIT Sindri Mechanical Lab + AgriSens Technologies) engineered low-power vibration telemetry pods
                   that predict motor stator burnout 48 hours before failure.
                 </p>
 
-                {/* Structured Baseline vs. Verified Target Comparison */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3 bg-neutral-0 border border-neutral-200 rounded-sm">
-                    <span className="text-[11px] font-mono text-neutral-400 block uppercase">
-                      Baseline
+                {/* Saturated Baseline vs. Target vs. Verified Metric Tiles */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                  <div className="p-4 bg-white/10 rounded-sm border border-white/20 text-left">
+                    <span className="text-[11px] font-mono text-brand-apricot uppercase font-bold block">
+                      Field Baseline
                     </span>
-                    <strong className="text-h3 font-bold text-neutral-900 font-mono">12.4 Days</strong>
-                    <span className="text-[11px] text-neutral-500 block mt-0.5">Average repair downtime</span>
+                    <div className="text-[2rem] font-extrabold text-white font-mono mt-0.5">
+                      12.4d
+                    </div>
+                    <span className="text-[11px] text-white/70 block mt-0.5">Historical downtime</span>
                   </div>
 
-                  <div className="p-3 bg-neutral-0 border border-neutral-200 rounded-sm">
-                    <span className="text-[11px] font-mono text-neutral-400 block uppercase">
-                      Target
+                  <div className="p-4 bg-white/10 rounded-sm border border-white/20 text-left">
+                    <span className="text-[11px] font-mono text-brand-coral uppercase font-bold block">
+                      Contract Target
                     </span>
-                    <strong className="text-h3 font-bold text-brand-coral font-mono">≤ 4.0 Days</strong>
-                    <span className="text-[11px] text-neutral-500 block mt-0.5">Contracted commitment</span>
+                    <div className="text-[2rem] font-extrabold text-brand-coral font-mono mt-0.5">
+                      ≤ 4.0d
+                    </div>
+                    <span className="text-[11px] text-white/70 block mt-0.5">State grant target</span>
                   </div>
 
-                  <div className="p-3 bg-brand-purple-subtle border border-brand-purple-border/30 rounded-sm">
-                    <span className="text-[11px] font-mono text-brand-purple block uppercase font-semibold">
+                  <div className="p-4 bg-brand-apricot text-neutral-900 rounded-sm border-2 border-brand-coral text-left shadow-md">
+                    <span className="text-[11px] font-mono text-brand-purple uppercase font-bold block">
                       Verified Result
                     </span>
-                    <strong className="text-h3 font-bold text-brand-purple font-mono">3.2 Days</strong>
-                    <span className="text-[11px] text-brand-purple/80 block mt-0.5">Gram Panchayat certified</span>
+                    <div className="text-[2rem] font-extrabold text-brand-purple font-mono mt-0.5">
+                      3.2d
+                    </div>
+                    <span className="text-[11px] font-bold text-neutral-800 block mt-0.5">Panchayat certified</span>
                   </div>
                 </div>
               </div>
 
-              {/* Stakeholder Sign-Off Strip */}
-              <div className="pt-4 border-t border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-caption text-neutral-600">
+              {/* Sign-off strip */}
+              <div className="pt-4 border-t border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-caption text-neutral-0/80">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-status-success" />
-                  <span>Consortium: <strong>BIT Sindri</strong> (Research) + <strong>AgriSens</strong> (MSME)</span>
+                  <ShieldCheck className="h-4.5 w-4.5 text-brand-coral" />
+                  <span>Consortium: <strong>BIT Sindri</strong> (Research) + <strong>AgriSens MSME</strong> (Production)</span>
                 </div>
 
                 <button
                   onClick={() => navigate('/challenges')}
-                  className="font-medium text-brand-purple hover:underline inline-flex items-center gap-1"
+                  className="font-bold text-brand-apricot hover:text-white underline inline-flex items-center gap-1"
                 >
-                  <span>Review Verification Audit</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <span>Review Verification Dossier</span>
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
             </div>

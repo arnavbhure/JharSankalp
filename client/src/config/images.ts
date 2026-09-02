@@ -14,7 +14,27 @@ export interface EditorialImage {
 }
 
 export const IMAGES = {
-  // ── Hero & Regional Landscape ────────────────────────────────
+  // ── Hero & Regional Waterfall Landscape ───────────────────────
+  heroWaterfall: {
+    id: 'hero-waterfall',
+    url: 'https://images.unsplash.com/photo-1546768292-fb12f6c92568?auto=format&fit=crop&w=1200&q=80',
+    title: 'Jharkhand Waterfall & Community Pioneers',
+    caption: 'Hundru & Dassam falls eco-corridor with student innovators exploring regional terrain',
+    credit: 'Pradeep Gaurs / Unsplash',
+    alt: 'Lush green waterfall canyon with young innovators looking forward',
+  },
+
+  // ── Final CTA Students & Innovators ───────────────────────────
+  studentsInnovators: {
+    id: 'students-innovators',
+    url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80',
+    title: 'Young Jharkhand Innovators & Researchers',
+    caption: 'University students and researchers collaborating on civic technology prototypes',
+    credit: 'Brooke Cagle / Unsplash',
+    alt: 'Diverse Indian university students smiling together with notebooks and backpacks',
+  },
+
+  // ── Rural Community Landscape ─────────────────────────────────
   heroLandscape: {
     id: 'hero-landscape',
     url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',

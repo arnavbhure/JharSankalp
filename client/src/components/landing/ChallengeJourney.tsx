@@ -1,4 +1,4 @@
-import { Search, Cpu, Users, Wrench, Compass, ShieldCheck } from 'lucide-react';
+import { Search, Cpu, Compass, Wrench, Users, ShieldCheck } from 'lucide-react';
 
 export function ChallengeJourney() {
   const steps = [
@@ -9,7 +9,10 @@ export function ChallengeJourney() {
       desc: 'Problems captured locally via voice, photo, and geolocation from blocks and panchayats.',
       actor: 'Local Citizen / PRI',
       icon: Search,
-      accent: 'border-t-brand-purple',
+      bg: 'bg-brand-apricot',
+      text: 'text-neutral-900',
+      iconBg: 'bg-brand-purple text-brand-apricot',
+      badgeClass: 'bg-brand-purple/10 text-brand-purple border-brand-purple/20 font-bold',
     },
     {
       num: '02',
@@ -18,25 +21,34 @@ export function ChallengeJourney() {
       desc: 'AI synthesizes raw intake, flags duplicate incidents, and structures engineering problem briefs.',
       actor: 'AI Analysis Engine',
       icon: Cpu,
-      accent: 'border-t-brand-coral',
+      bg: 'bg-brand-purple',
+      text: 'text-neutral-0',
+      iconBg: 'bg-brand-coral text-white',
+      badgeClass: 'bg-brand-coral/20 text-brand-coral border-brand-coral/30 font-bold',
     },
     {
       num: '03',
       title: 'MATCH',
       subtitle: 'Capability Graph',
-      desc: 'Identifies matching university labs, faculty researchers, and industry commitments across the state.',
+      desc: 'Matches challenge needs with certified university labs, faculty expertise, and corporate resources.',
       actor: 'State Algorithm',
       icon: Compass,
-      accent: 'border-t-brand-purple',
+      bg: 'bg-brand-khaki',
+      text: 'text-neutral-900',
+      iconBg: 'bg-neutral-900 text-brand-khaki',
+      badgeClass: 'bg-neutral-900/15 text-neutral-900 border-neutral-900/20 font-bold',
     },
     {
       num: '04',
       title: 'BUILD',
       subtitle: 'Consortium & Contract',
-      desc: 'HEIs and MSMEs form a multidisciplinary consortium and sign a pre-agreed Impact Contract.',
+      desc: 'HEIs and MSMEs form a collaborative consortium and sign a binding Impact Contract.',
       actor: 'University + Industry',
       icon: Wrench,
-      accent: 'border-t-brand-coral',
+      bg: 'bg-brand-coral',
+      text: 'text-white',
+      iconBg: 'bg-white text-brand-coral',
+      badgeClass: 'bg-white/20 text-white border-white/30 font-bold',
     },
     {
       num: '05',
@@ -45,7 +57,10 @@ export function ChallengeJourney() {
       desc: 'Hardware and software deployed in target blocks for real-world environmental and social testing.',
       actor: 'Field Pilot Team',
       icon: Users,
-      accent: 'border-t-brand-purple',
+      bg: 'bg-emerald-700',
+      text: 'text-white',
+      iconBg: 'bg-white text-emerald-800',
+      badgeClass: 'bg-white/20 text-white border-white/30 font-bold',
     },
     {
       num: '06',
@@ -54,20 +69,24 @@ export function ChallengeJourney() {
       desc: 'Independent measurements compare baseline against target metrics for policy adoption.',
       actor: 'Govt. Verification',
       icon: ShieldCheck,
-      accent: 'border-t-status-success',
+      bg: 'bg-brand-purple-hover',
+      text: 'text-neutral-0',
+      iconBg: 'bg-brand-apricot text-brand-purple',
+      badgeClass: 'bg-brand-apricot/20 text-brand-apricot border-brand-apricot/30 font-bold',
     },
   ];
 
   return (
-    <section id="how-it-works" className="py-14 border-b border-neutral-200 bg-neutral-50 text-left">
+    <section id="how-it-works" className="py-16 border-b border-neutral-200 bg-neutral-50 text-left">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="border-b border-neutral-200 pb-5 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="border-b border-neutral-200 pb-5 mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <div>
-            <span className="text-caption font-mono uppercase tracking-widest text-brand-purple font-semibold">
+            <span className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-brand-purple font-bold">
+              <span className="h-2 w-2 rounded-full bg-brand-coral" />
               Closed-Loop Innovation Lifecycle
             </span>
-            <h2 className="text-h2 font-bold text-neutral-900 tracking-tight mt-1">
+            <h2 className="text-h2 sm:text-[2.25rem] font-bold text-neutral-900 tracking-tight mt-1">
               The Challenge-to-Impact Loop
             </h2>
           </div>
@@ -77,52 +96,53 @@ export function ChallengeJourney() {
           </p>
         </div>
 
-        {/* ── DESKTOP HORIZONTAL CONNECTED JOURNEY (Hidden on small screens) ── */}
-        <div className="hidden lg:block relative">
-          {/* Continuous Baseline Track */}
-          <div className="absolute top-[42px] left-8 right-8 h-0.5 bg-neutral-200 -z-0" />
+        {/* ── DESKTOP HORIZONTAL CONNECTED JOURNEY ── */}
+        <div className="hidden xl:block relative">
+          {/* Continuous Connected Pipe Track */}
+          <div className="absolute top-1/2 left-4 right-4 h-1.5 bg-gradient-to-r from-brand-apricot via-brand-purple via-brand-coral to-emerald-600 -translate-y-1/2 z-0 rounded-full opacity-60" />
 
           <div className="grid grid-cols-6 gap-3 relative z-10">
             {steps.map((step, idx) => {
               const Icon = step.icon;
-              const isEven = idx % 2 === 1;
+              const isShifted = idx % 2 === 1;
 
               return (
                 <div
                   key={step.num}
-                  className={`border-t-[3px] ${step.accent} border-x border-b border-neutral-200 p-3.5 flex flex-col justify-between transition-colors ${
-                    isEven ? 'bg-neutral-0' : 'bg-neutral-25'
-                  }`}
+                  className={`p-4 rounded-sm border-2 border-neutral-200 shadow-medium flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 ${
+                    step.bg
+                  } ${step.text} ${isShifted ? 'translate-y-3' : '-translate-y-2'}`}
                 >
                   <div>
-                    {/* Header with Icon and Sequential Number */}
-                    <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-brand-purple-subtle text-brand-purple">
-                        <Icon className="h-4 w-4" />
+                    {/* Header with Icon and Stage Number */}
+                    <div className="flex items-center justify-between pb-3 border-b border-current/20">
+                      <div className={`flex h-9 w-9 items-center justify-center rounded-sm shadow-sm ${step.iconBg}`}>
+                        <Icon className="h-5 w-5 stroke-[2.2]" />
                       </div>
-                      <span className="text-caption font-mono font-bold text-neutral-400">
+                      <span className="text-body font-mono font-extrabold tracking-tight opacity-90">
                         {step.num}
                       </span>
                     </div>
 
                     {/* Step Title & Subtitle */}
                     <div className="mt-3">
-                      <h3 className="text-small font-bold text-neutral-900 tracking-tight leading-tight">
+                      <h3 className="text-body-sm font-extrabold tracking-tight leading-tight uppercase">
                         {step.title}
                       </h3>
-                      <div className="text-[11px] font-medium text-brand-purple mt-0.5">
+                      <div className="text-[11px] font-bold mt-0.5 opacity-90">
                         {step.subtitle}
                       </div>
-                      <p className="text-caption text-neutral-600 mt-2 leading-relaxed">
+                      <p className="text-caption mt-2 leading-relaxed opacity-85 line-clamp-4">
                         {step.desc}
                       </p>
                     </div>
                   </div>
 
-                  {/* Actor Footer */}
-                  <div className="mt-4 pt-2.5 border-t border-neutral-100 flex items-center justify-between text-[11px]">
-                    <span className="text-neutral-400 font-medium">Actor:</span>
-                    <span className="font-semibold text-neutral-800">{step.actor}</span>
+                  {/* Actor Pill Badge */}
+                  <div className="mt-4 pt-2.5 border-t border-current/20 flex items-center justify-between">
+                    <span className={`text-[10px] px-2 py-0.5 rounded-pill border uppercase tracking-wider ${step.badgeClass}`}>
+                      {step.actor}
+                    </span>
                   </div>
                 </div>
               );
@@ -130,39 +150,32 @@ export function ChallengeJourney() {
           </div>
         </div>
 
-        {/* ── MOBILE VERTICAL PROGRESSION (Visible on small/tablet screens) ── */}
-        <div className="lg:hidden relative pl-6 space-y-4 text-left">
-          {/* Vertical Connecting Line */}
-          <div className="absolute left-2.5 top-3 bottom-3 w-0.5 bg-neutral-200" />
-
+        {/* ── TABLET / MOBILE PROGRESSION ── */}
+        <div className="xl:hidden grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
           {steps.map((step) => {
             const Icon = step.icon;
 
             return (
-              <div key={step.num} className="relative">
-                {/* Numbered Indicator Node */}
-                <div className="absolute -left-6 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-purple text-neutral-0 text-[10px] font-mono font-bold">
-                  {step.num}
+              <div
+                key={step.num}
+                className={`p-5 rounded-sm border-2 border-neutral-200 shadow-subtle flex flex-col justify-between space-y-3 ${step.bg} ${step.text}`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`flex h-8 w-8 items-center justify-center rounded-sm shadow-sm ${step.iconBg}`}>
+                      <Icon className="h-4.5 w-4.5 stroke-[2]" />
+                    </div>
+                    <div>
+                      <span className="text-caption font-mono font-extrabold opacity-80">{step.num}</span>
+                      <h3 className="text-body-sm font-bold leading-tight">{step.title}</h3>
+                    </div>
+                  </div>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-pill border uppercase tracking-wider ${step.badgeClass}`}>
+                    {step.actor}
+                  </span>
                 </div>
 
-                <div className="border border-neutral-200 bg-neutral-0 p-4 rounded-sm">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-brand-purple" />
-                      <h3 className="text-body-sm font-bold text-neutral-900">{step.title}</h3>
-                    </div>
-                    <span className="text-caption font-medium text-brand-purple bg-brand-purple-subtle px-1.5 py-0.5 rounded-sm">
-                      {step.subtitle}
-                    </span>
-                  </div>
-                  <p className="text-small text-neutral-600 mt-1.5 leading-normal">
-                    {step.desc}
-                  </p>
-                  <div className="mt-2.5 pt-2 border-t border-neutral-100 text-caption text-neutral-500 flex justify-between">
-                    <span>Key Actor:</span>
-                    <strong className="text-neutral-800">{step.actor}</strong>
-                  </div>
-                </div>
+                <p className="text-small opacity-90 leading-relaxed">{step.desc}</p>
               </div>
             );
           })}

@@ -4,13 +4,31 @@ const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+      sans: ['"Plus Jakarta Sans"', '"IBM Plex Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+      accent: ['"Caveat"', '"Kalam"', 'cursive'],
       mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
     },
     extend: {
       colors: {
         // ── Official JharSankalp Brand Identity ────────────────
         brand: {
+          forest: {
+            DEFAULT: '#163D2B',
+            hover: '#102F21',
+            subtle: '#EBF3EE',
+            border: '#25593F',
+          },
+          golden: {
+            DEFAULT: '#F5A623',
+            hover: '#E09215',
+            subtle: '#FEF6E9',
+            border: '#F8CCA5',
+          },
+          natural: {
+            DEFAULT: '#3E7A4A',
+            hover: '#31633B',
+            subtle: '#EBF5ED',
+          },
           purple: {
             DEFAULT: '#4C1E4F',
             hover: '#3D173F',
