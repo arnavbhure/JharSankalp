@@ -1,0 +1,199 @@
+// ─────────────────────────────────────────────────────────────
+// JharSankalp — Prisma Schema
+// Phase 1: Core skeleton (User, Organization, District,
+//          Challenge, ChallengeEvidence, AuditLog)
+// ─────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── User ─────────────────────────────────────────────────────
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  passwordHash   String
+  name           String
+  phone          String?
+  role           String   @default("CITIZEN") // UserRole enum
+  organizationId String?
+  isActive       Boolean  @default(true)
+  avatarUrl      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization      Organization?      @relation(fields: [organizationId], references: [id])
+  submittedChallenges Challenge[]       @relation("ChallengeSubmitter")
+  auditLogs         AuditLog[]
+  notifications     Notification[]
+
+  @@index([email])
+  @@index([role])
+  @@index([organizationId])
+  @@map("users")
+}
+
+// ── Organization ─────────────────────────────────────────────
+
+model Organization {
+  id          String   @id @default(uuid())
+  name        String
+  type        String   // OrganizationType enum
+  description String?
+  website     String?
+  logoUrl     String?
+  districtId  String?
+  address     String?
+  contactEmail String?
+  contactPhone String?
+  isVerified  Boolean  @default(false)
+  metadata    Json?    // Flexible metadata for org-specific data
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  district   District? @relation(fields: [districtId], references: [id])
+  users      User[]
+  challenges Challenge[] @relation("ChallengeOrganization")
+
+  @@index([type])
+  @@index([districtId])
+  @@map("organizations")
+}
+
+// ── District ─────────────────────────────────────────────────
+
+model District {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  code      String   @unique
+  stateCode String   @default("JH")
+  // Future: PostGIS geometry column for boundaries
+  createdAt DateTime @default(now())
+
+  organizations Organization[]
+  challenges    Challenge[]
+
+  @@map("districts")
+}
+
+// ── Challenge ────────────────────────────────────────────────
+
+model Challenge {
+  id                      String   @id @default(uuid())
+  publicId                String   @unique @default(uuid()) // Human-friendly tracking ID
+  title                   String
+  description             String
+  sourceType              String   @default("CITIZEN") // SourceType enum
+  submittedById           String
+  organizationId          String?
+  status                  String   @default("SUBMITTED") // ChallengeStatus enum
+  actionTrack             String?  // ActionTrack enum — set after validation
+  domain                  String?  // ChallengeDomain enum
+  subdomain               String?
+  visibility              String   @default("PUBLIC") // Visibility enum
+  verificationStatus      String   @default("UNVERIFIED") // VerificationStatus enum
+  moderationStatus        String   @default("SAFE") // ModerationStatus enum
+  priorityScore           Float?
+  priorityBreakdown       Json?    // ScoreBreakdown
+  innovationReadinessScore Float?
+  readinessBreakdown      Json?    // ScoreBreakdown
+  districtId              String?
+  block                   String?
+  panchayatOrUlb          String?
+  latitude                Float?
+  longitude               Float?
+  affectedPopulation      Int?
+  severity                String?
+  urgency                 String?
+  // Future: embedding vector column via pgvector
+  idempotencyKey          String?  @unique // For duplicate submission prevention
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  submittedBy    User          @relation("ChallengeSubmitter", fields: [submittedById], references: [id])
+  organization   Organization? @relation("ChallengeOrganization", fields: [organizationId], references: [id])
+  district       District?     @relation(fields: [districtId], references: [id])
+  evidence       ChallengeEvidence[]
+
+  @@index([status])
+  @@index([sourceType])
+  @@index([actionTrack])
+  @@index([domain])
+  @@index([districtId])
+  @@index([submittedById])
+  @@index([verificationStatus])
+  @@index([moderationStatus])
+  @@index([createdAt])
+  @@index([priorityScore])
+  @@map("challenges")
+}
+
+// ── Challenge Evidence ───────────────────────────────────────
+
+model ChallengeEvidence {
+  id          String   @id @default(uuid())
+  challengeId String
+  type        String   // EvidenceType enum
+  url         String
+  filename    String
+  mimeType    String
+  sizeBytes   Int?
+  metadata    Json?    // EXIF, OCR output, etc.
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@index([challengeId])
+  @@map("challenge_evidence")
+}
+
+// ── Audit Log ────────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String?
+  actorRole  String?  // UserRole at time of action
+  action     String   // e.g., CHALLENGE_VALIDATED, STATUS_TRANSITION
+  entityType String   // e.g., Challenge, Project, Consortium
+  entityId   String
+  before     Json?    // State before change
+  after      Json?    // State after change
+  reason     String?
+  requestId  String?
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ── Notification (Phase 1 skeleton) ──────────────────────────
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  event     String   // NotificationEvent enum
+  title     String
+  message   String
+  entityType String?
+  entityId  String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
