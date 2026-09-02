@@ -148,4 +148,35 @@
     font-weight: 500;
     border-left: 3px solid var(--deep-purple);
   }
+
+  /* ── JharSankalp Civic Innovation Design Utilities ──────── */
+  .bg-civic-ivory {
+    background-color: #F8F6F1;
+  }
+  .bg-civic-beige {
+    background-color: #EEEAE1;
+  }
+  .bg-civic-forest {
+    background-color: #123B2A;
+  }
+  .text-civic-forest {
+    color: #123B2A;
+  }
+  .text-civic-amber {
+    color: #F5A623;
+  }
+  .text-civic-charcoal {
+    color: #1D2522;
+  }
+
+  /* Subtle Topographic & Geographic Dot Matrix Patterns */
+  .pattern-topography {
+    background-image: radial-gradient(#123B2A 1.2px, transparent 1.2px);
+    background-size: 28px 28px;
+  }
+  .pattern-topography-light {
+    background-image: radial-gradient(rgba(18, 59, 42, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 }
+

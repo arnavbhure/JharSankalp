@@ -11,12 +11,22 @@ const config: Config = {
     extend: {
       colors: {
         // ── Official JharSankalp Brand Identity ────────────────
+        civic: {
+          forest: '#123B2A',
+          'forest-rich': '#1F5A3D',
+          ivory: '#F8F6F1',
+          beige: '#EEEAE1',
+          amber: '#F5A623',
+          earth: '#6B5845',
+          charcoal: '#1D2522',
+        },
         brand: {
           forest: {
-            DEFAULT: '#163D2B',
-            hover: '#102F21',
+            DEFAULT: '#123B2A',
+            rich: '#1F5A3D',
+            hover: '#0D2B1E',
             subtle: '#EBF3EE',
-            border: '#25593F',
+            border: '#1F5A3D',
           },
           golden: {
             DEFAULT: '#F5A623',
