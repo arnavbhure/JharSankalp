@@ -29,6 +29,8 @@ import { DashboardCollaborations } from '../pages/dashboard/DashboardCollaborati
 import { DashboardNotifications } from '../pages/dashboard/DashboardNotifications';
 import { DashboardImpact } from '../pages/dashboard/DashboardImpact';
 import { DashboardSettings } from '../pages/dashboard/DashboardSettings';
+import { GovernmentLayout } from '../layouts/GovernmentLayout';
+import { GovernmentDashboard } from '../pages/government/GovernmentDashboard';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -56,6 +58,14 @@ export const router = createBrowserRouter([
       { path: 'notifications', element: <DashboardNotifications /> },
       { path: 'impact', element: <DashboardImpact /> },
       { path: 'settings', element: <DashboardSettings /> },
+    ],
+  },
+  {
+    path: '/government',
+    element: <GovernmentLayout />,
+    children: [
+      { index: true, element: <GovernmentDashboard /> },
+      { path: 'dashboard', element: <GovernmentDashboard /> },
     ],
   },
   {
@@ -93,8 +103,8 @@ export const router = createBrowserRouter([
       // Phase 10: { path: 'missions/:id', element: <MissionDetail /> },
 
       // ── Government ────────────────────────────────────
-      // Phase 10: { path: 'government', element: <GovDashboard /> },
-      // Phase 10: { path: 'government/challenges', element: <GovChallenges /> },
+      { path: 'government', element: <GovernmentDashboard /> },
+      { path: 'government/dashboard', element: <GovernmentDashboard /> },
       // Phase 10: { path: 'government/districts', element: <GovDistricts /> },
       // Phase 10: { path: 'government/missions', element: <GovMissions /> },
       // Phase 10: { path: 'government/projects', element: <GovProjects /> },

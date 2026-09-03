@@ -196,10 +196,18 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
 
         {/* Dashboard Shortcut Button */}
         <button
-          onClick={() => navigate('/dashboard')}
+          onClick={() => {
+            if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
+              navigate('/government/dashboard');
+            } else {
+              navigate('/dashboard');
+            }
+          }}
           className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-2 text-[13px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#F8F6F1] active:scale-[0.98] transition-all cursor-pointer"
         >
-          Dashboard ↗
+          {user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN
+            ? 'Command Center ↗'
+            : 'Dashboard ↗'}
         </button>
 
         {/* Login / Sign Up Strong Rectangular Button */}
@@ -240,6 +248,9 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
                       onClick={() => {
                         setDemoRole(role);
                         setShowRoleSwitcher(false);
+                        if (role === UserRole.GOVERNMENT_OFFICER) {
+                          navigate('/government/dashboard');
+                        }
                       }}
                       className={cn(
                         'flex items-center justify-between w-full px-3 py-1.5 text-left text-small hover:bg-neutral-100 transition-colors',
