@@ -69,3 +69,26 @@ export interface IdeaStatsData {
   prototypesInDevelopment: number;
   fieldPilots: number;
 }
+
+export type IdeaStatus =
+  | 'New'
+  | 'Community Supported'
+  | 'Under Review'
+  | 'In Development'
+  | 'Implemented';
+
+export interface CommunityIdea {
+  id: string;
+  title: string;
+  description: string;
+  focusArea: string;
+  district: string;
+  author: string;
+  supportersCount: number;
+  contributorsCount: number;
+  status: IdeaStatus;
+  submittedDate: string;
+  isSupported?: boolean;
+  linkedChallenge?: string;
+  linkedChallengeId?: string;
+}

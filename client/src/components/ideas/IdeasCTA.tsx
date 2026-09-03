@@ -1,57 +1,56 @@
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Compass, Plus, Sparkles } from 'lucide-react';
+import { ArrowRight, Lightbulb, HelpCircle, Plus } from 'lucide-react';
 
 interface IdeasCTAProps {
-  onShareIdea: () => void;
+  onOpenSubmitModal: () => void;
+  onOpenExplainer?: () => void;
 }
 
-export function IdeasCTA({ onShareIdea }: IdeasCTAProps) {
-  const navigate = useNavigate();
-
+export function IdeasCTA({ onOpenSubmitModal, onOpenExplainer }: IdeasCTAProps) {
   return (
-    <section className="bg-[#123B2A] text-white py-16 sm:py-20 relative overflow-hidden text-left">
-      {/* Background Geodetic Grid Accent */}
+    <section className="relative overflow-hidden rounded-[32px] bg-[#123B2A] text-white p-8 sm:p-12 lg:p-14 text-left border border-[#1E5A3A] shadow-md my-6">
+      {/* Background Subtle Contour Pattern */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none"
+        className="pointer-events-none absolute inset-0 opacity-[0.035] pattern-topography"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-[#F5A623] font-bold">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>COMMUNITY PROPOSALS WELCOME</span>
-          </div>
+      <div className="relative z-10 max-w-3xl space-y-5">
+        {/* Eyebrow */}
+        <div className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-1 text-[11px] font-mono font-bold tracking-wider uppercase text-[#F5A623]">
+          <Lightbulb className="h-3.5 w-3.5" />
+          <span>HAVE AN IDEA?</span>
+        </div>
 
-          <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-extrabold tracking-tight leading-tight font-sans text-white">
-            You don&apos;t need permission <br />
-            to contribute an idea.
-          </h2>
+        {/* Heading */}
+        <h2 className="text-[2rem] sm:text-[2.6rem] font-extrabold text-white tracking-tight leading-tight font-sans">
+          A local observation could become a statewide solution.
+        </h2>
 
-          <p className="text-[15.5px] sm:text-[17px] text-white/80 leading-relaxed max-w-2xl font-normal">
-            If you see a better way to solve a problem, share it. JharSankalp pairs emerging hypotheses with university labs, industrial fabricators, and district pilot programs.
-          </p>
+        {/* Supporting text */}
+        <p className="text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed font-normal max-w-2xl">
+          Share a problem you understand, an opportunity you see or a solution worth exploring. Your idea will be visible to innovators, students, and district officers across Jharkhand.
+        </p>
 
-          <div className="flex items-center gap-4 flex-wrap pt-2">
-            <button
-              type="button"
-              onClick={onShareIdea}
-              className="inline-flex items-center gap-2.5 rounded-lg bg-white hover:bg-[#F8F6F1] text-[#123B2A] px-7 py-3.5 text-[15px] font-bold shadow-md transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <Plus className="h-4 w-4 text-[#F5A623] stroke-[3]" />
-              <span>Share Your Idea</span>
-              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-            </button>
+        {/* Actions */}
+        <div className="flex items-center gap-3.5 flex-wrap pt-2">
+          <button
+            type="button"
+            onClick={onOpenSubmitModal}
+            className="inline-flex items-center gap-2 rounded-xl bg-[#F5A623] hover:bg-[#E09215] text-[#123B2A] px-6 py-3.5 text-[14px] font-bold shadow-xs transition-all active:scale-[0.98] cursor-pointer"
+          >
+            <Plus className="h-4 w-4 stroke-[3]" />
+            <span>Submit Your Idea</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
 
-            <button
-              type="button"
-              onClick={() => navigate('/challenges')}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-transparent hover:bg-white/10 text-white px-6 py-3.5 text-[15px] font-bold transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <Compass className="h-4 w-4 text-[#F5A623]" />
-              <span>Explore Open Challenges</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onOpenExplainer}
+            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 hover:bg-white/15 text-white px-5 py-3.5 text-[14px] font-semibold transition-all active:scale-[0.98] cursor-pointer"
+          >
+            <HelpCircle className="h-4 w-4 text-[#F5A623]" />
+            <span>How Ideas Work</span>
+          </button>
         </div>
       </div>
     </section>
