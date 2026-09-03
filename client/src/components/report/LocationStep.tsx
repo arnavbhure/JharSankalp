@@ -1,7 +1,18 @@
 import { useState } from 'react';
-import { ChallengeFormState } from '../../types/submission';
+import {
+  ChallengeFormState,
+  AffectedGroup,
+  EstimatedAffectedPopulation,
+} from '../../types/submission';
 import { JHARKHAND_DISTRICTS } from '../../data/challengesData';
-import { MapPin, Navigation, ShieldCheck, AlertCircle } from 'lucide-react';
+import {
+  MapPin,
+  Navigation,
+  ShieldCheck,
+  AlertCircle,
+  Users,
+  AlertTriangle,
+} from 'lucide-react';
 
 interface LocationStepProps {
   formData: ChallengeFormState;
@@ -9,11 +20,48 @@ interface LocationStepProps {
   errors?: Record<string, string>;
 }
 
+const AFFECTED_OPTIONS: AffectedGroup[] = [
+  'Individuals',
+  'Families / Households' as any,
+  'Village / Community' as any,
+  'Farmers',
+  'Students',
+  'Workers',
+  'Public Service Users' as any,
+  'Other',
+];
+
+const POPULATION_PRESETS: EstimatedAffectedPopulation[] = [
+  'Less than 50',
+  '50 – 500',
+  '500 – 2,000',
+  '2,000 – 10,000',
+  'More than 10,000',
+  'Not sure',
+];
+
+const URGENCY_CHOICES = [
+  {
+    value: 'Needs attention',
+    label: 'Needs attention',
+    desc: 'Noticeable issue, manageable for now but needs planning',
+  },
+  {
+    value: 'Important',
+    label: 'Important',
+    desc: 'Substantial recurring burden on daily lives and livelihood',
+  },
+  {
+    value: 'Urgent / Serious',
+    label: 'Urgent / Serious',
+    desc: 'Severe disruption affecting basic health, water, or immediate safety',
+  },
+];
+
 export function LocationStep({ formData, onChange, errors = {} }: LocationStepProps) {
   const [locating, setLocating] = useState(false);
-  const [gpsSuccess, setGpsSuccess] = useState(false);
+  const [gpsSuccess, setGpsSuccess] = useState(Boolean(formData.coordinates));
 
-  // Simulated GPS / Current Location grab
   const handleUseCurrentLocation = () => {
     setLocating(true);
     if ('geolocation' in navigator) {
@@ -27,10 +75,9 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
           setGpsSuccess(true);
         },
         () => {
-          // Fallback simulation for Ranchi coordinates
           onChange({
             coordinates: { lat: 23.3441, lng: 85.3096 },
-            landmark: formData.landmark || 'Ranchi District Centre',
+            landmark: formData.landmark || 'Ranchi District Centre (Approximate)',
           });
           setLocating(false);
           setGpsSuccess(true);
@@ -40,11 +87,22 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
     } else {
       onChange({
         coordinates: { lat: 23.3441, lng: 85.3096 },
-        landmark: formData.landmark || 'Ranchi Central Coordinates',
+        landmark: formData.landmark || 'Ranchi Central Coordinates (Approximate)',
       });
       setLocating(false);
       setGpsSuccess(true);
     }
+  };
+
+  const toggleAffectedGroup = (group: AffectedGroup) => {
+    const current = [...(formData.affectedGroups || [])];
+    const idx = current.indexOf(group);
+    if (idx >= 0) {
+      current.splice(idx, 1);
+    } else {
+      current.push(group);
+    }
+    onChange({ affectedGroups: current });
   };
 
   const validDistricts = JHARKHAND_DISTRICTS.filter((d) => d !== 'All Districts');
@@ -53,169 +111,236 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
     <div className="space-y-8 text-left max-w-2xl mx-auto">
       {/* Step Header */}
       <div className="space-y-1.5 border-b border-[#EEEAE1] pb-5">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#123B2A]/8 text-[#123B2A] text-[11px] font-mono font-bold uppercase tracking-wider">
+          STEP 02 OF 04
+        </div>
         <h2 className="text-[1.85rem] sm:text-[2.2rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-          Where is this happening?
+          Location & Community Impact
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Location helps us understand the local context and connect the challenge with relevant institutions, local panchayats, and university research hubs.
+          Tell us where this problem is taking place and who is impacted. This helps district officers, university research teams, and local panchayats assess the scope.
         </p>
       </div>
 
-      {/* District & Block Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* District Field */}
-        <div className="space-y-1.5">
-          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-            <span>District</span>
-            <span className="text-[#BE123C]">*</span>
-          </label>
-          <select
-            value={formData.district}
-            onChange={(e) => onChange({ district: e.target.value })}
-            className={`w-full h-12 px-4 rounded-xl border bg-white text-[14.5px] text-[#1D2522] shadow-2xs focus:outline-none transition-all ${
-              errors.district
-                ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
-                : 'border-[#EEEAE1] focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A]'
-            }`}
-          >
-            <option value="">Select a District...</option>
-            {validDistricts.map((dist) => (
-              <option key={dist} value={dist}>
-                {dist}
-              </option>
-            ))}
-          </select>
-          {errors.district && (
-            <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1">
-              <AlertCircle className="h-3.5 w-3.5" />
-              <span>{errors.district}</span>
-            </p>
-          )}
+      {/* ── Section A: Geographic Location ── */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-[12px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
+          <MapPin className="h-4 w-4 text-[#F5A623]" />
+          <span>Where is this happening?</span>
         </div>
 
-        {/* Block / Subdivision Field */}
-        <div className="space-y-1.5">
-          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-            <span>Block / Subdivision</span>
-            <span className="text-[#BE123C]">*</span>
-          </label>
-          <input
-            type="text"
-            value={formData.block}
-            onChange={(e) => onChange({ block: e.target.value })}
-            placeholder="e.g. Kanke Block / Jharia Sector"
-            className={`w-full h-12 px-4 rounded-xl border bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none transition-all ${
-              errors.block
-                ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
-                : 'border-[#EEEAE1] focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A]'
-            }`}
-          />
-          {errors.block && (
-            <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1">
-              <AlertCircle className="h-3.5 w-3.5" />
-              <span>{errors.block}</span>
-            </p>
-          )}
-        </div>
-      </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* District Field */}
+          <div className="space-y-1.5">
+            <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
+              <span>District</span>
+              <span className="text-[#BE123C]">*</span>
+            </label>
+            <select
+              value={formData.district}
+              onChange={(e) => onChange({ district: e.target.value })}
+              className={`w-full h-12 px-4 rounded-xl border bg-white text-[14.5px] text-[#1D2522] shadow-2xs focus:outline-none transition-all ${
+                errors.district
+                  ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
+                  : 'border-[#EEEAE1] focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A]'
+              }`}
+            >
+              <option value="">Select a District...</option>
+              {validDistricts.map((dist) => (
+                <option key={dist} value={dist}>
+                  {dist}
+                </option>
+              ))}
+            </select>
+            {errors.district && (
+              <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1">
+                <AlertCircle className="h-3.5 w-3.5" />
+                <span>{errors.district}</span>
+              </p>
+            )}
+          </div>
 
-      {/* Village / Ward & Landmark Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Village / Ward Field */}
+          {/* Block Field */}
+          <div className="space-y-1.5">
+            <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
+              <span>Block / Subdivision</span>
+              <span className="text-[#BE123C]">*</span>
+            </label>
+            <input
+              type="text"
+              value={formData.block}
+              onChange={(e) => onChange({ block: e.target.value })}
+              placeholder="e.g. Murhu, Namkum, Chas"
+              className={`w-full h-12 px-4 rounded-xl border bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none transition-all ${
+                errors.block
+                  ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
+                  : 'border-[#EEEAE1] focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A]'
+              }`}
+            />
+            {errors.block && (
+              <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1">
+                <AlertCircle className="h-3.5 w-3.5" />
+                <span>{errors.block}</span>
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Village / Locality Field */}
         <div className="space-y-1.5">
           <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            Village / Municipal Ward
+            Village / Locality / Ward
           </label>
           <input
             type="text"
             value={formData.villageOrWard}
             onChange={(e) => onChange({ villageOrWard: e.target.value })}
-            placeholder="e.g. Murhu Village / Ward 12"
-            className="w-full h-12 px-4 rounded-xl border border-[#EEEAE1] bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A] transition-all"
+            placeholder="e.g. Torpa Road, Ward 4, Khunti Toli"
+            className="w-full h-12 px-4 rounded-xl border border-[#EEEAE1] bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A] focus:outline-none transition-all"
           />
         </div>
 
-        {/* Landmark or Area */}
-        <div className="space-y-1.5">
-          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            Landmark or Specific Spot
-          </label>
-          <input
-            type="text"
-            value={formData.landmark}
-            onChange={(e) => onChange({ landmark: e.target.value })}
-            placeholder="e.g. Near Panchayat Bhavan / Main Culvert"
-            className="w-full h-12 px-4 rounded-xl border border-[#EEEAE1] bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none focus:border-[#123B2A] focus:ring-1 focus:ring-[#123B2A] transition-all"
-          />
-        </div>
-      </div>
-
-      {/* Geographic Map Pin Canvas */}
-      <div className="space-y-3 pt-2">
-        <div className="flex items-center justify-between">
-          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-            <MapPin className="h-4 w-4 text-[#F5A623]" />
-            <span>Interactive Map & Pin Placement</span>
-          </label>
+        {/* Optional GPS Location Pin */}
+        <div className="p-4 rounded-xl border border-[#EEEAE1] bg-[#FAF9F5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-0.5">
+            <span className="text-[12.5px] font-bold text-[#1D2522] block">
+              Optional Device Location (GPS)
+            </span>
+            <span className="text-[12px] text-[#6B5845] block">
+              {gpsSuccess && formData.coordinates
+                ? `Pin recorded: ${formData.coordinates.lat.toFixed(4)}°N, ${formData.coordinates.lng.toFixed(4)}°E`
+                : 'Not required. Helpful for field engineers and mobile surveys.'}
+            </span>
+          </div>
 
           <button
             type="button"
             onClick={handleUseCurrentLocation}
             disabled={locating}
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#123B2A] hover:underline cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#EEEAE1] text-[12.5px] font-bold text-[#1D2522] hover:bg-[#F8F6F1] shadow-2xs transition-all active:scale-[0.98] shrink-0 cursor-pointer"
           >
-            <Navigation className={`h-3.5 w-3.5 ${locating ? 'animate-spin' : ''}`} />
-            <span>{locating ? 'Acquiring GPS...' : 'Use Current Location'}</span>
-          </button>
-        </div>
-
-        {/* Geographic Canvas Placeholder */}
-        <div className="relative aspect-[16/9] w-full rounded-2xl border border-[#EEEAE1] bg-[#FAF9F5] overflow-hidden flex flex-col items-center justify-center p-6 shadow-inner text-center">
-          {/* Topographic Lines */}
-          <svg
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full stroke-[#EEEAE1] fill-none"
-            strokeWidth="0.8"
-          >
-            <circle cx="50%" cy="50%" r="60" strokeDasharray="3 3" />
-            <circle cx="50%" cy="50%" r="120" />
-            <circle cx="50%" cy="50%" r="180" strokeDasharray="4 4" />
-          </svg>
-
-          {/* Jharkhand Silhouette Outline */}
-          <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full stroke-[#123B2A] fill-[#EEEAE1]/50 opacity-40">
-            <polygon points="18,32 30,16 54,12 70,22 84,24 88,40 82,54 84,72 70,86 52,90 32,88 22,76 14,56 12,42" strokeWidth="1.2" />
-          </svg>
-
-          {/* Central Pin */}
-          <div className="relative z-10 flex flex-col items-center space-y-2">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#123B2A] text-[#F5A623] shadow-md ring-4 ring-white animate-bounce">
-              <MapPin className="h-6 w-6" />
-            </div>
-
-            <div className="bg-white/95 backdrop-blur-xs px-3.5 py-1.5 rounded-lg border border-[#EEEAE1] shadow-xs text-[12.5px] font-mono">
-              {formData.district ? (
-                <span className="font-bold text-[#123B2A]">
-                  {formData.district} {formData.block ? `· ${formData.block}` : ''}
-                </span>
-              ) : (
-                <span className="text-[#6B5845]">Select a district above or tap Use Location</span>
-              )}
-            </div>
-
-            {gpsSuccess && (
-              <span className="text-[11px] font-mono text-[#15803D] bg-[#F0FDF4] px-2 py-0.5 rounded border border-[#BBF7D0]">
-                GPS Coordinates Locked
-              </span>
+            {gpsSuccess ? (
+              <>
+                <ShieldCheck className="h-4 w-4 text-[#15803D]" />
+                <span>GPS Attached</span>
+              </>
+            ) : locating ? (
+              <span>Locating...</span>
+            ) : (
+              <>
+                <Navigation className="h-4 w-4 text-[#123B2A]" />
+                <span>Detect My Location</span>
+              </>
             )}
-          </div>
+          </button>
         </div>
       </div>
 
-      {/* Privacy Note */}
-      <div className="flex items-center gap-2 p-3 rounded-xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12.5px] text-[#6B5845]">
-        <ShieldCheck className="h-4 w-4 text-[#15803D] shrink-0" />
-        <span>Your exact location coordinates will only be used to understand and validate the challenge.</span>
+      {/* ── Section B: Community Impact ── */}
+      <div className="space-y-6 pt-4 border-t border-[#EEEAE1]">
+        {/* Field: Who is affected? */}
+        <div className="space-y-3">
+          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
+            <Users className="h-4 w-4 text-[#F5A623]" />
+            <span>Who is affected?</span>
+          </label>
+          <p className="text-[12.5px] text-[#6B5845]">
+            Select all groups impacted in this area.
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {AFFECTED_OPTIONS.map((opt) => {
+              const isSelected = formData.affectedGroups?.includes(opt);
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => toggleAffectedGroup(opt)}
+                  className={`px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-all cursor-pointer shadow-2xs ${
+                    isSelected
+                      ? 'bg-[#123B2A] text-white border border-[#123B2A]'
+                      : 'bg-white text-[#1D2522] border border-[#EEEAE1] hover:bg-[#FAF9F5]'
+                  }`}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Field: Approximate number of people affected */}
+        <div className="space-y-3">
+          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
+            Approximate number of people affected
+          </label>
+          <p className="text-[12.5px] text-[#6B5845]">
+            Choose a range or type a number (e.g. 50, 500, 5,000).
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {POPULATION_PRESETS.map((pop) => {
+              const isSelected = formData.estimatedPeople === pop;
+              return (
+                <button
+                  key={pop}
+                  type="button"
+                  onClick={() => onChange({ estimatedPeople: pop })}
+                  className={`p-2.5 rounded-xl text-[12.5px] font-semibold text-center transition-all cursor-pointer shadow-2xs border ${
+                    isSelected
+                      ? 'bg-[#123B2A] text-white border-[#123B2A]'
+                      : 'bg-white text-[#1D2522] border-[#EEEAE1] hover:bg-[#FAF9F5]'
+                  }`}
+                >
+                  {pop}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Field: How urgent is the issue? */}
+        <div className="space-y-3">
+          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
+            <AlertTriangle className="h-4 w-4 text-[#F5A623]" />
+            <span>How urgent is the issue?</span>
+          </label>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {URGENCY_CHOICES.map((choice) => {
+              const isSelected =
+                formData.urgency === choice.value || formData.severity === choice.value;
+              return (
+                <button
+                  key={choice.value}
+                  type="button"
+                  onClick={() =>
+                    onChange({
+                      urgency: choice.value as any,
+                      severity: choice.value as any,
+                    })
+                  }
+                  className={`p-3.5 rounded-xl text-left transition-all cursor-pointer shadow-2xs border flex flex-col justify-between space-y-1 ${
+                    isSelected
+                      ? 'border-[#123B2A] bg-[#123B2A]/5 ring-1 ring-[#123B2A]'
+                      : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5]'
+                  }`}
+                >
+                  <div
+                    className={`text-[13.5px] font-bold leading-tight font-sans ${
+                      isSelected ? 'text-[#123B2A]' : 'text-[#1D2522]'
+                    }`}
+                  >
+                    {choice.label}
+                  </div>
+                  <div className="text-[11.5px] text-[#6B5845] leading-snug">
+                    {choice.desc}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

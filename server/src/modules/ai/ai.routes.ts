@@ -1,17 +1,16 @@
 import { Router } from 'express';
-import { analyzeChallenge } from '../../ai/services/challengeAnalysis.service.js';
-import { handleAiError } from '../../ai/utils/aiErrorHandler.js';
+import { analyzeChallenge } from '../../services/ai/aiAnalysisService.js';
 import { sendSuccess, sendError } from '../../utils/response.js';
 
 const router = Router();
 
 /**
  * POST /api/ai/analyze-challenge
- * Analyzes a civic challenge submission through LangChain + LangGraph structured intelligence.
+ * Analyzes a civic challenge submission with AI-assisted problem structuring.
  */
-router.post('/analyze-challenge', async (req, res) => {
+router.post('/analyze-challenge', async (req, res, next) => {
   try {
-    const { title, description, district, location, affectedPopulation } = req.body;
+    const { title, description, district, affectedPopulation } = req.body;
 
     if (!title || typeof title !== 'string' || title.trim().length < 3) {
       sendError(res, 400, 'INVALID_INPUT', 'Challenge title must be at least 3 characters long', undefined, req);
@@ -27,13 +26,12 @@ router.post('/analyze-challenge', async (req, res) => {
       title: title.trim(),
       description: description.trim(),
       district: typeof district === 'string' ? district.trim() : undefined,
-      location: typeof location === 'string' ? location.trim() : undefined,
       affectedPopulation: typeof affectedPopulation === 'number' ? affectedPopulation : undefined,
     });
 
     sendSuccess(res, analysis, 200, req);
   } catch (error) {
-    handleAiError(error, res, req);
+    next(error);
   }
 });
 

@@ -47,6 +47,11 @@ export interface EvidenceFile {
   type: string;
   previewUrl?: string;
   uploadedAt: string;
+  storagePath?: string;
+  publicUrl?: string;
+  uploadStatus?: 'uploading' | 'uploaded' | 'error';
+  errorMessage?: string;
+  progress?: number;
 }
 
 export interface AIAssistSuggestion {
@@ -71,28 +76,28 @@ export interface ChallengeFormState {
   // Step 1: The Problem
   title: string;
   description: string;
+  category?: string;
   affectedGroups: AffectedGroup[];
   firstNoticed: NoticeTimeframe | '';
 
-  // Step 2: Location
+  // Step 2: Location & Impact
   district: string;
   block: string;
   villageOrWard: string;
   landmark: string;
   coordinates: { lat: number; lng: number } | null;
-
-  // Step 3: Evidence
-  evidenceFiles: EvidenceFile[];
-  evidenceContext: string;
-
-  // Step 4: Impact & Context
   estimatedPeople: EstimatedAffectedPopulation | '';
   frequency: ProblemFrequency | '';
   severity: SeverityLevel | '';
+  urgency?: 'Needs attention' | 'Important' | 'Urgent / Serious' | '';
+
+  // Step 3: Evidence & Context
+  evidenceFiles: EvidenceFile[];
+  evidenceContext: string;
   hasPreviousAttempts: PreviousAttempts | '';
   previousAttemptsDetail: string;
 
-  // Step 5: Review & Assist
+  // Step 4: Review & Assist
   aiSuggestions: AIAssistSuggestion | null;
   declarationAccepted: boolean;
 }

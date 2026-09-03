@@ -6,11 +6,11 @@ import {
   saveDraftLocal,
   loadDraftLocal,
 } from '../services/challengeSubmissionApi';
+import { cleanupOrphanedEvidence } from '../services/evidenceStorageService';
 import { SubmissionProgress } from '../components/report/SubmissionProgress';
 import { ProblemStep } from '../components/report/ProblemStep';
 import { LocationStep } from '../components/report/LocationStep';
 import { EvidenceStep } from '../components/report/EvidenceStep';
-import { ImpactStep } from '../components/report/ImpactStep';
 import { ReviewStep } from '../components/report/ReviewStep';
 import { SubmissionSuccess } from '../components/report/SubmissionSuccess';
 import { Footer } from '../components/layout/Footer';
@@ -19,7 +19,8 @@ import { ArrowLeft, ArrowRight, Save, Check, Sparkles } from 'lucide-react';
 const INITIAL_STATE: ChallengeFormState = {
   title: '',
   description: '',
-  affectedGroups: ['Residents'],
+  category: 'Not sure — Help me identify it',
+  affectedGroups: ['Village / Community' as any],
   firstNoticed: 'A few months ago',
   district: '',
   block: '',
@@ -28,9 +29,10 @@ const INITIAL_STATE: ChallengeFormState = {
   coordinates: null,
   evidenceFiles: [],
   evidenceContext: '',
-  estimatedPeople: '50 – 500',
+  estimatedPeople: '500 – 2,000',
   frequency: 'Frequent',
   severity: 'Important',
+  urgency: 'Important',
   hasPreviousAttempts: 'No',
   previousAttemptsDetail: '',
   aiSuggestions: null,
@@ -78,15 +80,15 @@ export function ReportChallenge() {
       if (!formData.title.trim()) {
         errs.title = 'Please provide a short title for the challenge.';
       }
-      if (!formData.description.trim() || formData.description.trim().length < 15) {
-        errs.description = 'Please describe the problem in a bit more detail (at least 15 characters).';
+      if (!formData.description.trim() || formData.description.trim().length < 10) {
+        errs.description = 'Please describe the problem in a bit more detail (at least 10 characters).';
       }
     } else if (step === 2) {
       if (!formData.district) {
         errs.district = 'Please select a district in Jharkhand.';
       }
       if (!formData.block.trim()) {
-        errs.block = 'Please specify the block, tehsil, or subdivision.';
+        errs.block = 'Please specify the block or subdivision.';
       }
     }
 
@@ -96,7 +98,7 @@ export function ReportChallenge() {
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
-      setCurrentStep((prev) => Math.min(prev + 1, 5));
+      setCurrentStep((prev) => Math.min(prev + 1, 4));
       window.scrollTo({ top: 120, behavior: 'smooth' });
     }
   };
@@ -110,9 +112,23 @@ export function ReportChallenge() {
     return stepNum <= currentStep;
   };
 
+  const handleCancelAndBack = async () => {
+    const paths = formData.evidenceFiles
+      ?.map((f) => f.storagePath)
+      .filter((p): p is string => Boolean(p)) || [];
+    if (paths.length > 0) {
+      const confirmLeave = window.confirm(
+        'Exit challenge report? Any unsubmitted uploaded files will be discarded from storage.'
+      );
+      if (!confirmLeave) return;
+      await cleanupOrphanedEvidence(paths);
+    }
+    navigate('/challenges');
+  };
+
   const handleSubmit = async () => {
     if (!formData.declarationAccepted) {
-      setErrors({ submit: 'Please accept the declaration before submitting.' });
+      setErrors({ submit: 'Please accept the declaration checkbox before submitting.' });
       return;
     }
 
@@ -121,9 +137,13 @@ export function ReportChallenge() {
       const res = await submitChallenge(formData);
       setSubmissionResponse(res);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Submission failed', err);
-      setErrors({ submit: 'Submission failed. Please check your internet connection and try again.' });
+      setErrors({
+        submit:
+          err?.message ||
+          'Submission failed. Please check your internet connection and try again.',
+      });
     } finally {
       setSubmitting(false);
     }
@@ -135,7 +155,7 @@ export function ReportChallenge() {
       <div className="border-b border-[#EEEAE1] bg-white py-3.5">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <button
-            onClick={() => navigate('/challenges')}
+            onClick={handleCancelAndBack}
             className="flex items-center gap-1.5 text-[13px] font-semibold text-[#6B5845] hover:text-[#123B2A] transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -184,11 +204,11 @@ export function ReportChallenge() {
               </p>
             </div>
 
-            {/* ── Progress Indicator ── */}
+            {/* ── Progress Indicator (4 Steps) ── */}
             <div className="pt-2">
               <SubmissionProgress
                 currentStep={currentStep}
-                totalSteps={5}
+                totalSteps={4}
                 onStepClick={(num) => setCurrentStep(num)}
                 canNavigateToStep={canNavigateToStep}
               />
@@ -220,18 +240,17 @@ export function ReportChallenge() {
               )}
 
               {currentStep === 4 && (
-                <ImpactStep
-                  formData={formData}
-                  onChange={updateFormData}
-                />
-              )}
-
-              {currentStep === 5 && (
                 <ReviewStep
                   formData={formData}
                   onEditStep={(stepNum) => setCurrentStep(stepNum)}
                   onDeclarationChange={(accepted) =>
                     updateFormData({ declarationAccepted: accepted })
+                  }
+                  onApplyAISuggestion={(sug) =>
+                    updateFormData({
+                      aiSuggestions: sug,
+                      category: sug.suggestedCategory,
+                    })
                   }
                   onSubmit={handleSubmit}
                   submitting={submitting}
@@ -240,8 +259,8 @@ export function ReportChallenge() {
               )}
             </div>
 
-            {/* ── Step Bottom Navigation Buttons (Desktop & Tablet) ── */}
-            {currentStep < 5 && (
+            {/* ── Step Bottom Navigation Buttons ── */}
+            {currentStep < 4 && (
               <div className="pt-8 border-t border-[#EEEAE1] flex items-center justify-between gap-4">
                 {currentStep > 1 ? (
                   <button

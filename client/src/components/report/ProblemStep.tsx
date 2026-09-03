@@ -1,8 +1,23 @@
 import { useState } from 'react';
-import { AffectedGroup, ChallengeFormState, NoticeTimeframe, AIAssistSuggestion } from '../../types/submission';
+import { ChallengeFormState, AIAssistSuggestion } from '../../types/submission';
 import { AIAssistPanel } from './AIAssistPanel';
 import { analyzeDescription } from '../../services/challengeSubmissionApi';
-import { Users, Clock, AlertCircle, Sparkles, Loader2 } from 'lucide-react';
+import {
+  AlertCircle,
+  Sparkles,
+  Loader2,
+  Droplets,
+  Sprout,
+  GraduationCap,
+  HeartPulse,
+  Trees,
+  HardHat,
+  Accessibility,
+  Coins,
+  Building2,
+  Zap,
+  HelpCircle,
+} from 'lucide-react';
 
 interface ProblemStepProps {
   formData: ChallengeFormState;
@@ -10,25 +25,73 @@ interface ProblemStepProps {
   errors?: Record<string, string>;
 }
 
-const AFFECTED_OPTIONS: AffectedGroup[] = [
-  'Residents',
-  'Farmers',
-  'Students',
-  'Women',
-  'Children',
-  'Elderly Citizens',
-  'Persons with Disabilities',
-  'Workers',
-  'Small Businesses',
-  'Entire Community',
-  'Other',
-];
+interface CategoryOption {
+  label: string;
+  icon: any;
+  desc: string;
+}
 
-const TIMEFRAME_OPTIONS: NoticeTimeframe[] = [
-  'Recently',
-  'A few months ago',
-  'More than a year ago',
-  'It has existed for several years',
+const CATEGORY_OPTIONS: CategoryOption[] = [
+  {
+    label: 'Not sure — Help me identify it',
+    icon: HelpCircle,
+    desc: 'Our AI and review board will help classify the domain for you',
+  },
+  {
+    label: 'Water Management',
+    icon: Droplets,
+    desc: 'Drinking water, wells, hand pumps, drought, water contamination',
+  },
+  {
+    label: 'Agriculture',
+    icon: Sprout,
+    desc: 'Farming, crops, soil health, seeds, irrigation, fertilizer',
+  },
+  {
+    label: 'Education',
+    icon: GraduationCap,
+    desc: 'Schools, students, learning materials, vernacular teaching',
+  },
+  {
+    label: 'Healthcare',
+    icon: HeartPulse,
+    desc: 'Hospitals, clinics, anemia, medicines, maternal care, ASHA workers',
+  },
+  {
+    label: 'Environment',
+    icon: Trees,
+    desc: 'Forests, pollution, rivers, waste management, wildlife safety',
+  },
+  {
+    label: 'Mining Safety',
+    icon: HardHat,
+    desc: 'Mine subsidence, ground cracks, coal fires, quarry hazards',
+  },
+  {
+    label: 'Accessibility',
+    icon: Accessibility,
+    desc: 'Mobility, ramps, disabled-friendly public facilities, assistive tools',
+  },
+  {
+    label: 'Rural Livelihood',
+    icon: Coins,
+    desc: 'Artisans, lac, tussar silk, forest produce, women self-help groups',
+  },
+  {
+    label: 'Urban Development',
+    icon: Building2,
+    desc: 'City roads, streetlights, stormwater drainage, municipal garbage',
+  },
+  {
+    label: 'Public Services',
+    icon: Zap,
+    desc: 'Electricity supply, transformers, ration / PDS, bridges & connectivity',
+  },
+  {
+    label: 'Other',
+    icon: HelpCircle,
+    desc: 'Any other challenge affecting your village or neighborhood',
+  },
 ];
 
 export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProps) {
@@ -39,9 +102,13 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
 
+  const selectedCategory = formData.category || 'Not sure — Help me identify it';
+
   const handleTriggerAI = async () => {
     if (!formData.description || formData.description.trim().length < 15) {
-      setAnalyzeError('Please write at least 15 characters in the description before requesting AI analysis.');
+      setAnalyzeError(
+        'Please write at least 15 characters in the description before requesting AI feedback.'
+      );
       return;
     }
 
@@ -64,19 +131,11 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
     }
   };
 
-  const toggleAffectedGroup = (group: AffectedGroup) => {
-    const current = [...formData.affectedGroups];
-    const idx = current.indexOf(group);
-    if (idx >= 0) {
-      current.splice(idx, 1);
-    } else {
-      current.push(group);
-    }
-    onChange({ affectedGroups: current });
-  };
-
   const handleApplyAISuggestions = (sug: AIAssistSuggestion) => {
-    onChange({ aiSuggestions: sug });
+    onChange({
+      aiSuggestions: sug,
+      category: sug.suggestedCategory,
+    });
     setIsApplied(true);
   };
 
@@ -84,28 +143,28 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
     <div className="space-y-8 text-left max-w-2xl mx-auto">
       {/* Step Header */}
       <div className="space-y-1.5 border-b border-[#EEEAE1] pb-5">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#123B2A]/8 text-[#123B2A] text-[11px] font-mono font-bold uppercase tracking-wider">
+          STEP 01 OF 04
+        </div>
         <h2 className="text-[1.85rem] sm:text-[2.2rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-          What problem are you facing or observing?
+          Describe the problem you are seeing.
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Describe the situation in your own words. You don&apos;t need technical language or administrative terminology.
+          You don&apos;t need technical terminology or administrative knowledge. Tell us in simple words what is happening in your area.
         </p>
       </div>
 
-      {/* Field 1: Challenge Title */}
+      {/* Field 1: Problem Title */}
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-            <span>Give the problem a short title</span>
-            <span className="text-[#BE123C]">*</span>
-          </label>
-        </div>
-
+        <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
+          <span>Problem Title</span>
+          <span className="text-[#BE123C]">*</span>
+        </label>
         <input
           type="text"
           value={formData.title}
           onChange={(e) => onChange({ title: e.target.value })}
-          placeholder="Example: Frequent breakdown of drinking water pumps in our village"
+          placeholder="Example: Village hand pumps frequently stop working for several days."
           className={`w-full h-12 px-4 rounded-xl border bg-white text-[15px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none transition-all ${
             errors.title
               ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
@@ -120,23 +179,27 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         )}
       </div>
 
-      {/* Field 2: Problem Description */}
+      {/* Field 2: Describe what is happening */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-            <span>What is happening?</span>
+            <span>Describe what is happening</span>
             <span className="text-[#BE123C]">*</span>
           </label>
           <span className="text-[11.5px] font-mono text-[#6B5845]">
-            {formData.description.length} characters (min 15 required for AI)
+            {formData.description.length} characters
           </span>
         </div>
 
+        <p className="text-[13px] text-[#6B5845] italic">
+          Tell us what the problem is, who is affected, and what happens because of it.
+        </p>
+
         <textarea
-          rows={5}
+          rows={6}
           value={formData.description}
           onChange={(e) => onChange({ description: e.target.value })}
-          placeholder="Describe the problem, how often it occurs, and what makes it difficult for the community. For example: During summer months, 4 out of 5 handpumps in our ward run dry, forcing women and elderly residents to walk 3 km..."
+          placeholder="Example: The hand pumps in our ward break down every few days during summer months. Over 200 families cannot get clean water and women have to walk more than 2 kilometers to the river..."
           className={`w-full p-4 rounded-xl border bg-white text-[14.5px] text-[#1D2522] placeholder:text-[#6B5845]/50 shadow-2xs focus:outline-none leading-relaxed transition-all ${
             errors.description
               ? 'border-[#BE123C] ring-1 ring-[#BE123C]'
@@ -150,28 +213,28 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
           </p>
         )}
 
-        {/* Explicit Analyze With AI Trigger Button */}
+        {/* Optional AI Feedback Trigger */}
         <div className="flex items-center justify-between pt-1 flex-wrap gap-2">
           <button
             type="button"
             onClick={handleTriggerAI}
             disabled={isAnalyzing || formData.description.trim().length < 15}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[12.5px] font-bold shadow-xs transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FAF9F5] hover:bg-[#EEEAE1] text-[#123B2A] border border-[#EEEAE1] text-[12px] font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             {isAnalyzing ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin text-[#F5A623]" />
-                <span>Analyzing with LangChain Engine...</span>
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-[#F5A623]" />
+                <span>Understanding your challenge...</span>
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4 text-[#F5A623]" />
-                <span>Analyze with AI</span>
+                <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
+                <span>Get early AI feedback</span>
               </>
             )}
           </button>
           <span className="text-[11.5px] text-[#6B5845]">
-            Uses OpenRouter + LangGraph intelligence to suggest domain & expertise.
+            Optional: You can also use AI structuring in the review step.
           </span>
         </div>
 
@@ -183,7 +246,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         )}
       </div>
 
-      {/* Real-Time AI Assistance Panel */}
+      {/* Early AI Assistance Panel if triggered */}
       {localSuggestion && (
         <AIAssistPanel
           suggestion={localSuggestion}
@@ -193,63 +256,54 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         />
       )}
 
-      {/* Field 3: Who is affected? Structured multi-select chips */}
+      {/* Field 3: Optional Problem Category */}
       <div className="space-y-3 pt-2">
-        <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-          <Users className="h-4 w-4 text-[#F5A623]" />
-          <span>Who is affected? (Select all that apply)</span>
-        </label>
-
-        <div className="flex flex-wrap gap-2">
-          {AFFECTED_OPTIONS.map((opt) => {
-            const isSelected = formData.affectedGroups.includes(opt);
-            return (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => toggleAffectedGroup(opt)}
-                className={`px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-all cursor-pointer shadow-2xs ${
-                  isSelected
-                    ? 'bg-[#123B2A] text-white border border-[#123B2A]'
-                    : 'bg-white text-[#1D2522] border border-[#EEEAE1] hover:bg-[#FAF9F5]'
-                }`}
-              >
-                {opt}
-              </button>
-            );
-          })}
+        <div>
+          <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] block">
+            Optional Problem Category
+          </label>
+          <p className="text-[12.5px] text-[#6B5845]">
+            Pick what fits best, or choose &ldquo;Not sure&rdquo; and let the platform help.
+          </p>
         </div>
-      </div>
-
-      {/* Field 4: Timeframe */}
-      <div className="space-y-3 pt-2">
-        <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
-          <Clock className="h-4 w-4 text-[#F5A623]" />
-          <span>How long has this issue existed?</span>
-        </label>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {TIMEFRAME_OPTIONS.map((timeframe) => {
-            const isSelected = formData.firstNoticed === timeframe;
+          {CATEGORY_OPTIONS.map((cat) => {
+            const isSelected = selectedCategory === cat.label;
+            const IconComponent = cat.icon;
             return (
-              <label
-                key={timeframe}
-                className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all shadow-2xs ${
+              <button
+                key={cat.label}
+                type="button"
+                onClick={() => onChange({ category: cat.label })}
+                className={`p-3.5 rounded-xl text-left transition-all cursor-pointer flex items-start gap-3 shadow-2xs border ${
                   isSelected
-                    ? 'border-[#123B2A] bg-[#123B2A]/5'
+                    ? 'border-[#123B2A] bg-[#123B2A]/5 ring-1 ring-[#123B2A]'
                     : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5]'
                 }`}
               >
-                <input
-                  type="radio"
-                  name="firstNoticed"
-                  value={timeframe}
-                  checked={isSelected}
-                  onChange={() => onChange({ firstNoticed: timeframe })}
-                  className="h-4 w-4 accent-[#123B2A]"
-                />
-                <span className="text-[13.5px] font-medium text-[#1D2522]">{timeframe}</span>
-              </label>
+                <div
+                  className={`p-2 rounded-lg shrink-0 ${
+                    isSelected
+                      ? 'bg-[#123B2A] text-white'
+                      : 'bg-[#F8F6F1] text-[#6B5845]'
+                  }`}
+                >
+                  <IconComponent className="h-4 w-4" />
+                </div>
+                <div className="space-y-0.5">
+                  <div
+                    className={`text-[13.5px] font-bold leading-tight font-sans ${
+                      isSelected ? 'text-[#123B2A]' : 'text-[#1D2522]'
+                    }`}
+                  >
+                    {cat.label}
+                  </div>
+                  <div className="text-[11.5px] text-[#6B5845] leading-snug">
+                    {cat.desc}
+                  </div>
+                </div>
+              </button>
             );
           })}
         </div>

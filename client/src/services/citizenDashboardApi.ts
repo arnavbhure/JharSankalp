@@ -3,6 +3,7 @@ import {
   ActivityItem,
   CitizenNotification,
   DashboardStats,
+  CitizenLifecycleStage,
 } from '../types/citizenDashboard';
 
 const DEMO_CHALLENGES: UserChallenge[] = [
@@ -120,11 +121,67 @@ const DEMO_NOTIFICATIONS: CitizenNotification[] = [
   },
 ];
 
+import { api } from './api';
+
 // In-memory store for dynamic response updates during session
 let inMemoryChallenges = [...DEMO_CHALLENGES];
 
 export async function getUserChallenges(): Promise<UserChallenge[]> {
-  await new Promise((resolve) => setTimeout(resolve, 150));
+  try {
+    const dbChallenges = await api.get<any[]>('/challenges');
+    if (Array.isArray(dbChallenges) && dbChallenges.length > 0) {
+      const mapped: UserChallenge[] = dbChallenges.map((ch) => {
+        let stage: CitizenLifecycleStage = 'Submitted';
+        let statusLabel = 'SUBMITTED';
+
+        if (ch.status === 'UNDER_REVIEW') {
+          stage = 'Review';
+          statusLabel = 'UNDER REVIEW';
+        } else if (ch.status === 'VALIDATED' || ch.status === 'MATCHED') {
+          stage = 'Match';
+          statusLabel = 'VALIDATED';
+        } else if (
+          ch.status === 'ACTIVE' ||
+          ch.status === 'IN_PROGRESS' ||
+          ch.status === 'SOLUTION_IN_PROGRESS'
+        ) {
+          stage = 'Solution';
+          statusLabel = 'SOLUTION IN PROGRESS';
+        } else if (ch.status === 'RESOLVED') {
+          stage = 'Solution';
+          statusLabel = 'RESOLVED';
+        }
+
+        return {
+          id: ch.publicId || ch.challengeCode || ch.id,
+          referenceId: ch.publicId || ch.challengeCode || ch.id,
+          title: ch.title,
+          category: ch.domain || 'Civic Problem',
+          district: ch.district?.name || (typeof ch.district === 'string' ? ch.district : 'Jharkhand'),
+          block: ch.block || 'Local Block',
+          submittedDate: new Date(ch.createdAt).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }),
+          status: ch.status as any,
+          statusLabel,
+          currentStage: stage,
+          collaboratorsCount: ch._count?.collaborations || ch.collaborations?.length || 0,
+          ideasCount: ch._count?.ideas || ch.ideas?.length || 0,
+          description: ch.description,
+        };
+      });
+
+      const existingRefs = new Set(mapped.map((m) => m.referenceId));
+      const filteredDemo = inMemoryChallenges.filter((d) => !existingRefs.has(d.referenceId));
+
+      return [...mapped, ...filteredDemo];
+    }
+  } catch (err) {
+    console.warn('Backend challenges unreachable, using local demo data:', err);
+  }
+
   return [...inMemoryChallenges];
 }
 

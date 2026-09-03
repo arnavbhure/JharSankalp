@@ -15,6 +15,7 @@ import { governmentApi } from '../../services/governmentApi';
 import { GovernmentHeader } from '../../components/government/GovernmentHeader';
 import { QuickActionsToolbar } from '../../components/government/QuickActionsToolbar';
 import { ExecutiveMetricsCards } from '../../components/government/ExecutiveMetricsCards';
+import { CitizenIntakeReviewSection } from '../../components/government/CitizenIntakeReviewSection';
 import { JharkhandInnovationMap } from '../../components/government/JharkhandInnovationMap';
 import { ChallengePipelineFunnel } from '../../components/government/ChallengePipelineFunnel';
 import { DomainIntelligencePanel } from '../../components/government/DomainIntelligencePanel';
@@ -44,6 +45,16 @@ export function GovernmentDashboard() {
   const [attentionItems, setAttentionItems] = useState<AttentionItem[]>([]);
   const [activities, setActivities] = useState<EcosystemActivity[]>([]);
   const [impact, setImpact] = useState<StateImpactSnapshot | null>(null);
+  const [intakeChallenges, setIntakeChallenges] = useState<any[]>([]);
+
+  const fetchIntake = async () => {
+    try {
+      const live = await governmentApi.getLiveChallenges();
+      setIntakeChallenges(live);
+    } catch (e) {
+      console.warn('Unable to load intake challenges:', e);
+    }
+  };
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -81,6 +92,8 @@ export function GovernmentDashboard() {
         setAttentionItems(attentionData);
         setActivities(activityData);
         setImpact(impactData);
+
+        await fetchIntake();
       } catch (err) {
         console.error('Failed to load government dashboard telemetry:', err);
       } finally {
@@ -90,6 +103,11 @@ export function GovernmentDashboard() {
 
     loadDashboardData();
   }, []);
+
+  const handleStatusUpdate = async (challengeId: string, newStatus: string) => {
+    await governmentApi.updateChallengeStatus(challengeId, newStatus);
+    await fetchIntake();
+  };
 
   const handleExportReport = () => {
     setExporting(true);
@@ -129,6 +147,12 @@ export function GovernmentDashboard() {
 
         {/* ── 2. Executive Metrics (Grouped Layout) ── */}
         <ExecutiveMetricsCards metrics={metrics} />
+
+        {/* ── Citizen Intake & Verification Protocol Desk ── */}
+        <CitizenIntakeReviewSection
+          challenges={intakeChallenges}
+          onStatusUpdate={handleStatusUpdate}
+        />
 
         {/* ── 8. Bottlenecks / Attention Required (Placed Prominently) ── */}
         <BottlenecksAttentionModule items={attentionItems} />

@@ -8,11 +8,10 @@ interface SubmissionProgressProps {
 }
 
 const STEPS = [
-  { num: 1, title: 'The Problem', subtitle: 'Describe what you see' },
-  { num: 2, title: 'Location', subtitle: 'Where it happens' },
-  { num: 3, title: 'Evidence', subtitle: 'Photos & documents' },
-  { num: 4, title: 'Impact', subtitle: 'Who is affected' },
-  { num: 5, title: 'Review', subtitle: 'Confirm & submit' },
+  { num: 1, title: 'Describe Problem', subtitle: 'What is happening' },
+  { num: 2, title: 'Location & Impact', subtitle: 'Where & who is affected' },
+  { num: 3, title: 'Evidence & Context', subtitle: 'Photos & background' },
+  { num: 4, title: 'Review & Submit', subtitle: 'AI assist & confirm' },
 ];
 
 export function SubmissionProgress({

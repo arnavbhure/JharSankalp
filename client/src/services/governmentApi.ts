@@ -90,6 +90,24 @@ export async function getStateImpactSnapshot(): Promise<StateImpactSnapshot> {
   return STATE_IMPACT_SNAPSHOT;
 }
 
+export async function getLiveChallenges(): Promise<any[]> {
+  try {
+    return await api.get<any[]>('/challenges');
+  } catch (err) {
+    console.warn('Backend /challenges unreachable:', err);
+    return [];
+  }
+}
+
+export async function updateChallengeStatus(id: string, status: string): Promise<any> {
+  try {
+    return await api.patch<any>(`/challenges/${encodeURIComponent(id)}`, { status });
+  } catch (err) {
+    console.warn(`Failed to patch challenge ${id} status:`, err);
+    throw err;
+  }
+}
+
 export const governmentApi = {
   getOverview,
   getDistrictInsights,
@@ -100,4 +118,6 @@ export const governmentApi = {
   getAttentionItems,
   getRecentActivity,
   getStateImpactSnapshot,
+  getLiveChallenges,
+  updateChallengeStatus,
 };

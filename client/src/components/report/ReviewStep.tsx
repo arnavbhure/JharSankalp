@@ -1,10 +1,26 @@
-import { ChallengeFormState } from '../../types/submission';
-import { Edit2, Sparkles, MapPin, Users, FileText, CheckSquare, Square, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { ChallengeFormState, AIAssistSuggestion } from '../../types/submission';
+import { analyzeDescription } from '../../services/challengeSubmissionApi';
+import {
+  Edit2,
+  Sparkles,
+  FileText,
+  AlertCircle,
+  Loader2,
+  CheckCircle2,
+  Compass,
+  Activity,
+  ShieldCheck,
+  Building2,
+  ArrowRight,
+  Info,
+} from 'lucide-react';
 
 interface ReviewStepProps {
   formData: ChallengeFormState;
   onEditStep: (stepNumber: number) => void;
   onDeclarationChange: (accepted: boolean) => void;
+  onApplyAISuggestion?: (suggestion: AIAssistSuggestion) => void;
   onSubmit: () => void;
   submitting: boolean;
   error?: string;
@@ -14,255 +30,416 @@ export function ReviewStep({
   formData,
   onEditStep,
   onDeclarationChange,
+  onApplyAISuggestion,
   onSubmit,
   submitting,
   error,
 }: ReviewStepProps) {
+  const [aiSuggestion, setAiSuggestion] = useState<AIAssistSuggestion | null>(
+    formData.aiSuggestions
+  );
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzeError, setAnalyzeError] = useState<string | null>(null);
+  const [isApplied, setIsApplied] = useState(Boolean(formData.aiSuggestions));
+
+  const handleStructureChallenge = async () => {
+    if (!formData.description || formData.description.trim().length < 10) {
+      setAnalyzeError('Please provide a problem description before requesting AI structuring.');
+      return;
+    }
+
+    setIsAnalyzing(true);
+    setAnalyzeError(null);
+    try {
+      const res = await analyzeDescription(
+        formData.description,
+        formData.title,
+        formData.district
+      );
+      if (res) {
+        setAiSuggestion(res);
+        setIsApplied(false);
+        if (onApplyAISuggestion) {
+          onApplyAISuggestion(res);
+        }
+      }
+    } catch (err: any) {
+      setAnalyzeError(err?.message || 'Unable to connect to AI analysis service.');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const handleAcceptSuggestion = () => {
+    if (aiSuggestion && onApplyAISuggestion) {
+      onApplyAISuggestion(aiSuggestion);
+    }
+    setIsApplied(true);
+  };
+
+  const displayDomain =
+    formData.category && formData.category !== 'Not sure — Help me identify it'
+      ? formData.category
+      : aiSuggestion?.suggestedCategory || 'To be classified by review board';
+
+  const displayPriority =
+    formData.urgency || formData.severity || aiSuggestion?.suggestedPriority || 'Standard';
+
   return (
     <div className="space-y-8 text-left max-w-2xl mx-auto">
       {/* Step Header */}
       <div className="space-y-1.5 border-b border-[#EEEAE1] pb-5">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#123B2A]/8 text-[#123B2A] text-[11px] font-mono font-bold uppercase tracking-wider">
+          STEP 04 OF 04 · REVIEW & SUBMIT
+        </div>
         <h2 className="text-[1.85rem] sm:text-[2.2rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-          Review before submitting
+          Review your challenge
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Please check the summary below. You can edit any section before final submission to the JharSankalp review board.
+          Please review the summary below. You can use our AI assistant to help structure your problem statement, or edit any details before submitting.
         </p>
       </div>
 
-      {/* ── 1. The Problem Card ── */}
-      <div className="rounded-2xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[#EEEAE1] pb-3">
-          <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            <FileText className="h-4 w-4 text-[#F5A623]" />
-            <span>01 · THE PROBLEM</span>
+      {/* ── AI STRUCTURING CALLOUT & PANEL ── */}
+      <div className="rounded-2xl border-2 border-[#123B2A]/20 bg-[#F2FBF5] p-5 sm:p-6 text-left space-y-4 shadow-sm">
+        <div className="flex items-center justify-between flex-wrap gap-2 border-b border-[#123B2A]/15 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#123B2A] text-[#F5A623]">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <div>
+              <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-[#123B2A] block">
+                JHARSANKALP CIVIC INTELLIGENCE ENGINE
+              </span>
+              <h3 className="text-[14px] font-bold text-[#1D2522]">
+                AI-Assisted Problem Structuring
+              </h3>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleStructureChallenge}
+            disabled={isAnalyzing}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[13px] font-bold shadow-xs transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+          >
+            {isAnalyzing ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin text-[#F5A623]" />
+                <span>Understanding your challenge...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4 text-[#F5A623]" />
+                <span>Help me structure this challenge</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* AI Transparency Notice */}
+        <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#123B2A]/10 text-[12px] text-[#6B5845]">
+          <Info className="h-4 w-4 text-[#123B2A] shrink-0 mt-0.5" />
+          <span>
+            <strong className="text-[#1D2522]">AI Transparency:</strong> Suggestions assist with classification, prioritization, and stakeholder mapping. Real district officers, university researchers, and domain experts review and validate all submissions.
+          </span>
+        </div>
+
+        {analyzeError && (
+          <p className="text-[12.5px] font-medium text-[#BE123C] flex items-center gap-1">
+            <AlertCircle className="h-4 w-4" />
+            <span>{analyzeError}</span>
+          </p>
+        )}
+
+        {/* AI Analysis Output Display */}
+        {aiSuggestion && (
+          <div className="space-y-4 pt-1 animate-in fade-in duration-300">
+            {/* Summary Rationale */}
+            {aiSuggestion.analysisSummary && (
+              <div className="bg-white p-3.5 rounded-xl border border-[#123B2A]/15 space-y-1">
+                <span className="text-[11px] font-mono font-bold uppercase text-[#6B5845] block">
+                  Detected Problem Summary
+                </span>
+                <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
+                  {aiSuggestion.analysisSummary}
+                </p>
+              </div>
+            )}
+
+            {/* Key Classification Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Domain & Category */}
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+                <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+                  <Compass className="h-3 w-3 text-[#123B2A]" />
+                  Suggested Domain
+                </span>
+                <div className="text-[14px] font-bold text-[#123B2A] leading-tight">
+                  {aiSuggestion.suggestedCategory}
+                </div>
+                {aiSuggestion.subDomain && (
+                  <div className="text-[11.5px] font-mono text-[#6B5845]">
+                    ↳ {aiSuggestion.subDomain}
+                  </div>
+                )}
+                {aiSuggestion.confidence && (
+                  <div className="text-[10.5px] font-mono text-[#15803D] pt-0.5">
+                    Confidence: {Math.round(aiSuggestion.confidence * 100)}%
+                  </div>
+                )}
+              </div>
+
+              {/* Suggested Priority */}
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+                <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+                  <Activity className="h-3 w-3 text-[#BE123C]" />
+                  Suggested Priority
+                </span>
+                <div className="pt-0.5">
+                  <span
+                    className={`text-[12px] font-mono font-bold px-2 py-0.5 rounded ${
+                      aiSuggestion.suggestedPriority === 'CRITICAL'
+                        ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
+                        : aiSuggestion.suggestedPriority === 'HIGH'
+                        ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
+                        : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                    }`}
+                  >
+                    {aiSuggestion.suggestedPriority}
+                  </span>
+                </div>
+                {aiSuggestion.priorityReason && (
+                  <div className="text-[11px] text-[#6B5845] line-clamp-2">
+                    {aiSuggestion.priorityReason}
+                  </div>
+                )}
+              </div>
+
+              {/* Review Protocol */}
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+                <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+                  <ShieldCheck className="h-3 w-3 text-[#123B2A]" />
+                  Review Protocol
+                </span>
+                <div className="text-[13px] font-bold text-[#1D2522]">
+                  Human Validation
+                </div>
+                <div className="text-[11px] text-[#6B5845]">
+                  Awaiting review by district engineering desk.
+                </div>
+              </div>
+            </div>
+
+            {/* Possible Impact Areas */}
+            {aiSuggestion.suggestedApproach && aiSuggestion.suggestedApproach.length > 0 && (
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+                <span className="text-[11px] font-mono uppercase font-bold text-[#123B2A] block">
+                  Possible Impact & Intervention Areas
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {aiSuggestion.suggestedApproach.map((appr) => (
+                    <span
+                      key={appr}
+                      className="text-[11.5px] font-mono bg-[#FAF9F5] text-[#1D2522] border border-[#EEEAE1] px-2.5 py-0.5 rounded-md"
+                    >
+                      ✓ {appr}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Potential Stakeholders */}
+            {aiSuggestion.affectedStakeholders && aiSuggestion.affectedStakeholders.length > 0 && (
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+                <span className="text-[11px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+                  <Building2 className="h-3 w-3 text-[#6B5845]" />
+                  Potential Stakeholders & Academic Labs
+                </span>
+                <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
+                  {aiSuggestion.affectedStakeholders.join(' · ')}
+                </div>
+              </div>
+            )}
+
+            {/* Accept / Applied Bar */}
+            <div className="flex items-center justify-between pt-1 flex-wrap gap-2">
+              <span className="text-[11.5px] text-[#6B5845]">
+                {isApplied
+                  ? 'AI recommendations merged into your challenge docket.'
+                  : 'Click below to accept these suggestions before submitting.'}
+              </span>
+              <button
+                type="button"
+                onClick={handleAcceptSuggestion}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#123B2A] text-white text-[12px] font-bold shadow-2xs hover:bg-[#0D2B1E] transition-all cursor-pointer"
+              >
+                {isApplied ? (
+                  <>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#F5A623]" />
+                    <span>Suggestions Accepted</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
+                    <span>Accept AI Suggestions</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── SUMMARY DOCKET CARD ── */}
+      <div className="rounded-2xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-6">
+        <div className="border-b border-[#EEEAE1] pb-3 flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-mono uppercase font-bold text-[#6B5845] block">
+              YOUR CHALLENGE DOCKET
+            </span>
+            <h3 className="text-[1.3rem] font-bold text-[#1D2522] font-sans">
+              {formData.title || 'Untitled Challenge'}
+            </h3>
           </div>
           <button
             type="button"
             onClick={() => onEditStep(1)}
             className="text-[12.5px] font-bold text-[#123B2A] hover:underline inline-flex items-center gap-1 cursor-pointer"
           >
-            <Edit2 className="h-3 w-3" />
+            <Edit2 className="h-3.5 w-3.5" />
             <span>Edit</span>
           </button>
         </div>
 
-        <div className="space-y-2">
-          <div className="text-[1.15rem] font-bold text-[#1D2522] font-sans">
-            {formData.title || <span className="text-[#6B5845] italic">No title provided</span>}
-          </div>
-          <p className="text-[13.5px] text-[#1D2522]/85 leading-relaxed whitespace-pre-line bg-[#FAF9F5] p-3.5 rounded-xl border border-[#EEEAE1]">
-            {formData.description || <span className="text-[#6B5845] italic">No description entered</span>}
-          </p>
-        </div>
-
-        {formData.firstNoticed && (
-          <div className="text-[12px] text-[#6B5845]">
-            <strong className="text-[#1D2522]">First noticed:</strong> {formData.firstNoticed}
-          </div>
-        )}
-      </div>
-
-      {/* ── 2. Location Card ── */}
-      <div className="rounded-2xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[#EEEAE1] pb-3">
-          <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            <MapPin className="h-4 w-4 text-[#F5A623]" />
-            <span>02 · LOCATION</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => onEditStep(2)}
-            className="text-[12.5px] font-bold text-[#123B2A] hover:underline inline-flex items-center gap-1 cursor-pointer"
-          >
-            <Edit2 className="h-3 w-3" />
-            <span>Edit</span>
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[13px]">
+        {/* Key Metrics Banner */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[#FAF9F5] p-3.5 rounded-xl border border-[#EEEAE1] text-[13px]">
           <div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">District</span>
-            <strong className="text-[#1D2522] font-bold text-[14px]">
-              {formData.district || '—'}
+            <span className="text-[11px] font-mono text-[#6B5845] block">Domain</span>
+            <strong className="text-[#1D2522] block truncate">{displayDomain}</strong>
+          </div>
+          <div>
+            <span className="text-[11px] font-mono text-[#6B5845] block">Location</span>
+            <strong className="text-[#1D2522] block truncate">
+              {formData.district || 'Jharkhand'} · {formData.block || 'Block'}
             </strong>
           </div>
           <div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">Block / Sub-div</span>
-            <strong className="text-[#1D2522] font-bold text-[14px]">
-              {formData.block || '—'}
+            <span className="text-[11px] font-mono text-[#6B5845] block">Affected</span>
+            <strong className="text-[#1D2522] block">
+              {formData.estimatedPeople ? `${formData.estimatedPeople} people` : 'Community'}
             </strong>
           </div>
           <div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">Village / Ward</span>
-            <strong className="text-[#1D2522] font-bold text-[14px]">
-              {formData.villageOrWard || '—'}
-            </strong>
+            <span className="text-[11px] font-mono text-[#6B5845] block">Urgency</span>
+            <strong className="text-[#1D2522] block">{displayPriority}</strong>
           </div>
         </div>
 
-        {formData.landmark && (
-          <div className="text-[12px] text-[#6B5845]">
-            <strong className="text-[#1D2522]">Specific Landmark:</strong> {formData.landmark}
-          </div>
-        )}
-      </div>
-
-      {/* ── 3. People Affected & Impact Card ── */}
-      <div className="rounded-2xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[#EEEAE1] pb-3">
-          <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            <Users className="h-4 w-4 text-[#F5A623]" />
-            <span>03 · PEOPLE AFFECTED & IMPACT</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => onEditStep(4)}
-            className="text-[12.5px] font-bold text-[#123B2A] hover:underline inline-flex items-center gap-1 cursor-pointer"
-          >
-            <Edit2 className="h-3 w-3" />
-            <span>Edit</span>
-          </button>
-        </div>
-
-        <div className="space-y-3">
-          {formData.affectedGroups.length > 0 && (
-            <div>
-              <span className="text-[11px] font-mono text-[#6B5845] block mb-1.5">
-                Affected Demographic Groups:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {formData.affectedGroups.map((g) => (
-                  <span
-                    key={g}
-                    className="px-2.5 py-0.5 rounded-md bg-[#F8F6F1] border border-[#EEEAE1] text-[12px] font-semibold text-[#123B2A]"
-                  >
-                    {g}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[13px] pt-1">
-            <div>
-              <span className="text-[11px] font-mono text-[#6B5845] block">Estimated Scope</span>
-              <strong className="text-[#1D2522]">{formData.estimatedPeople || 'Not specified'}</strong>
-            </div>
-            <div>
-              <span className="text-[11px] font-mono text-[#6B5845] block">Frequency</span>
-              <strong className="text-[#1D2522]">{formData.frequency || 'Not specified'}</strong>
-            </div>
-            <div>
-              <span className="text-[11px] font-mono text-[#6B5845] block">Urgency / Severity</span>
-              <strong className="text-[#B45309]">{formData.severity || 'Not specified'}</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── 4. Evidence Card ── */}
-      <div className="rounded-2xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-3">
-        <div className="flex items-center justify-between border-b border-[#EEEAE1] pb-3">
-          <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            <FileText className="h-4 w-4 text-[#F5A623]" />
-            <span>04 · SUPPORTING EVIDENCE</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => onEditStep(3)}
-            className="text-[12.5px] font-bold text-[#123B2A] hover:underline inline-flex items-center gap-1 cursor-pointer"
-          >
-            <Edit2 className="h-3 w-3" />
-            <span>Edit</span>
-          </button>
-        </div>
-
-        <div className="text-[13px] text-[#6B5845]">
-          {formData.evidenceFiles.length > 0 ? (
-            <span className="font-semibold text-[#1D2522]">
-              {formData.evidenceFiles.length} file(s) attached ({formData.evidenceFiles.map((f) => f.name).join(', ')})
-            </span>
-          ) : (
-            <span className="italic">No files attached (Optional step)</span>
-          )}
-        </div>
-
-        {formData.evidenceContext && (
-          <p className="text-[12.5px] text-[#1D2522]/80 italic pt-1">
-            &ldquo;{formData.evidenceContext}&rdquo;
-          </p>
-        )}
-      </div>
-
-      {/* ── 5. AI Suggestions Summary Card ── */}
-      {formData.aiSuggestions && (
-        <div className="rounded-2xl border border-[#123B2A]/20 bg-[#F2FBF5] p-6 text-left space-y-3">
-          <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-            <Sparkles className="h-4 w-4 text-[#F5A623]" />
-            <span>JHARSANKALP ASSIST REVIEW</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[13px]">
-            <div>
-              <span className="text-[11px] font-mono text-[#6B5845] block">Primary Focus Area</span>
-              <strong className="text-[#123B2A] font-bold">
-                {formData.aiSuggestions.suggestedCategory}
-              </strong>
-            </div>
-            <div className="sm:col-span-2">
-              <span className="text-[11px] font-mono text-[#6B5845] block">Secondary Themes</span>
-              <span className="text-[#1D2522] font-medium">
-                {formData.aiSuggestions.relatedThemes.join(' · ')}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Accuracy Declaration Checkbox */}
-      <div className="pt-2">
-        <label
-          onClick={() => onDeclarationChange(!formData.declarationAccepted)}
-          className="flex items-start gap-3 p-4 rounded-xl border border-[#EEEAE1] bg-white cursor-pointer select-none hover:bg-[#FAF9F5] transition-colors"
-        >
-          <div className="mt-0.5 text-[#123B2A]">
-            {formData.declarationAccepted ? (
-              <CheckSquare className="h-5 w-5 fill-[#123B2A] text-white" />
-            ) : (
-              <Square className="h-5 w-5 text-[#6B5845]" />
-            )}
-          </div>
-          <span className="text-[13.5px] text-[#1D2522] leading-snug">
-            I confirm that the information provided is accurate to the best of my knowledge and is submitted to support civic improvement in Jharkhand.
+        {/* Problem Description */}
+        <div className="space-y-1.5">
+          <span className="text-[11.5px] font-mono font-bold uppercase text-[#6B5845] block">
+            Your Description
           </span>
-        </label>
+          <p className="text-[13.5px] text-[#1D2522]/90 leading-relaxed whitespace-pre-line bg-[#FAF9F5] p-4 rounded-xl border border-[#EEEAE1]">
+            {formData.description || 'No description provided'}
+          </p>
+        </div>
+
+        {/* Affected Groups & Context */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px]">
+          <div>
+            <span className="text-[11px] font-mono text-[#6B5845] block">
+              Impacted Population
+            </span>
+            <div className="font-semibold text-[#1D2522] pt-0.5">
+              {formData.affectedGroups && formData.affectedGroups.length > 0
+                ? formData.affectedGroups.join(', ')
+                : 'General residents'}
+            </div>
+          </div>
+          <div>
+            <span className="text-[11px] font-mono text-[#6B5845] block">
+              First Observed
+            </span>
+            <div className="font-semibold text-[#1D2522] pt-0.5">
+              {formData.firstNoticed || 'Recently'}
+            </div>
+          </div>
+        </div>
+
+        {/* Evidence Attachments */}
+        {formData.evidenceFiles && formData.evidenceFiles.length > 0 && (
+          <div className="space-y-1.5 pt-2 border-t border-[#EEEAE1]">
+            <div className="flex items-center justify-between">
+              <span className="text-[11.5px] font-mono font-bold uppercase text-[#6B5845]">
+                Attached Evidence ({formData.evidenceFiles.length} files)
+              </span>
+              <button
+                type="button"
+                onClick={() => onEditStep(3)}
+                className="text-[12px] font-bold text-[#123B2A] hover:underline"
+              >
+                Change
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {formData.evidenceFiles.map((f) => (
+                <a
+                  key={f.id}
+                  href={f.publicUrl || f.previewUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[12px] font-mono bg-[#FAF9F5] text-[#123B2A] hover:bg-white hover:underline border border-[#EEEAE1] px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5 transition-colors"
+                  title="View uploaded evidence"
+                >
+                  <FileText className="h-3 w-3 text-[#123B2A]" />
+                  <span>{f.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Error Message if any */}
-      {error && (
-        <div className="p-3.5 rounded-xl bg-[#FEF0F4] border border-[#FDD3D9] text-[13px] text-[#BE123C] flex items-center gap-2">
-          <AlertCircle className="h-4 w-4 shrink-0" />
-          <span>{error}</span>
-        </div>
-      )}
+      {/* ── DECLARATION & SUBMISSION ACTION ── */}
+      <div className="space-y-4 pt-2">
+        <label className="flex items-start gap-3 p-4 rounded-xl border border-[#EEEAE1] bg-white cursor-pointer hover:bg-[#FAF9F5] transition-all shadow-2xs">
+          <input
+            type="checkbox"
+            checked={formData.declarationAccepted}
+            onChange={(e) => onDeclarationChange(e.target.checked)}
+            className="mt-0.5 h-4 w-4 accent-[#123B2A]"
+          />
+          <div className="text-[12.5px] text-[#1D2522] leading-relaxed">
+            I declare that this challenge describes a genuine issue observed in Jharkhand. I understand that the information will be processed with AI assistance and reviewed by public authorities and research institutions.
+          </div>
+        </label>
 
-      {/* Submit Action */}
-      <div className="pt-2">
+        {error && (
+          <p className="text-[12.5px] font-medium text-[#BE123C] flex items-center gap-1.5">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>{error}</span>
+          </p>
+        )}
+
         <button
           type="button"
           onClick={onSubmit}
-          disabled={!formData.declarationAccepted || submitting}
-          className={`w-full py-4 rounded-xl text-[15px] font-extrabold shadow-sm transition-all active:scale-[0.99] flex items-center justify-center gap-2 ${
-            formData.declarationAccepted && !submitting
-              ? 'bg-[#123B2A] hover:bg-[#0D2B1E] text-white cursor-pointer'
-              : 'bg-[#EEEAE1] text-[#6B5845]/60 cursor-not-allowed'
-          }`}
+          disabled={submitting}
+          className="w-full py-4 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[15px] font-bold shadow-sm transition-all active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
         >
           {submitting ? (
-            <span>Transmitting Case Docket...</span>
+            <>
+              <Loader2 className="h-5 w-5 animate-spin text-[#F5A623]" />
+              <span>Submitting challenge to innovation exchange...</span>
+            </>
           ) : (
-            <span>Submit Challenge for Review →</span>
+            <>
+              <span>Submit Challenge to JharSankalp</span>
+              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+            </>
           )}
         </button>
       </div>
