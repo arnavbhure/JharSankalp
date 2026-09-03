@@ -105,6 +105,19 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         </Link>
 
         <Link
+          to="/dashboard"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            location.pathname === '/dashboard' ? 'text-[#123B2A] font-bold' : '',
+          )}
+        >
+          Dashboard
+          {location.pathname === '/dashboard' && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
+
+        <Link
           to="/my-challenges"
           className={cn(
             'relative py-2 transition-colors hover:text-[#123B2A]',
@@ -181,6 +194,14 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
           aria-label="Search challenges"
         >
           <Search className="h-4 w-4 stroke-[2.2]" />
+        </button>
+
+        {/* Dashboard Shortcut Button */}
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-2 text-[13px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#F8F6F1] active:scale-[0.98] transition-all cursor-pointer"
+        >
+          Dashboard ↗
         </button>
 
         {/* Login / Sign Up Strong Rectangular Button */}

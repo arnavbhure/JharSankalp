@@ -13,6 +13,7 @@ import { MyIdeas } from '../pages/MyIdeas';
 import { Projects } from '../pages/Projects';
 import { ProjectDetail } from '../pages/ProjectDetail';
 import { ProjectWorkspace } from '../pages/ProjectWorkspace';
+import { Dashboard } from '../pages/Dashboard';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
   },
   {
     path: '/',
