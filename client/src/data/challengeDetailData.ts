@@ -207,20 +207,140 @@ export const DHANBAD_MINING_DETAIL: ChallengeDetailData = {
   relatedChallengeIds: ['JS-2024-00015', 'JS-2024-00019', 'JS-2024-00018'],
 };
 
+export const KHUNTI_WATER_DETAIL: ChallengeDetailData = {
+  id: 'JS-2026-00024',
+  title: 'Intermittent Handpump Breakdowns & Delayed Rural Water Restorations in Khunti',
+  category: 'Water Management',
+  district: 'Khunti',
+  subLocation: 'Murhu Block, Hamlets 4–9',
+  locationCoordinates: {
+    lat: 23.08,
+    lon: 85.28,
+    formatted: '23.08° N · 85.28° E',
+    zoneName: 'KHUNTI · MURHU GROUNDWATER AQUIFER CORRIDOR',
+  },
+  status: 'ACTIVE PILOT',
+  impactPriority: 'High Impact Priority',
+  summary:
+    'Over 18 rural hamlets face recurring drinking water disruptions due to sub-surface mechanical valve fatigue in India Mark II handpumps. Unmonitored failures leave communities without clean water for an average of 18 days.',
+  problem: {
+    background:
+      'Murhu Block in Khunti district is predominantly rural and hilly, where over 85% of households rely on community borewells and India Mark II deep-well handpumps for daily drinking and domestic water. During the dry season (March to June), water tables drop significantly, increasing the mechanical stroke burden on underground pump rods and seal cups.',
+    currentSituation:
+      'Over 18 hamlets across 4 Gram Panchayats report recurring pump breakdowns. Because there is zero continuous telemetry or remote sensing on handpump assets, block maintenance mechanics only learn of failures when a village mukhiya files a manual paper requisition weeks later.',
+    whyExistingApproachesNotEnough:
+      'Scheduled preventive inspections happen only once or twice a year due to sparse block technician staffing. A clamp-on, self-powered acoustic vibration telemetry collar can continuously track mechanical stroke count and transmit premature wear alerts before mechanical seizure occurs.',
+  },
+  profile: {
+    district: 'Khunti',
+    focusArea: 'Water Management',
+    primaryStakeholders: ['Village Water Committees', 'Panchayati Raj Dept.', 'BIT Mesra'],
+    dateSubmitted: '10 March 2026',
+    adminDepartment: 'Dept. of Drinking Water & Sanitation, Govt. of Jharkhand',
+    trackingId: 'JS-CASE-KHT-26024-01',
+  },
+  impactMetrics: {
+    affectedResidents: '2,000+',
+    highRiskLocations: '18 Hamlets',
+    communitiesInvolved: '4 Panchayats',
+    statement:
+      'Resolving this challenge restores reliable potable water to rural households and cuts repair latency from 18 days down to under 48 hours.',
+  },
+  evidenceTimeline: [
+    {
+      year: '2024',
+      dateStr: 'November 2024',
+      observation: 'Gram Panchayat audits record 34 pump breakdowns across Murhu with average 21-day downtime.',
+      sourceType: 'Panchayat Grievance Logs',
+      verified: true,
+      docketId: 'LOG-KHT-2024-1102',
+    },
+    {
+      year: '2025',
+      dateStr: 'May 2025',
+      observation: 'Severe drinking water scarcity in Hamlets 5 & 7 following simultaneous seal failure.',
+      sourceType: 'Community Water Audit',
+      verified: true,
+      docketId: 'AUDIT-KHT-2025-0520',
+    },
+    {
+      year: '2026',
+      dateStr: '10 March 2026',
+      observation: 'Challenge accepted into JharSankalp and matched with BIT Mesra IoT engineering team.',
+      sourceType: 'State Innovation Clearinghouse',
+      verified: true,
+      docketId: 'JS-2026-00024-INTAKE',
+    },
+  ],
+  solutionApproaches: [
+    {
+      number: 'Approach 01',
+      title: 'Acoustic Stroke Vibration Collar',
+      description:
+        'A weatherproof piezoelectric collar clamped to the handpump head that detects mechanical stroke irregularity and sends LoRaWAN signals.',
+      status: 'Under Discussion',
+      feasibilityNotes: 'Engineered by BIT Mesra; prototype bench testing completed.',
+      potentialPartners: ['BIT Mesra', 'JharSankalp Water Consortium'],
+    },
+  ],
+  stakeholders: DHANBAD_MINING_DETAIL.stakeholders,
+  lifecycleStages: [
+    {
+      stage: 'Identify',
+      status: 'completed',
+      label: 'Challenge Identified',
+      summary: 'Verified community problem submitted by Murhu Gram Panchayat.',
+    },
+    {
+      stage: 'Research',
+      status: 'completed',
+      label: 'Research & Solution Matching',
+      summary: 'Matched with BIT Mesra IoT & Embedded Systems Laboratory.',
+    },
+    {
+      stage: 'Build',
+      status: 'completed',
+      label: 'Prototype Built',
+      summary: 'Low-power LoRa collar bench tested.',
+    },
+    {
+      stage: 'Pilot',
+      status: 'current',
+      label: 'Field Pilot in Progress',
+      summary: '10 pilot handpump nodes active in Murhu under project PRJ-2026-0012.',
+    },
+    {
+      stage: 'Impact',
+      status: 'upcoming',
+      label: 'Scale Across State',
+      summary: 'District-wide rollout planned for 1,200 rural water points.',
+    },
+  ],
+  stats: {
+    collaboratorsCount: 14,
+    ideasCount: 3,
+    followersCount: 168,
+  },
+  relatedChallengeIds: ['JS-2024-00003', 'JS-2026-00005', 'JS-2026-00015'],
+};
+
 /**
  * Returns structured challenge detail data for a given challenge ID.
- * Defaults to the comprehensive Dhanbad Mining Safety case file if ID matches or is fallback.
  */
 export function getChallengeDetail(id?: string): ChallengeDetailData {
   if (!id || id === 'JS-2024-00003') {
     return DHANBAD_MINING_DETAIL;
   }
 
-  // Find in CHALLENGES_DATA if another challenge was requested
+  if (id === 'JS-2026-00024') {
+    return KHUNTI_WATER_DETAIL;
+  }
+
+  // Find in CANONICAL_CHALLENGES or CHALLENGES_DATA
   const baseChallenge = CHALLENGES_DATA.find((c) => c.id === id);
 
   if (!baseChallenge) {
-    return DHANBAD_MINING_DETAIL;
+    return id.includes('00024') ? KHUNTI_WATER_DETAIL : DHANBAD_MINING_DETAIL;
   }
 
   return {
@@ -253,3 +373,4 @@ export function getChallengeDetail(id?: string): ChallengeDetailData {
     },
   };
 }
+

@@ -209,6 +209,8 @@ export const WATER_PUMP_IDEA_DETAIL: IdeaDetail = {
   ],
 };
 
+import { CANONICAL_IDEAS } from './ecosystem';
+
 export function getIdeaDetail(id?: string): IdeaDetail {
   if (!id) return WATER_PUMP_IDEA_DETAIL;
 
@@ -220,6 +222,34 @@ export function getIdeaDetail(id?: string): IdeaDetail {
     normalized === 'idea-2026-0042'
   ) {
     return WATER_PUMP_IDEA_DETAIL;
+  }
+
+  const canonical = CANONICAL_IDEAS.find(
+    (i) => i.id.toLowerCase() === normalized || i.referenceId?.toLowerCase() === normalized
+  );
+
+  if (canonical) {
+    return {
+      ...WATER_PUMP_IDEA_DETAIL,
+      id: canonical.id,
+      referenceId: canonical.referenceId,
+      title: canonical.title,
+      summary: canonical.summary,
+      category: canonical.domain,
+      district: canonical.district,
+      block: canonical.block,
+      stage: canonical.stage,
+      stageLabel: canonical.stageLabel,
+      parentChallenge: {
+        id: canonical.challengeId,
+        title: canonical.challengeTitle,
+        description: canonical.summary,
+        district: canonical.district,
+        affectedPopulation: '1,500+ Citizens',
+        domain: canonical.domain,
+        priority: 'High',
+      },
+    };
   }
 
   // Return realistic fallback structure adapted for the requested ID

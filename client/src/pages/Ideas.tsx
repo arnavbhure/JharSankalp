@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IdeasHero } from '../components/ideas/IdeasHero';
 import { IdeaFilters } from '../components/ideas/IdeaFilters';
 import { FeaturedIdea } from '../components/ideas/FeaturedIdea';
@@ -9,21 +9,41 @@ import { SubmitIdeaModal } from '../components/ideas/SubmitIdeaModal';
 import { Footer } from '../components/layout/Footer';
 import { CommunityIdea } from '../types/ideas';
 import { fetchIdeas } from '../services/api/ideas';
+import { CANONICAL_IDEAS } from '../data/ecosystem';
 import { useInnovationStore } from '../stores/innovationStore';
 import { CheckCircle2, Bookmark, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
+const FALLBACK_COMMUNITY_IDEAS: CommunityIdea[] = CANONICAL_IDEAS.map((i) => ({
+  id: i.id,
+  title: i.title,
+  description: i.summary,
+  focusArea: i.domain,
+  district: i.district,
+  author: i.authorOrTeam,
+  supportersCount: i.likesCount,
+  contributorsCount: 4,
+  status: 'In Development',
+  submittedDate: '10 March 2026',
+  linkedChallenge: i.challengeTitle,
+  linkedChallengeId: i.challengeId,
+}));
+
 export function Ideas() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { submitIdea } = useInnovationStore();
 
-  const [ideas, setIdeas] = useState<CommunityIdea[]>([]);
+  const urlDomain = searchParams.get('domain') || searchParams.get('category');
+  const urlDistrict = searchParams.get('district');
+
+  const [ideas, setIdeas] = useState<CommunityIdea[]>(FALLBACK_COMMUNITY_IDEAS);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Filters State
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('All Focus Areas');
-  const [district, setDistrict] = useState('All Districts');
+  const [category, setCategory] = useState(urlDomain || 'All Focus Areas');
+  const [district, setDistrict] = useState(urlDistrict || 'All Districts');
   const [status, setStatus] = useState('All Statuses');
   const [sortBy, setSortBy] = useState('most_supported');
 
@@ -40,9 +60,13 @@ export function Ideas() {
         district,
         status,
       });
-      setIdeas(data || []);
-    } catch (err: any) {
-      setError(err?.message || 'Unable to connect to JharSankalp database.');
+      if (data && data.length > 0) {
+        setIdeas(data);
+      } else {
+        setIdeas(FALLBACK_COMMUNITY_IDEAS);
+      }
+    } catch {
+      setIdeas(FALLBACK_COMMUNITY_IDEAS);
     } finally {
       setLoading(false);
     }

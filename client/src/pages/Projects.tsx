@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Project,
   PortfolioMetrics,
@@ -35,11 +36,21 @@ const INITIAL_FILTERS: ProjectFiltersState = {
 };
 
 export function Projects() {
+  const [searchParams] = useSearchParams();
+  const urlStage = searchParams.get('stage');
+  const urlDomain = searchParams.get('domain');
+  const urlDistrict = searchParams.get('district');
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [featuredProject, setFeaturedProject] = useState<Project | null>(null);
   const [metrics, setMetrics] = useState<PortfolioMetrics>(PORTFOLIO_METRICS);
   const [activities, setActivities] = useState<ProjectActivityItem[]>([]);
-  const [filters, setFilters] = useState<ProjectFiltersState>(INITIAL_FILTERS);
+  const [filters, setFilters] = useState<ProjectFiltersState>({
+    ...INITIAL_FILTERS,
+    stage: (urlStage as any) || INITIAL_FILTERS.stage,
+    domain: urlDomain || INITIAL_FILTERS.domain,
+    district: urlDistrict || INITIAL_FILTERS.district,
+  });
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [loading, setLoading] = useState(true);
 

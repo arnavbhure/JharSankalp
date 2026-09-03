@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
 import { BrandMark } from '../components/common/BrandMark';
+import { GlobalSearchModal } from '../components/common/GlobalSearchModal';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthStore } from '../stores/authStore';
 import { UserRole } from '@jharsankalp/shared';
@@ -12,6 +13,7 @@ import {
   ChevronDown,
   Check,
   ExternalLink,
+  Search,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -19,7 +21,19 @@ export function GovernmentLayout() {
   const { user } = useAuth();
   const setDemoRole = useAuthStore((s) => s.setDemoRole);
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setShowSearch((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const navItems = [
     { label: 'State Command', href: '/government/dashboard', icon: BarChart3 },
@@ -56,6 +70,16 @@ export function GovernmentLayout() {
 
             {/* Right Action & Perspective Switches */}
             <div className="flex items-center gap-3">
+              {/* Global Search Trigger */}
+              <button
+                type="button"
+                onClick={() => setShowSearch(true)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-[#FAF9F5] text-[#1D2522] hover:bg-white hover:border-[#4C1E4F] transition-colors shadow-xs cursor-pointer"
+                title="Search initiatives (Ctrl+K)"
+              >
+                <Search className="h-4 w-4 text-[#4C1E4F]" />
+              </button>
+
               {/* Public Platform Link */}
               <Link
                 to="/"
@@ -155,6 +179,12 @@ export function GovernmentLayout() {
       <div className="flex-1 w-full">
         <Outlet />
       </div>
+
+      {/* Global Search Modal */}
+      <GlobalSearchModal
+        isOpen={showSearch}
+        onClose={() => setShowSearch(false)}
+      />
     </div>
   );
 }

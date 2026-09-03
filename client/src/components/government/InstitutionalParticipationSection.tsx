@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { InstitutionMetric, IndustryPartnerMetric } from '../../types/government';
 import { Building2, GraduationCap, Briefcase } from 'lucide-react';
 
@@ -101,6 +102,17 @@ export function InstitutionalParticipationSection({
                   <strong className="text-[#B45309]">{inst.researchOutputs} Papers/IP</strong>
                 </div>
               </div>
+
+              {inst.name.includes('BIT Mesra') && (
+                <div className="pt-2 border-t border-[#EEEAE1]">
+                  <Link
+                    to="/university/dashboard"
+                    className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-[#4C1E4F] hover:text-[#FA7E61]"
+                  >
+                    <span>Open Campus Workspace →</span>
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>

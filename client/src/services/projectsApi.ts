@@ -87,8 +87,9 @@ export async function getFeaturedProject(): Promise<Project> {
 
 export async function getProjectById(id: string): Promise<Project | null> {
   await new Promise((resolve) => setTimeout(resolve, 50));
+  const targetId = id.toLowerCase().trim();
   const found = SEEDED_PROJECTS.find(
-    (p) => p.id === id || p.projectCode === id
+    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId
   );
   return found || null;
 }
@@ -170,7 +171,10 @@ export async function getProjectMapData(): Promise<
  */
 export async function getProjectDetail(id: string): Promise<ProjectDetail | null> {
   await new Promise((resolve) => setTimeout(resolve, 80));
-  const base = SEEDED_PROJECTS.find((p) => p.id === id || p.projectCode === id);
+  const targetId = id.toLowerCase().trim();
+  const base = SEEDED_PROJECTS.find(
+    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId
+  );
   if (!base) return null;
   return buildProjectDetail(base);
 }

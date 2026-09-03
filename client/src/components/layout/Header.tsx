@@ -2,9 +2,10 @@ import { useAuth } from '../../hooks/useAuth';
 import { UserRole } from '@jharsankalp/shared';
 import { useAuthStore } from '../../stores/authStore';
 import { BrandMark } from '../common/BrandMark';
+import { GlobalSearchModal } from '../common/GlobalSearchModal';
 import { Menu, ChevronDown, Check, Search } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
@@ -34,10 +35,22 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
   const { user } = useAuth();
   const setDemoRole = useAuthStore((s) => s.setDemoRole);
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isLandingPage = location.pathname === '/';
   const isChallengesPage = location.pathname === '/challenges';
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const demoRoles: UserRole[] = [
     UserRole.CITIZEN,
@@ -187,9 +200,10 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
       <div className="flex items-center gap-3">
         {/* Search Circular Icon Button */}
         <button
-          onClick={() => navigate('/challenges')}
+          onClick={() => setIsSearchOpen(true)}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-white text-[#1D2522] hover:bg-[#EEEAE1] hover:text-[#123B2A] transition-colors shadow-xs cursor-pointer"
-          aria-label="Search challenges"
+          aria-label="Search initiatives (Ctrl+K)"
+          title="Search initiatives (Ctrl+K)"
         >
           <Search className="h-4 w-4 stroke-[2.2]" />
         </button>
@@ -281,6 +295,12 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
           )}
         </div>
       </div>
+
+      {/* Global Command / Ecosystem Search Modal */}
+      <GlobalSearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </header>
   );
 }

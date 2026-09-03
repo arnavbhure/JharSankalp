@@ -5,6 +5,7 @@ import { getChallengeDetail } from '../data/challengeDetailData';
 import { fetchChallengeById } from '../services/api/challenges';
 import { ChallengeDetailData } from '../types/challengeDetail';
 import { DetailHero } from '../components/challenge-detail/DetailHero';
+import { ChallengeEcosystemBanner } from '../components/challenge-detail/ChallengeEcosystemBanner';
 import { DetailSectionNav } from '../components/challenge-detail/DetailSectionNav';
 import { ProblemStatement } from '../components/challenge-detail/ProblemStatement';
 import { ImpactAtAGlance } from '../components/challenge-detail/ImpactAtAGlance';
@@ -150,6 +151,9 @@ export function ChallengeDetail() {
         onJoinClick={handleOpenJoinCollaboration}
         isJoined={isJoined}
       />
+
+      {/* ── Connected Innovation Pipeline Banner ── */}
+      <ChallengeEcosystemBanner challengeId={challenge.id} />
 
       {/* ── Section 2: Sticky Section Anchor Navigation ── */}
       <DetailSectionNav />

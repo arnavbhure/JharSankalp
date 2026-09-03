@@ -5,6 +5,7 @@ import { IdeaDetail as IdeaDetailType, CollaborationOpportunity } from '../types
 import { IdeaDetailHero } from '../components/idea-detail/IdeaDetailHero';
 import { IdeaStickyNav } from '../components/idea-detail/IdeaStickyNav';
 import { RelatedChallengePanel } from '../components/idea-detail/RelatedChallengePanel';
+import { GraduatedProjectBanner } from '../components/idea-detail/GraduatedProjectBanner';
 import { ProposedApproach } from '../components/idea-detail/ProposedApproach';
 import { HowItWorksFlow } from '../components/idea-detail/HowItWorksFlow';
 import { IdeaStageProgress } from '../components/idea-detail/IdeaStageProgress';
@@ -51,6 +52,9 @@ export function IdeaDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* ── Left Editorial Column (8 Columns) ── */}
           <div className="lg:col-span-8 space-y-14">
+            {/* Ecosystem Graduation Banner (if linked to active project) */}
+            <GraduatedProjectBanner ideaId={idea.id} />
+
             {/* Section 1: The Challenge Behind the Idea */}
             <RelatedChallengePanel challenge={idea.parentChallenge} />
 

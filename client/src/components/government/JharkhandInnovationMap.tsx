@@ -256,7 +256,7 @@ export function JharkhandInnovationMap({
               {/* Action Link */}
               <div className="pt-2">
                 <Link
-                  to="/challenges"
+                  to={`/challenges?district=${encodeURIComponent(activeDistrict.district)}`}
                   className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#4C1E4F] hover:bg-[#3A143D] text-white text-[13px] font-bold shadow-xs transition-all"
                 >
                   <span>Inspect {activeDistrict.district} Challenge Queue →</span>
