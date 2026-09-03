@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChallengeHero } from '../components/challenges/ChallengeHero';
 import { ChallengeFilters } from '../components/challenges/ChallengeFilters';
@@ -7,14 +7,19 @@ import { ChallengeCard } from '../components/challenges/ChallengeCard';
 import { ChallengeMap } from '../components/challenges/ChallengeMap';
 import { ChallengeCTA } from '../components/challenges/ChallengeCTA';
 import { Footer } from '../components/layout/Footer';
-import { CHALLENGES_DATA } from '../data/challengesData';
 import { ChallengeItem } from '../types/challenges';
-import { SearchX, ArrowDown, X, Users, MapPin } from 'lucide-react';
+import { fetchChallenges } from '../services/api/challenges';
+import { SearchX, ArrowDown, X, Users, MapPin, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 const INITIAL_PAGE_SIZE = 6;
 
 export function Challenges() {
   const navigate = useNavigate();
+
+  // Data State
+  const [challenges, setChallenges] = useState<ChallengeItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Filter States
   const [search, setSearch] = useState('');
@@ -28,15 +33,36 @@ export function Challenges() {
   // Selected challenge for interactive modal / preview
   const [previewChallenge, setPreviewChallenge] = useState<ChallengeItem | null>(null);
 
+  const loadChallenges = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchChallenges({
+        domain: selectedCategory,
+        district: selectedDistrict,
+        status: selectedStatus,
+      });
+      setChallenges(data || []);
+    } catch (err: any) {
+      setError(err?.message || 'Unable to connect to JharSankalp database.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadChallenges();
+  }, [selectedCategory, selectedDistrict, selectedStatus]);
+
   // Featured challenge
   const featuredItem = useMemo(
-    () => CHALLENGES_DATA.find((c) => c.featured) || CHALLENGES_DATA[0],
-    []
+    () => challenges.find((c) => c.featured) || challenges[0] || null,
+    [challenges]
   );
 
-  // Filtered challenges list
+  // Filtered challenges list (client-side search keyword and impact filter)
   const filteredChallenges = useMemo(() => {
-    return CHALLENGES_DATA.filter((item) => {
+    return challenges.filter((item) => {
       // Search keyword filter
       if (search.trim()) {
         const query = search.toLowerCase();
@@ -50,31 +76,33 @@ export function Challenges() {
         }
       }
 
-      // Category filter
-      if (selectedCategory !== 'All Focus Areas' && item.category !== selectedCategory) {
-        return false;
-      }
-
-      // District filter
-      if (selectedDistrict !== 'All Districts' && item.district !== selectedDistrict) {
-        return false;
-      }
-
-      // Status filter
-      if (selectedStatus !== 'All Statuses' && item.status !== selectedStatus) {
-        return false;
-      }
-
-      // Impact level filter
+      // Impact Level filter
       if (selectedImpact !== 'All Impact Levels' && item.impactLevel !== selectedImpact) {
         return false;
       }
 
       return true;
     });
-  }, [search, selectedCategory, selectedDistrict, selectedStatus, selectedImpact]);
+  }, [challenges, search, selectedImpact]);
 
-  // Reset all filters
+  // Visible sliced list
+  const visibleChallenges = useMemo(() => {
+    return filteredChallenges.slice(0, visibleCount);
+  }, [filteredChallenges, visibleCount]);
+
+  const hasMore = visibleCount < filteredChallenges.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
+
+  const hasActiveFilters =
+    search !== '' ||
+    selectedCategory !== 'All Focus Areas' ||
+    selectedDistrict !== 'All Districts' ||
+    selectedStatus !== 'All Statuses' ||
+    selectedImpact !== 'All Impact Levels';
+
   const handleResetFilters = () => {
     setSearch('');
     setSelectedCategory('All Focus Areas');
@@ -84,227 +112,193 @@ export function Challenges() {
     setVisibleCount(INITIAL_PAGE_SIZE);
   };
 
-  const visibleChallenges = filteredChallenges.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredChallenges.length;
-
   return (
-    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
-      {/* ── 1. Page Hero with Platform Insights ── */}
-      <ChallengeHero />
+    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col justify-between relative">
+      <div>
+        {/* ── Page Hero ── */}
+        <ChallengeHero />
 
-      {/* ── 2. Discovery Section (Filters + Featured + Grid/Map) ── */}
-      <section className="py-10 sm:py-14 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full space-y-10 flex-1">
-        {/* Discovery Filter Controls */}
-        <ChallengeFilters
-          search={search}
-          onSearchChange={(val) => {
-            setSearch(val);
-            setVisibleCount(INITIAL_PAGE_SIZE);
-          }}
-          selectedCategory={selectedCategory}
-          onCategoryChange={(val) => {
-            setSelectedCategory(val);
-            setVisibleCount(INITIAL_PAGE_SIZE);
-          }}
-          selectedDistrict={selectedDistrict}
-          onDistrictChange={(val) => {
-            setSelectedDistrict(val);
-            setVisibleCount(INITIAL_PAGE_SIZE);
-          }}
-          selectedStatus={selectedStatus}
-          onStatusChange={(val) => {
-            setSelectedStatus(val);
-            setVisibleCount(INITIAL_PAGE_SIZE);
-          }}
-          selectedImpact={selectedImpact}
-          onImpactChange={(val) => {
-            setSelectedImpact(val);
-            setVisibleCount(INITIAL_PAGE_SIZE);
-          }}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          onResetFilters={handleResetFilters}
-          totalFiltered={filteredChallenges.length}
-        />
+        {/* ── Main Content Area ── */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+          {/* ── Featured Challenge Section ── */}
+          {!hasActiveFilters && featuredItem && (
+            <FeaturedChallenge
+              challenge={featuredItem}
+              onViewDetails={(ch) => navigate(`/challenges/${ch.id}`)}
+              onJoinCollaboration={(ch) => navigate(`/challenges/${ch.id}`)}
+            />
+          )}
 
-        {/* ── Featured Challenge Spotlight (Show when in Grid View and no specific narrow filter) ── */}
-        {viewMode === 'grid' && !search && selectedCategory === 'All Focus Areas' && (
-          <FeaturedChallenge
-            challenge={featuredItem}
-            onViewDetails={(c) => navigate(`/challenges/${c.id}`)}
-            onJoinCollaboration={(c) => setPreviewChallenge(c)}
+          {/* ── Filters & Search Controls ── */}
+          <ChallengeFilters
+            search={search}
+            onSearchChange={setSearch}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedDistrict={selectedDistrict}
+            onDistrictChange={setSelectedDistrict}
+            selectedStatus={selectedStatus}
+            onStatusChange={setSelectedStatus}
+            selectedImpact={selectedImpact}
+            onImpactChange={setSelectedImpact}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+            totalFiltered={filteredChallenges.length}
+            onResetFilters={handleResetFilters}
           />
-        )}
 
-        {/* ── Main Challenges Section Header ── */}
-        <div className="border-b border-[#EEEAE1] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-          <div>
-            <h2 className="text-[1.75rem] sm:text-[2rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-              Explore Challenges
-            </h2>
-            <p className="text-[13.5px] text-[#6B5845] mt-0.5">
-              Showing{' '}
-              <strong className="text-[#1D2522] font-bold">
-                {filteredChallenges.length}
-              </strong>{' '}
-              active challenges across Jharkhand
-            </p>
-          </div>
-        </div>
-
-        {/* ── VIEW SWITCH: Grid View or Interactive Map View ── */}
-        {viewMode === 'map' ? (
-          /* Map View */
-          <ChallengeMap
-            challenges={filteredChallenges}
-            onSelectChallenge={(c) => navigate(`/challenges/${c.id}`)}
-          />
-        ) : filteredChallenges.length > 0 ? (
-          /* Grid View */
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visibleChallenges.map((challenge) => (
-                <ChallengeCard
-                  key={challenge.id}
-                  challenge={challenge}
-                  onViewDetails={(c) => navigate(`/challenges/${c.id}`)}
-                />
-              ))}
-            </div>
-
-            {/* Load More Challenges Progressive Pagination */}
-            {hasMore && (
-              <div className="text-center pt-4">
-                <button
-                  onClick={() => setVisibleCount((prev) => prev + 6)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#123B2A] bg-white hover:bg-[#F8F6F1] text-[#123B2A] px-7 py-3 text-[14px] font-bold shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
-                >
-                  <span>Load More Challenges</span>
-                  <ArrowDown className="h-4 w-4 stroke-[2.5]" />
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* Empty State */
-          <div className="py-16 px-4 text-center rounded-2xl border border-dashed border-[#EEEAE1] bg-white space-y-4 max-w-xl mx-auto">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FEF6E9] text-[#B45309] mx-auto">
-              <SearchX className="h-7 w-7 stroke-[2]" />
-            </div>
-            <div>
-              <h3 className="text-[1.25rem] font-bold text-[#1D2522] font-sans">
-                No challenges found.
-              </h3>
-              <p className="text-[13.5px] text-[#6B5845] mt-1 max-w-sm mx-auto">
-                Try changing your search terms or explore another focus area and district.
+          {/* ── Loading State ── */}
+          {loading && (
+            <div className="py-20 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+              <Loader2 className="h-8 w-8 text-[#123B2A] animate-spin mx-auto" />
+              <p className="text-[13.5px] font-mono text-[#6B5845]">
+                Fetching verified challenges from JharSankalp database...
               </p>
             </div>
-            <button
-              onClick={handleResetFilters}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[#123B2A] text-white px-5 py-2.5 text-[13.5px] font-bold hover:bg-[#0D2B1E] transition-all cursor-pointer shadow-2xs"
-            >
-              <span>Clear All Filters</span>
-            </button>
-          </div>
-        )}
-      </section>
+          )}
 
-      {/* ── 3. Community Voice Call to Action ── */}
-      <ChallengeCTA />
+          {/* ── Error State with Retry ── */}
+          {!loading && error && (
+            <div className="py-16 text-center rounded-3xl bg-[#FFF5F5] border border-[#FECDD3] p-8 space-y-3">
+              <AlertCircle className="h-8 w-8 text-[#BE123C] mx-auto" />
+              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
+                Unable to load challenges
+              </h4>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
+                {error}
+              </p>
+              <button
+                type="button"
+                onClick={loadChallenges}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#BE123C] text-white text-[12.5px] font-bold cursor-pointer hover:bg-[#9F1239]"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>Retry</span>
+              </button>
+            </div>
+          )}
 
-      {/* ── 4. Institutional Footer ── */}
+          {/* ── Grid or Map View ── */}
+          {!loading && !error && (
+            <div className="space-y-6">
+              {filteredChallenges.length === 0 ? (
+                <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+                  <SearchX className="h-10 w-10 text-[#6B5845] mx-auto opacity-40" />
+                  <h4 className="text-[1.2rem] font-bold text-[#1D2522]">
+                    No challenges found matching your criteria
+                  </h4>
+                  <p className="text-[13.5px] text-[#6B5845] max-w-sm mx-auto">
+                    Try clearing one or more filters or search terms to see open challenges across Jharkhand.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="mt-2 px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[13px] font-bold cursor-pointer"
+                  >
+                    Reset All Filters
+                  </button>
+                </div>
+              ) : viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {visibleChallenges.map((challenge) => (
+                    <ChallengeCard
+                      key={challenge.id}
+                      challenge={challenge}
+                      onViewDetails={(ch) => navigate(`/challenges/${ch.id}`)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <ChallengeMap
+                  challenges={filteredChallenges}
+                  onSelectChallenge={setPreviewChallenge}
+                />
+              )}
+
+              {/* Load More Pagination */}
+              {viewMode === 'grid' && hasMore && (
+                <div className="pt-6 text-center">
+                  <button
+                    type="button"
+                    onClick={handleLoadMore}
+                    className="inline-flex items-center gap-2 rounded-xl border border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] px-6 py-3 text-[13.5px] font-bold text-[#1D2522] shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+                  >
+                    <span>Load More Challenges</span>
+                    <ArrowDown className="h-4 w-4 text-[#123B2A]" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Bottom Call To Action ── */}
+          <ChallengeCTA />
+        </div>
+      </div>
+
+      {/* ── Footer ── */}
       <Footer />
 
-      {/* ── Interactive Problem Dossier Modal / Preview Drawer ── */}
+      {/* ── Preview Modal for Map View Selection ── */}
       {previewChallenge && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs text-left animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl rounded-2xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
-            {/* Close button */}
-            <button
-              onClick={() => setPreviewChallenge(null)}
-              className="absolute top-5 right-5 p-1.5 rounded-lg text-[#6B5845] hover:bg-[#F8F6F1] hover:text-[#1D2522] transition-colors cursor-pointer"
-              aria-label="Close dialog"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="space-y-2 pr-8">
-              <div className="flex items-center gap-2 text-[11px] font-mono font-bold text-[#123B2A] uppercase">
-                <MapPin className="h-3.5 w-3.5 text-[#F5A623]" />
-                <span>{previewChallenge.district}</span>
-                <span>·</span>
-                <span>{previewChallenge.category}</span>
-                <span>·</span>
-                <span className="text-[#6B5845]">{previewChallenge.id}</span>
-              </div>
-
-              <h3 className="text-[1.5rem] sm:text-[1.75rem] font-extrabold text-[#1D2522] tracking-tight leading-snug font-sans">
-                {previewChallenge.title}
-              </h3>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150"
+          onClick={() => setPreviewChallenge(null)}
+        >
+          <div
+            className="w-full max-w-lg rounded-3xl bg-white border border-[#EEEAE1] shadow-2xl p-6 sm:p-7 space-y-4 text-left"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between border-b border-[#EEEAE1] pb-3">
+              <span className="text-[11px] font-mono font-bold uppercase text-[#123B2A] bg-[#FAF9F5] px-2.5 py-0.5 rounded border border-[#EEEAE1]">
+                {previewChallenge.category}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPreviewChallenge(null)}
+                className="text-[#6B5845] hover:text-[#1D2522] p-1 cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
 
-            {/* Problem Description */}
-            <div className="space-y-2">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#6B5845]">
-                Problem Formulation & Ground Reality
-              </span>
-              <p className="text-[14.5px] text-[#1D2522]/90 leading-relaxed bg-[#FAF9F5] p-4 rounded-xl border border-[#EEEAE1]">
+            <div className="space-y-1.5">
+              <h3 className="text-[1.35rem] font-bold text-[#1D2522]">
+                {previewChallenge.title}
+              </h3>
+              <p className="text-[13px] text-[#6B5845] line-clamp-3">
                 {previewChallenge.description}
               </p>
             </div>
 
-            {/* District & Operational Metadata */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div className="p-3 rounded-lg border border-[#EEEAE1] bg-white text-left">
-                <div className="text-[11px] font-mono text-[#6B5845]">Target Block</div>
-                <div className="text-[13.5px] font-bold text-[#1D2522] mt-0.5">{previewChallenge.block}</div>
-              </div>
-
-              <div className="p-3 rounded-lg border border-[#EEEAE1] bg-white text-left">
-                <div className="text-[11px] font-mono text-[#6B5845]">Impact Level</div>
-                <div className="text-[13.5px] font-bold text-[#123B2A] mt-0.5">{previewChallenge.impactLevel}</div>
-              </div>
-
-              <div className="p-3 rounded-lg border border-[#EEEAE1] bg-white text-left col-span-2 sm:col-span-1">
-                <div className="text-[11px] font-mono text-[#6B5845]">Current Status</div>
-                <div className="text-[13.5px] font-bold text-[#B45309] mt-0.5">{previewChallenge.status}</div>
-              </div>
-            </div>
-
-            {/* Collaborators & Contributions */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-[#F8F6F1] border border-[#EEEAE1] flex-wrap gap-3">
-              <div className="flex items-center gap-3 text-[13px] text-[#6B5845]">
-                <span className="flex items-center gap-1.5 font-bold text-[#1D2522]">
-                  <Users className="h-4 w-4 text-[#123B2A]" />
-                  {previewChallenge.collaboratorsCount} Active Solvers
-                </span>
-                <span>·</span>
-                <span>{previewChallenge.ideasCount} Ideas Submitted</span>
-              </div>
-
-              <span className="text-[11px] font-mono text-[#6B5845]">
-                Verified by Dept. of Higher & Tech Education
+            <div className="flex items-center gap-4 text-[12px] font-mono text-[#6B5845] pt-1">
+              <span className="flex items-center gap-1">
+                <MapPin className="h-3.5 w-3.5 text-[#BE123C]" />
+                {previewChallenge.locationDisplay}
+              </span>
+              <span>·</span>
+              <span className="flex items-center gap-1 text-[#15803D] font-bold">
+                <Users className="h-3.5 w-3.5" />
+                {previewChallenge.collaboratorsCount} Collaborators
               </span>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-2">
+            <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-end gap-3">
               <button
+                type="button"
                 onClick={() => setPreviewChallenge(null)}
-                className="px-5 py-2.5 rounded-lg border border-[#EEEAE1] text-[13.5px] font-medium text-[#1D2522] hover:bg-[#F8F6F1] transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-[12.5px] font-bold text-[#6B5845] hover:text-[#1D2522] cursor-pointer"
               >
                 Close
               </button>
-
               <button
+                type="button"
                 onClick={() => {
-                  setPreviewChallenge(null);
-                  navigate('/report');
+                  navigate(`/challenges/${previewChallenge.id}`);
                 }}
-                className="px-6 py-2.5 rounded-lg bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[13.5px] font-bold transition-all shadow-xs cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#123B2A] text-white text-[12.5px] font-bold shadow-xs hover:bg-[#0D2B1E] cursor-pointer"
               >
-                Contribute Idea / Collaborate
+                Open Full Challenge Dossier
               </button>
             </div>
           </div>

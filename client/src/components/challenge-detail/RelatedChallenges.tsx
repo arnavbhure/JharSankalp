@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChallengeCard } from '../challenges/ChallengeCard';
-import { CHALLENGES_DATA } from '../../data/challengesData';
+import { fetchChallenges } from '../../services/api/challenges';
+import { ChallengeItem } from '../../types/challenges';
 
 interface RelatedChallengesProps {
-  currentChallengeId: string;
+  currentChallengeId?: string;
+  currentCategory?: string;
+  currentId?: string;
 }
 
-export function RelatedChallenges({ currentChallengeId }: RelatedChallengesProps) {
+export function RelatedChallenges({ currentChallengeId, currentId, currentCategory }: RelatedChallengesProps) {
   const navigate = useNavigate();
+  const targetId = currentChallengeId || currentId || '';
+  const [related, setRelated] = useState<ChallengeItem[]>([]);
 
-  // Pick 3 related challenges excluding current
-  const related = CHALLENGES_DATA.filter((c) => c.id !== currentChallengeId).slice(0, 3);
+  useEffect(() => {
+    fetchChallenges()
+      .then((list) => {
+        const filtered = (list || [])
+          .filter((c) => c.id !== targetId)
+          .slice(0, 3);
+        setRelated(filtered);
+      })
+      .catch((err) => console.warn('Failed to load related challenges:', err));
+  }, [targetId, currentCategory]);
 
   return (
     <section className="py-12 sm:py-16 border-b border-[#EEEAE1] text-left">

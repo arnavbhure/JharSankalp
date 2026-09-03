@@ -3,8 +3,6 @@ import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
-// ── Jharkhand Districts (all 24) ─────────────────────────────
-
 const DISTRICTS = [
   { name: 'Bokaro', code: 'BOK' },
   { name: 'Chatra', code: 'CHA' },
@@ -35,7 +33,7 @@ const DISTRICTS = [
 const DEMO_PASSWORD_HASH = '$2a$10$rQZK4Q7XfaGxYzKhXV1wgeKLnZ4j3E1TnCaYdN7F5LbLkVhQ1Y7Ye'; // password123
 
 async function main() {
-  console.log('🌱 Seeding JharSankalp PostgreSQL database...\n');
+  console.log('🌱 Seeding complete JharSankalp PostgreSQL database...\n');
 
   // 1. Districts
   console.log('📍 Seeding 24 Jharkhand districts...');
@@ -111,6 +109,19 @@ async function main() {
       isVerified: true,
     },
   });
+
+  const dumkaEduOrg = await prisma.organization.upsert({
+    where: { id: '20000000-0000-0000-0000-000000000005' },
+    update: {},
+    create: {
+      id: '20000000-0000-0000-0000-000000000005',
+      name: 'Santhal Pargana Tech Collective',
+      type: 'STARTUP',
+      description: 'Educational technology cooperative specializing in offline bilingual Santhali Ol Chiki tools.',
+      districtId: districtMap['Dumka'],
+      isVerified: true,
+    },
+  });
   console.log(`   ✅ Organizations seeded`);
 
   // 3. Users
@@ -172,23 +183,10 @@ async function main() {
       bio: 'Lead CSR rural technology implementation partner.',
     },
   });
-
-  const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@jharsankalp.in' },
-    update: {},
-    create: {
-      id: '10000000-0000-0000-0000-000000000005',
-      name: 'JharSankalp Administrator',
-      email: 'admin@jharsankalp.in',
-      passwordHash: DEMO_PASSWORD_HASH,
-      role: 'ADMIN',
-      district: 'Ranchi',
-    },
-  });
   console.log(`   ✅ Users seeded`);
 
-  // 4. Challenges
-  console.log('⚡ Seeding challenges...');
+  // 4. Challenges (6 Core Domains)
+  console.log('⚡ Seeding 6 core challenges...');
   const waterChallenge = await prisma.challenge.upsert({
     where: { publicId: 'JS-2026-00024' },
     update: {},
@@ -265,10 +263,48 @@ async function main() {
       submittedById: citizenUser.id,
     },
   });
-  console.log(`   ✅ Challenges seeded`);
 
-  // 5. Ideas
-  console.log('💡 Seeding ideas...');
+  const eduChallenge = await prisma.challenge.upsert({
+    where: { publicId: 'JS-2026-00014' },
+    update: {},
+    create: {
+      id: '30000000-0000-0000-0000-000000000005',
+      publicId: 'JS-2026-00014',
+      challengeCode: 'JS-2026-00014',
+      title: 'Educational Equity & Multilingual Digital Access in Santhal Pargana',
+      description: 'Non-electrified tribal primary schools lack foundational numeracy learning tools in their mother tongue Santhali (Ol Chiki script).',
+      domain: 'Education',
+      districtId: districtMap['Dumka'],
+      block: 'Shikaripara',
+      status: 'ACTIVE',
+      priority: 'HIGH',
+      affectedPopulation: 1700,
+      submittedById: citizenUser.id,
+    },
+  });
+
+  const envChallenge = await prisma.challenge.upsert({
+    where: { publicId: 'JS-2026-00021' },
+    update: {},
+    create: {
+      id: '30000000-0000-0000-0000-000000000006',
+      publicId: 'JS-2026-00021',
+      challengeCode: 'JS-2026-00021',
+      title: 'Forest Economy & Acoustic Chainsaw Detection in Betla Buffer Zone',
+      description: 'Illegal tree felling in the sal forest buffer zone threatens tribal minor forest produce (MFP) collection and biodiversity.',
+      domain: 'Environment',
+      districtId: districtMap['Latehar'],
+      block: 'Garu',
+      status: 'ACTIVE',
+      priority: 'MEDIUM',
+      affectedPopulation: 1100,
+      submittedById: citizenUser.id,
+    },
+  });
+  console.log(`   ✅ 6 challenges seeded`);
+
+  // 5. Ideas (6 Core Domains)
+  console.log('💡 Seeding 6 ideas...');
   const waterIdea = await prisma.idea.upsert({
     where: { id: '40000000-0000-0000-0000-000000000001' },
     update: {},
@@ -308,10 +344,90 @@ async function main() {
       tags: ['Spectroscopy', 'Bluetooth', 'Soil Health Card'],
     },
   });
-  console.log(`   ✅ Ideas seeded`);
 
-  // 6. Collaborations
-  console.log('👥 Seeding collaborations & project teams...');
+  const miningIdea = await prisma.idea.upsert({
+    where: { id: '40000000-0000-0000-0000-000000000003' },
+    update: {},
+    create: {
+      id: '40000000-0000-0000-0000-000000000003',
+      title: 'Subsurface MEMS Extensometer & InSAR Warning Array',
+      description: 'Early warning array detecting sub-millimeter displacement in Jharia subsidence zones and firing sirens 48 hours before cave-ins.',
+      domain: 'Mining Safety',
+      district: 'Dhanbad',
+      status: 'IN_COLLABORATION',
+      submittedById: facultyUser.id,
+      relatedChallengeId: miningChallenge.id,
+      authorName: 'IIT ISM Dhanbad Geo-tech Group',
+      authorRole: 'Senior Geophysicist',
+      supportersCount: 114,
+      collaboratorsCount: 5,
+      tags: ['MEMS Tiltmeters', 'InSAR Fusion', 'Early Warning'],
+    },
+  });
+
+  const healthIdea = await prisma.idea.upsert({
+    where: { id: '40000000-0000-0000-0000-000000000004' },
+    update: {},
+    create: {
+      id: '40000000-0000-0000-0000-000000000004',
+      title: 'Solar-Powered Backpack Diagnostic Kit for Tribal ASHA Workers',
+      description: 'Non-invasive hemoglobinometer and digital vitals kit enabling maternal screening during routine forest hamlet visits.',
+      domain: 'Healthcare',
+      district: 'West Singhbhum',
+      status: 'IMPLEMENTED',
+      submittedById: citizenUser.id,
+      relatedChallengeId: healthChallenge.id,
+      authorName: 'Rural Health Mission Team',
+      authorRole: 'ASHA Facilitator',
+      supportersCount: 165,
+      collaboratorsCount: 9,
+      tags: ['Diagnostic Hardware', 'Solar Battery', 'Digital Health Record'],
+    },
+  });
+
+  const eduIdea = await prisma.idea.upsert({
+    where: { id: '40000000-0000-0000-0000-000000000005' },
+    update: {},
+    create: {
+      id: '40000000-0000-0000-0000-000000000005',
+      title: 'Offline Digital Learning Hub with Ol Chiki NCERT Modules',
+      description: 'Solar-powered offline Wi-Fi micro-servers broadcasting bilingual interactive primary education content to low-cost tablets.',
+      domain: 'Education',
+      district: 'Dumka',
+      status: 'IN_COLLABORATION',
+      submittedById: citizenUser.id,
+      relatedChallengeId: eduChallenge.id,
+      authorName: 'Santhal Pargana Tech Collective',
+      authorRole: 'EdTech Innovator',
+      supportersCount: 88,
+      collaboratorsCount: 4,
+      tags: ['Offline Wi-Fi Mesh', 'Solar Micro-Server', 'Ol Chiki'],
+    },
+  });
+
+  const envIdea = await prisma.idea.upsert({
+    where: { id: '40000000-0000-0000-0000-000000000006' },
+    update: {},
+    create: {
+      id: '40000000-0000-0000-0000-000000000006',
+      title: 'Community Forest Monitoring Platform with Canopy Audio ML',
+      description: 'Acoustic listening nodes in tree canopies detecting chainsaw frequencies and alerting forest guards and Van Suraksha Samitis.',
+      domain: 'Environment',
+      district: 'Latehar',
+      status: 'APPROVED',
+      submittedById: facultyUser.id,
+      relatedChallengeId: envChallenge.id,
+      authorName: 'BAU Forestry Department',
+      authorRole: 'Forest Ecologist',
+      supportersCount: 76,
+      collaboratorsCount: 5,
+      tags: ['Canopy Acoustic Sensors', 'Audio ML', 'GPS Geofencing'],
+    },
+  });
+  console.log(`   ✅ 6 ideas seeded`);
+
+  // 6. Collaborations (6 Projects)
+  console.log('👥 Seeding 6 collaborative projects & teams...');
   const waterCollab = await prisma.collaboration.upsert({
     where: { id: '50000000-0000-0000-0000-000000000001' },
     update: {},
@@ -332,48 +448,124 @@ async function main() {
     },
   });
 
-  // Collaboration Members
+  const agriCollab = await prisma.collaboration.upsert({
+    where: { id: '50000000-0000-0000-0000-000000000002' },
+    update: {},
+    create: {
+      id: '50000000-0000-0000-0000-000000000002',
+      title: 'Smart Agriculture & Soil Diagnostics Initiative',
+      description: 'Birsa Agricultural University and Gumla Krishi Vigyan Kendra validating handheld optical soil testing in 42 tribal farm cooperatives.',
+      status: 'ACTIVE',
+      domain: 'Agriculture',
+      district: 'Gumla',
+      stage: 'Prototype',
+      progressPercentage: 52,
+      leadPartner: 'Birsa Agricultural University',
+      institutionName: 'BAU + Gumla KVK',
+      relatedChallengeId: agriChallenge.id,
+      relatedIdeaId: agriIdea.id,
+      neededSkills: ['Agronomy', 'Spectroscopy', 'Mobile UI Design'],
+    },
+  });
+
+  const miningCollab = await prisma.collaboration.upsert({
+    where: { id: '50000000-0000-0000-0000-000000000003' },
+    update: {},
+    create: {
+      id: '50000000-0000-0000-0000-000000000003',
+      title: 'Early Warning Community Network',
+      description: 'Sensor array and early warning telemetry network deployed across Jharia coalfield settlements with civil defence dispatch.',
+      status: 'ACTIVE',
+      domain: 'Mining Safety',
+      district: 'Dhanbad',
+      stage: 'Testing',
+      progressPercentage: 64,
+      leadPartner: 'IIT (ISM) Dhanbad',
+      institutionName: 'IIT (ISM) Dhanbad + Jharia Rehabilitation Authority',
+      relatedChallengeId: miningChallenge.id,
+      relatedIdeaId: miningIdea.id,
+      neededSkills: ['Geophysics', 'Telemetry', 'Disaster Management'],
+    },
+  });
+
+  const healthCollab = await prisma.collaboration.upsert({
+    where: { id: '50000000-0000-0000-0000-000000000004' },
+    update: {},
+    create: {
+      id: '50000000-0000-0000-0000-000000000004',
+      title: 'Mobile Health Outreach Network',
+      description: 'Deploying backpack diagnostic kits with non-invasive vitals logging across 24 isolated forest hamlets in Kolhan division.',
+      status: 'ACTIVE',
+      domain: 'Healthcare',
+      district: 'West Singhbhum',
+      stage: 'Deployment',
+      progressPercentage: 90,
+      leadPartner: 'Rural Health Mission Jharkhand',
+      institutionName: 'Chaibasa Civil Hospital + AIIMS Deoghar',
+      relatedChallengeId: healthChallenge.id,
+      relatedIdeaId: healthIdea.id,
+      neededSkills: ['Point-of-Care Diagnostics', 'Community Health', 'Vernacular Training'],
+    },
+  });
+
+  const eduCollab = await prisma.collaboration.upsert({
+    where: { id: '50000000-0000-0000-0000-000000000005' },
+    update: {},
+    create: {
+      id: '50000000-0000-0000-0000-000000000005',
+      title: 'Digital Learning Access Initiative',
+      description: 'Equipping 12 non-electrified primary schools in Dumka with solar offline micro-servers and Ol Chiki audio-visual curriculum.',
+      status: 'ACTIVE',
+      domain: 'Education',
+      district: 'Dumka',
+      stage: 'Field Pilot',
+      progressPercentage: 75,
+      leadPartner: 'Santhal Pargana Tech Collective',
+      institutionName: 'Dumka District Education Office',
+      relatedChallengeId: eduChallenge.id,
+      relatedIdeaId: eduIdea.id,
+      neededSkills: ['Curriculum Localization', 'Solar Micro-Servers', 'Ol Chiki Pedagogy'],
+    },
+  });
+
+  const envCollab = await prisma.collaboration.upsert({
+    where: { id: '50000000-0000-0000-0000-000000000006' },
+    update: {},
+    create: {
+      id: '50000000-0000-0000-0000-000000000006',
+      title: 'Community Forest Intelligence Project',
+      description: 'Acoustic canopy nodes detecting chainsaw noise signatures and transmitting geolocation alerts to Van Suraksha Samitis.',
+      status: 'ACTIVE',
+      domain: 'Environment',
+      district: 'Latehar',
+      stage: 'Research',
+      progressPercentage: 38,
+      leadPartner: 'Latehar Forest Division',
+      institutionName: 'BAU Forestry Department',
+      relatedChallengeId: envChallenge.id,
+      relatedIdeaId: envIdea.id,
+      neededSkills: ['Audio ML Classification', 'Hardware Weatherproofing', 'Forest Law'],
+    },
+  });
+
+  // Seed Members for Collaborations
   await prisma.collaborationMember.createMany({
     data: [
-      {
-        id: randomUUID(),
-        collaborationId: waterCollab.id,
-        userId: facultyUser.id,
-        memberName: 'Prof. Anand Verma',
-        role: 'LEAD',
-        institution: 'BIT Mesra',
-      },
-      {
-        id: randomUUID(),
-        collaborationId: waterCollab.id,
-        userId: citizenUser.id,
-        memberName: 'Kavita Munda',
-        role: 'COMMUNITY_PARTNER',
-        institution: 'Murhu Jal Sahiya Collective',
-      },
-      {
-        id: randomUUID(),
-        collaborationId: waterCollab.id,
-        userId: govtUser.id,
-        memberName: 'Dr. Rajesh Kumar',
-        role: 'MENTOR',
-        institution: 'Khunti District DW&S',
-      },
-      {
-        id: randomUUID(),
-        collaborationId: waterCollab.id,
-        userId: partnerUser.id,
-        memberName: 'Sanjay Oraon',
-        role: 'INDUSTRY_PARTNER',
-        institution: 'Rural Innovation Foundation',
-      },
+      { id: randomUUID(), collaborationId: waterCollab.id, userId: facultyUser.id, memberName: 'Prof. Anand Verma', role: 'LEAD', institution: 'BIT Mesra' },
+      { id: randomUUID(), collaborationId: waterCollab.id, userId: citizenUser.id, memberName: 'Kavita Munda', role: 'COMMUNITY_PARTNER', institution: 'Murhu Jal Sahiya' },
+      { id: randomUUID(), collaborationId: waterCollab.id, userId: govtUser.id, memberName: 'Dr. Rajesh Kumar', role: 'MENTOR', institution: 'DW&S Khunti' },
+      { id: randomUUID(), collaborationId: waterCollab.id, userId: partnerUser.id, memberName: 'Sanjay Oraon', role: 'INDUSTRY_PARTNER', institution: 'Tata Steel CSR' },
+      { id: randomUUID(), collaborationId: agriCollab.id, userId: facultyUser.id, memberName: 'Dr. Sudhir Sahay', role: 'LEAD', institution: 'BAU Ranchi' },
+      { id: randomUUID(), collaborationId: agriCollab.id, userId: citizenUser.id, memberName: 'Bhudhan Oraon', role: 'COMMUNITY_PARTNER', institution: 'Gumla Krishi Samiti' },
+      { id: randomUUID(), collaborationId: healthCollab.id, userId: citizenUser.id, memberName: 'Sushila Soy', role: 'LEAD', institution: 'ASHA Kolhan' },
+      { id: randomUUID(), collaborationId: eduCollab.id, userId: citizenUser.id, memberName: 'Sunil Murmu', role: 'LEAD', institution: 'Santhal Tech' },
     ],
     skipDuplicates: true,
   });
-  console.log(`   ✅ Collaborations seeded`);
+  console.log(`   ✅ 6 collaborations & members seeded`);
 
-  // 7. Solutions
-  console.log('✓ Seeding solutions & innovation portfolio...');
+  // 7. Solutions (6 Core Solutions)
+  console.log('✓ Seeding 6 solutions...');
   const waterSolution = await prisma.solution.upsert({
     where: { id: '60000000-0000-0000-0000-000000000001' },
     update: {},
@@ -412,6 +604,7 @@ async function main() {
       progressPercentage: 52,
       impactSummary: '42 tribal farmers testbed · 28% chemical fertilizer cost reduction',
       relatedChallengeId: agriChallenge.id,
+      relatedCollaborationId: agriCollab.id,
       leadPartners: ['Birsa Agricultural University', 'Gumla Krishi Vigyan Kendra'],
     },
   });
@@ -432,6 +625,7 @@ async function main() {
       progressPercentage: 64,
       impactSummary: '8 settlement monitoring nodes · Sub-millimeter ground movement alert accuracy',
       relatedChallengeId: miningChallenge.id,
+      relatedCollaborationId: miningCollab.id,
       leadPartners: ['IIT (ISM) Dhanbad', 'Jharia Coalfield Rehabilitation Authority'],
     },
   });
@@ -452,10 +646,53 @@ async function main() {
       progressPercentage: 90,
       impactSummary: '1,800+ screenings · 24 forest hamlets covered · 34 high-risk anemia cases flagged',
       relatedChallengeId: healthChallenge.id,
+      relatedCollaborationId: healthCollab.id,
       leadPartners: ['Rural Health Mission Jharkhand', 'Chaibasa Civil Hospital', 'AIIMS Deoghar'],
     },
   });
-  console.log(`   ✅ Solutions seeded`);
+
+  const eduSolution = await prisma.solution.upsert({
+    where: { id: '60000000-0000-0000-0000-000000000005' },
+    update: {},
+    create: {
+      id: '60000000-0000-0000-0000-000000000005',
+      title: 'Offline Digital Learning Hub',
+      tagline: 'Solar micro-server with curated multilingual Ol Chiki and NCERT learning modules',
+      description: 'Offline solar-powered micro-servers loaded with interactive bilingual curriculum modules for non-electrified primary schools without internet.',
+      domain: 'Education',
+      district: 'Dumka',
+      stage: 'FIELD_PILOT',
+      technologyTags: ['Offline Wi-Fi Mesh', 'Solar Micro-Server', 'Ol Chiki Language', 'Open Educational Resources'],
+      technologyType: 'EdTech',
+      progressPercentage: 75,
+      impactSummary: '12 non-electrified schools · 650 primary students active · 40% math fluency gain',
+      relatedChallengeId: eduChallenge.id,
+      relatedCollaborationId: eduCollab.id,
+      leadPartners: ['Santhal Pargana Tech Collective', 'Dumka District Education Office'],
+    },
+  });
+
+  const envSolution = await prisma.solution.upsert({
+    where: { id: '60000000-0000-0000-0000-000000000006' },
+    update: {},
+    create: {
+      id: '60000000-0000-0000-0000-000000000006',
+      title: 'Community Forest Monitoring Platform',
+      tagline: 'Acoustic canopy sensors & mobile vernacular app for Van Suraksha Samitis',
+      description: 'Acoustic canopy sensors and smartphone reporting app for community forest protection committees to prevent timber smuggling and log fire smoke.',
+      domain: 'Environment',
+      district: 'Latehar',
+      stage: 'RESEARCH',
+      technologyTags: ['Canopy Acoustic Sensors', 'Machine Learning Audio Classifier', 'Offline Map', 'GPS Geofencing'],
+      technologyType: 'Environmental Tech',
+      progressPercentage: 38,
+      impactSummary: '3 Van Suraksha Samitis · 450 hectares monitored · Zero illegal felling in pilot zone',
+      relatedChallengeId: envChallenge.id,
+      relatedCollaborationId: envCollab.id,
+      leadPartners: ['Latehar Forest Division', 'Birsa Agricultural University Forestry Dept'],
+    },
+  });
+  console.log(`   ✅ 6 solutions seeded`);
 
   // 8. Impact Records
   console.log('📊 Seeding impact records...');
@@ -530,6 +767,26 @@ async function main() {
         district: 'Dhanbad',
         domain: 'Mining Safety',
         description: 'Advance sensor warning window prior to subsurface road and settlement fissure breaches.',
+      },
+      {
+        id: randomUUID(),
+        solutionId: eduSolution.id,
+        metricName: 'Students Supported',
+        metricValue: '650',
+        metricUnit: 'Students',
+        district: 'Dumka',
+        domain: 'Education',
+        description: 'Tribal primary students actively learning with Ol Chiki digital modules.',
+      },
+      {
+        id: randomUUID(),
+        solutionId: envSolution.id,
+        metricName: 'Hectares Forest Monitored',
+        metricValue: '450',
+        metricUnit: 'Hectares',
+        district: 'Latehar',
+        domain: 'Environment',
+        description: 'Dense Sal forest protected under community acoustic sensor surveillance.',
       },
     ],
     skipDuplicates: true,

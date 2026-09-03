@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ImpactHero } from '../../components/impact/ImpactHero';
 import { ImpactJourney } from '../../components/impact/ImpactJourney';
 import { ImpactFilters } from '../../components/impact/ImpactFilters';
@@ -16,11 +16,39 @@ import {
   COMMUNITY_QUOTES,
   RECENT_IMPACT_FEED,
 } from '../../data/impactData';
+import { fetchImpactAnalytics, mapDbRecordToFeedItem, ImpactAnalyticsResponse } from '../../services/api/impact';
+import { ImpactFeedItem } from '../../types/impact';
+import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 export function Impact() {
   const [selectedDistrict, setSelectedDistrict] = useState('All Districts');
   const [selectedDomain, setSelectedDomain] = useState('All Focus Areas');
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('all_time');
+
+  // API Data State
+  const [apiData, setApiData] = useState<ImpactAnalyticsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadImpactData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchImpactAnalytics({
+        domain: selectedDomain,
+        district: selectedDistrict,
+      });
+      setApiData(data);
+    } catch (err: any) {
+      setError(err?.message || 'Unable to connect to JharSankalp database.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadImpactData();
+  }, [selectedDomain, selectedDistrict, selectedTimePeriod]);
 
   // Filtered Districts
   const filteredDistricts = useMemo(() => {
@@ -43,17 +71,13 @@ export function Impact() {
     return list.length > 0 ? list : DOMAINS_IMPACT_DATA;
   }, [selectedDomain]);
 
-  // Filtered Feed Items
-  const filteredFeed = useMemo(() => {
-    let list = [...RECENT_IMPACT_FEED];
-    if (selectedDistrict !== 'All Districts') {
-      list = list.filter((f) => f.district.toLowerCase() === selectedDistrict.toLowerCase());
+  // Dynamic Activity Feed: Mapped from PostgreSQL records if available
+  const feedItems: ImpactFeedItem[] = useMemo(() => {
+    if (apiData?.records && apiData.records.length > 0) {
+      return apiData.records.map((r, i) => mapDbRecordToFeedItem(r, i));
     }
-    if (selectedDomain !== 'All Focus Areas') {
-      list = list.filter((f) => f.domain.toLowerCase() === selectedDomain.toLowerCase());
-    }
-    return list.length > 0 ? list : RECENT_IMPACT_FEED;
-  }, [selectedDistrict, selectedDomain]);
+    return RECENT_IMPACT_FEED;
+  }, [apiData]);
 
   const hasActiveFilters =
     selectedDistrict !== 'All Districts' ||
@@ -102,26 +126,61 @@ export function Impact() {
             hasActiveFilters={hasActiveFilters}
           />
 
-          {/* ── 4. Impact Overview & District Geographic Reach ── */}
-          <ImpactOverview districts={filteredDistricts} />
+          {/* ── Loading State ── */}
+          {loading && (
+            <div className="py-20 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+              <Loader2 className="h-8 w-8 text-[#123B2A] animate-spin mx-auto" />
+              <p className="text-[13.5px] font-mono text-[#6B5845]">
+                Auditing verified field impact records from JharSankalp database...
+              </p>
+            </div>
+          )}
 
-          {/* ── 5. Featured Human Impact Story (Murhu Block) ── */}
-          <FeaturedImpactStory />
+          {/* ── Error State with Retry ── */}
+          {!loading && error && (
+            <div className="py-16 text-center rounded-3xl bg-[#FFF5F5] border border-[#FECDD3] p-8 space-y-3">
+              <AlertCircle className="h-8 w-8 text-[#BE123C] mx-auto" />
+              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
+                Unable to load impact records
+              </h4>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
+                {error}
+              </p>
+              <button
+                type="button"
+                onClick={loadImpactData}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#BE123C] text-white text-[12.5px] font-bold cursor-pointer hover:bg-[#9F1239]"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>Retry</span>
+              </button>
+            </div>
+          )}
 
-          {/* ── 6. Domain Reach & Outcomes ── */}
-          <DomainImpact domains={filteredDomains} />
+          {!loading && !error && (
+            <>
+              {/* ── 4. Impact Overview & District Geographic Reach ── */}
+              <ImpactOverview districts={filteredDistricts} />
 
-          {/* ── 7. Community Testimonials / Qualitative Voices ── */}
-          <CommunityOutcomes quotes={COMMUNITY_QUOTES} />
+              {/* ── 5. Featured Human Impact Story (Murhu Block) ── */}
+              <FeaturedImpactStory />
 
-          {/* ── 8. Recent Impact Activity Feed ── */}
-          <RecentImpactFeed items={filteredFeed} />
+              {/* ── 6. Domain Reach & Outcomes ── */}
+              <DomainImpact domains={filteredDomains} />
 
-          {/* ── 9. State Innovation Intelligence (Gov CTA) ── */}
-          <GovernmentInsightCTA />
+              {/* ── 7. Community Testimonials / Qualitative Voices ── */}
+              <CommunityOutcomes quotes={COMMUNITY_QUOTES} />
 
-          {/* ── 10. Final Ecosystem CTA ── */}
-          <ImpactFinalCTA />
+              {/* ── 8. Recent Impact Activity Feed ── */}
+              <RecentImpactFeed items={feedItems} />
+
+              {/* ── 9. State Innovation Intelligence (Gov CTA) ── */}
+              <GovernmentInsightCTA />
+
+              {/* ── 10. Final Ecosystem CTA ── */}
+              <ImpactFinalCTA />
+            </>
+          )}
         </div>
       </div>
 

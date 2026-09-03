@@ -1,7 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { getChallengeDetail } from '../data/challengeDetailData';
+import { fetchChallengeById } from '../services/api/challenges';
+import { ChallengeDetailData } from '../types/challengeDetail';
 import { DetailHero } from '../components/challenge-detail/DetailHero';
 import { DetailSectionNav } from '../components/challenge-detail/DetailSectionNav';
 import { ProblemStatement } from '../components/challenge-detail/ProblemStatement';
@@ -19,7 +21,56 @@ import { useInnovationStore } from '../stores/innovationStore';
 export function ChallengeDetail() {
   const { challengeId } = useParams<{ challengeId: string }>();
   const navigate = useNavigate();
-  const challenge = useMemo(() => getChallengeDetail(challengeId), [challengeId]);
+
+  const [challenge, setChallenge] = useState<ChallengeDetailData>(() =>
+    getChallengeDetail(challengeId)
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchChallengeById(challengeId || '')
+      .then((res) => {
+        if (!isMounted) return;
+        if (res && res.id) {
+          setChallenge((prev) => ({
+            ...prev,
+            id: res.publicId || res.challengeCode || res.id,
+            title: res.title || prev.title,
+            category: (res.domain || prev.category) as any,
+            district: res.district?.name || res.district || prev.district,
+            subLocation: res.block || prev.subLocation,
+            summary: res.description || prev.summary,
+            status: res.status ? res.status.toUpperCase() : prev.status,
+            impactPriority: `${res.priority || 'High'} Impact Priority`,
+            stats: {
+              collaboratorsCount: res._count?.collaborations || res.collaborations?.length || prev.stats.collaboratorsCount,
+              ideasCount: res._count?.ideas || res.ideas?.length || prev.stats.ideasCount,
+              followersCount: prev.stats.followersCount,
+            },
+            profile: {
+              ...prev.profile,
+              district: res.district?.name || res.district || prev.profile.district,
+              focusArea: res.domain || prev.profile.focusArea,
+              dateSubmitted: res.createdAt
+                ? new Date(res.createdAt).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })
+                : prev.profile.dateSubmitted,
+              trackingId: res.publicId || res.challengeCode || prev.profile.trackingId,
+            },
+          }));
+        }
+      })
+      .catch((err) => {
+        console.warn('Using local fallback for challenge detail:', err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [challengeId]);
 
   const { isChallengeJoined, joinChallenge, isChallengeSaved, saveChallenge } = useInnovationStore();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -59,43 +110,40 @@ export function ChallengeDetail() {
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col relative">
       {/* ── Floating Notification Toast ── */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[#123B2A] text-white shadow-xl border border-[#1E5A3A] text-[13px] font-medium">
-            <CheckCircle2 className="h-4 w-4 text-[#F5A623] shrink-0" />
-            <span>{toastMessage}</span>
-          </div>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#123B2A] text-white shadow-xl border border-[#1E5A3A] animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <CheckCircle2 className="h-4 w-4 text-[#F5A623] shrink-0" />
+          <span className="text-[13px] font-medium">{toastMessage}</span>
         </div>
       )}
 
-      {/* ── Breadcrumb Bar ── */}
-      <div className="border-b border-[#EEEAE1] bg-white py-3">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[12.5px] text-[#6B5845]">
-          <div className="flex items-center gap-2">
-            <Link to="/challenges" className="hover:text-[#123B2A] transition-colors flex items-center gap-1 font-medium">
-              <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Back to Challenges</span>
+      {/* ── Breadcrumb & Return Bar ── */}
+      <nav aria-label="Breadcrumb" className="border-b border-[#EEEAE1] bg-white/70 backdrop-blur-xs sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-[12.5px] font-mono text-[#6B5845]">
+            <Link to="/" className="hover:text-[#123B2A] transition-colors">
+              JharSankalp
             </Link>
             <ChevronRight className="h-3.5 w-3.5 text-[#6B5845]/50" />
-            <span className="font-semibold text-[#123B2A]">{challenge.category}</span>
+            <Link to="/challenges" className="hover:text-[#123B2A] transition-colors">
+              Challenges
+            </Link>
             <ChevronRight className="h-3.5 w-3.5 text-[#6B5845]/50" />
-            <span className="font-mono text-[#6B5845] truncate max-w-[140px] sm:max-w-xs">
-              {challenge.id}
+            <span className="text-[#123B2A] font-bold truncate max-w-[200px] sm:max-w-xs">
+              {challenge.title}
             </span>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] text-[#6B5845]">
-            {isJoined && (
-              <span className="px-2 py-0.5 rounded-full bg-[#F0FDF4] text-[#15803D] font-bold border border-[#BBF7D0]">
-                Joined by You ✓
-              </span>
-            )}
-            <span className="h-2 w-2 rounded-full bg-[#15803D]" />
-            <span>Case Dossier Active</span>
-          </div>
+          <Link
+            to="/challenges"
+            className="inline-flex items-center gap-1.5 text-[12px] font-mono font-bold text-[#123B2A] hover:underline"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>Back to Explorer</span>
+          </Link>
         </div>
-      </div>
+      </nav>
 
-      {/* ── 1. Challenge Editorial Hero ── */}
+      {/* ── Section 1: Detail Hero ── */}
       <DetailHero
         challenge={challenge}
         onContributeClick={handleOpenContributeIdea}
@@ -103,63 +151,63 @@ export function ChallengeDetail() {
         isJoined={isJoined}
       />
 
-      {/* ── 2. Sticky Section Sub-Navigation ── */}
+      {/* ── Section 2: Sticky Section Anchor Navigation ── */}
       <DetailSectionNav />
 
-      {/* ── 3. Main Case File Body with Sticky Action Sidebar ── */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Main Case Dossier Column (8 Cols on Desktop) */}
-          <div className="lg:col-span-8 space-y-2">
-            {/* Section 2: The Problem Analysis */}
+      {/* ── Main Detail Grid Layout ── */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* ── Left Narrative & Detail Column (8 Cols) ── */}
+          <div className="lg:col-span-8 space-y-10">
+            {/* Section 3: Problem Statement */}
             <ProblemStatement challenge={challenge} />
 
-            {/* Section 3: Impact at a Glance */}
+            {/* Section 4: Impact at a Glance */}
             <ImpactAtAGlance challenge={challenge} />
 
-            {/* Section 4: Evidence & Observations Timeline */}
+            {/* Section 5: Timeline & Community Evidence */}
             <EvidenceTimeline challenge={challenge} />
 
-            {/* Section 5: Ideas & Approaches */}
-            <SolutionApproaches
-              challenge={challenge}
-              onProposeIdea={handleOpenContributeIdea}
-            />
+            {/* Section 6: Solution Approaches & Active Ideas */}
+            <SolutionApproaches challenge={challenge} onProposeIdea={handleOpenContributeIdea} />
 
-            {/* Section 6: Active Collaboration Coalition */}
+            {/* Section 7: Collaboration Space & Partner Roster */}
             <CollaborationSection
               challenge={challenge}
               onJoinCollaboration={handleOpenJoinCollaboration}
             />
 
-            {/* Section 7: Lifecycle Progress */}
+            {/* Section 8: Lifecycle Progress */}
             <LifecycleProgress challenge={challenge} />
 
-            {/* Section 8: Related Challenges */}
-            <RelatedChallenges currentChallengeId={challenge.id} />
+            {/* Section 10: Related Challenges */}
+            <RelatedChallenges currentCategory={challenge.category} currentId={challenge.id} />
           </div>
 
-          {/* Sticky Sidebar Action Column (4 Cols on Desktop) */}
-          <div className="lg:col-span-4">
+          {/* ── Right Fixed Action & Metadata Panel (4 Cols) ── */}
+          <aside className="lg:col-span-4 sticky top-20 space-y-6">
+            {/* Section 9: Contextual Action Box */}
             <ChallengeActionPanel
               challenge={challenge}
-              onContributeIdea={handleOpenContributeIdea}
-              onJoinCollaboration={handleOpenJoinCollaboration}
               isJoined={isJoined}
               isSaved={isSaved}
+              onContributeIdea={handleOpenContributeIdea}
+              onJoinCollaboration={handleOpenJoinCollaboration}
               onToggleSave={handleToggleSave}
             />
-          </div>
+          </aside>
         </div>
-      </div>
 
-      {/* ── 4. Bottom Editorial CTA ── */}
-      <DetailCTA
-        onContributeIdea={handleOpenContributeIdea}
-        onJoinCollaboration={handleOpenJoinCollaboration}
-      />
+        {/* ── Section 11: Call to Action Banner ── */}
+        <div className="mt-14">
+          <DetailCTA
+            onContributeIdea={handleOpenContributeIdea}
+            onJoinCollaboration={handleOpenJoinCollaboration}
+          />
+        </div>
+      </main>
 
-      {/* ── 5. Platform Standard Footer ── */}
+      {/* ── Footer ── */}
       <Footer />
     </div>
   );

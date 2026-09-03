@@ -3,132 +3,98 @@ import {
   IdeaSubmissionResult,
   SelectedChallenge,
 } from '../types/ideaSubmission';
-import { CHALLENGES_DATA } from '../data/challengesData';
+import { fetchChallenges } from './api/challenges';
 
 const DRAFT_STORAGE_KEY = 'jharsankalp_idea_draft_v1';
 const SUBMITTED_STORAGE_KEY = 'jharsankalp_submitted_ideas_v1';
 
-// Formatted challenge records ready for selection
 export const SEED_CHALLENGES: SelectedChallenge[] = [
   {
     id: 'JS-2026-00024',
-    title: 'Frequent Breakdown of Drinking Water Pumps in Murhu Block',
+    title: 'Frequent Breakdown of Drinking Water Handpumps in Murhu Block',
     category: 'Water Management',
     district: 'Khunti',
-    block: 'Murhu Block',
+    block: 'Murhu',
     priority: 'High',
     affectedPopulation: '2,000+ Residents',
   },
   {
-    id: 'JS-2024-00002',
-    title: 'Post-Harvest Crop Loss Among Small Farmers',
+    id: 'JS-2026-00019',
+    title: 'Post-Harvest Storage & Soil Degradation in Tribal Belts',
     category: 'Agriculture',
     district: 'Gumla',
-    block: 'Bishunpur Block',
-    priority: 'Medium',
-    affectedPopulation: '1,500+ Farmers',
+    block: 'Bishunpur',
+    priority: 'High',
+    affectedPopulation: '3,200+ Farmers',
   },
   {
     id: 'JS-2024-00003',
-    title: 'Early Detection of Ground Subsidence in Mining Areas',
+    title: 'Early Detection of Ground Subsidence & Mine Inundation in Jharia',
     category: 'Mining Safety',
     district: 'Dhanbad',
-    block: 'Jharia Coalfield',
+    block: 'Jharia',
     priority: 'Critical',
-    affectedPopulation: '8,000+ Residents',
+    affectedPopulation: '1,200+ Residents',
   },
-  {
-    id: 'JS-2026-00017',
-    title: 'Poor Mobile Connectivity in Remote Villages',
-    category: 'Digital Infrastructure',
-    district: 'West Singhbhum',
-    block: 'Manoharpur Block',
-    priority: 'High',
-    affectedPopulation: '4,200+ Villagers',
-  },
-  {
-    id: 'JS-2025-00182',
-    title: 'Unsafe Waste Disposal Near Residential Areas',
-    category: 'Environment',
-    district: 'Ranchi',
-    block: 'Namkum Ward',
-    priority: 'Medium',
-    affectedPopulation: '12,000+ Urban Residents',
-  },
-  {
-    id: 'JS-2024-00001',
-    title: 'Groundwater Fluoride Toxicity in Rural Hamlets',
-    category: 'Water Management',
-    district: 'Palamu',
-    block: 'Satbarwa Block',
-    priority: 'Critical',
-    affectedPopulation: '3,800+ Villagers',
-  },
-  ...CHALLENGES_DATA.map((c) => ({
-    id: c.id,
-    title: c.title,
-    category: c.category,
-    district: c.district,
-    block: c.block,
-    priority:
-      c.impactLevel === 'Critical'
-        ? ('Critical' as const)
-        : c.impactLevel === 'High Impact'
-        ? ('High' as const)
-        : ('Medium' as const),
-    affectedPopulation:
-      c.metrics?.find(
-        (m) =>
-          m.label.toLowerCase().includes('population') ||
-          m.label.toLowerCase().includes('affected')
-      )?.value || '1,000+ Residents',
-  })),
 ];
-
-// De-duplicate by ID
-const UNIQUE_CHALLENGES = Array.from(
-  new Map(SEED_CHALLENGES.map((item) => [item.id, item])).values()
-);
 
 export async function searchChallenges(
   query: string,
   filters?: { domain?: string; district?: string; priority?: string }
 ): Promise<SelectedChallenge[]> {
-  await new Promise((resolve) => setTimeout(resolve, 80));
+  try {
+    const rawChallenges = await fetchChallenges({
+      domain: filters?.domain,
+      district: filters?.district,
+    });
 
-  let results = [...UNIQUE_CHALLENGES];
+    let results: SelectedChallenge[] = (rawChallenges || []).map((c) => ({
+      id: c.id,
+      title: c.title,
+      category: c.category,
+      district: c.district,
+      block: c.block,
+      priority:
+        c.impactLevel === 'Critical'
+          ? 'Critical'
+          : c.impactLevel === 'High Impact'
+          ? 'High'
+          : 'Medium',
+      affectedPopulation:
+        c.metrics?.find(
+          (m) =>
+            m.label.toLowerCase().includes('population') ||
+            m.label.toLowerCase().includes('affected')
+        )?.value || '2,000+ Residents',
+    }));
 
-  if (query && query.trim()) {
-    const q = query.toLowerCase();
-    results = results.filter(
-      (c) =>
-        c.title.toLowerCase().includes(q) ||
-        c.category.toLowerCase().includes(q) ||
-        c.district.toLowerCase().includes(q) ||
-        (c.block && c.block.toLowerCase().includes(q)) ||
-        c.id.toLowerCase().includes(q)
-    );
+    if (results.length === 0) {
+      results = [...SEED_CHALLENGES];
+    }
+
+    if (query && query.trim()) {
+      const q = query.toLowerCase();
+      results = results.filter(
+        (c) =>
+          c.title.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q) ||
+          c.district.toLowerCase().includes(q) ||
+          (c.block && c.block.toLowerCase().includes(q)) ||
+          c.id.toLowerCase().includes(q)
+      );
+    }
+
+    if (filters?.priority && filters.priority !== 'All Priorities') {
+      results = results.filter(
+        (c) => c.priority.toLowerCase() === filters.priority!.toLowerCase()
+      );
+    }
+
+    return results;
+  } catch (error) {
+    console.warn('Unable to query challenges API in idea submission:', error);
+    return SEED_CHALLENGES;
   }
-
-  if (filters?.domain && filters.domain !== 'All Domains') {
-    results = results.filter(
-      (c) => c.category.toLowerCase() === filters.domain!.toLowerCase()
-    );
-  }
-
-  if (filters?.district && filters.district !== 'All Districts') {
-    results = results.filter(
-      (c) => c.district.toLowerCase() === filters.district!.toLowerCase()
-    );
-  }
-
-  if (filters?.priority && filters.priority !== 'All Priorities') {
-    results = results.filter(
-      (c) => c.priority.toLowerCase() === filters.priority!.toLowerCase()
-    );
-  }
-
-  return results;
 }
 
 export function saveDraft(data: Partial<IdeaSubmissionFormData>): void {
@@ -162,46 +128,40 @@ export async function submitIdea(
 ): Promise<IdeaSubmissionResult> {
   await new Promise((resolve) => setTimeout(resolve, 600));
 
-  const randomDigits = Math.floor(1000 + Math.random() * 9000);
-  const refId = `IDEA-2026-${randomDigits}`;
+  const referenceId = `JS-IDEA-${new Date().getFullYear()}-${String(
+    Math.floor(1000 + Math.random() * 9000)
+  )}`;
 
   const result: IdeaSubmissionResult = {
-    referenceId: refId,
+    referenceId,
     title: data.title,
-    challengeTitle: data.challenge?.title || 'Community Societal Challenge',
-    submittedDate: new Date().toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }),
+    challengeTitle: data.challenge?.title || 'Grassroots Innovation',
+    submittedDate: new Date().toISOString(),
     status: 'SUBMITTED_FOR_REVIEW',
   };
 
-  // Save to list of user's submitted ideas in localStorage
   try {
-    const existing = JSON.parse(localStorage.getItem(SUBMITTED_STORAGE_KEY) || '[]');
-    localStorage.setItem(
-      SUBMITTED_STORAGE_KEY,
-      JSON.stringify([
-        {
-          ...result,
-          formData: data,
-        },
-        ...existing,
-      ])
-    );
-    clearDraft();
+    const existingRaw = localStorage.getItem(SUBMITTED_STORAGE_KEY);
+    const existingList: IdeaSubmissionResult[] = existingRaw
+      ? JSON.parse(existingRaw)
+      : [];
+    existingList.unshift(result);
+    localStorage.setItem(SUBMITTED_STORAGE_KEY, JSON.stringify(existingList));
   } catch (err) {
     console.error('Failed to persist submitted idea', err);
   }
 
+  clearDraft();
   return result;
 }
 
-export function getMySubmittedIdeas() {
+export function getSubmittedIdeas(): IdeaSubmissionResult[] {
   try {
-    return JSON.parse(localStorage.getItem(SUBMITTED_STORAGE_KEY) || '[]');
+    const raw = localStorage.getItem(SUBMITTED_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
 }
+
+export const getMySubmittedIdeas = getSubmittedIdeas;

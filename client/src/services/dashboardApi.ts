@@ -1,4 +1,5 @@
 import { DashboardRole, DashboardRoleData } from '../types/dashboard';
+import { api } from './api';
 
 const CITIZEN_DATA: DashboardRoleData = {
   role: 'citizen',
@@ -444,6 +445,28 @@ const ROLES_STORE: Record<DashboardRole, DashboardRoleData> = {
 export async function getDashboardData(
   role: DashboardRole = 'citizen'
 ): Promise<DashboardRoleData> {
-  await new Promise((r) => setTimeout(r, 60));
-  return ROLES_STORE[role] || ROLES_STORE.citizen;
+  const baseData = { ...(ROLES_STORE[role] || ROLES_STORE.citizen) };
+
+  try {
+    const overview = await api.get<any>('/dashboard/overview');
+    if (overview) {
+      // Enrich with real counts from database
+      if (overview.ideaCount && baseData.metrics[0]) {
+        baseData.metrics[0] = { ...baseData.metrics[0], value: overview.ideaCount };
+      }
+      if (overview.challengeCount && baseData.metrics[1]) {
+        baseData.metrics[1] = { ...baseData.metrics[1], value: overview.challengeCount };
+      }
+      if (overview.solutionCount && baseData.metrics[2]) {
+        baseData.metrics[2] = { ...baseData.metrics[2], value: overview.solutionCount };
+      }
+      if (overview.ideaCount && baseData.impact) {
+        baseData.impact = { ...baseData.impact, mainCount: overview.ideaCount };
+      }
+    }
+  } catch (error) {
+    console.warn('Backend overview endpoint unreachable, using standard profile metrics:', error);
+  }
+
+  return baseData;
 }
