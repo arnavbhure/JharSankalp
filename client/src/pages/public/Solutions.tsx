@@ -1,203 +1,184 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useMemo } from 'react';
+import { SolutionsHero } from '../../components/solutions/SolutionsHero';
+import { SolutionLifecycle } from '../../components/solutions/SolutionLifecycle';
+import { FeaturedSolution } from '../../components/solutions/FeaturedSolution';
+import { SolutionFilters } from '../../components/solutions/SolutionFilters';
+import { SolutionCard } from '../../components/solutions/SolutionCard';
+import { DeploymentStories } from '../../components/solutions/DeploymentStories';
+import { SolutionsCTA } from '../../components/solutions/SolutionsCTA';
+import { SolutionDetailModal } from '../../components/solutions/SolutionDetailModal';
+import { Footer } from '../../components/layout/Footer';
 import {
-  CheckCircle2,
-  Droplets,
-  Wheat,
-  HeartPulse,
-  Zap,
-  ArrowRight,
-  Filter,
-  Sparkles,
-} from 'lucide-react';
-
-interface SolutionItem {
-  id: string;
-  projectId: string;
-  title: string;
-  domain: string;
-  stage: string;
-  partner: string;
-  district: string;
-  impactMetric: string;
-  description: string;
-  icon: typeof Droplets;
-  tagColor: string;
-}
-
-const SOLUTIONS: SolutionItem[] = [
-  {
-    id: 'SOL-01',
-    projectId: 'PROJECT-2026-0012',
-    title: 'Smart Rural Water Infrastructure Monitoring',
-    domain: 'Water Management',
-    stage: 'Field Pilot',
-    partner: 'BIT Mesra & Murhu Block Administration',
-    district: 'Khunti',
-    impactMetric: '45.8% reduction in pump downtime across 20 villages',
-    description:
-      'Low-cost vibration and acoustic sensor collars mounted on India Mark II handpumps to detect valve failures before complete breakdown.',
-    icon: Droplets,
-    tagColor: 'text-[#0284C7] bg-[#F0F9FF] border-[#BAE6FD]',
-  },
-  {
-    id: 'SOL-02',
-    projectId: 'PROJECT-2026-0009',
-    title: 'Micro-Cold Storage for Tribal Lac & Forest Produce',
-    domain: 'Forest Economy',
-    stage: 'Pilot Deployment',
-    partner: 'TRIFED Jharkhand & IIT ISM Dhanbad',
-    district: 'Latehar',
-    impactMetric: '3x extended shelf life for 450 tribal gathering households',
-    description:
-      'Phase-change material evaporative cool chambers designed for off-grid forest fringe villages without 24x7 electrical grid access.',
-    icon: Wheat,
-    tagColor: 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]',
-  },
-  {
-    id: 'SOL-03',
-    projectId: 'PROJECT-2026-0007',
-    title: 'Jharia Coalfield Fire & Subsidence Alert Telemetry',
-    domain: 'Mining Safety',
-    stage: 'Prototype Validated',
-    partner: 'IIT ISM Dhanbad & Bharat Coking Coal Limited',
-    district: 'Dhanbad',
-    impactMetric: 'Sub-millimeter ground displacement alert accuracy',
-    description:
-      'InSAR satellite radar data fused with ground MEMS tiltmeters to provide 48-hour advance warning of mine subsidence in densely populated wards.',
-    icon: Zap,
-    tagColor: 'text-[#B45309] bg-[#FFFBEB] border-[#FDE68A]',
-  },
-  {
-    id: 'SOL-04',
-    projectId: 'PROJECT-2026-0005',
-    title: 'Solar Direct-Drive Diagnostic Van & Clinic Box',
-    domain: 'Healthcare',
-    stage: 'Field Pilot',
-    partner: 'AIIMS Deoghar & Rural Health Mission',
-    district: 'Dumka',
-    impactMetric: '1,200+ maternal point-of-care screenings completed',
-    description:
-      'Portable blood pathology analyzer and solar-refrigerated vaccine transport system powered by rooftop foldable monocrystalline panels.',
-    icon: HeartPulse,
-    tagColor: 'text-[#BE123C] bg-[#FFF5F5] border-[#FECDD3]',
-  },
-];
+  FEATURED_SOLUTION,
+  INITIAL_SOLUTIONS,
+  DEPLOYMENT_STORIES,
+} from '../../data/solutionsData';
+import { SolutionItem } from '../../types/solutions';
+import { Bookmark } from 'lucide-react';
 
 export function Solutions() {
-  const navigate = useNavigate();
-  const [selectedDomain, setSelectedDomain] = useState<string>('All');
+  const [solutions] = useState<SolutionItem[]>(INITIAL_SOLUTIONS);
+  const [featuredSolution] = useState<SolutionItem>(FEATURED_SOLUTION);
 
-  const domains = ['All', 'Water Management', 'Forest Economy', 'Mining Safety', 'Healthcare'];
+  // Filters State
+  const [search, setSearch] = useState('');
+  const [focusArea, setFocusArea] = useState('All Focus Areas');
+  const [district, setDistrict] = useState('All Districts');
+  const [stage, setStage] = useState('All Stages');
+  const [techType, setTechType] = useState('All Technologies');
 
-  const filtered =
-    selectedDomain === 'All'
-      ? SOLUTIONS
-      : SOLUTIONS.filter((s) => s.domain === selectedDomain);
+  // Detail Modal State
+  const [selectedSolution, setSelectedSolution] = useState<SolutionItem | null>(null);
+
+  // Filter Logic
+  const filteredSolutions = useMemo(() => {
+    let list = [...solutions];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (s) =>
+          s.name.toLowerCase().includes(q) ||
+          s.tagline.toLowerCase().includes(q) ||
+          s.description.toLowerCase().includes(q) ||
+          s.district.toLowerCase().includes(q) ||
+          s.focusArea.toLowerCase().includes(q) ||
+          s.technologyType.toLowerCase().includes(q) ||
+          s.technologyTags.some((t) => t.toLowerCase().includes(q))
+      );
+    }
+
+    if (focusArea !== 'All Focus Areas') {
+      list = list.filter(
+        (s) => s.focusArea.toLowerCase() === focusArea.toLowerCase()
+      );
+    }
+
+    if (district !== 'All Districts') {
+      list = list.filter(
+        (s) => s.district.toLowerCase() === district.toLowerCase()
+      );
+    }
+
+    if (stage !== 'All Stages') {
+      list = list.filter((s) => s.stage.toLowerCase() === stage.toLowerCase());
+    }
+
+    if (techType !== 'All Technologies') {
+      list = list.filter(
+        (s) => s.technologyType.toLowerCase() === techType.toLowerCase()
+      );
+    }
+
+    return list;
+  }, [solutions, search, focusArea, district, stage, techType]);
+
+  const hasActiveFilters =
+    search.trim() !== '' ||
+    focusArea !== 'All Focus Areas' ||
+    district !== 'All Districts' ||
+    stage !== 'All Stages' ||
+    techType !== 'All Technologies';
+
+  const handleClearFilters = () => {
+    setSearch('');
+    setFocusArea('All Focus Areas');
+    setDistrict('All Districts');
+    setStage('All Stages');
+    setTechType('All Technologies');
+  };
+
+  const scrollToDirectory = () => {
+    const el = document.getElementById('solutions-directory');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <div className="w-full bg-[#FAF9F5] text-[#1D2522] font-sans text-left">
-      {/* ── Editorial Header ── */}
-      <section className="border-b border-[#EEEAE1] bg-white py-12 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] text-[11px] font-mono font-bold uppercase tracking-wider">
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            <span>PROVEN & EMERGING INNOVATIONS</span>
-          </div>
+    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col justify-between relative">
+      <div>
+        {/* ── 1. Page Hero ── */}
+        <SolutionsHero onExploreClick={scrollToDirectory} />
 
-          <h1 className="text-[2.2rem] sm:text-[3rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-            Solutions for Jharkhand
-          </h1>
+        {/* ── Main Content Area ── */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+          {/* ── 2. Solution Lifecycle Visualization ── */}
+          <SolutionLifecycle />
 
-          <p className="text-[15px] sm:text-[16px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Real-world technologies, operating protocols, and community-tested innovations developed collaboratively to solve pressing societal challenges across Jharkhand.
-          </p>
+          {/* ── 3. Featured Solution ── */}
+          {!hasActiveFilters && (
+            <FeaturedSolution
+              solution={featuredSolution}
+              onOpenDetails={setSelectedSolution}
+            />
+          )}
 
-          {/* Domain Filter Pills */}
-          <div className="pt-4 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <Filter className="h-4 w-4 text-[#6B5845] mr-1 shrink-0" />
-            {domains.map((dom) => (
-              <button
-                key={dom}
-                type="button"
-                onClick={() => setSelectedDomain(dom)}
-                className={`px-3.5 py-1.5 rounded-xl text-[12.5px] font-mono font-bold transition-all cursor-pointer ${
-                  selectedDomain === dom
-                    ? 'bg-[#123B2A] text-white shadow-xs'
-                    : 'bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1] hover:bg-white'
-                }`}
-              >
-                {dom}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+          {/* ── 4. Solution Discovery Controls ── */}
+          <SolutionFilters
+            search={search}
+            onSearchChange={setSearch}
+            focusArea={focusArea}
+            onFocusAreaChange={setFocusArea}
+            district={district}
+            onDistrictChange={setDistrict}
+            stage={stage}
+            onStageChange={setStage}
+            techType={techType}
+            onTechTypeChange={setTechType}
+            totalCount={filteredSolutions.length}
+            onClearFilters={handleClearFilters}
+            hasActiveFilters={hasActiveFilters}
+          />
 
-      {/* ── Solutions Grid ── */}
-      <section className="py-10 sm:py-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filtered.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <div
-                  key={item.id}
-                  className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-5 group"
+          {/* ── 5. Solutions Grid ── */}
+          <div className="space-y-4">
+            {filteredSolutions.length === 0 ? (
+              <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+                <Bookmark className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
+                <h4 className="text-[1.15rem] font-bold text-[#1D2522]">
+                  No solutions match your filter criteria
+                </h4>
+                <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
+                  Try adjusting your search query or clearing the selected stage and technology filters.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold cursor-pointer"
                 >
-                  <div className="space-y-3.5">
-                    <div className="flex items-center justify-between">
-                      <span
-                        className={`inline-flex items-center gap-1.5 text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-md border ${item.tagColor}`}
-                      >
-                        <Icon className="h-3 w-3" />
-                        <span>{item.domain}</span>
-                      </span>
-                      <span className="text-[11px] font-mono text-[#15803D] font-bold bg-[#F0FDF4] px-2.5 py-0.5 rounded-md border border-[#BBF7D0]">
-                        ✓ {item.stage}
-                      </span>
-                    </div>
-
-                    <h3 className="text-[1.25rem] sm:text-[1.4rem] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-                      {item.description}
-                    </p>
-
-                    <div className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1.5 text-[12px]">
-                      <div className="flex items-center gap-1.5 text-[#123B2A] font-bold">
-                        <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
-                        <span>Verified Impact:</span>
-                      </div>
-                      <p className="text-[#1D2522] font-medium pl-5">
-                        {item.impactMetric}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-between">
-                    <div className="text-[11.5px] font-mono text-[#6B5845]">
-                      <span>{item.partner}</span> · <strong className="text-[#1D2522]">{item.district}</strong>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => navigate(`/projects/${item.projectId}`)}
-                      className="inline-flex items-center gap-1 text-[12.5px] font-bold text-[#123B2A] hover:underline cursor-pointer"
-                    >
-                      <span>Explore Case Dossier</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                  Reset All Filters
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredSolutions.map((solution) => (
+                  <SolutionCard
+                    key={solution.id}
+                    solution={solution}
+                    onOpenDetails={setSelectedSolution}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* ── 6. Recently Deployed Section ── */}
+          <DeploymentStories stories={DEPLOYMENT_STORIES} />
+
+          {/* ── 7. Contribution CTA ── */}
+          <SolutionsCTA />
         </div>
-      </section>
+      </div>
+
+      {/* ── 8. Footer ── */}
+      <Footer />
+
+      {/* ── 9. Solution Detail Modal ── */}
+      <SolutionDetailModal
+        solution={selectedSolution}
+        onClose={() => setSelectedSolution(null)}
+      />
     </div>
   );
 }
