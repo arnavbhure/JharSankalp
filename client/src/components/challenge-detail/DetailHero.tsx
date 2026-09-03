@@ -1,13 +1,19 @@
-import { MapPin, Users, Lightbulb, AlertTriangle, ShieldAlert, Activity } from 'lucide-react';
+import { MapPin, Users, Lightbulb, AlertTriangle, ShieldAlert, Activity, Check } from 'lucide-react';
 import { ChallengeDetailData } from '../../types/challengeDetail';
 
 interface DetailHeroProps {
   challenge: ChallengeDetailData;
   onContributeClick: () => void;
   onJoinClick: () => void;
+  isJoined?: boolean;
 }
 
-export function DetailHero({ challenge, onContributeClick, onJoinClick }: DetailHeroProps) {
+export function DetailHero({
+  challenge,
+  onContributeClick,
+  onJoinClick,
+  isJoined = false,
+}: DetailHeroProps) {
   return (
     <section className="relative overflow-hidden bg-[#F8F6F1] pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-[#EEEAE1] text-left">
       {/* Topographic Background Matrix */}
@@ -174,10 +180,23 @@ export function DetailHero({ challenge, onContributeClick, onJoinClick }: Detail
 
                 <button
                   onClick={onJoinClick}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/10 hover:bg-white/15 text-white py-2.5 px-4 text-[13px] font-bold transition-all active:scale-[0.98] cursor-pointer"
+                  className={`flex-1 inline-flex items-center justify-center gap-2 rounded-lg py-2.5 px-4 text-[13px] font-bold transition-all active:scale-[0.98] cursor-pointer ${
+                    isJoined
+                      ? 'bg-[#15803D] text-white border border-[#BBF7D0]'
+                      : 'border border-white/30 bg-white/10 hover:bg-white/15 text-white'
+                  }`}
                 >
-                  <Users className="h-4 w-4 text-[#F5A623]" />
-                  <span>Join Collaboration</span>
+                  {isJoined ? (
+                    <>
+                      <Check className="h-4 w-4 text-white" />
+                      <span>Joined ✓</span>
+                    </>
+                  ) : (
+                    <>
+                      <Users className="h-4 w-4 text-[#F5A623]" />
+                      <span>Join Challenge</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

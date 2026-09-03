@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInnovationStore } from '../../stores/innovationStore';
 import {
   MapPin,
   Users,
@@ -87,16 +88,34 @@ const MY_CHALLENGES: CitizenChallengeItem[] = [
 
 export function DashboardChallenges() {
   const navigate = useNavigate();
+  const { joinedChallengeIds, savedChallengeIds } = useInnovationStore();
   const [activeTab, setActiveTab] = useState<'joined' | 'saved' | 'submitted' | 'completed'>('joined');
 
+  // Dynamically compute list reflecting joined and saved IDs
+  const allChallenges = useMemo(() => {
+    return MY_CHALLENGES.map((ch) => {
+      let isJoined = joinedChallengeIds.includes(ch.id);
+      let isSaved = savedChallengeIds.includes(ch.id);
+
+      // If category was joined originally or dynamically added to store
+      if (isJoined && ch.category !== 'submitted' && ch.category !== 'completed') {
+        return { ...ch, category: 'joined' as const, status: 'Contributing' as const };
+      }
+      if (isSaved && ch.category !== 'submitted' && ch.category !== 'completed') {
+        return { ...ch, category: 'saved' as const };
+      }
+      return ch;
+    });
+  }, [joinedChallengeIds, savedChallengeIds]);
+
   const tabs: Array<{ id: 'joined' | 'saved' | 'submitted' | 'completed'; label: string; count: number }> = [
-    { id: 'joined', label: 'Joined Challenges', count: MY_CHALLENGES.filter((c) => c.category === 'joined').length },
-    { id: 'saved', label: 'Saved', count: MY_CHALLENGES.filter((c) => c.category === 'saved').length },
-    { id: 'submitted', label: 'Submitted by Me', count: MY_CHALLENGES.filter((c) => c.category === 'submitted').length },
-    { id: 'completed', label: 'Completed', count: MY_CHALLENGES.filter((c) => c.category === 'completed').length },
+    { id: 'joined', label: 'Joined Challenges', count: allChallenges.filter((c) => c.category === 'joined').length },
+    { id: 'saved', label: 'Saved', count: allChallenges.filter((c) => c.category === 'saved').length },
+    { id: 'submitted', label: 'Submitted by Me', count: allChallenges.filter((c) => c.category === 'submitted').length },
+    { id: 'completed', label: 'Completed', count: allChallenges.filter((c) => c.category === 'completed').length },
   ];
 
-  const filteredChallenges = MY_CHALLENGES.filter((c) => c.category === activeTab);
+  const filteredChallenges = allChallenges.filter((c) => c.category === activeTab);
 
   const getStatusBadge = (status: CitizenChallengeItem['status']) => {
     switch (status) {

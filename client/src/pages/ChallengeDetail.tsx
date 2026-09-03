@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ChevronRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { getChallengeDetail } from '../data/challengeDetailData';
 import { DetailHero } from '../components/challenge-detail/DetailHero';
 import { DetailSectionNav } from '../components/challenge-detail/DetailSectionNav';
@@ -13,29 +13,60 @@ import { LifecycleProgress } from '../components/challenge-detail/LifecycleProgr
 import { ChallengeActionPanel } from '../components/challenge-detail/ChallengeActionPanel';
 import { RelatedChallenges } from '../components/challenge-detail/RelatedChallenges';
 import { DetailCTA } from '../components/challenge-detail/DetailCTA';
-import { ContributionModal } from '../components/challenge-detail/ContributionModal';
 import { Footer } from '../components/layout/Footer';
+import { useInnovationStore } from '../stores/innovationStore';
 
 export function ChallengeDetail() {
   const { challengeId } = useParams<{ challengeId: string }>();
+  const navigate = useNavigate();
   const challenge = useMemo(() => getChallengeDetail(challengeId), [challengeId]);
 
-  // Contribution Modal State
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<'idea' | 'collaboration'>('idea');
+  const { isChallengeJoined, joinChallenge, isChallengeSaved, saveChallenge } = useInnovationStore();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const isJoined = isChallengeJoined(challenge.id);
+  const isSaved = isChallengeSaved(challenge.id);
 
   const handleOpenContributeIdea = () => {
-    setModalMode('idea');
-    setModalOpen(true);
+    navigate(`/challenges/${challenge.id}/submit-idea`);
   };
 
   const handleOpenJoinCollaboration = () => {
-    setModalMode('collaboration');
-    setModalOpen(true);
+    const justJoined = joinChallenge(challenge.id);
+    if (justJoined) {
+      setToastMessage("You've joined this challenge! Contributor status active.");
+    } else {
+      setToastMessage("You are an active contributor on this challenge.");
+    }
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+  };
+
+  const handleToggleSave = () => {
+    saveChallenge(challenge.id);
+    setToastMessage(
+      !isSaved
+        ? 'Challenge saved to your dashboard bookmark queue.'
+        : 'Challenge removed from your bookmarks.'
+    );
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
   };
 
   return (
-    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
+    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col relative">
+      {/* ── Floating Notification Toast ── */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[#123B2A] text-white shadow-xl border border-[#1E5A3A] text-[13px] font-medium">
+            <CheckCircle2 className="h-4 w-4 text-[#F5A623] shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
       {/* ── Breadcrumb Bar ── */}
       <div className="border-b border-[#EEEAE1] bg-white py-3">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[12.5px] text-[#6B5845]">
@@ -52,7 +83,12 @@ export function ChallengeDetail() {
             </span>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[11px] text-[#6B5845]">
+          <div className="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] text-[#6B5845]">
+            {isJoined && (
+              <span className="px-2 py-0.5 rounded-full bg-[#F0FDF4] text-[#15803D] font-bold border border-[#BBF7D0]">
+                Joined by You ✓
+              </span>
+            )}
             <span className="h-2 w-2 rounded-full bg-[#15803D]" />
             <span>Case Dossier Active</span>
           </div>
@@ -64,6 +100,7 @@ export function ChallengeDetail() {
         challenge={challenge}
         onContributeClick={handleOpenContributeIdea}
         onJoinClick={handleOpenJoinCollaboration}
+        isJoined={isJoined}
       />
 
       {/* ── 2. Sticky Section Sub-Navigation ── */}
@@ -108,27 +145,22 @@ export function ChallengeDetail() {
               challenge={challenge}
               onContributeIdea={handleOpenContributeIdea}
               onJoinCollaboration={handleOpenJoinCollaboration}
+              isJoined={isJoined}
+              isSaved={isSaved}
+              onToggleSave={handleToggleSave}
             />
           </div>
         </div>
       </div>
 
-      {/* ── 4. Final CTA ── */}
+      {/* ── 4. Bottom Editorial CTA ── */}
       <DetailCTA
         onContributeIdea={handleOpenContributeIdea}
         onJoinCollaboration={handleOpenJoinCollaboration}
       />
 
-      {/* ── 5. Institutional Footer ── */}
+      {/* ── 5. Platform Standard Footer ── */}
       <Footer />
-
-      {/* ── 6. Contribution Modal Dialog ── */}
-      <ContributionModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        mode={modalMode}
-        challenge={challenge}
-      />
     </div>
   );
 }

@@ -17,10 +17,12 @@ import { Solutions } from '../pages/public/Solutions';
 import { Collaborators } from '../pages/public/Collaborators';
 import { Impact } from '../pages/public/Impact';
 import { About } from '../pages/public/About';
+import { SubmitChallengeIdea } from '../pages/SubmitChallengeIdea';
 import { DashboardLayout } from '../layouts/DashboardLayout';
 import { DashboardOverview } from '../pages/dashboard/DashboardOverview';
 import { DashboardChallenges } from '../pages/dashboard/DashboardChallenges';
 import { DashboardIdeas } from '../pages/dashboard/DashboardIdeas';
+import { DashboardIdeaDetail } from '../pages/dashboard/DashboardIdeaDetail';
 import { DashboardProjects } from '../pages/dashboard/DashboardProjects';
 import { DashboardSolutions } from '../pages/dashboard/DashboardSolutions';
 import { DashboardCollaborations } from '../pages/dashboard/DashboardCollaborations';
@@ -47,6 +49,7 @@ export const router = createBrowserRouter([
       { index: true, element: <DashboardOverview /> },
       { path: 'challenges', element: <DashboardChallenges /> },
       { path: 'ideas', element: <DashboardIdeas /> },
+      { path: 'ideas/:id', element: <DashboardIdeaDetail /> },
       { path: 'projects', element: <DashboardProjects /> },
       { path: 'solutions', element: <DashboardSolutions /> },
       { path: 'collaborations', element: <DashboardCollaborations /> },
@@ -63,6 +66,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Landing /> },
       { path: 'challenges', element: <Challenges /> },
       { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
+      { path: 'challenges/:challengeId/submit-idea', element: <SubmitChallengeIdea /> },
       { path: 'ideas', element: <Ideas /> },
       { path: 'ideas/:ideaId', element: <IdeaDetail /> },
       { path: 'solutions', element: <Solutions /> },
