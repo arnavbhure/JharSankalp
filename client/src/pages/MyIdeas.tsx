@@ -1,138 +1,191 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getMySubmittedIdeas } from '../services/ideaSubmissionApi';
-import { Plus, Target, Clock, ArrowRight, Lightbulb } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import {
+  MyIdeaItem,
+  ContributorRequest,
+  IdeaActivityItem,
+  ProjectReadinessCriteria,
+  ContributorOverviewStats,
+} from '../types/myIdeas';
+import {
+  getMyIdeas,
+  getContributorStats,
+  getContributionRequests,
+  respondToContributionRequest,
+  respondToActionRequired,
+  getIdeaActivities,
+  getIdeaUpdates,
+  getProjectReadiness,
+} from '../services/myIdeasApi';
+import { MyIdeasHeader } from '../components/my-ideas/MyIdeasHeader';
+import { IdeaContributionOverview } from '../components/my-ideas/IdeaContributionOverview';
+import { IdeaMomentumPanel } from '../components/my-ideas/IdeaMomentumPanel';
+import { IdeaActionRequiredPanel } from '../components/my-ideas/IdeaActionRequiredPanel';
+import { MyIdeasList } from '../components/my-ideas/MyIdeasList';
+import { IdeaCollaborationRequests } from '../components/my-ideas/IdeaCollaborationRequests';
+import { ProjectFormationReadiness } from '../components/my-ideas/ProjectFormationReadiness';
+import { IdeaActivityTimeline } from '../components/my-ideas/IdeaActivityTimeline';
+import { IdeaUpdatesPanel } from '../components/my-ideas/IdeaUpdatesPanel';
+import { IdeaStatusGuide } from '../components/my-ideas/IdeaStatusGuide';
+import { MyIdeasEmptyState } from '../components/my-ideas/MyIdeasEmptyState';
 import { Footer } from '../components/layout/Footer';
 
-interface StoredIdea {
-  referenceId: string;
-  title: string;
-  challengeTitle: string;
-  submittedDate: string;
-  status: string;
-  formData: {
-    category?: string;
-    stage?: string;
-    summary?: string;
-  };
-}
-
 export function MyIdeas() {
-  const navigate = useNavigate();
-  const [ideas, setIdeas] = useState<StoredIdea[]>([]);
+  const [ideas, setIdeas] = useState<MyIdeaItem[]>([]);
+  const [stats, setStats] = useState<ContributorOverviewStats>({
+    ideasSubmitted: 4,
+    underReview: 1,
+    openForCollaboration: 2,
+    movingTowardProjectFormation: 1,
+  });
+  const [requests, setRequests] = useState<ContributorRequest[]>([]);
+  const [activities, setActivities] = useState<IdeaActivityItem[]>([]);
+  const [updates, setUpdates] = useState<Array<{ id: string; text: string; time: string; link?: string }>>([]);
+  const [readinessCriteria, setReadinessCriteria] = useState<ProjectReadinessCriteria[]>([]);
+  const [currentTab, setCurrentTab] = useState('All');
+  const [loading, setLoading] = useState(true);
+
+  const requestsRef = useRef<HTMLDivElement>(null);
+
+  const loadDashboard = async () => {
+    try {
+      const [
+        ideasData,
+        statsData,
+        requestsData,
+        activitiesData,
+        updatesData,
+        readinessData,
+      ] = await Promise.all([
+        getMyIdeas(currentTab),
+        getContributorStats(),
+        getContributionRequests(),
+        getIdeaActivities(),
+        getIdeaUpdates(),
+        getProjectReadiness('IDEA-2026-0001'),
+      ]);
+
+      setIdeas(ideasData);
+      setStats(statsData);
+      setRequests(requestsData);
+      setActivities(activitiesData);
+      setUpdates(updatesData);
+      setReadinessCriteria(readinessData);
+    } catch (err) {
+      console.error('Failed to load contributor dashboard', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const list = getMySubmittedIdeas();
-    setIdeas(list);
-  }, []);
+    loadDashboard();
+  }, [currentTab]);
+
+  const handleRespondToRequest = async (
+    requestId: string,
+    action: 'ACCEPTED' | 'DECLINED'
+  ) => {
+    await respondToContributionRequest(requestId, action);
+    await loadDashboard();
+  };
+
+  const handleRespondActionRequired = async (reply: string) => {
+    const targetIdea = ideas.find((i) => i.hasActionRequired);
+    if (targetIdea) {
+      await respondToActionRequired(targetIdea.id, reply);
+      await loadDashboard();
+    }
+  };
+
+  const scrollToRequests = () => {
+    if (requestsRef.current) {
+      requestsRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Find most active idea (momentum)
+  const momentumIdea =
+    ideas.find((i) => i.id === 'IDEA-2026-0001') || ideas[0];
+
+  const actionRequiredIdea = ideas.find((i) => i.hasActionRequired);
 
   return (
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="border-b border-[#EEEAE1] bg-white py-12 text-left">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-3">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-[#123B2A] font-bold">
-                <Lightbulb className="h-4 w-4 text-[#F5A623]" />
-                <span>MY CONTRIBUTION · INNOVATOR DOSSIER</span>
-              </div>
-              <h1 className="text-[2.2rem] sm:text-[2.8rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-                My Proposed Ideas
-              </h1>
-              <p className="text-[15px] text-[#6B5845] max-w-xl leading-relaxed">
-                Track review status, peer evaluations, and collaborator interest for solution ideas you submitted to JharSankalp.
-              </p>
-            </div>
+      {/* ── Page Hero Header ── */}
+      <MyIdeasHeader />
 
-            <button
-              type="button"
-              onClick={() => navigate('/submit-idea')}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[14px] font-bold shadow-xs transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <Plus className="h-4 w-4 text-[#F5A623] stroke-[3]" />
-              <span>Submit Another Idea</span>
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* ── Horizontal Statistics Strip ── */}
+      <IdeaContributionOverview stats={stats} />
 
-      {/* Main Content */}
-      <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 w-full space-y-6">
-        {ideas.length === 0 ? (
-          <div className="rounded-3xl border border-[#EEEAE1] bg-white p-12 text-center space-y-4 shadow-2xs">
-            <div className="h-14 w-14 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex items-center justify-center text-[#123B2A] mx-auto">
-              <Lightbulb className="h-7 w-7 text-[#F5A623]" />
-            </div>
-            <div className="space-y-1 max-w-md mx-auto">
-              <h3 className="text-[1.3rem] font-bold text-[#1D2522]">
-                No ideas submitted yet.
-              </h3>
-              <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-                Have a hypothesis or prototype that could solve an open societal challenge in Jharkhand? Submit it to connect with labs and collaborators.
-              </p>
-            </div>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => navigate('/submit-idea')}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#123B2A] text-white text-[13.5px] font-bold shadow-xs cursor-pointer"
-              >
-                <span>Propose an Idea</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
+      {/* ── Main Workspace Body ── */}
+      <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full">
+        {loading ? (
+          <div className="py-20 text-center text-[14px] text-[#6B5845]">
+            Loading your innovation workspace...
           </div>
+        ) : ideas.length === 0 ? (
+          <MyIdeasEmptyState />
         ) : (
-          <div className="space-y-4">
-            <div className="text-[12px] font-mono text-[#6B5845]">
-              Showing {ideas.length} proposal docket(s):
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            {/* ── Left Management Stream (8 Columns) ── */}
+            <div className="lg:col-span-8 space-y-12">
+              {/* Featured Idea Momentum Panel */}
+              {momentumIdea && (
+                <IdeaMomentumPanel
+                  idea={momentumIdea}
+                  onViewCollaboration={scrollToRequests}
+                />
+              )}
+
+              {/* Action Required Banner */}
+              <IdeaActionRequiredPanel
+                hasAction={Boolean(actionRequiredIdea)}
+                actionMessage={actionRequiredIdea?.actionMessage}
+                relatedIdeaTitle={actionRequiredIdea?.title}
+                relatedIdeaId={actionRequiredIdea?.id}
+                onRespond={handleRespondActionRequired}
+              />
+
+              {/* All Your Ideas List */}
+              <MyIdeasList
+                ideas={ideas}
+                currentTab={currentTab}
+                onTabChange={setCurrentTab}
+              />
+
+              {/* Incoming Collaboration Requests Triage */}
+              <div ref={requestsRef}>
+                <IdeaCollaborationRequests
+                  requests={requests}
+                  onRespond={handleRespondToRequest}
+                />
+              </div>
+
+              {/* Project Formation Signal */}
+              {momentumIdea && (
+                <ProjectFormationReadiness
+                  criteria={readinessCriteria}
+                  ideaTitle={momentumIdea.title}
+                />
+              )}
             </div>
 
-            <div className="space-y-3">
-              {ideas.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-5 sm:p-6 rounded-3xl border border-[#EEEAE1] bg-white shadow-2xs hover:border-[#123B2A]/40 transition-all space-y-3 text-left"
-                >
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-[11px] font-mono font-bold uppercase text-[#123B2A]">
-                      REFERENCE: {item.referenceId}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-[#B45309] bg-[#FFFBEB] px-2.5 py-1 rounded-md border border-[#FDE68A]">
-                      <Clock className="h-3 w-3" />
-                      Under Peer Review
-                    </span>
-                  </div>
+            {/* ── Right Context Sidebar (4 Columns) ── */}
+            <div className="lg:col-span-4 space-y-6">
+              {/* Updates For You Panel */}
+              <IdeaUpdatesPanel updates={updates} />
 
-                  <div className="space-y-1">
-                    <h3 className="text-[1.3rem] font-bold text-[#1D2522]">
-                      {item.title}
-                    </h3>
-                    {item.formData?.summary && (
-                      <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-                        {item.formData.summary}
-                      </p>
-                    )}
-                  </div>
+              {/* Chronological Activity Timeline */}
+              <IdeaActivityTimeline activities={activities} />
 
-                  <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between flex-wrap gap-2 text-[12px] text-[#6B5845]">
-                    <div className="flex items-center gap-1.5 font-medium">
-                      <Target className="h-3.5 w-3.5 text-[#F5A623]" />
-                      <span>Solving: <strong>{item.challengeTitle}</strong></span>
-                    </div>
-
-                    <span className="font-mono">
-                      Registered: {item.submittedDate}
-                    </span>
-                  </div>
-                </div>
-              ))}
+              {/* 6-Stage Lifecycle Status Guide */}
+              <IdeaStatusGuide />
             </div>
           </div>
         )}
       </main>
 
+      {/* ── Footer ── */}
       <Footer />
     </div>
   );
