@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AffectedGroup, ChallengeFormState, NoticeTimeframe, AIAssistSuggestion } from '../../types/submission';
 import { AIAssistPanel } from './AIAssistPanel';
 import { analyzeDescription } from '../../services/challengeSubmissionApi';
-import { Users, Clock, AlertCircle } from 'lucide-react';
+import { Users, Clock, AlertCircle, Sparkles, Loader2 } from 'lucide-react';
 
 interface ProblemStepProps {
   formData: ChallengeFormState;
@@ -36,27 +36,33 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
     formData.aiSuggestions
   );
   const [isApplied, setIsApplied] = useState(Boolean(formData.aiSuggestions));
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzeError, setAnalyzeError] = useState<string | null>(null);
 
-  // Trigger AI assistant when description has enough length
-  useEffect(() => {
-    let active = true;
-
-    if (formData.description.trim().length >= 25) {
-      const timer = setTimeout(async () => {
-        const res = await analyzeDescription(formData.description);
-        if (active && res) {
-          setLocalSuggestion(res);
-        }
-      }, 500);
-
-      return () => {
-        active = false;
-        clearTimeout(timer);
-      };
-    } else {
-      setLocalSuggestion(null);
+  const handleTriggerAI = async () => {
+    if (!formData.description || formData.description.trim().length < 15) {
+      setAnalyzeError('Please write at least 15 characters in the description before requesting AI analysis.');
+      return;
     }
-  }, [formData.description]);
+
+    setIsAnalyzing(true);
+    setAnalyzeError(null);
+    try {
+      const res = await analyzeDescription(
+        formData.description,
+        formData.title,
+        formData.district
+      );
+      if (res) {
+        setLocalSuggestion(res);
+        setIsApplied(false);
+      }
+    } catch (err: any) {
+      setAnalyzeError(err?.message || 'Unable to complete AI analysis right now.');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const toggleAffectedGroup = (group: AffectedGroup) => {
     const current = [...formData.affectedGroups];
@@ -122,7 +128,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
             <span className="text-[#BE123C]">*</span>
           </label>
           <span className="text-[11.5px] font-mono text-[#6B5845]">
-            {formData.description.length} characters (min 20 recommended)
+            {formData.description.length} characters (min 15 required for AI)
           </span>
         </div>
 
@@ -143,6 +149,38 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
             <span>{errors.description}</span>
           </p>
         )}
+
+        {/* Explicit Analyze With AI Trigger Button */}
+        <div className="flex items-center justify-between pt-1 flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={handleTriggerAI}
+            disabled={isAnalyzing || formData.description.trim().length < 15}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[12.5px] font-bold shadow-xs transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          >
+            {isAnalyzing ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin text-[#F5A623]" />
+                <span>Analyzing with LangChain Engine...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4 text-[#F5A623]" />
+                <span>Analyze with AI</span>
+              </>
+            )}
+          </button>
+          <span className="text-[11.5px] text-[#6B5845]">
+            Uses OpenRouter + LangGraph intelligence to suggest domain & expertise.
+          </span>
+        </div>
+
+        {analyzeError && (
+          <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1 pt-1">
+            <AlertCircle className="h-3.5 w-3.5" />
+            <span>{analyzeError}</span>
+          </p>
+        )}
       </div>
 
       {/* Real-Time AI Assistance Panel */}
@@ -150,6 +188,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         <AIAssistPanel
           suggestion={localSuggestion}
           onApply={handleApplyAISuggestions}
+          onDismiss={() => setLocalSuggestion(null)}
           isApplied={isApplied}
         />
       )}
@@ -182,34 +221,35 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         </div>
       </div>
 
-      {/* Field 4: When did you first notice this problem? */}
+      {/* Field 4: Timeframe */}
       <div className="space-y-3 pt-2">
         <label className="text-[13px] font-mono font-bold uppercase tracking-wider text-[#123B2A] flex items-center gap-1.5">
           <Clock className="h-4 w-4 text-[#F5A623]" />
-          <span>When did you first notice this problem?</span>
+          <span>How long has this issue existed?</span>
         </label>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {TIMEFRAME_OPTIONS.map((timeframe) => {
             const isSelected = formData.firstNoticed === timeframe;
             return (
-              <button
+              <label
                 key={timeframe}
-                type="button"
-                onClick={() => onChange({ firstNoticed: timeframe })}
-                className={`p-3 rounded-xl text-[13px] font-semibold text-left transition-all cursor-pointer shadow-2xs flex items-center justify-between ${
+                className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all shadow-2xs ${
                   isSelected
-                    ? 'bg-[#123B2A] text-white border border-[#123B2A]'
-                    : 'bg-white text-[#1D2522] border border-[#EEEAE1] hover:bg-[#FAF9F5]'
+                    ? 'border-[#123B2A] bg-[#123B2A]/5'
+                    : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5]'
                 }`}
               >
-                <span>{timeframe}</span>
-                <span
-                  className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                    isSelected ? 'border-white bg-[#F5A623]' : 'border-[#EEEAE1]'
-                  }`}
+                <input
+                  type="radio"
+                  name="firstNoticed"
+                  value={timeframe}
+                  checked={isSelected}
+                  onChange={() => onChange({ firstNoticed: timeframe })}
+                  className="h-4 w-4 accent-[#123B2A]"
                 />
-              </button>
+                <span className="text-[13.5px] font-medium text-[#1D2522]">{timeframe}</span>
+              </label>
             );
           })}
         </div>

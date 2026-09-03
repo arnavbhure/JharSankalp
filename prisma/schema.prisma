@@ -115,6 +115,9 @@ model Challenge {
   affectedPopulation      Int?
   severity                String?
   urgency                 String?
+  aiAnalysis              Json?
+  aiAnalyzedAt            DateTime?
+  aiModelVersion          String?
   idempotencyKey          String?  @unique
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt

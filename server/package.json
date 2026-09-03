@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@jharsankalp/shared": "*",
+    "@langchain/core": "^1.2.9",
+    "@langchain/langgraph": "^1.4.13",
+    "@langchain/openai": "^1.5.11",
     "@prisma/client": "^6.5.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

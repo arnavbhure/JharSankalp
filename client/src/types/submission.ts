@@ -51,11 +51,20 @@ export interface EvidenceFile {
 
 export interface AIAssistSuggestion {
   suggestedCategory: string;
+  subDomain?: string | null;
   relatedThemes: string[];
   potentialDuplicatesCount: number;
   suggestedPriority: string;
+  priorityReason?: string;
   analysisSummary: string;
   detectedKeywords: string[];
+  affectedStakeholders?: string[];
+  possibleRootCauses?: string[];
+  suggestedApproach?: string[];
+  requiredExpertise?: string[];
+  estimatedImpactLevel?: string;
+  confidence?: number;
+  needsHumanReview?: boolean;
 }
 
 export interface ChallengeFormState {

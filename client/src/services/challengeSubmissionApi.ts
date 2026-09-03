@@ -1,107 +1,78 @@
 import { ChallengeFormState, AIAssistSuggestion, SubmissionResponse } from '../types/submission';
+import { requestChallengeAnalysis } from './api/ai';
 
 const LOCAL_STORAGE_KEY = 'jharsankalp_challenge_draft_v1';
 
 /**
- * Intelligent client-side AI analysis simulation.
- * Structures the raw problem description into themes, categories, and duplicate checks.
- * Easily replaceable with backend POST /api/ai/analyze-challenge.
+ * Executes structured challenge intelligence analysis through LangChain / OpenRouter API.
  */
-export async function analyzeDescription(text: string): Promise<AIAssistSuggestion | null> {
-  if (!text || text.trim().length < 20) {
+export async function analyzeDescription(
+  text: string,
+  title?: string,
+  district?: string,
+  affectedPopulation?: number
+): Promise<AIAssistSuggestion | null> {
+  if (!text || text.trim().length < 15) {
     return null;
   }
 
-  // Artificial slight pause to give authentic assistance feel
-  await new Promise((resolve) => setTimeout(resolve, 350));
+  try {
+    const res = await requestChallengeAnalysis({
+      title: title && title.trim().length >= 3 ? title : 'Community Challenge Report',
+      description: text.trim(),
+      district,
+      affectedPopulation,
+    });
 
-  const lower = text.toLowerCase();
-
-  let category = 'Public Infrastructure';
-  let themes = ['Community Welfare', 'Civic Facilities'];
-  let priority = 'Important';
-
-  if (
-    lower.includes('water') ||
-    lower.includes('pump') ||
-    lower.includes('borewell') ||
-    lower.includes('drinking') ||
-    lower.includes('well') ||
-    lower.includes('aquifer') ||
-    lower.includes('drought')
-  ) {
-    category = 'Water Management';
-    themes = ['Public Infrastructure', 'Rural Development', 'Groundwater Security'];
-    priority = 'High';
-  } else if (
-    lower.includes('crop') ||
-    lower.includes('farm') ||
-    lower.includes('harvest') ||
-    lower.includes('soil') ||
-    lower.includes('seed') ||
-    lower.includes('grain')
-  ) {
-    category = 'Agriculture';
-    themes = ['Agritech Solutions', 'Smallholder Support', 'Post-Harvest Supply'];
-    priority = 'Important';
-  } else if (
-    lower.includes('mine') ||
-    lower.includes('mining') ||
-    lower.includes('subsidence') ||
-    lower.includes('coal') ||
-    lower.includes('quarry') ||
-    lower.includes('blast')
-  ) {
-    category = 'Mining Safety';
-    themes = ['Geotechnical Risk', 'Disaster Mitigation', 'Public Safety'];
-    priority = 'Critical';
-  } else if (
-    lower.includes('school') ||
-    lower.includes('student') ||
-    lower.includes('teacher') ||
-    lower.includes('education') ||
-    lower.includes('book') ||
-    lower.includes('learning')
-  ) {
-    category = 'Education';
-    themes = ['Digital Literacy', 'Vernacular Learning', 'Tribal Education'];
-    priority = 'Important';
-  } else if (
-    lower.includes('health') ||
-    lower.includes('doctor') ||
-    lower.includes('clinic') ||
-    lower.includes('hospital') ||
-    lower.includes('medicine') ||
-    lower.includes('nurse')
-  ) {
-    category = 'Healthcare';
-    themes = ['Primary Care Access', 'Telemedicine', 'Rural Health Infrastructure'];
-    priority = 'High';
-  } else if (
-    lower.includes('waste') ||
-    lower.includes('garbage') ||
-    lower.includes('pollution') ||
-    lower.includes('dust') ||
-    lower.includes('forest') ||
-    lower.includes('river')
-  ) {
-    category = 'Environment';
-    themes = ['Urban Waste Ecology', 'Ecosystem Conservation', 'Pollution Control'];
-    priority = 'Important';
+    if (res) {
+      return {
+        suggestedCategory: res.domain,
+        subDomain: res.subDomain,
+        relatedThemes: res.suggestedApproach,
+        potentialDuplicatesCount: 0,
+        suggestedPriority: res.suggestedPriority,
+        priorityReason: res.priorityReason,
+        analysisSummary: res.summary,
+        detectedKeywords: res.requiredExpertise,
+        affectedStakeholders: res.affectedStakeholders,
+        possibleRootCauses: res.possibleRootCauses,
+        suggestedApproach: res.suggestedApproach,
+        requiredExpertise: res.requiredExpertise,
+        estimatedImpactLevel: res.estimatedImpactLevel,
+        confidence: res.confidence,
+        needsHumanReview: res.needsHumanReview,
+      };
+    }
+  } catch (err) {
+    console.warn('Backend AI analysis endpoint unavailable, using local heuristic:', err);
   }
 
-  const detectedKeywords = lower
-    .split(/\s+/)
-    .filter((w) => w.length > 4)
-    .slice(0, 4);
+  const lower = text.toLowerCase();
+  let category = 'Water Management';
+  let themes = ['Rural Water Infrastructure', 'LoRaWAN Telemetry'];
+  let priority = 'HIGH';
+
+  if (lower.includes('crop') || lower.includes('soil') || lower.includes('farmer')) {
+    category = 'Agriculture';
+    themes = ['Soil Health Monitoring', 'Agronomy'];
+    priority = 'HIGH';
+  } else if (lower.includes('mine') || lower.includes('subsidence')) {
+    category = 'Mining Safety';
+    themes = ['Mine Subsidence Early Warning', 'InSAR Geophysics'];
+    priority = 'CRITICAL';
+  } else if (lower.includes('school') || lower.includes('student')) {
+    category = 'Education';
+    themes = ['Vernacular Primary EdTech', 'Offline Mesh'];
+    priority = 'MEDIUM';
+  }
 
   return {
     suggestedCategory: category,
     relatedThemes: themes,
-    potentialDuplicatesCount: 2,
+    potentialDuplicatesCount: 1,
     suggestedPriority: priority,
-    analysisSummary: `Based on your description, this issue primarily concerns ${category} with secondary intersections in ${themes.slice(0, 2).join(' and ')}.`,
-    detectedKeywords,
+    analysisSummary: `Heuristic classification: ${category} issue identified in local district.`,
+    detectedKeywords: themes,
   };
 }
 

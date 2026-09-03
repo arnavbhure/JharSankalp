@@ -13,6 +13,7 @@ import collaborationsRoutes from './modules/collaborations/collaborations.routes
 import solutionsRoutes from './modules/solutions/solutions.routes.js';
 import impactRoutes from './modules/impact/impact.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
+import aiRoutes from './modules/ai/ai.routes.js';
 
 const app = express();
 
@@ -85,6 +86,9 @@ app.use('/api/impact', impactRoutes);
 
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+
+app.use('/api/v1/ai', aiRoutes);
+app.use('/api/ai', aiRoutes);
 
 // ── Error Handling ───────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import { Sparkles, Check, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Check, CheckCircle2, ShieldAlert, Cpu, Users2, Compass, Activity } from 'lucide-react';
 import { AIAssistSuggestion } from '../../types/submission';
 
 interface AIAssistPanelProps {
@@ -15,7 +15,7 @@ export function AIAssistPanel({
   isApplied = false,
 }: AIAssistPanelProps) {
   return (
-    <div className="rounded-2xl border-2 border-[#123B2A]/20 bg-[#F2FBF5] p-5 sm:p-6 text-left space-y-4 shadow-xs transition-all animate-in fade-in duration-300">
+    <div className="rounded-2xl border-2 border-[#123B2A]/25 bg-[#F2FBF5] p-5 sm:p-6 text-left space-y-4 shadow-sm transition-all animate-in fade-in duration-300">
       {/* Header */}
       <div className="flex items-center justify-between gap-2 border-b border-[#123B2A]/15 pb-3">
         <div className="flex items-center gap-2">
@@ -24,66 +24,142 @@ export function AIAssistPanel({
           </div>
           <div>
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-[#123B2A] block">
-              JHARSANKALP ASSIST
+              JHARSANKALP AI INTELLIGENCE ENGINE
             </span>
             <span className="text-[13px] font-bold text-[#1D2522]">
-              We&apos;re helping structure your challenge.
+              Structured Challenge Classification & Recommendations
             </span>
           </div>
         </div>
 
-        {isApplied ? (
-          <span className="inline-flex items-center gap-1 text-[12px] font-mono font-bold text-[#15803D] bg-white px-2.5 py-1 rounded-md border border-[#BBF7D0]">
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            Applied
-          </span>
-        ) : (
-          <span className="text-[11px] font-mono text-[#6B5845] bg-white/70 px-2 py-0.5 rounded border border-[#123B2A]/10">
-            Automated Draft Aid
+        {suggestion.confidence && (
+          <span className="text-[11.5px] font-mono font-bold text-[#123B2A] bg-white px-2.5 py-1 rounded-md border border-[#BBF7D0]">
+            Confidence: {Math.round(suggestion.confidence * 100)}%
           </span>
         )}
       </div>
 
-      {/* Suggestion Highlights Grid */}
+      {/* Summary Rationale */}
+      {suggestion.analysisSummary && (
+        <p className="text-[13px] text-[#3D4C44] leading-relaxed bg-white/70 p-3 rounded-xl border border-[#123B2A]/10">
+          {suggestion.analysisSummary}
+        </p>
+      )}
+
+      {/* Grid of Key Classification Findings */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {/* Suggested Focus Area */}
+        {/* Domain & Subdomain */}
         <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
-          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] block">
-            Possible Focus Area
+          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+            <Compass className="h-3 w-3 text-[#123B2A]" />
+            Suggested Domain
           </span>
           <div className="text-[14px] font-bold text-[#123B2A] leading-tight">
             {suggestion.suggestedCategory}
           </div>
+          {suggestion.subDomain && (
+            <div className="text-[11.5px] font-mono text-[#6B5845]">
+              ↳ {suggestion.subDomain}
+            </div>
+          )}
         </div>
 
-        {/* Related Themes */}
-        <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1 sm:col-span-2">
-          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] block">
-            Related Cross-Cutting Themes
+        {/* Priority Assessment */}
+        <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+            <Activity className="h-3 w-3 text-[#BE123C]" />
+            Priority Assessment
           </span>
-          <div className="text-[13.5px] font-semibold text-[#1D2522] leading-tight">
-            {suggestion.relatedThemes.join(' · ')}
+          <div className="flex items-center gap-1.5">
+            <span
+              className={`text-[12px] font-mono font-bold px-2 py-0.5 rounded ${
+                suggestion.suggestedPriority === 'CRITICAL'
+                  ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
+                  : suggestion.suggestedPriority === 'HIGH'
+                  ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
+                  : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+              }`}
+            >
+              {suggestion.suggestedPriority}
+            </span>
+            {suggestion.estimatedImpactLevel && (
+              <span className="text-[11px] font-mono text-[#6B5845]">
+                ({suggestion.estimatedImpactLevel} SCALE)
+              </span>
+            )}
+          </div>
+          {suggestion.priorityReason && (
+            <div className="text-[11.5px] text-[#6B5845] line-clamp-2">
+              {suggestion.priorityReason}
+            </div>
+          )}
+        </div>
+
+        {/* Human Review Status */}
+        <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+            <ShieldAlert className="h-3 w-3 text-[#B45309]" />
+            Review Protocol
+          </span>
+          <div className="text-[13px] font-bold text-[#1D2522]">
+            {suggestion.needsHumanReview ? 'Flagged for Human Review' : 'Standard Validation Track'}
+          </div>
+          <div className="text-[11px] text-[#6B5845]">
+            Preserves human verification before state deployment.
           </div>
         </div>
       </div>
 
-      {/* Potential Duplicates Notice */}
-      <div className="flex items-center justify-between p-3 rounded-xl bg-white/80 border border-[#123B2A]/10 text-[12.5px] text-[#6B5845] flex-wrap gap-2">
-        <span className="flex items-center gap-2">
-          <AlertCircle className="h-4 w-4 text-[#F5A623] shrink-0" />
-          <span>
-            <strong className="text-[#1D2522] font-semibold">
-              {suggestion.potentialDuplicatesCount} similar challenges
-            </strong>{' '}
-            found in neighboring blocks. Submitting will link your ground observation to this ongoing cluster.
+      {/* Suggested Innovation Directions */}
+      {suggestion.suggestedApproach && suggestion.suggestedApproach.length > 0 && (
+        <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+          <span className="text-[11px] font-mono uppercase font-bold text-[#123B2A] flex items-center gap-1">
+            <Cpu className="h-3.5 w-3.5 text-[#15803D]" />
+            Suggested Innovation Directions & Technologies
           </span>
-        </span>
+          <div className="flex flex-wrap gap-1.5">
+            {suggestion.suggestedApproach.map((appr) => (
+              <span
+                key={appr}
+                className="text-[11.5px] font-mono bg-[#FAF9F5] text-[#1D2522] border border-[#EEEAE1] px-2.5 py-0.5 rounded-md"
+              >
+                ✓ {appr}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Required Expertise & Stakeholders */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {suggestion.requiredExpertise && suggestion.requiredExpertise.length > 0 && (
+          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+            <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] block">
+              Required Disciplines & Expertise
+            </span>
+            <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
+              {suggestion.requiredExpertise.join(', ')}
+            </div>
+          </div>
+        )}
+
+        {suggestion.affectedStakeholders && suggestion.affectedStakeholders.length > 0 && (
+          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+            <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+              <Users2 className="h-3 w-3 text-[#6B5845]" />
+              Identified Stakeholders
+            </span>
+            <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
+              {suggestion.affectedStakeholders.join(', ')}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex items-center justify-between pt-1 flex-wrap gap-3">
+      {/* Action Bar */}
+      <div className="flex items-center justify-between pt-2 border-t border-[#123B2A]/15 flex-wrap gap-3">
         <span className="text-[11.5px] text-[#6B5845]">
-          Suggestions are recommendations. You maintain complete control to edit at any step.
+          AI recommendations do not modify your submission. You retain complete human control.
         </span>
 
         <div className="flex items-center gap-2.5">
@@ -91,19 +167,28 @@ export function AIAssistPanel({
             <button
               type="button"
               onClick={onDismiss}
-              className="px-3 py-1.5 rounded-lg text-[12.5px] font-medium text-[#6B5845] hover:text-[#1D2522] cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-[12px] font-medium text-[#6B5845] hover:text-[#1D2522] cursor-pointer"
             >
-              Review Manually
+              Dismiss
             </button>
           )}
 
           <button
             type="button"
             onClick={() => onApply(suggestion)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[13px] font-bold shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[12.5px] font-bold shadow-xs transition-all active:scale-[0.98] cursor-pointer"
           >
-            <Check className="h-3.5 w-3.5 text-[#F5A623]" />
-            <span>{isApplied ? 'Update Suggestions' : 'Use Suggestions'}</span>
+            {isApplied ? (
+              <>
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#F5A623]" />
+                <span>AI Guidance Applied</span>
+              </>
+            ) : (
+              <>
+                <Check className="h-3.5 w-3.5 text-[#F5A623]" />
+                <span>Apply Recommendations to Form</span>
+              </>
+            )}
           </button>
         </div>
       </div>
