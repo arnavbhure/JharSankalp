@@ -12,6 +12,7 @@ import { SubmitIdea } from '../pages/SubmitIdea';
 import { MyIdeas } from '../pages/MyIdeas';
 import { Projects } from '../pages/Projects';
 import { ProjectDetail } from '../pages/ProjectDetail';
+import { ProjectWorkspace } from '../pages/ProjectWorkspace';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -41,6 +42,8 @@ export const router = createBrowserRouter([
       { path: 'my-ideas', element: <MyIdeas /> },
       { path: 'projects', element: <Projects /> },
       { path: 'projects/:projectId', element: <ProjectDetail /> },
+      { path: 'workspace/projects/:projectId', element: <ProjectWorkspace /> },
+      { path: 'workspace/projects/:projectId/:tab', element: <ProjectWorkspace /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
 
       // ── Ecosystem ─────────────────────────────────────

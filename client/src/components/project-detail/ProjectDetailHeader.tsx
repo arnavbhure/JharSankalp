@@ -1,4 +1,6 @@
+
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ProjectDetail } from '../../types/projectDetail';
 import { ProjectHealthIndicator } from '../projects/ProjectHealthIndicator';
 import {
@@ -10,6 +12,7 @@ import {
   Radio,
   Users,
   Building2,
+  LayoutDashboard,
 } from 'lucide-react';
 
 interface ProjectDetailHeaderProps {
@@ -21,6 +24,7 @@ export function ProjectDetailHeader({
   project,
   onJoinClick,
 }: ProjectDetailHeaderProps) {
+  const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -97,11 +101,10 @@ export function ProjectDetailHeader({
             <button
               type="button"
               onClick={() => setIsFollowing(!isFollowing)}
-              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-[13px] font-bold transition-all cursor-pointer ${
-                isFollowing
-                  ? 'border-[#15803D] bg-[#F0FDF4] text-[#15803D]'
-                  : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522]'
-              }`}
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-[13px] font-bold transition-all cursor-pointer ${isFollowing
+                ? 'border-[#15803D] bg-[#F0FDF4] text-[#15803D]'
+                : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522]'
+                }`}
             >
               {isFollowing ? (
                 <>
@@ -133,6 +136,16 @@ export function ProjectDetailHeader({
                   <span>Share</span>
                 </>
               )}
+            </button>
+
+            {/* Contributor Workspace Trigger */}
+            <button
+              type="button"
+              onClick={() => navigate(`/workspace/projects/${project.id}`)}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1B112C] hover:bg-[#281943] text-[#FFD8A8] text-[13px] font-bold border border-[#382657] transition-all cursor-pointer"
+            >
+              <LayoutDashboard className="h-4 w-4 text-[#F5A623]" />
+              <span>Workspace ↗</span>
             </button>
 
             {/* Primary Action */}

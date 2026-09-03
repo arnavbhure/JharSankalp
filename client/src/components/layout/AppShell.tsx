@@ -21,6 +21,7 @@ export function AppShell() {
   const isMyIdeas = location.pathname === '/my-ideas';
   const isProjects = location.pathname === '/projects';
   const isProjectDetail = location.pathname.startsWith('/projects/');
+  const isWorkspace = location.pathname.startsWith('/workspace/projects/');
   const isPublicExploration =
     isLanding ||
     isChallenges ||
@@ -32,7 +33,8 @@ export function AppShell() {
     isSubmitIdea ||
     isMyIdeas ||
     isProjects ||
-    isProjectDetail;
+    isProjectDetail ||
+    isWorkspace;
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">
