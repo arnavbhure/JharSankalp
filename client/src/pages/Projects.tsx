@@ -1,61 +1,58 @@
 import { useState, useEffect } from 'react';
 import {
   Project,
-  PortfolioStats,
-  PortfolioActivityItem,
+  PortfolioMetrics,
+  ProjectActivityItem,
   ProjectFiltersState,
 } from '../types/projects';
 import {
   getProjects,
   getFeaturedProject,
-  getPortfolioStats,
-  getPortfolioActivity,
-  getCollaborationOpportunities,
-  PORTFOLIO_STATS,
+  getProjectMetrics,
+  getProjectActivity,
 } from '../services/projectsApi';
 import { ProjectsHero } from '../components/projects/ProjectsHero';
-import { ProjectPortfolioOverview } from '../components/projects/ProjectPortfolioOverview';
-import { FeaturedProject } from '../components/projects/FeaturedProject';
+import { ProjectMetricsBand } from '../components/projects/ProjectMetricsBand';
 import { ProjectStageExplorer } from '../components/projects/ProjectStageExplorer';
+import { FeaturedProject } from '../components/projects/FeaturedProject';
 import { ProjectFilters } from '../components/projects/ProjectFilters';
-import { ProjectsList } from '../components/projects/ProjectsList';
+import { ProjectPortfolio } from '../components/projects/ProjectPortfolio';
 import { ProjectMapView } from '../components/projects/ProjectMapView';
-import { CollaborationOpportunities } from '../components/projects/CollaborationOpportunities';
-import { PortfolioImpactSnapshot } from '../components/projects/PortfolioImpactSnapshot';
-import { PortfolioActivityTimeline } from '../components/projects/PortfolioActivityTimeline';
+import { CollaborationNetwork } from '../components/projects/CollaborationNetwork';
+import { ProjectActivityFeed } from '../components/projects/ProjectActivityFeed';
+import { ProjectImpactPreview } from '../components/projects/ProjectImpactPreview';
+import { ProjectParticipationCTA } from '../components/projects/ProjectParticipationCTA';
 import { Footer } from '../components/layout/Footer';
+import { PORTFOLIO_METRICS } from '../data/projectsData';
 
 const INITIAL_FILTERS: ProjectFiltersState = {
   search: '',
   domain: 'All Domains',
   district: 'All Districts',
-  stage: 'ALL PROJECTS',
+  stage: 'ALL',
   institution: 'All Institutions',
-  opportunity: 'All Projects',
+  impactArea: 'All',
 };
 
 export function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [featuredProject, setFeaturedProject] = useState<Project | null>(null);
-  const [stats, setStats] = useState<PortfolioStats>(PORTFOLIO_STATS);
-  const [activities, setActivities] = useState<PortfolioActivityItem[]>([]);
-  const [opportunities, setOpportunities] = useState<Array<{ project: Project; need: string }>>([]);
+  const [metrics, setMetrics] = useState<PortfolioMetrics>(PORTFOLIO_METRICS);
+  const [activities, setActivities] = useState<ProjectActivityItem[]>([]);
   const [filters, setFilters] = useState<ProjectFiltersState>(INITIAL_FILTERS);
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [loading, setLoading] = useState(true);
 
-  // Load initial portfolio data
+  // Load initial projects data
   useEffect(() => {
     Promise.all([
       getFeaturedProject(),
-      getPortfolioStats(),
-      getPortfolioActivity(),
-      getCollaborationOpportunities(),
-    ]).then(([featured, portfolioStats, activityData, oppData]) => {
+      getProjectMetrics(),
+      getProjectActivity(),
+    ]).then(([featured, metricsData, activityData]) => {
       setFeaturedProject(featured);
-      setStats(portfolioStats);
+      setMetrics(metricsData);
       setActivities(activityData);
-      setOpportunities(oppData);
     });
   }, []);
 
@@ -73,6 +70,11 @@ export function Projects() {
 
   const handleStageSelect = (stageKey: string) => {
     setFilters((prev) => ({ ...prev, stage: stageKey }));
+    // If user clicked stage explorer, smoothly scroll down to the portfolio
+    const el = document.getElementById('project-portfolio');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleFilterUpdate = (updates: Partial<ProjectFiltersState>) => {
@@ -83,57 +85,84 @@ export function Projects() {
     setFilters(INITIAL_FILTERS);
   };
 
+  const handleDistrictSelectFromMap = (district: string) => {
+    setFilters((prev) => ({ ...prev, district }));
+  };
+
   return (
-    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
-      {/* ── Page Hero Introduction ── */}
-      <ProjectsHero />
+    <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col justify-between">
+      <div>
+        {/* ── SECTION 1: Project Portfolio Hero ── */}
+        <ProjectsHero />
 
-      {/* ── Wide Continuous Portfolio Metrics Band (Deep Purple) ── */}
-      <ProjectPortfolioOverview stats={stats} />
+        {/* ── SECTION 2: Project Portfolio Metrics Band (Deep Purple) ── */}
+        <ProjectMetricsBand metrics={metrics} />
 
-      {/* ── Featured Centerpiece Case Study ── */}
-      {featuredProject && <FeaturedProject project={featuredProject} />}
-
-      {/* ── Horizontal Stage Explorer ── */}
-      <ProjectStageExplorer
-        currentStage={filters.stage}
-        onSelectStage={handleStageSelect}
-      />
-
-      {/* ── Main Portfolio Exploration Body ── */}
-      <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full space-y-12">
-        {/* Search & Filtering Controls with List/Map Toggle */}
-        <ProjectFilters
-          filters={filters}
-          onChange={handleFilterUpdate}
-          onReset={handleResetFilters}
-          viewMode={viewMode}
-          onToggleViewMode={setViewMode}
+        {/* ── SECTION 3: Project Stage Explorer ── */}
+        <ProjectStageExplorer
+          selectedStage={filters.stage}
+          onSelectStage={handleStageSelect}
         />
 
-        {/* Dynamic View: Structured List or Geodetic Map */}
-        {loading ? (
-          <div className="py-20 text-center text-[14px] text-[#6B5845]">
-            Updating innovation portfolio...
+        {/* ── SECTION 4: Featured Project In Focus ── */}
+        {featuredProject && <FeaturedProject project={featuredProject} />}
+
+        {/* ── SECTION 5: Explore Projects (Portfolio & Map Views) ── */}
+        <div id="project-portfolio" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+          <div className="space-y-2 border-b border-[#EEEAE1] pb-5">
+            <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#4C1E4F] font-bold">
+              <span className="h-2 w-2 rounded-full bg-[#FA7E61]" />
+              ACTIVE SPRINT DIRECTORY
+            </div>
+            <h2 className="text-[2.2rem] sm:text-[2.8rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
+              Projects across the innovation ecosystem
+            </h2>
+            <p className="text-[15px] sm:text-[17px] text-[#6B5845] max-w-3xl leading-relaxed">
+              Explore ongoing work by sector, location, development stage and participating institutions.
+            </p>
           </div>
-        ) : viewMode === 'list' ? (
-          <ProjectsList
-            projects={projects}
-            onResetFilters={handleResetFilters}
+
+          {/* Filter Bar */}
+          <ProjectFilters
+            filters={filters}
+            onChange={handleFilterUpdate}
+            onReset={handleResetFilters}
+            viewMode={viewMode}
+            onToggleViewMode={setViewMode}
+            totalFiltered={projects.length}
           />
-        ) : (
-          <ProjectMapView projects={projects} />
-        )}
 
-        {/* ── Collaboration Opportunities (Industry & Partners) ── */}
-        <CollaborationOpportunities opportunities={opportunities} />
+          {/* Dynamic Portfolio View vs Map View */}
+          {loading ? (
+            <div className="py-16 text-center text-[13.5px] font-mono text-[#6B5845] bg-white rounded-3xl border border-[#EEEAE1] p-8">
+              Retrieving active project sprints...
+            </div>
+          ) : viewMode === 'list' ? (
+            <ProjectPortfolio
+              projects={projects}
+              onResetFilters={handleResetFilters}
+            />
+          ) : (
+            <ProjectMapView
+              projects={projects}
+              selectedDistrict={filters.district}
+              onSelectDistrict={handleDistrictSelectFromMap}
+            />
+          )}
+        </div>
 
-        {/* ── Impact Snapshot (Deep Purple & Soft Apricot) ── */}
-        <PortfolioImpactSnapshot stats={stats} />
+        {/* ── SECTION 6: Collaboration Network ── */}
+        <CollaborationNetwork />
 
-        {/* ── Portfolio Activity Movement Timeline ── */}
-        <PortfolioActivityTimeline activities={activities} />
-      </main>
+        {/* ── SECTION 7: Project Activity Feed ── */}
+        <ProjectActivityFeed activities={activities} />
+
+        {/* ── SECTION 8: Project Impact Preview (Deep Purple) ── */}
+        <ProjectImpactPreview metrics={metrics} />
+
+        {/* ── SECTION 9: Call To Action (Role-Specific) ── */}
+        <ProjectParticipationCTA />
+      </div>
 
       {/* ── Institutional Footer ── */}
       <Footer />

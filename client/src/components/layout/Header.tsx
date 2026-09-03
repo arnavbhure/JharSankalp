@@ -118,6 +118,19 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         </Link>
 
         <Link
+          to="/projects"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            location.pathname === '/projects' ? 'text-[#123B2A] font-bold' : '',
+          )}
+        >
+          Projects
+          {location.pathname === '/projects' && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
+
+        <Link
           to="/solutions"
           className={cn(
             'relative py-2 transition-colors hover:text-[#123B2A]',

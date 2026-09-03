@@ -655,8 +655,8 @@ function generateFallbackWorkspace(projectId: string): WorkspaceData {
         period: 'Q2 2026',
         title: 'Engineering & Field Testing',
         description: `Operating deployment units in ${base.location}.`,
-        status: base.stage === 'DESIGN' ? 'IN_PROGRESS' : 'COMPLETED',
-        progress: base.progressPercentage,
+        status: (base.stage === 'RESEARCH_DESIGN' || (base.stage as string) === 'DESIGN') ? 'IN_PROGRESS' : 'COMPLETED',
+        progress: base.progressPercentage || 50,
         startDate: 'Apr 2026',
         targetDate: 'Jun 2026',
         deliverables: ['Field Node Deployment', 'Live Telemetry Integration'],
@@ -726,8 +726,8 @@ function generateFallbackWorkspace(projectId: string): WorkspaceData {
         title: 'Verified Beneficiaries Reached',
         metricType: 'Community Beneficiaries',
         baseline: '0',
-        current: `${Math.round(base.potentialBeneficiaries * 0.4)}`,
-        target: `${base.potentialBeneficiaries}`,
+        current: `${Math.round((base.potentialBeneficiaries || 2000) * 0.4)}`,
+        target: `${base.potentialBeneficiaries || 2000}`,
         evidence: [
           {
             id: 'ev-gen-1',

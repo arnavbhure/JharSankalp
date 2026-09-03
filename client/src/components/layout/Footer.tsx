@@ -36,24 +36,34 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-[14px] text-white/80 font-medium">
               <li>
-                <a href="#challenges-feed" className="hover:text-white transition-colors">
+                <Link to="/challenges" className="hover:text-white transition-colors">
                   Challenges
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#focus-areas" className="hover:text-white transition-colors">
+                <Link to="/ideas" className="hover:text-white transition-colors">
                   Ideas
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-white transition-colors">
+                <Link to="/projects" className="hover:text-[#FA7E61] transition-colors font-bold text-[#FEE1C7]">
+                  Active Projects
+                </Link>
+              </li>
+              <li>
+                <Link to="/collaborations" className="hover:text-white transition-colors">
+                  Collaborations
+                </Link>
+              </li>
+              <li>
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Solutions
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#impact" className="hover:text-white transition-colors">
+                <Link to="/impact" className="hover:text-white transition-colors">
                   Impact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
