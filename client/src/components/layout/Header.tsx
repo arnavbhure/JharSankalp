@@ -199,6 +199,10 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
           onClick={() => {
             if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
               navigate('/government/dashboard');
+            } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
+              navigate('/university/dashboard');
+            } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
+              navigate('/industry/dashboard');
             } else {
               navigate('/dashboard');
             }
@@ -207,6 +211,10 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         >
           {user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN
             ? 'Command Center ↗'
+            : user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY
+            ? 'University Workspace ↗'
+            : user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP
+            ? 'Industry Workspace ↗'
             : 'Dashboard ↗'}
         </button>
 
@@ -250,6 +258,12 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
                         setShowRoleSwitcher(false);
                         if (role === UserRole.GOVERNMENT_OFFICER) {
                           navigate('/government/dashboard');
+                        } else if (role === UserRole.UNIVERSITY_ADMIN || role === UserRole.FACULTY) {
+                          navigate('/university/dashboard');
+                        } else if (role === UserRole.INDUSTRY) {
+                          navigate('/industry/dashboard');
+                        } else if (role === UserRole.CITIZEN) {
+                          navigate('/dashboard');
                         }
                       }}
                       className={cn(

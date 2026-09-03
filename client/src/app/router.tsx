@@ -31,6 +31,10 @@ import { DashboardImpact } from '../pages/dashboard/DashboardImpact';
 import { DashboardSettings } from '../pages/dashboard/DashboardSettings';
 import { GovernmentLayout } from '../layouts/GovernmentLayout';
 import { GovernmentDashboard } from '../pages/government/GovernmentDashboard';
+import { UniversityLayout } from '../layouts/UniversityLayout';
+import { UniversityDashboard } from '../pages/university/UniversityDashboard';
+import { IndustryLayout } from '../layouts/IndustryLayout';
+import { IndustryDashboard } from '../pages/industry/IndustryDashboard';
 import { NotFound } from '../pages/NotFound';
 
 /**
@@ -66,6 +70,22 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <GovernmentDashboard /> },
       { path: 'dashboard', element: <GovernmentDashboard /> },
+    ],
+  },
+  {
+    path: '/university',
+    element: <UniversityLayout />,
+    children: [
+      { index: true, element: <UniversityDashboard /> },
+      { path: 'dashboard', element: <UniversityDashboard /> },
+    ],
+  },
+  {
+    path: '/industry',
+    element: <IndustryLayout />,
+    children: [
+      { index: true, element: <IndustryDashboard /> },
+      { path: 'dashboard', element: <IndustryDashboard /> },
     ],
   },
   {
@@ -112,17 +132,12 @@ export const router = createBrowserRouter([
       // Phase 10: { path: 'government/insights', element: <GovInsights /> },
 
       // ── University ────────────────────────────────────
-      // Phase 6: { path: 'university', element: <UniDashboard /> },
-      // Phase 6: { path: 'university/challenges', element: <UniChallenges /> },
-      // Phase 6: { path: 'university/capabilities', element: <UniCapabilities /> },
-      // Phase 6: { path: 'university/teams', element: <UniTeams /> },
-      // Phase 8: { path: 'university/projects', element: <UniProjects /> },
+      { path: 'university', element: <UniversityDashboard /> },
+      { path: 'university/dashboard', element: <UniversityDashboard /> },
 
       // ── Industry ──────────────────────────────────────
-      // Phase 6: { path: 'industry', element: <IndustryDashboard /> },
-      // Phase 6: { path: 'industry/opportunities', element: <IndustryOpps /> },
-      // Phase 6: { path: 'industry/capabilities', element: <IndustryCaps /> },
-      // Phase 7: { path: 'industry/commitments', element: <IndustryCommitments /> },
+      { path: 'industry', element: <IndustryDashboard /> },
+      { path: 'industry/dashboard', element: <IndustryDashboard /> },
       // Phase 7: { path: 'industry/partnerships', element: <IndustryPartnerships /> },
 
       // ── Catch-all ─────────────────────────────────────
