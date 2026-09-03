@@ -105,32 +105,6 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         </Link>
 
         <Link
-          to="/dashboard"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/dashboard' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Dashboard
-          {location.pathname === '/dashboard' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/my-challenges"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/my-challenges' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          My Challenges
-          {location.pathname === '/my-challenges' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
           to="/ideas"
           className={cn(
             'relative py-2 transition-colors hover:text-[#123B2A]',
@@ -144,45 +118,56 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         </Link>
 
         <Link
-          to="/projects"
+          to="/solutions"
           className={cn(
             'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname.startsWith('/projects') ? 'text-[#123B2A] font-bold' : '',
+            location.pathname === '/solutions' ? 'text-[#123B2A] font-bold' : '',
           )}
         >
-          Projects
-          {location.pathname.startsWith('/projects') && (
+          Solutions
+          {location.pathname === '/solutions' && (
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
           )}
         </Link>
 
-        <a
-          href="#how-it-works"
-          className="py-2 transition-colors hover:text-[#123B2A]"
-        >
-          Solutions
-        </a>
-
-        <a
-          href="#ecosystem"
-          className="py-2 transition-colors hover:text-[#123B2A]"
+        <Link
+          to="/collaborators"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            location.pathname === '/collaborators' ? 'text-[#123B2A] font-bold' : '',
+          )}
         >
           Collaborators
-        </a>
+          {location.pathname === '/collaborators' && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
 
-        <a
-          href="#impact"
-          className="py-2 transition-colors hover:text-[#123B2A]"
+        <Link
+          to="/impact"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            location.pathname === '/impact' ? 'text-[#123B2A] font-bold' : '',
+          )}
         >
           Impact
-        </a>
+          {location.pathname === '/impact' && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
 
-        <a
-          href="#about"
-          className="py-2 transition-colors hover:text-[#123B2A]"
+        <Link
+          to="/about"
+          className={cn(
+            'relative py-2 transition-colors hover:text-[#123B2A]',
+            location.pathname === '/about' ? 'text-[#123B2A] font-bold' : '',
+          )}
         >
           About Us
-        </a>
+          {location.pathname === '/about' && (
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+          )}
+        </Link>
       </nav>
 
       {/* Right: Search + Login/Sign Up + Demo Role Switcher */}

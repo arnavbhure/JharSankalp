@@ -13,13 +13,27 @@ import { MyIdeas } from '../pages/MyIdeas';
 import { Projects } from '../pages/Projects';
 import { ProjectDetail } from '../pages/ProjectDetail';
 import { ProjectWorkspace } from '../pages/ProjectWorkspace';
-import { Dashboard } from '../pages/Dashboard';
+import { Solutions } from '../pages/public/Solutions';
+import { Collaborators } from '../pages/public/Collaborators';
+import { Impact } from '../pages/public/Impact';
+import { About } from '../pages/public/About';
+import { DashboardLayout } from '../layouts/DashboardLayout';
+import { DashboardOverview } from '../pages/dashboard/DashboardOverview';
+import { DashboardChallenges } from '../pages/dashboard/DashboardChallenges';
+import { DashboardIdeas } from '../pages/dashboard/DashboardIdeas';
+import { DashboardProjects } from '../pages/dashboard/DashboardProjects';
+import { DashboardSolutions } from '../pages/dashboard/DashboardSolutions';
+import { DashboardCollaborations } from '../pages/dashboard/DashboardCollaborations';
+import { DashboardNotifications } from '../pages/dashboard/DashboardNotifications';
+import { DashboardImpact } from '../pages/dashboard/DashboardImpact';
+import { DashboardSettings } from '../pages/dashboard/DashboardSettings';
 import { NotFound } from '../pages/NotFound';
 
 /**
  * Application router.
- * Phase 1: Landing, Login, 404 with role-aware AppShell.
- * Each subsequent phase will add feature routes.
+ * Separated into:
+ * 1. Public Platform (AppShell with top navbar, outlet, footer)
+ * 2. Authenticated Citizen Innovator Workspace (DashboardLayout with persistent sidebar, topbar, outlet)
  */
 export const router = createBrowserRouter([
   {
@@ -28,27 +42,42 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: <DashboardLayout />,
+    children: [
+      { index: true, element: <DashboardOverview /> },
+      { path: 'challenges', element: <DashboardChallenges /> },
+      { path: 'ideas', element: <DashboardIdeas /> },
+      { path: 'projects', element: <DashboardProjects /> },
+      { path: 'solutions', element: <DashboardSolutions /> },
+      { path: 'collaborations', element: <DashboardCollaborations /> },
+      { path: 'notifications', element: <DashboardNotifications /> },
+      { path: 'impact', element: <DashboardImpact /> },
+      { path: 'settings', element: <DashboardSettings /> },
+    ],
   },
   {
     path: '/',
     element: <AppShell />,
     children: [
-      // ── Public / Citizen ──────────────────────────────
+      // ── Public Platform Routes ──────────────────────────────
       { index: true, element: <Landing /> },
       { path: 'challenges', element: <Challenges /> },
       { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
-      { path: 'report-challenge', element: <ReportChallenge /> },
-      { path: 'report', element: <ReportChallenge /> },
-      { path: 'my-challenges', element: <MyChallenges /> },
       { path: 'ideas', element: <Ideas /> },
       { path: 'ideas/:ideaId', element: <IdeaDetail /> },
-      { path: 'submit-idea', element: <SubmitIdea /> },
-      { path: 'my-ideas', element: <MyIdeas /> },
+      { path: 'solutions', element: <Solutions /> },
+      { path: 'collaborators', element: <Collaborators /> },
+      { path: 'impact', element: <Impact /> },
+      { path: 'about', element: <About /> },
       { path: 'projects', element: <Projects /> },
       { path: 'projects/:projectId', element: <ProjectDetail /> },
       { path: 'workspace/projects/:projectId', element: <ProjectWorkspace /> },
       { path: 'workspace/projects/:projectId/:tab', element: <ProjectWorkspace /> },
+      { path: 'report-challenge', element: <ReportChallenge /> },
+      { path: 'report', element: <ReportChallenge /> },
+      { path: 'submit-idea', element: <SubmitIdea /> },
+      { path: 'my-challenges', element: <MyChallenges /> },
+      { path: 'my-ideas', element: <MyIdeas /> },
       // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
 
       // ── Ecosystem ─────────────────────────────────────

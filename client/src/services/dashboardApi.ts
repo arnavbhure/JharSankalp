@@ -3,8 +3,8 @@ import { DashboardRole, DashboardRoleData } from '../types/dashboard';
 const CITIZEN_DATA: DashboardRoleData = {
   role: 'citizen',
   roleLabel: 'Citizen Innovator',
-  userName: 'Arnab',
-  greeting: 'Good evening, Arnab 👋',
+  userName: 'Arnav',
+  greeting: 'Good evening, Arnav 👋',
   subtitle: "See how your ideas are creating change across Jharkhand.",
   impact: {
     title: 'Your Contribution Impact',

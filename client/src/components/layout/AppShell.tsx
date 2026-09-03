@@ -22,6 +22,10 @@ export function AppShell() {
   const isProjects = location.pathname === '/projects';
   const isProjectDetail = location.pathname.startsWith('/projects/');
   const isWorkspace = location.pathname.startsWith('/workspace/projects/');
+  const isSolutions = location.pathname === '/solutions';
+  const isCollaborators = location.pathname === '/collaborators';
+  const isImpact = location.pathname === '/impact';
+  const isAbout = location.pathname === '/about';
   const isPublicExploration =
     isLanding ||
     isChallenges ||
@@ -34,7 +38,11 @@ export function AppShell() {
     isMyIdeas ||
     isProjects ||
     isProjectDetail ||
-    isWorkspace;
+    isWorkspace ||
+    isSolutions ||
+    isCollaborators ||
+    isImpact ||
+    isAbout;
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">

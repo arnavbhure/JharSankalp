@@ -31,20 +31,17 @@ export function DashboardSidebar({
 
   const MAIN_LINKS = [
     { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Challenges', path: '/challenges', icon: Zap },
-    { label: 'Ideas', path: '/ideas', icon: Lightbulb },
-    { label: 'Solutions', path: '/projects', icon: CheckCircle2 },
-    {
-      label: 'Collaborations',
-      path: '/workspace/projects/PROJECT-2026-0012',
-      icon: Users,
-    },
+    { label: 'Challenges', path: '/dashboard/challenges', icon: Zap },
+    { label: 'Ideas', path: '/dashboard/ideas', icon: Lightbulb },
+    { label: 'Projects', path: '/dashboard/projects', icon: CheckCircle2 },
+    { label: 'Solutions', path: '/dashboard/solutions', icon: Award },
+    { label: 'Collaborations', path: '/dashboard/collaborations', icon: Users },
   ];
 
   const PERSONAL_LINKS = [
-    { label: 'Notifications', path: '/my-challenges', icon: Bell, badge: 2 },
-    { label: 'My Impact', path: '/my-ideas', icon: Award },
-    { label: 'Settings', path: '/workspace/projects/PROJECT-2026-0012', icon: Settings },
+    { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
+    { label: 'My Impact', path: '/dashboard/impact', icon: Award },
+    { label: 'Settings', path: '/dashboard/settings', icon: Settings },
   ];
 
   const roleDisplayNames: Record<DashboardRole, string> = {
@@ -110,9 +107,10 @@ export function DashboardSidebar({
               {MAIN_LINKS.map((link) => {
                 const Icon = link.icon;
                 const isActive =
-                  location.pathname === link.path ||
-                  (link.path === '/dashboard' &&
-                    location.pathname.startsWith('/dashboard'));
+                  link.path === '/dashboard'
+                    ? location.pathname === '/dashboard'
+                    : location.pathname === link.path ||
+                      location.pathname.startsWith(link.path + '/');
 
                 return (
                   <button
@@ -179,6 +177,18 @@ export function DashboardSidebar({
               })}
             </nav>
           </div>
+        </div>
+
+        {/* Public Portal Exit Shortcut */}
+        <div className="px-4 pb-1">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-[11.5px] font-mono font-semibold text-[#F7F5F0]/70 hover:text-white hover:bg-[#1E5A3A]/40 border border-[#1E5A3A]/40 transition-all cursor-pointer"
+          >
+            <span>Exit to Public Portal</span>
+            <span>↗</span>
+          </button>
         </div>
 
         {/* Bottom User Profile Strip */}

@@ -31,7 +31,7 @@ export function Dashboard() {
       {/* ── Left Sidebar (Deep Green ~252px) ── */}
       <DashboardSidebar
         currentRole={currentRole}
-        userName={data ? data.userName : 'Arnab'}
+        userName={data ? data.userName : 'Arnav'}
         isOpenMobile={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
       />
@@ -41,7 +41,7 @@ export function Dashboard() {
         <div className="w-full bg-[#F7F5F0] rounded-[28px] sm:rounded-[36px] shadow-xl border border-[#EEEAE1] p-5 sm:p-8 lg:p-10 space-y-7 min-h-[calc(100vh-3rem)]">
           {/* Top Header */}
           <DashboardTopHeader
-            greeting={data?.greeting || 'Good evening, Arnab 👋'}
+            greeting={data?.greeting || 'Good evening, Arnav 👋'}
             subtitle={
               data?.subtitle ||
               'See how your ideas are creating change across Jharkhand.'
