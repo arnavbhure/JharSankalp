@@ -4,6 +4,7 @@ import {
   PortfolioActivityItem,
   ProjectFiltersState,
 } from '../types/projects';
+import { ProjectDetail, ExpressInterestFormData } from '../types/projectDetail';
 
 export const SEED_PROJECTS: Project[] = [
   {
@@ -280,6 +281,468 @@ export const PORTFOLIO_ACTIVITIES: PortfolioActivityItem[] = [
   },
 ];
 
+export const DETAILED_PROJECTS: Record<string, ProjectDetail> = {
+  'PROJECT-2026-0012': {
+    ...SEED_PROJECTS[0],
+    description:
+      'A collaborative initiative developing low-cost monitoring systems to detect rural drinking water infrastructure failures early and reduce prolonged service disruption across Murhu Block.',
+    challenge: {
+      id: 'JS-2026-00024',
+      title: 'Frequent Breakdown of Drinking Water Pumps in Murhu Block',
+      location: 'Murhu Block, Khunti',
+    },
+    idea: {
+      id: 'IDEA-2026-0001',
+      title: 'Low-Cost IoT Monitoring for Rural Water Pumps',
+    },
+    mission: {
+      problem:
+        'Communities in Murhu Block experience prolonged water disruption when drinking water pumps fail without early detection or a structured maintenance response.',
+      approach:
+        'Deploy affordable sensor modules capable of identifying pump inactivity and unusual operational patterns, combined with a simple monitoring interface for maintenance teams.',
+      expectedOutcome:
+        'Reduce average infrastructure downtime and enable faster maintenance intervention.',
+    },
+    successCriteria: [
+      {
+        label: 'Reduce average pump downtime',
+        baseline: 'From 12 days',
+        target: 'Target below 4 days',
+      },
+      {
+        label: 'Improve fault detection speed',
+        baseline: 'Manual community reporting',
+        target: 'Automated telemetry alerts',
+      },
+      {
+        label: 'Pilot Coverage',
+        baseline: '20 initial water points',
+        target: '75 planned water points across Murhu Block',
+      },
+    ],
+    team: [
+      {
+        id: 'tm-1',
+        name: 'Dr. Ananya Singh',
+        role: 'Faculty Mentor & Principal Investigator',
+        title: 'Professor, Embedded Systems & IoT',
+        specialty: 'Low-Power LoRa Mesh & Sensing Circuits',
+        institution: 'BIT Mesra',
+        avatarInitials: 'AS',
+      },
+      {
+        id: 'tm-2',
+        name: 'Ravi Kumar',
+        role: 'Student Researcher',
+        title: 'M.Tech Embedded Systems Fellow',
+        specialty: 'Hardware Development & Vibration DSP',
+        institution: 'BIT Mesra',
+        avatarInitials: 'RK',
+      },
+      {
+        id: 'tm-3',
+        name: 'Priya Verma',
+        role: 'Project Coordinator',
+        title: 'Field Operations Specialist',
+        specialty: 'Jal Samiti Community Engagement & Training',
+        institution: 'Rural Innovation Lab',
+        avatarInitials: 'PV',
+      },
+    ],
+    milestones: [
+      {
+        id: 'ms-1',
+        phase: 'PHASE 01',
+        period: 'JAN 2026',
+        title: 'Problem Validation',
+        description:
+          'Conducted field baseline across 25 villages in Murhu Block, verifying average pump breakdown patterns and Jal Samiti repair intervals.',
+        deliverables: ['Field Failure Audit Report', 'Pump Mechanical Specification Matrix'],
+        owner: 'Rural Innovation Lab',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'ms-2',
+        phase: 'PHASE 02',
+        period: 'FEB 2026',
+        title: 'System Architecture',
+        description:
+          'Designed low-power LoRa mesh topology, piezoelectric transducer collar, and energy-harvesting solar battery circuit.',
+        deliverables: ['Schematic Design v1.2', 'LoRaWAN Gateway Placement Plan'],
+        owner: 'BIT Mesra',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'ms-3',
+        phase: 'PHASE 03',
+        period: 'MAR 2026',
+        title: 'Prototype Development',
+        description:
+          'Fabricated 20 bench prototypes and tested stroke frequency anomaly detection in controlled hydraulic flow test rigs.',
+        deliverables: ['IoT Sensor Prototype v2', 'Calibration Firmware v1.0'],
+        owner: 'BIT Mesra',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'ms-4',
+        phase: 'PHASE 04',
+        period: 'APR – JUN 2026',
+        title: 'Field Pilot',
+        description:
+          'Installing and operating 20 telemetry nodes on working India Mark II handpumps across 8 gram panchayats in Murhu Block.',
+        deliverables: ['14 Installed Field Nodes', 'Daily Dashboard Sync', 'Jal Samiti WhatsApp Integration'],
+        owner: 'Joint Consortium',
+        status: 'IN_PROGRESS',
+      },
+      {
+        id: 'ms-5',
+        phase: 'PHASE 05',
+        period: 'JUL 2026',
+        title: 'Impact Evaluation',
+        description:
+          'Measure response turnaround times, false-positive alert frequencies, and community satisfaction with Jal Sahiya workers.',
+        deliverables: ['Pilot Evaluation Dossier', 'Mean Time To Repair (MTTR) Analysis'],
+        owner: 'Khunti District Administration',
+        status: 'UPCOMING',
+      },
+      {
+        id: 'ms-6',
+        phase: 'PHASE 06',
+        period: 'AUG 2026',
+        title: 'Scale Recommendation',
+        description:
+          'Submit policy brief and commercialization tender specifications to Jharkhand State Drinking Water & Sanitation Department (DWSD).',
+        deliverables: ['State Scale Blueprint', 'Tender Hardware Specs'],
+        owner: 'BIT Mesra & State DWSD',
+        status: 'PLANNED',
+      },
+    ],
+    workstreams: [
+      {
+        id: 'ws-1',
+        title: 'FIELD DEPLOYMENT',
+        description: 'Install sensor modules across 20 selected water points in Murhu Block panchayats.',
+        progress: '14 / 20 Sites',
+        status: 'Active Field Testing',
+        metric: '70% Complete',
+      },
+      {
+        id: 'ws-2',
+        title: 'DATA COLLECTION',
+        description: 'Monitor pump activity and failure patterns.',
+        progress: 'Collecting Pilot Data',
+        status: 'Continuous Stream',
+        metric: '18,400 Packets',
+      },
+      {
+        id: 'ws-3',
+        title: 'MAINTENANCE WORKFLOW',
+        description: 'Test automated alert routing to maintenance teams.',
+        progress: 'In Validation',
+        status: 'Dry-Run Testing',
+        metric: '6 Verified Alerts',
+      },
+    ],
+    deliverables: [
+      {
+        id: 'del-1',
+        title: 'IoT Sensor Prototype v2',
+        owner: 'BIT Mesra',
+        status: 'COMPLETED',
+        date: 'May 12, 2026',
+      },
+      {
+        id: 'del-2',
+        title: 'Field Installation Protocol',
+        owner: 'Rural Innovation Lab',
+        status: 'COMPLETED',
+        date: 'May 18, 2026',
+      },
+      {
+        id: 'del-3',
+        title: 'Maintenance Alert Workflow',
+        owner: 'Khunti District Administration',
+        status: 'IN_REVIEW',
+        date: 'May 22, 2026',
+      },
+      {
+        id: 'del-4',
+        title: 'Pilot Evaluation Report',
+        owner: 'Research Team',
+        status: 'UPCOMING',
+        date: 'June 30, 2026',
+      },
+    ],
+    fieldImplementation: {
+      district: 'Khunti',
+      block: 'Murhu Block',
+      targetPoints: 20,
+      installedPoints: 14,
+      progressPercentage: 68,
+      communityPartners: 3,
+      telemetryNotes:
+        'Sensors mounted on discharge head and pump handle. Battery charged via 5W solar panel. Real-time packet hop to BDO office LoRa gateway.',
+    },
+    documents: [
+      {
+        id: 'doc-1',
+        title: 'Research Proposal & Feasibility Study',
+        type: 'PDF',
+        date: 'January 2026',
+        size: '3.4 MB',
+      },
+      {
+        id: 'doc-2',
+        title: 'System Architecture & Telemetry Specs',
+        type: 'Technical Document',
+        date: 'February 2026',
+        size: '5.8 MB',
+      },
+      {
+        id: 'doc-3',
+        title: 'Field Deployment Protocol & Jal Samiti SOP',
+        type: 'PDF',
+        date: 'April 2026',
+        size: '2.1 MB',
+      },
+      {
+        id: 'doc-4',
+        title: 'Pilot Sensor Vibration & Failure Dataset',
+        type: 'Dataset',
+        date: 'Updated Yesterday',
+        size: '18.2 MB',
+      },
+    ],
+    impact: {
+      currentOutputs: [
+        { label: 'Water Points Equipped', value: 14, desc: 'Operational sensor telemetry nodes installed' },
+        { label: 'Prototype Iterations', value: 2, desc: 'Hardware circuit and machined casing designs' },
+        { label: 'Partner Organizations', value: 4, desc: 'Academic, district, and MSME institutions' },
+        { label: 'Active Contributors', value: 8, desc: 'Engineers, coordinators, and field staff' },
+      ],
+      targetOutcomes: [
+        { label: 'Reduction in Pump Downtime', value: '75%', desc: 'From 12 days to under 48 hours response' },
+        { label: 'Residents with Improved Reliability', value: '2,000+', desc: 'Direct access to uninterrupted drinking water' },
+        { label: 'Potential Deployment Points', value: '75', desc: 'Full Murhu Block public handpump coverage' },
+      ],
+      evidenceStatus: {
+        baselineData: 'COLLECTED',
+        pilotData: 'IN_PROGRESS',
+        impactValidation: 'PENDING',
+      },
+    },
+    activity: [
+      {
+        id: 'pact-1',
+        timestamp: 'TODAY',
+        title: '3 Sensor Modules Installed',
+        description: 'Installed at Buruhatu and Siyankel village water points with local Jal Sahiya.',
+      },
+      {
+        id: 'pact-2',
+        timestamp: 'YESTERDAY',
+        title: 'Reliability Observations Submitted',
+        description: 'Field testing team submitted initial telemetry reliability observations from 11 nodes.',
+      },
+      {
+        id: 'pact-3',
+        timestamp: '3 DAYS AGO',
+        title: 'Manufacturing Opportunity Published',
+        description: 'Published vacancy for local PCB and casing fabrication partner for scale-up.',
+      },
+      {
+        id: 'pact-4',
+        timestamp: '1 WEEK AGO',
+        title: 'Prototype v2 Approved',
+        description: 'Hardware v2 approved by technical committee for all remaining pilot locations.',
+      },
+      {
+        id: 'pact-5',
+        timestamp: '2 WEEKS AGO',
+        title: 'Community Validation Workshop',
+        description: 'Conducted interactive workshop with 18 Jal Samiti members at Murhu Block headquarters.',
+      },
+    ],
+  },
+};
+
+// Fallback generator for other seeded projects
+function generateFallbackProjectDetail(base: Project): ProjectDetail {
+  return {
+    ...base,
+    description: base.summary,
+    challenge: {
+      id: base.relatedChallengeId,
+      title: base.relatedChallengeTitle,
+      location: base.location,
+    },
+    idea: base.relatedIdeaId
+      ? {
+          id: base.relatedIdeaId,
+          title: `Prototype Idea for ${base.domain}`,
+        }
+      : undefined,
+    mission: {
+      problem: `Communities in ${base.location} face significant difficulties requiring institutional and technological intervention.`,
+      approach: `Deploy engineered solutions developed by ${base.leadInstitution} and validated through district-level field testing.`,
+      expectedOutcome: `Achieve measurable reduction in operational latency and deliver sustained public impact.`,
+    },
+    successCriteria: [
+      {
+        label: 'Operational Efficacy',
+        baseline: 'Manual process baseline',
+        target: 'Automated & verified performance',
+      },
+      {
+        label: 'Community Adoption',
+        baseline: 'Initial pilot cohort',
+        target: `${base.impactMetric} beneficiary coverage`,
+      },
+    ],
+    team: [
+      {
+        id: 'tm-gen-1',
+        name: 'Dr. Ramesh Soren',
+        role: 'Principal Investigator',
+        title: `Faculty Lead, ${base.leadInstitution}`,
+        specialty: `${base.domain} Technology Architecture`,
+        institution: base.leadInstitution,
+        avatarInitials: 'RS',
+      },
+      {
+        id: 'tm-gen-2',
+        name: 'Aditi Mukhopadhyay',
+        role: 'Research Associate',
+        title: 'Field Validation Lead',
+        specialty: 'System Verification & Community Trials',
+        institution: base.leadInstitution,
+        avatarInitials: 'AM',
+      },
+    ],
+    milestones: [
+      {
+        id: 'ms-gen-1',
+        phase: 'PHASE 01',
+        period: 'Q1 2026',
+        title: 'Problem Formulation & Needs Assessment',
+        description: `Verified real-world ground conditions in ${base.location}.`,
+        deliverables: ['Baseline Needs Dossier', 'Technical Architecture Specs'],
+        owner: base.leadInstitution,
+        status: 'COMPLETED',
+      },
+      {
+        id: 'ms-gen-2',
+        phase: 'PHASE 02',
+        period: 'Q2 2026',
+        title: 'Solution Prototyping & Lab Bench Testing',
+        description: 'Engineering the core software and hardware mechanics.',
+        deliverables: ['Working Prototype v1.0', 'Safety & Performance Audit'],
+        owner: base.leadInstitution,
+        status: base.stage === 'DESIGN' ? 'IN_PROGRESS' : 'COMPLETED',
+      },
+      {
+        id: 'ms-gen-3',
+        phase: 'PHASE 03',
+        period: 'Q3 2026',
+        title: 'Field Pilot & District Implementation',
+        description: `Deploying initial units across ${base.location}.`,
+        deliverables: ['Field Installation', 'Operational Telemetry Sync'],
+        owner: 'Joint Consortium',
+        status: base.stage === 'FIELD_PILOT' ? 'IN_PROGRESS' : base.stage === 'IMPACT_VERIFICATION' || base.stage === 'SCALING' ? 'COMPLETED' : 'UPCOMING',
+      },
+    ],
+    workstreams: [
+      {
+        id: 'ws-gen-1',
+        title: 'TECHNICAL CORE',
+        description: `Refining algorithmic and hardware capabilities for ${base.domain}.`,
+        progress: `${base.progressPercentage}% Complete`,
+        status: 'In Development',
+        metric: 'Sprint 6',
+      },
+      {
+        id: 'ws-gen-2',
+        title: 'DISTRICT COORDINATION',
+        description: `Liaising with ${base.district} district authorities for pilot site onboarding.`,
+        progress: 'Active Dialogue',
+        status: 'Coordinating',
+        metric: '3 Sites Evaluated',
+      },
+    ],
+    deliverables: [
+      {
+        id: 'del-gen-1',
+        title: 'Core Architecture Dossier',
+        owner: base.leadInstitution,
+        status: 'COMPLETED',
+        date: 'Earlier this year',
+      },
+      {
+        id: 'del-gen-2',
+        title: 'Field Implementation SOP',
+        owner: 'Joint Consortium',
+        status: 'IN_REVIEW',
+        date: 'Recent',
+      },
+    ],
+    fieldImplementation: {
+      district: base.district,
+      block: base.location,
+      targetPoints: 15,
+      installedPoints: 8,
+      progressPercentage: base.progressPercentage,
+      communityPartners: 2,
+      telemetryNotes: `Active implementation site in ${base.location}. Direct coordination with district administrative teams.`,
+    },
+    documents: [
+      {
+        id: 'doc-gen-1',
+        title: 'Project Inception & Architecture Proposal',
+        type: 'PDF',
+        date: base.startedAt,
+        size: '2.8 MB',
+      },
+      {
+        id: 'doc-gen-2',
+        title: 'Field Site Evaluation Dataset',
+        type: 'Dataset',
+        date: 'Recent',
+        size: '6.4 MB',
+      },
+    ],
+    impact: {
+      currentOutputs: [
+        { label: 'Installed Deployments', value: 8, desc: 'Active test units in field' },
+        { label: 'Partner Institutions', value: base.partners.length, desc: 'Consortium stakeholders' },
+        { label: 'Active Team Members', value: 6, desc: 'Researchers and domain specialists' },
+      ],
+      targetOutcomes: [
+        { label: 'Potential Beneficiaries', value: base.impactMetric, desc: `Target population in ${base.district}` },
+        { label: 'Scale Target', value: '100% Coverage', desc: `Full block coverage across ${base.district}` },
+      ],
+      evidenceStatus: {
+        baselineData: 'COLLECTED',
+        pilotData: base.stage === 'FIELD_PILOT' ? 'IN_PROGRESS' : 'PENDING',
+        impactValidation: base.stage === 'IMPACT_VERIFICATION' || base.stage === 'SCALING' ? 'IN_PROGRESS' : 'PENDING',
+      },
+    },
+    activity: [
+      {
+        id: 'act-gen-1',
+        timestamp: 'THIS WEEK',
+        title: 'Milestone Progress Review',
+        description: `Project team reviewed implementation velocity for ${base.stageLabel}.`,
+      },
+      {
+        id: 'act-gen-2',
+        timestamp: 'LAST WEEK',
+        title: 'District Coordination Meeting',
+        description: `Review meeting with ${base.district} district representatives completed.`,
+      },
+    ],
+  };
+}
+
 export async function getProjects(filters?: Partial<ProjectFiltersState>): Promise<Project[]> {
   await new Promise((r) => setTimeout(r, 60));
   let result = [...SEED_PROJECTS];
@@ -334,6 +797,26 @@ export async function getFeaturedProject(): Promise<Project> {
 export async function getProjectById(id: string): Promise<Project | null> {
   await new Promise((r) => setTimeout(r, 40));
   return SEED_PROJECTS.find((p) => p.id === id || p.projectCode === id) || null;
+}
+
+export async function getProjectDetail(id: string): Promise<ProjectDetail | null> {
+  await new Promise((r) => setTimeout(r, 60));
+  if (DETAILED_PROJECTS[id]) {
+    return DETAILED_PROJECTS[id];
+  }
+  const base = SEED_PROJECTS.find((p) => p.id === id || p.projectCode === id);
+  if (base) {
+    return generateFallbackProjectDetail(base);
+  }
+  return null;
+}
+
+export async function expressInterest(
+  _projectId: string,
+  _data: ExpressInterestFormData
+): Promise<boolean> {
+  await new Promise((r) => setTimeout(r, 200));
+  return true;
 }
 
 export async function getCollaborationOpportunities(): Promise<Array<{ project: Project; need: string }>> {
