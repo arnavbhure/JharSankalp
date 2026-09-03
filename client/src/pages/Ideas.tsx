@@ -79,9 +79,7 @@ export function Ideas() {
 
   // Actions
   const handleOpenShare = () => {
-    setModalMode('SHARE');
-    setSelectedIdea(null);
-    setModalOpen(true);
+    navigate('/submit-idea');
   };
 
   const handleOpenJoin = (idea: IdeaItem) => {
