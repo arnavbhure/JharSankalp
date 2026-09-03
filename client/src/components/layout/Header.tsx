@@ -131,14 +131,14 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
         </Link>
 
         <Link
-          to="/collaborators"
+          to="/collaborations"
           className={cn(
             'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/collaborators' ? 'text-[#123B2A] font-bold' : '',
+            location.pathname === '/collaborations' || location.pathname === '/collaborators' ? 'text-[#123B2A] font-bold' : '',
           )}
         >
-          Collaborators
-          {location.pathname === '/collaborators' && (
+          Collaborations
+          {(location.pathname === '/collaborations' || location.pathname === '/collaborators') && (
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
           )}
         </Link>

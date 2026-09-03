@@ -23,6 +23,7 @@ export function AppShell() {
   const isProjectDetail = location.pathname.startsWith('/projects/');
   const isWorkspace = location.pathname.startsWith('/workspace/projects/');
   const isSolutions = location.pathname === '/solutions';
+  const isCollaborations = location.pathname === '/collaborations';
   const isCollaborators = location.pathname === '/collaborators';
   const isImpact = location.pathname === '/impact';
   const isAbout = location.pathname === '/about';
@@ -40,6 +41,7 @@ export function AppShell() {
     isProjectDetail ||
     isWorkspace ||
     isSolutions ||
+    isCollaborations ||
     isCollaborators ||
     isImpact ||
     isAbout;

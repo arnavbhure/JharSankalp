@@ -14,7 +14,7 @@ import { Projects } from '../pages/Projects';
 import { ProjectDetail } from '../pages/ProjectDetail';
 import { ProjectWorkspace } from '../pages/ProjectWorkspace';
 import { Solutions } from '../pages/public/Solutions';
-import { Collaborators } from '../pages/public/Collaborators';
+import { Collaborations } from '../pages/Collaborations';
 import { Impact } from '../pages/public/Impact';
 import { About } from '../pages/public/About';
 import { SubmitChallengeIdea } from '../pages/SubmitChallengeIdea';
@@ -70,7 +70,8 @@ export const router = createBrowserRouter([
       { path: 'ideas', element: <Ideas /> },
       { path: 'ideas/:ideaId', element: <IdeaDetail /> },
       { path: 'solutions', element: <Solutions /> },
-      { path: 'collaborators', element: <Collaborators /> },
+      { path: 'collaborations', element: <Collaborations /> },
+      { path: 'collaborators', element: <Collaborations /> },
       { path: 'impact', element: <Impact /> },
       { path: 'about', element: <About /> },
       { path: 'projects', element: <Projects /> },
