@@ -7,6 +7,11 @@ import { env } from './config/env.js';
 import { requestIdMiddleware } from './middleware/requestId.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import healthRoutes from './modules/health/health.routes.js';
+import challengesRoutes from './modules/challenges/challenges.routes.js';
+import ideasRoutes from './modules/ideas/ideas.routes.js';
+import collaborationsRoutes from './modules/collaborations/collaborations.routes.js';
+import solutionsRoutes from './modules/solutions/solutions.routes.js';
+import impactRoutes from './modules/impact/impact.routes.js';
 
 const app = express();
 
@@ -52,26 +57,30 @@ app.use(requestIdMiddleware);
 if (env.NODE_ENV !== 'test') {
   app.use(
     morgan(':method :url :status :response-time ms - :res[content-length]', {
-      skip: (req) => req.url === '/api/v1/health',
+      skip: (req) => req.url.includes('/health'),
     }),
   );
 }
 
-// ── API Routes ───────────────────────────────────────────────
+// ── API Routes (mounted for both /api/v1 and /api) ───────────
 
 app.use('/api/v1/health', healthRoutes);
+app.use('/api/health', healthRoutes);
 
-// Future module routes will be mounted here:
-// app.use('/api/v1/auth', authRoutes);
-// app.use('/api/v1/challenges', challengeRoutes);
-// app.use('/api/v1/ai', aiRoutes);
-// app.use('/api/v1/universities', universityRoutes);
-// app.use('/api/v1/industries', industryRoutes);
-// app.use('/api/v1/commitments', commitmentRoutes);
-// app.use('/api/v1/consortiums', consortiumRoutes);
-// app.use('/api/v1/projects', projectRoutes);
-// app.use('/api/v1/missions', missionRoutes);
-// app.use('/api/v1/analytics', analyticsRoutes);
+app.use('/api/v1/challenges', challengesRoutes);
+app.use('/api/challenges', challengesRoutes);
+
+app.use('/api/v1/ideas', ideasRoutes);
+app.use('/api/ideas', ideasRoutes);
+
+app.use('/api/v1/collaborations', collaborationsRoutes);
+app.use('/api/collaborations', collaborationsRoutes);
+
+app.use('/api/v1/solutions', solutionsRoutes);
+app.use('/api/solutions', solutionsRoutes);
+
+app.use('/api/v1/impact', impactRoutes);
+app.use('/api/impact', impactRoutes);
 
 // ── Error Handling ───────────────────────────────────────────
 
