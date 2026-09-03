@@ -70,11 +70,15 @@ export function ProjectDetailHeader({
           </div>
 
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase px-3 py-1 rounded-lg bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]">
-              <Radio className="h-3 w-3 animate-pulse text-[#15803D]" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase px-3 py-1 rounded-lg bg-[#4C1E4F] text-white shadow-2xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#15803D]" />
+              {project.status || 'ACTIVE'}
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase px-3 py-1 rounded-lg bg-[#FEE1C7] text-[#FA7E61] border border-[#FA7E61]/30">
+              <Radio className="h-3 w-3 animate-pulse text-[#FA7E61]" />
               {project.stageLabel}
             </span>
-            <ProjectHealthIndicator health={project.health} label={project.healthLabel} />
+            <ProjectHealthIndicator health={project.health || 'ON_TRACK'} label={project.healthLabel || 'ON TRACK'} />
           </div>
         </div>
 
@@ -97,6 +101,18 @@ export function ProjectDetailHeader({
           </div>
 
           <div className="flex items-center gap-2.5 flex-wrap">
+            {/* View Linked Challenge */}
+            {project.challenge && (
+              <button
+                type="button"
+                onClick={() => navigate(`/challenges/${project.challenge.id}`)}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#B5A886]/50 bg-[#FAF9F5] hover:bg-[#FEE1C7]/40 text-[#4C1E4F] text-[13px] font-bold transition-all cursor-pointer shadow-2xs"
+              >
+                <span>View Linked Challenge</span>
+                <span className="text-[11px] font-mono text-[#FA7E61]">({project.challenge.id})</span>
+              </button>
+            )}
+
             {/* Follow Project Button */}
             <button
               type="button"

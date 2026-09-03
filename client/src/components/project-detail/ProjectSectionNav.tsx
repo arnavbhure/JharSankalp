@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 
 const NAV_SECTIONS = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'lineage', label: 'Lineage' },
-  { id: 'mission', label: 'Mission' },
-  { id: 'team', label: 'Team & Partners' },
-  { id: 'roadmap', label: 'Roadmap' },
-  { id: 'work', label: 'Current Work' },
-  { id: 'field-pilot', label: 'Field Pilot' },
-  { id: 'needs', label: 'Collaboration' },
-  { id: 'impact', label: 'Impact' },
-  { id: 'activity', label: 'Activity' },
+  { id: 'overview', label: 'Lifecycle' },
+  { id: 'lineage', label: 'Origin & Lineage' },
+  { id: 'mission', label: 'Problem & Solution' },
+  { id: 'roadmap', label: 'Milestones' },
+  { id: 'team', label: 'Partners & Team' },
+  { id: 'activity', label: 'Field Updates' },
+  { id: 'documents', label: 'Evidence & Docs' },
+  { id: 'impact', label: 'Impact Tracking' },
+  { id: 'related', label: 'Related Ecosystem' },
 ];
 
 export function ProjectSectionNav() {

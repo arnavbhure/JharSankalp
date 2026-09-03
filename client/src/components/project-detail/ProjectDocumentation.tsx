@@ -1,32 +1,70 @@
 import { useState } from 'react';
 import { ProjectDetail, ProjectDocument } from '../../types/projectDetail';
-import { FileText, Download, Eye, Check, X } from 'lucide-react';
+import { FileText, Download, Eye, Check, X, FolderOpen, Image as ImageIcon } from 'lucide-react';
 
 interface ProjectDocumentationProps {
   project: ProjectDetail;
 }
 
 export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
+  const [activeTab, setActiveTab] = useState<string>('ALL');
   const [activeDoc, setActiveDoc] = useState<ProjectDocument | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
 
-  const handleDownload = (doc: ProjectDocument) => {
+  const categories = [
+    { key: 'ALL', label: 'All Artifacts' },
+    { key: 'PROTOTYPE', label: 'Prototype Documentation' },
+    { key: 'FIELD_REPORT', label: 'Field Reports' },
+    { key: 'RESEARCH', label: 'Research Documents' },
+    { key: 'MEDIA', label: 'Images & Media' },
+  ];
+
+  // Enhanced document records with category
+  const allDocs = [
+    ...project.documents.map((d, i) => ({
+      ...d,
+      category: i === 0 ? 'FIELD_REPORT' : i === 1 ? 'PROTOTYPE' : 'RESEARCH',
+    })),
+    {
+      id: 'doc-media-1',
+      title: 'Handpump Telemetry Sensor Collar Installation Photo',
+      type: 'JPG Image',
+      size: '1.2 MB',
+      date: '10 Feb 2026',
+      category: 'MEDIA',
+    },
+    {
+      id: 'doc-media-2',
+      title: 'Murhu Village Jal Sahiya Community Review Session',
+      type: 'JPG Image',
+      size: '2.8 MB',
+      date: '18 Feb 2026',
+      category: 'MEDIA',
+    },
+  ];
+
+  const filteredDocs = activeTab === 'ALL' ? allDocs : allDocs.filter((d) => d.category === activeTab);
+
+  const handleDownload = (doc: any) => {
     setDownloadNotice(`Downloading ${doc.title}...`);
     setTimeout(() => setDownloadNotice(null), 2500);
   };
 
   return (
-    <section className="space-y-6 text-left">
+    <section id="documents" className="scroll-mt-32 space-y-6 text-left">
       <div className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-2xs space-y-6">
-        <div className="space-y-1 border-b border-[#EEEAE1] pb-4 flex items-center justify-between">
+        <div className="space-y-1 border-b border-[#EEEAE1] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-              <FileText className="h-4 w-4 text-[#F5A623]" />
-              <span>OPEN RESEARCH REPOSITORY</span>
+            <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#4C1E4F]">
+              <FolderOpen className="h-4 w-4 text-[#FA7E61]" />
+              <span>EVIDENCE & OPEN ARTIFACTS</span>
             </div>
             <h3 className="text-[1.5rem] sm:text-[1.75rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-              Knowledge & documentation
+              Documentation, Field Reports & Evidence
             </h3>
+            <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
+              Open technical blueprints, ground inspection datasets, and multi-media evidence published by the project team.
+            </p>
           </div>
 
           {downloadNotice && (
@@ -37,16 +75,38 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
           )}
         </div>
 
+        {/* Category Pills */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {categories.map((cat) => (
+            <button
+              key={cat.key}
+              type="button"
+              onClick={() => setActiveTab(cat.key)}
+              className={`px-3.5 py-1.5 rounded-xl text-[12px] font-mono font-bold transition-all cursor-pointer ${
+                activeTab === cat.key
+                  ? 'bg-[#4C1E4F] text-white shadow-xs'
+                  : 'bg-[#FAF9F5] hover:bg-[#F8F6F1] text-[#6B5845] border border-[#EEEAE1]'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         {/* ── Document Rows ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          {project.documents.map((doc) => (
+          {filteredDocs.map((doc) => (
             <div
               key={doc.id}
               className="p-4 rounded-2xl border border-[#EEEAE1] bg-[#FAF9F5] hover:border-[#123B2A]/40 transition-colors flex items-center justify-between gap-4 text-left"
             >
               <div className="flex items-start gap-3 min-w-0">
                 <div className="h-10 w-10 rounded-xl bg-white border border-[#EEEAE1] text-[#123B2A] flex items-center justify-center shrink-0 shadow-2xs">
-                  <FileText className="h-5 w-5 text-[#123B2A]" />
+                  {doc.category === 'MEDIA' ? (
+                    <ImageIcon className="h-5 w-5 text-[#FA7E61]" />
+                  ) : (
+                    <FileText className="h-5 w-5 text-[#4C1E4F]" />
+                  )}
                 </div>
 
                 <div className="space-y-0.5 min-w-0">
@@ -66,7 +126,7 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
               <div className="flex items-center gap-1 shrink-0">
                 <button
                   type="button"
-                  onClick={() => setActiveDoc(doc)}
+                  onClick={() => setActiveDoc(doc as any)}
                   className="p-2 rounded-lg hover:bg-white text-[#6B5845] hover:text-[#123B2A] transition-colors cursor-pointer"
                   title="View Document Summary"
                 >
@@ -99,7 +159,7 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
             </button>
 
             <div className="space-y-1 pr-6">
-              <span className="text-[11px] font-mono font-bold uppercase text-[#123B2A]">
+              <span className="text-[11px] font-mono font-bold uppercase text-[#4C1E4F]">
                 DOCUMENT PREVIEW
               </span>
               <h3 className="text-[1.35rem] font-bold text-[#1D2522] font-sans">
@@ -112,7 +172,7 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
 
             <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-2 text-[13px] text-[#1D2522]">
               <p className="leading-relaxed">
-                This document details the telemetry firmware benchmarks, sensor sensitivity thresholds, and mechanical mounting specifications established for India Mark II handpumps during the Murhu Block pilot.
+                This verified open-access dossier documents the engineering specifications, telemetry calibration logs, and local community review signatures recorded in {project.location}.
               </p>
             </div>
 

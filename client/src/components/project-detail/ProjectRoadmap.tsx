@@ -43,26 +43,39 @@ export function ProjectRoadmap({ project }: ProjectRoadmapProps) {
     }
   };
 
+  const completedCount = project.milestones.filter((m) => m.status === 'COMPLETED').length;
+  const totalCount = project.milestones.length;
+  const milestoneProgressPct = Math.round((completedCount / (totalCount || 1)) * 100);
+
   return (
     <section id="roadmap" className="scroll-mt-32 space-y-6 text-left">
       <div className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-2xs space-y-6">
-        <div className="space-y-1 border-b border-[#EEEAE1] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
-              <Calendar className="h-4 w-4 text-[#F5A623]" />
-              <span>EXECUTION MILESTONES</span>
+        <div className="space-y-3 border-b border-[#EEEAE1] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider text-[#4C1E4F]">
+              <Calendar className="h-4 w-4 text-[#FA7E61]" />
+              <span>PROJECT MILESTONES & PHASES</span>
             </div>
             <h3 className="text-[1.5rem] sm:text-[1.75rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
-              Project roadmap & phases
+              Structured Milestone Execution
             </h3>
             <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-              Phased delivery structure from laboratory bench trials to district-wide replication.
+              Phased delivery structure from community problem validation to field deployment.
             </p>
           </div>
 
-          <span className="text-[12px] font-mono text-[#6B5845]">
-            {project.milestones.length} Strategic Milestones
-          </span>
+          <div className="space-y-1.5 sm:text-right shrink-0">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF9F5] border border-[#EEEAE1] text-[12.5px] font-mono font-bold text-[#1D2522]">
+              <span className="h-2 w-2 rounded-full bg-[#15803D]" />
+              <span>{completedCount} of {totalCount} milestones completed</span>
+            </div>
+            <div className="h-1.5 w-44 bg-[#EEEAE1] rounded-full overflow-hidden ml-auto">
+              <div
+                className="h-full bg-gradient-to-r from-[#4C1E4F] to-[#15803D] rounded-full"
+                style={{ width: `${milestoneProgressPct}%` }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* ── Chronological Milestone Track ── */}

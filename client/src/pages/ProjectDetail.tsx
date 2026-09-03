@@ -17,9 +17,10 @@ import { ProjectDocumentation } from '../components/project-detail/ProjectDocume
 import { CollaborationNeeds } from '../components/project-detail/CollaborationNeeds';
 import { ProjectImpact } from '../components/project-detail/ProjectImpact';
 import { ProjectActivityTimeline } from '../components/project-detail/ProjectActivityTimeline';
+import { RelatedEntities } from '../components/project-detail/RelatedEntities';
 import { ExpressInterestDialog } from '../components/project-detail/ExpressInterestDialog';
 import { ExpressInterestFormData } from '../types/projectDetail';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, SearchX, RotateCcw } from 'lucide-react';
 import { Footer } from '../components/layout/Footer';
 
 export function ProjectDetail() {
@@ -50,8 +51,11 @@ export function ProjectDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8F6F1] flex items-center justify-center text-[14px] text-[#6B5845]">
-        Loading project execution dossier...
+      <div className="min-h-screen bg-[#F8F6F1] flex flex-col items-center justify-center text-center p-6 space-y-3">
+        <div className="h-10 w-10 border-3 border-[#4C1E4F] border-t-transparent rounded-full animate-spin" />
+        <span className="text-[14px] font-mono text-[#6B5845]">
+          Loading project execution dossier...
+        </span>
       </div>
     );
   }
@@ -59,13 +63,18 @@ export function ProjectDetail() {
   if (!project) {
     return (
       <div className="min-h-screen bg-[#F8F6F1] flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <SearchX className="h-12 w-12 text-[#6B5845] opacity-40" />
         <h2 className="text-[1.8rem] font-bold text-[#1D2522]">Project Not Found</h2>
-        <p className="text-[#6B5845]">The requested project dossier could not be located.</p>
+        <p className="text-[#6B5845] max-w-md">
+          The requested project dossier could not be located. It may have been archived or moved.
+        </p>
         <button
+          type="button"
           onClick={() => navigate('/projects')}
-          className="px-5 py-2.5 rounded-xl bg-[#123B2A] text-white text-[13px] font-bold cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#4C1E4F] text-white text-[13px] font-bold cursor-pointer shadow-xs"
         >
-          Return to Projects Portfolio
+          <RotateCcw className="h-4 w-4" />
+          <span>Return to Projects Portfolio</span>
         </button>
       </div>
     );
@@ -79,15 +88,20 @@ export function ProjectDetail() {
           <button
             type="button"
             onClick={() => navigate('/projects')}
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#6B5845] hover:text-[#123B2A] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#6B5845] hover:text-[#4C1E4F] transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Projects Portfolio</span>
           </button>
 
-          <span className="text-[11.5px] font-mono text-[#6B5845]">
-            DOSSIER: {project.projectCode}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono uppercase bg-[#FAF9F5] px-2.5 py-0.5 rounded border border-[#EEEAE1] text-[#6B5845]">
+              STAGE: {project.stageLabel}
+            </span>
+            <span className="text-[11.5px] font-mono text-[#6B5845]">
+              DOSSIER: <strong>{project.projectCode}</strong>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -105,41 +119,48 @@ export function ProjectDetail() {
 
       {/* ── Main Workspace Body Stream ── */}
       <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full space-y-12">
-        {/* Section 1: Lifecycle Progress */}
+        {/* Section 1: Lifecycle Progress (8 Stages) */}
         <ProjectLifecycle project={project} />
 
-        {/* Section 2: Lineage Pipeline */}
+        {/* Section 2: Origin Lineage Pipeline (Challenge → Idea → Project) */}
         <ProjectLineage project={project} />
 
-        {/* Section 3: Mission & Charter */}
+        {/* Section 3: Problem, Approach & Expected Outcome */}
         <ProjectMission project={project} />
 
-        {/* Section 4: Team & Partners */}
-        <ProjectTeam project={project} />
-
-        {/* Section 5: Milestone Roadmap */}
+        {/* Section 4: Milestones Roadmap */}
         <ProjectRoadmap project={project} />
 
-        {/* Section 6: Current Workstreams */}
-        <CurrentWorkstreams project={project} />
+        {/* Sections 5 & 6: Partners Ecosystem & Project Team */}
+        <ProjectTeam project={project} />
 
-        {/* Section 7: Formal Deliverables Output Table */}
+        {/* Field Implementation & Active Workstreams */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="lg:col-span-6">
+            <CurrentWorkstreams project={project} />
+          </div>
+          <div className="lg:col-span-6">
+            <FieldImplementation project={project} />
+          </div>
+        </div>
+
+        {/* Deliverables Output Table */}
         <ProjectDeliverables project={project} />
 
-        {/* Section 8: Field Implementation */}
-        <FieldImplementation project={project} />
+        {/* Section 7: Project Activity Timeline (Field Updates) */}
+        <ProjectActivityTimeline project={project} />
 
-        {/* Section 9: Project Documentation */}
+        {/* Section 8: Evidence & Open Documentation (Categorized) */}
         <ProjectDocumentation project={project} />
 
-        {/* Section 10: Collaboration Needs */}
+        {/* Collaboration Opportunities */}
         <CollaborationNeeds project={project} />
 
-        {/* Section 11: Impact & Outcome Measurement */}
+        {/* Section 9: Impact Tracking & Outcome Auditing */}
         <ProjectImpact project={project} />
 
-        {/* Section 12: Project Activity Timeline */}
-        <ProjectActivityTimeline project={project} />
+        {/* Section 10: Related Entities (Challenge, Idea, Same Domain Projects) */}
+        <RelatedEntities project={project} />
       </main>
 
       {/* ── Modal Dialog for Header Join Action ── */}
