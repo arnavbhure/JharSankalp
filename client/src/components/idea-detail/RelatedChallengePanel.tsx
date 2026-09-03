@@ -47,9 +47,7 @@ export function RelatedChallengePanel({ challenge }: RelatedChallengePanelProps)
               <MapPin className="h-3 w-3 text-[#123B2A]" />
               DISTRICT
             </span>
-            <span className="font-bold text-[#1D2522] block">
-              {challenge.district}
-            </span>
+            <span className="font-bold text-[#1D2522] block">{challenge.district}</span>
           </div>
 
           <div className="space-y-0.5">
@@ -57,9 +55,7 @@ export function RelatedChallengePanel({ challenge }: RelatedChallengePanelProps)
               <Users className="h-3 w-3 text-[#123B2A]" />
               AFFECTED POPULATION
             </span>
-            <span className="font-bold text-[#1D2522] block">
-              {challenge.affectedPopulation}
-            </span>
+            <span className="font-bold text-[#1D2522] block">{challenge.affectedPopulation}</span>
           </div>
 
           <div className="space-y-0.5">
@@ -67,9 +63,7 @@ export function RelatedChallengePanel({ challenge }: RelatedChallengePanelProps)
               <Droplets className="h-3 w-3 text-[#0284C7]" />
               DOMAIN
             </span>
-            <span className="font-bold text-[#123B2A] block">
-              {challenge.domain}
-            </span>
+            <span className="font-bold text-[#123B2A] block">{challenge.domain}</span>
           </div>
 
           <div className="space-y-0.5">
@@ -77,9 +71,7 @@ export function RelatedChallengePanel({ challenge }: RelatedChallengePanelProps)
               <AlertTriangle className="h-3 w-3 text-[#B45309]" />
               PRIORITY
             </span>
-            <span className="font-bold text-[#B45309] block">
-              {challenge.priority} Impact
-            </span>
+            <span className="font-bold text-[#B45309] block">{challenge.priority} Impact</span>
           </div>
         </div>
 

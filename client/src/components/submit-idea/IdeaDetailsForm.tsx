@@ -36,7 +36,8 @@ export function IdeaDetailsForm({
           Tell us about your idea.
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          You don&apos;t need a complete solution yet. Explain the direction you believe could help solve the challenge.
+          You don&apos;t need a complete solution yet. Explain the direction you believe could help
+          solve the challenge.
         </p>
       </div>
 
@@ -57,9 +58,7 @@ export function IdeaDetailsForm({
               errors.title ? 'border-[#BE123C]' : 'border-[#EEEAE1]'
             }`}
           />
-          {errors.title && (
-            <p className="text-[11.5px] text-[#BE123C] font-mono">{errors.title}</p>
-          )}
+          {errors.title && <p className="text-[11.5px] text-[#BE123C] font-mono">{errors.title}</p>}
         </div>
 
         {/* Field 2: Short Summary */}

@@ -84,11 +84,7 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
       <div className="relative w-full max-w-2xl rounded-3xl bg-white shadow-2xl border border-[#EEEAE1] overflow-hidden text-left z-10 space-y-0">
         {/* Top Input Bar */}
@@ -136,13 +132,17 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModalProps) {
                   }`}
                 >
                   <div className="flex items-start gap-3 min-w-0">
-                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border ${badge.bg}`}>
+                    <div
+                      className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border ${badge.bg}`}
+                    >
                       <BadgeIcon className="h-4 w-4" />
                     </div>
 
                     <div className="min-w-0 space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.2 rounded border ${badge.bg}`}>
+                        <span
+                          className={`text-[10px] font-mono font-bold uppercase px-2 py-0.2 rounded border ${badge.bg}`}
+                        >
                           {badge.label}
                         </span>
                         <span className="text-[11px] font-mono text-[#6B5845] truncate">
@@ -170,11 +170,10 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModalProps) {
             })
           ) : (
             <div className="p-8 text-center space-y-2">
-              <p className="text-[14px] font-bold text-[#1D2522]">
-                No matching initiatives found
-              </p>
+              <p className="text-[14px] font-bold text-[#1D2522]">No matching initiatives found</p>
               <p className="text-[12.5px] text-[#6B5845]">
-                Try searching for keywords like &ldquo;Water&rdquo;, &ldquo;Mining&rdquo;, &ldquo;Khunti&rdquo;, &ldquo;Dhanbad&rdquo;, or &ldquo;Soil&rdquo;.
+                Try searching for keywords like &ldquo;Water&rdquo;, &ldquo;Mining&rdquo;,
+                &ldquo;Khunti&rdquo;, &ldquo;Dhanbad&rdquo;, or &ldquo;Soil&rdquo;.
               </p>
             </div>
           )}

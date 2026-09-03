@@ -2,21 +2,11 @@ import { supabase, EVIDENCE_BUCKET } from '../lib/supabase';
 import { EvidenceFile } from '../types/submission';
 
 // Allowed MIME types and extensions
-export const ALLOWED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-];
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-export const ALLOWED_DOCUMENT_TYPES = [
-  'application/pdf',
-];
+export const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
 
-export const ALLOWED_MIME_TYPES = [
-  ...ALLOWED_IMAGE_TYPES,
-  ...ALLOWED_DOCUMENT_TYPES,
-];
+export const ALLOWED_MIME_TYPES = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_DOCUMENT_TYPES];
 
 export const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
 
@@ -72,10 +62,12 @@ function sanitizeFileName(filename: string): string {
 export function generateStoragePath(
   userId: string | undefined,
   submissionId: string | undefined,
-  filename: string
+  filename: string,
 ): string {
   const userSegment = userId ? userId.replace(/[^a-zA-Z0-9_-]/g, '') : 'citizen';
-  const subSegment = submissionId ? submissionId.replace(/[^a-zA-Z0-9_-]/g, '') : `sub_${Date.now()}`;
+  const subSegment = submissionId
+    ? submissionId.replace(/[^a-zA-Z0-9_-]/g, '')
+    : `sub_${Date.now()}`;
   const safeName = sanitizeFileName(filename);
   return `${userSegment}/${subSegment}/${Date.now()}_${safeName}`;
 }
@@ -91,7 +83,7 @@ export interface UploadOptions {
  */
 export async function uploadEvidenceToSupabase(
   file: File,
-  options: UploadOptions = {}
+  options: UploadOptions = {},
 ): Promise<EvidenceFile> {
   // 1. Validation
   const validation = validateEvidenceFile(file);
@@ -100,11 +92,7 @@ export async function uploadEvidenceToSupabase(
   }
 
   // 2. Generate Safe Path
-  const storagePath = generateStoragePath(
-    options.userId,
-    options.submissionId,
-    file.name
-  );
+  const storagePath = generateStoragePath(options.userId, options.submissionId, file.name);
 
   // 3. Upload File via Supabase Client (Standard publishable key, no service key)
   const { error: uploadError } = await supabase.storage
@@ -121,9 +109,7 @@ export async function uploadEvidenceToSupabase(
   }
 
   // 4. Retrieve Public URL
-  const { data: urlData } = supabase.storage
-    .from(EVIDENCE_BUCKET)
-    .getPublicUrl(storagePath);
+  const { data: urlData } = supabase.storage.from(EVIDENCE_BUCKET).getPublicUrl(storagePath);
 
   const publicUrl = urlData.publicUrl;
 
@@ -148,9 +134,7 @@ export async function deleteEvidenceFromSupabase(storagePath: string): Promise<b
   if (!storagePath) return false;
 
   try {
-    const { error } = await supabase.storage
-      .from(EVIDENCE_BUCKET)
-      .remove([storagePath]);
+    const { error } = await supabase.storage.from(EVIDENCE_BUCKET).remove([storagePath]);
 
     if (error) {
       console.warn(`Failed to delete storage file at ${storagePath}:`, error.message);
@@ -171,9 +155,7 @@ export async function cleanupOrphanedEvidence(storagePaths: string[]): Promise<v
   if (validPaths.length === 0) return;
 
   try {
-    const { error } = await supabase.storage
-      .from(EVIDENCE_BUCKET)
-      .remove(validPaths);
+    const { error } = await supabase.storage.from(EVIDENCE_BUCKET).remove(validPaths);
 
     if (error) {
       console.warn('Failed to clean up orphaned evidence files:', error.message);

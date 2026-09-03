@@ -84,7 +84,8 @@ export function ReadinessSelector({
           How far has this idea progressed?
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Be honest about the current stage. Ideas at every level—from early hypotheses to working prototypes—are welcome in the ecosystem.
+          Be honest about the current stage. Ideas at every level—from early hypotheses to working
+          prototypes—are welcome in the ecosystem.
         </p>
       </div>
 
@@ -115,12 +116,8 @@ export function ReadinessSelector({
                 </span>
 
                 <div className="space-y-0.5 min-w-0">
-                  <h4 className="text-[14px] font-bold text-[#1D2522] leading-tight">
-                    {s.title}
-                  </h4>
-                  <p className="text-[12.5px] text-[#6B5845] leading-snug">
-                    {s.desc}
-                  </p>
+                  <h4 className="text-[14px] font-bold text-[#1D2522] leading-tight">{s.title}</h4>
+                  <p className="text-[12.5px] text-[#6B5845] leading-snug">{s.desc}</p>
                 </div>
               </div>
 
@@ -205,9 +202,7 @@ export function ReadinessSelector({
                 </label>
                 <select
                   value={materialType}
-                  onChange={(e) =>
-                    setMaterialType(e.target.value as SupportingMaterial['type'])
-                  }
+                  onChange={(e) => setMaterialType(e.target.value as SupportingMaterial['type'])}
                   className="w-full h-10 px-3 rounded-xl border border-[#EEEAE1] bg-white text-[13px] text-[#1D2522] focus:outline-none focus:border-[#123B2A]"
                 >
                   <option value="Research">Research</option>

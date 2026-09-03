@@ -36,13 +36,15 @@ export function mapDbIdeaToUi(dbItem: any): CommunityIdea {
 export async function fetchIdeas(params?: IdeaQueryParams): Promise<CommunityIdea[]> {
   const query = new URLSearchParams();
   if (params?.domain && params.domain !== 'All Focus Areas') query.set('domain', params.domain);
-  if (params?.district && params.district !== 'All Districts') query.set('district', params.district);
+  if (params?.district && params.district !== 'All Districts')
+    query.set('district', params.district);
   if (params?.status && params.status !== 'All Statuses') query.set('status', params.status);
 
   const queryString = query.toString();
   const endpoint = queryString ? `/ideas?${queryString}` : '/ideas';
-  const rawList = await api.get<any[]>(endpoint);
-  return (rawList || []).map(mapDbIdeaToUi);
+  const rawList = await api.get<any>(endpoint);
+  const list = Array.isArray(rawList) ? rawList : rawList?.data || [];
+  return list.map(mapDbIdeaToUi);
 }
 
 export async function fetchIdeaById(id: string): Promise<any | null> {

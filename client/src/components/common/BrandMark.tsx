@@ -16,11 +16,7 @@ const sizeClasses = {
  * JharSankalp Institutional Emblem.
  * Represents the Sacred Sal Tree of Jharkhand & Collective Innovation Convergence.
  */
-export function BrandMark({
-  size = 'md',
-  className,
-  variant = 'forest',
-}: BrandMarkProps) {
+export function BrandMark({ size = 'md', className, variant = 'forest' }: BrandMarkProps) {
   if (variant === 'forest') {
     return (
       <div
@@ -38,10 +34,7 @@ export function BrandMark({
           className="w-3/5 h-3/5"
         >
           {/* Stylized Sal Tree / Growth Foliage */}
-          <path
-            d="M16 4L9 14H13L7 22H14V27H18V22H25L19 14H23L16 4Z"
-            fill="#FFFFFF"
-          />
+          <path d="M16 4L9 14H13L7 22H14V27H18V22H25L19 14H23L16 4Z" fill="#FFFFFF" />
           {/* Golden Sprout / Innovation Dot */}
           <circle cx="16" cy="11" r="2" fill="#F5A623" />
         </svg>

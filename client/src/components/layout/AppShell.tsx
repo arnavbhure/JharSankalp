@@ -49,10 +49,7 @@ export function AppShell() {
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">
       {/* Institutional Top Header */}
-      <Header
-        onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        showMenuButton={!isCitizen}
-      />
+      <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} showMenuButton={!isCitizen} />
 
       {/* Body Layout */}
       <div className="flex flex-1 w-full">

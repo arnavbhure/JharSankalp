@@ -12,7 +12,10 @@ export interface AlertProps {
   className?: string;
 }
 
-const variantStyles: Record<AlertVariant, { container: string; icon: React.ReactNode; text: string }> = {
+const variantStyles: Record<
+  AlertVariant,
+  { container: string; icon: React.ReactNode; text: string }
+> = {
   info: {
     container: 'bg-brand-purple-subtle border-brand-purple-border/30 text-neutral-900',
     icon: <Info className="h-5 w-5 text-brand-purple shrink-0" />,
@@ -35,13 +38,7 @@ const variantStyles: Record<AlertVariant, { container: string; icon: React.React
   },
 };
 
-export function Alert({
-  variant = 'info',
-  title,
-  children,
-  action,
-  className,
-}: AlertProps) {
+export function Alert({ variant = 'info', title, children, action, className }: AlertProps) {
   const current = variantStyles[variant];
 
   return (
@@ -55,7 +52,9 @@ export function Alert({
     >
       <div className="pt-0.5">{current.icon}</div>
       <div className="flex-1 min-w-0 space-y-0.5">
-        {title && <h4 className={cn('text-body-sm font-semibold leading-tight', current.text)}>{title}</h4>}
+        {title && (
+          <h4 className={cn('text-body-sm font-semibold leading-tight', current.text)}>{title}</h4>
+        )}
         <div className="text-small text-neutral-700 leading-normal">{children}</div>
         {action && <div className="mt-2 pt-1">{action}</div>}
       </div>

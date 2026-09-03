@@ -10,7 +10,8 @@ export function ActiveChallengeFeed() {
       location: 'DHANBAD',
       category: 'MINING SAFETY',
       title: 'Real-Time Seismic Early Warning for Mine Subsidence',
-      description: 'Ground shifting hazards require continuous monitoring and early warning systems to protect 15,000 residents living near active and abandoned coal seam excavations.',
+      description:
+        'Ground shifting hazards require continuous monitoring and early warning systems to protect 15,000 residents living near active and abandoned coal seam excavations.',
       status: 'UNDER VALIDATION',
       statusColor: 'bg-[#FEF6E9] text-[#B45309] border-[#F8CCA5]',
       collaborators: 12,
@@ -20,7 +21,8 @@ export function ActiveChallengeFeed() {
       location: 'KHUNTI',
       category: 'WATER MANAGEMENT',
       title: 'Rural Handpump Telemetry & Predictive Failure Prevention',
-      description: 'Repeated mechanical failure of community borewell pumps leaves rural hamlets without drinking water. Vibration sensor pods predict stator wear before complete pump breakdown.',
+      description:
+        'Repeated mechanical failure of community borewell pumps leaves rural hamlets without drinking water. Vibration sensor pods predict stator wear before complete pump breakdown.',
       status: 'FIELD PILOT',
       statusColor: 'bg-[#EBF3EE] text-[#123B2A] border-[#1F5A3D]/30',
       collaborators: 18,
@@ -30,7 +32,8 @@ export function ActiveChallengeFeed() {
       location: 'GUMLA',
       category: 'AGRICULTURE',
       title: 'Rapid Soil Nutrient Diagnostic Kits for Tribal Farmers',
-      description: 'Smallholder farmers in Bishunpur face severe yield uncertainty due to two-week lab soil test delays. Low-cost colorimetric testing strips provide on-field NPK results in 15 minutes.',
+      description:
+        'Smallholder farmers in Bishunpur face severe yield uncertainty due to two-week lab soil test delays. Low-cost colorimetric testing strips provide on-field NPK results in 15 minutes.',
       status: 'LAB MATCHING',
       statusColor: 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]',
       collaborators: 14,
@@ -40,7 +43,8 @@ export function ActiveChallengeFeed() {
       location: 'SIMDEGA',
       category: 'HEALTHCARE',
       title: 'Low-Bandwidth Pediatric Teleconsultation for Primary Health Centers',
-      description: 'Remote community health clinics in Thethaitangar lack on-site pediatric specialists. Store-and-forward offline telemetry allows rural nurses to transmit diagnostics asynchronously to RIMS.',
+      description:
+        'Remote community health clinics in Thethaitangar lack on-site pediatric specialists. Store-and-forward offline telemetry allows rural nurses to transmit diagnostics asynchronously to RIMS.',
       status: 'PROTOTYPING',
       statusColor: 'bg-[#FEF0F4] text-[#BE123C] border-[#FECDD3]',
       collaborators: 9,
@@ -48,7 +52,10 @@ export function ActiveChallengeFeed() {
   ];
 
   return (
-    <section id="challenges-feed" className="py-20 border-b border-[#EEEAE1] bg-[#F8F6F1] text-left relative">
+    <section
+      id="challenges-feed"
+      className="py-20 border-b border-[#EEEAE1] bg-[#F8F6F1] text-left relative"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="border-b border-[#EEEAE1] pb-6 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -62,7 +69,8 @@ export function ActiveChallengeFeed() {
             </h2>
           </div>
           <p className="max-w-md text-[14px] text-[#6B5845] leading-relaxed">
-            Real civic problems reported by citizens and local authorities across Jharkhand, actively matched with academic labs and solver teams.
+            Real civic problems reported by citizens and local authorities across Jharkhand,
+            actively matched with academic labs and solver teams.
           </p>
         </div>
 
@@ -82,7 +90,9 @@ export function ActiveChallengeFeed() {
                   <span className="text-[#123B2A]">{item.category}</span>
                 </div>
 
-                <span className={`text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded-md border uppercase tracking-wider ${item.statusColor}`}>
+                <span
+                  className={`text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded-md border uppercase tracking-wider ${item.statusColor}`}
+                >
                   {item.status}
                 </span>
               </div>
@@ -102,7 +112,8 @@ export function ActiveChallengeFeed() {
                 <div className="flex items-center gap-2 text-[12.5px] font-medium text-[#6B5845]">
                   <Users className="h-4 w-4 text-[#123B2A]" />
                   <span>
-                    <strong className="text-[#1D2522] font-bold">{item.collaborators}</strong> Collaborators
+                    <strong className="text-[#1D2522] font-bold">{item.collaborators}</strong>{' '}
+                    Collaborators
                   </span>
                 </div>
 
@@ -135,4 +146,3 @@ export function ActiveChallengeFeed() {
     </section>
   );
 }
-

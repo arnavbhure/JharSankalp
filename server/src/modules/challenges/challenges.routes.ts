@@ -144,13 +144,25 @@ router.post('/', async (req, res, next) => {
     }
 
     if (!submitterId) {
-      sendError(res, 400, 'USER_REQUIRED', 'Valid user is required to submit a challenge', undefined, req);
+      sendError(
+        res,
+        400,
+        'USER_REQUIRED',
+        'Valid user is required to submit a challenge',
+        undefined,
+        req,
+      );
       return;
     }
 
     // Resolve District ID by name if not passed as UUID
     let targetDistrictId = districtId;
-    if (!targetDistrictId && district && typeof district === 'string' && district !== 'All Districts') {
+    if (
+      !targetDistrictId &&
+      district &&
+      typeof district === 'string' &&
+      district !== 'All Districts'
+    ) {
       const matched = await prisma.district.findFirst({
         where: { name: { equals: district.trim(), mode: 'insensitive' } },
       });
@@ -234,8 +246,8 @@ router.post('/', async (req, res, next) => {
             type: f.type?.includes('image')
               ? 'IMAGE'
               : f.type?.includes('video')
-              ? 'VIDEO'
-              : 'DOCUMENT',
+                ? 'VIDEO'
+                : 'DOCUMENT',
             url:
               f.publicUrl ||
               f.url ||

@@ -26,7 +26,8 @@ export function SolutionsCTA() {
 
         {/* Supporting text */}
         <p className="text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed font-normal max-w-2xl">
-          Turn promising ideas into prototypes, pilot programs and deployable innovations by connecting with the JharSankalp collaboration network.
+          Turn promising ideas into prototypes, pilot programs and deployable innovations by
+          connecting with the JharSankalp collaboration network.
         </p>
 
         {/* Actions */}

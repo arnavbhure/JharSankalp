@@ -6,9 +6,7 @@ interface CollaborationOpportunitiesProps {
   opportunities: Array<{ project: Project; need: string }>;
 }
 
-export function CollaborationOpportunities({
-  opportunities,
-}: CollaborationOpportunitiesProps) {
+export function CollaborationOpportunities({ opportunities }: CollaborationOpportunitiesProps) {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +20,8 @@ export function CollaborationOpportunities({
           Projects looking for partners
         </h3>
         <p className="text-[14px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Some projects are ready to move faster with the right industrial manufacturing, geospatial analytics, or local community implementation support.
+          Some projects are ready to move faster with the right industrial manufacturing, geospatial
+          analytics, or local community implementation support.
         </p>
       </div>
 
@@ -62,9 +61,7 @@ export function CollaborationOpportunities({
                   <Sparkles className="h-3 w-3 text-[#F5A623]" />
                   <span>SEEKING PARTNERSHIP</span>
                 </div>
-                <p className="text-[13px] font-extrabold text-[#123B2A]">
-                  {need}
-                </p>
+                <p className="text-[13px] font-extrabold text-[#123B2A]">{need}</p>
               </div>
             </div>
 

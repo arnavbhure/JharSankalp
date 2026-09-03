@@ -51,21 +51,24 @@ export function IndustryHeader({ profile }: IndustryHeaderProps) {
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-[#15803D]" />
             <span>
-              <strong className="text-[#1D2522]">{profile.activeCommitments}</strong> Active Commitments
+              <strong className="text-[#1D2522]">{profile.activeCommitments}</strong> Active
+              Commitments
             </span>
           </div>
           <span className="text-[#6B5845]/40 hidden sm:inline">·</span>
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-[#FA7E61]" />
             <span>
-              <strong className="text-[#1D2522]">{profile.collaborationOpportunities}</strong> Open Opportunities
+              <strong className="text-[#1D2522]">{profile.collaborationOpportunities}</strong> Open
+              Opportunities
             </span>
           </div>
           <span className="text-[#6B5845]/40 hidden sm:inline">·</span>
           <div className="flex items-center gap-2">
             <Building2 className="h-4 w-4 text-[#4C1E4F]" />
             <span>
-              <strong className="text-[#1D2522]">{profile.projectsSupported}</strong> Projects Supported
+              <strong className="text-[#1D2522]">{profile.projectsSupported}</strong> Projects
+              Supported
             </span>
           </div>
         </div>

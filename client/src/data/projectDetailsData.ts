@@ -47,7 +47,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 1',
         period: 'Nov 2025',
         title: 'Community Problem & Handpump Geometry Validation',
-        description: 'Conducted field acoustic survey across 30 handpumps in Murhu block with village Jal Sahiyas.',
+        description:
+          'Conducted field acoustic survey across 30 handpumps in Murhu block with village Jal Sahiyas.',
         deliverables: ['Acoustic Baseline Dataset', 'Mounting Clamp CAD Spec'],
         owner: 'BIT Mesra & Jal Sahiya Collective',
         status: 'COMPLETED',
@@ -57,7 +58,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 2',
         period: 'Dec 2025',
         title: 'University Team Formation & Hardware Prototyping',
-        description: 'Assembled cross-functional engineering team and manufactured 5 breadboard telemetry prototypes.',
+        description:
+          'Assembled cross-functional engineering team and manufactured 5 breadboard telemetry prototypes.',
         deliverables: ['Bench Prototype PCB', 'LoRaWAN Frequency License Review'],
         owner: 'Dr. Alok Sen (BIT Mesra)',
         status: 'COMPLETED',
@@ -67,7 +69,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 3',
         period: 'Jan 2026',
         title: 'Initial Prototype Laboratory Testing',
-        description: 'Completed 100,000 cycle stroke simulation in hydraulic test rig with simulated sand grit ingestion.',
+        description:
+          'Completed 100,000 cycle stroke simulation in hydraulic test rig with simulated sand grit ingestion.',
         deliverables: ['Durability Test Dossier', 'IP67 Enclosure Blueprint'],
         owner: 'IoT Innovation Partner',
         status: 'COMPLETED',
@@ -77,7 +80,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 4',
         period: 'Feb 2026',
         title: 'Weatherproof Sensor Fabrication & Gateway Deployment',
-        description: 'Fabricated 25 solar-rechargeable collars and erected the Murhu Block BDO gateway mast.',
+        description:
+          'Fabricated 25 solar-rechargeable collars and erected the Murhu Block BDO gateway mast.',
         deliverables: ['25 Production Sensor Collars', 'Murhu Gateway Station'],
         owner: 'Joint Consortium',
         status: 'COMPLETED',
@@ -87,7 +91,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 5',
         period: 'Mar 2026 – Present',
         title: 'Field Pilot Deployment on 18 Water Points',
-        description: 'Active installation and real-world telemetry validation across 18 public borewells with trained Jal Sahiyas.',
+        description:
+          'Active installation and real-world telemetry validation across 18 public borewells with trained Jal Sahiyas.',
         deliverables: ['18 Live Dashboard Feeds', 'Automated Dispatch SMS Gateway'],
         owner: 'District Water Resources Team',
         status: 'IN_PROGRESS',
@@ -97,7 +102,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 6',
         period: 'May 2026',
         title: 'Impact Verification & District Scale-up Roadmap',
-        description: 'Independent third-party evaluation of downtime metrics and blueprint for 100-village Khunti rollout.',
+        description:
+          'Independent third-party evaluation of downtime metrics and blueprint for 100-village Khunti rollout.',
         deliverables: ['Verified Impact Report', 'Scale-up Operational Plan'],
         owner: 'Department of Drinking Water & Sanitation',
         status: 'UPCOMING',
@@ -155,25 +161,29 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         id: 'act-1',
         timestamp: 'TODAY',
         title: 'Field Pilot sensors installed at 4 additional water points',
-        description: 'Consortium technicians and Jal Sahiyas completed collar attachments at Hatinghore hamlet borewells.',
+        description:
+          'Consortium technicians and Jal Sahiyas completed collar attachments at Hatinghore hamlet borewells.',
       },
       {
         id: 'act-2',
         timestamp: '2 DAYS AGO',
         title: 'Prototype reliability testing completed',
-        description: 'Over-the-air firmware patch v2.1 successfully distributed to 14 active nodes with zero transmission drop.',
+        description:
+          'Over-the-air firmware patch v2.1 successfully distributed to 14 active nodes with zero transmission drop.',
       },
       {
         id: 'act-3',
         timestamp: '1 WEEK AGO',
         title: 'District water team joined the pilot review meeting',
-        description: 'Khunti PHED leadership reviewed initial downtime reduction telemetry and endorsed SMS ticket escalation rules.',
+        description:
+          'Khunti PHED leadership reviewed initial downtime reduction telemetry and endorsed SMS ticket escalation rules.',
       },
       {
         id: 'act-4',
         timestamp: '2 WEEKS AGO',
         title: 'Initial field testing report uploaded',
-        description: 'Baseline report detailing first 30 days of continuous acoustic recording compiled and submitted.',
+        description:
+          'Baseline report detailing first 30 days of continuous acoustic recording compiled and submitted.',
       },
     ],
     documents: [
@@ -208,14 +218,38 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
     ],
     impact: {
       currentOutputs: [
-        { label: 'Water Points Monitored', value: '18', desc: 'Active sensor collars deployed on borewells' },
-        { label: 'Potential Beneficiaries', value: '2,000+', desc: 'Direct household water access safeguarded' },
-        { label: 'Communities Participating', value: '4', desc: 'Hamlets in Murhu Block actively engaged' },
+        {
+          label: 'Water Points Monitored',
+          value: '18',
+          desc: 'Active sensor collars deployed on borewells',
+        },
+        {
+          label: 'Potential Beneficiaries',
+          value: '2,000+',
+          desc: 'Direct household water access safeguarded',
+        },
+        {
+          label: 'Communities Participating',
+          value: '4',
+          desc: 'Hamlets in Murhu Block actively engaged',
+        },
       ],
       targetOutcomes: [
-        { label: 'Downtime Reduction', value: '32%', desc: 'Decrease in average pump failure duration' },
-        { label: 'Resolution Window', value: '< 36h', desc: 'Mechanic dispatch following automated alert' },
-        { label: 'Scale-up Capacity', value: '100 Wells', desc: 'Phase 2 district scale-out readiness' },
+        {
+          label: 'Downtime Reduction',
+          value: '32%',
+          desc: 'Decrease in average pump failure duration',
+        },
+        {
+          label: 'Resolution Window',
+          value: '< 36h',
+          desc: 'Mechanic dispatch following automated alert',
+        },
+        {
+          label: 'Scale-up Capacity',
+          value: '100 Wells',
+          desc: 'Phase 2 district scale-out readiness',
+        },
       ],
       evidenceStatus: {
         baselineData: 'COLLECTED',
@@ -266,7 +300,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 1',
         period: 'Oct 2025',
         title: 'Geological Void Mapping & Risk Stratification',
-        description: 'Surveyed legacy underground mining galleries in Jharia sector with CIMFR geologists.',
+        description:
+          'Surveyed legacy underground mining galleries in Jharia sector with CIMFR geologists.',
         deliverables: ['Subsurface Hazard Map', 'Borehole Sensor Siting Matrix'],
         owner: 'BIT Sindri & Mining Research Centre',
         status: 'COMPLETED',
@@ -365,13 +400,15 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         id: 'act-m1',
         timestamp: 'TODAY',
         title: 'Micro-seismic geophone array calibration completed',
-        description: 'Laboratory simulation verified tri-axial sensitivity down to 0.5 Hz frequencies.',
+        description:
+          'Laboratory simulation verified tri-axial sensitivity down to 0.5 Hz frequencies.',
       },
       {
         id: 'act-m2',
         timestamp: '3 DAYS AGO',
         title: 'Borehole drilling permit approved by BCCL',
-        description: 'Permission granted for 4 test sensor wells along the Jharia-Dhanbad transit boundary.',
+        description:
+          'Permission granted for 4 test sensor wells along the Jharia-Dhanbad transit boundary.',
       },
       {
         id: 'act-m3',
@@ -398,14 +435,38 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
     ],
     impact: {
       currentOutputs: [
-        { label: 'Settlements Covered', value: '4 Wards', desc: 'Highest vulnerability sectors in Jharia' },
-        { label: 'Protected Population', value: '15,000+', desc: 'Residents inside subsidence hazard contour' },
-        { label: 'Sensors Calibrated', value: '12 Units', desc: 'Borehole geophones ready for deployment' },
+        {
+          label: 'Settlements Covered',
+          value: '4 Wards',
+          desc: 'Highest vulnerability sectors in Jharia',
+        },
+        {
+          label: 'Protected Population',
+          value: '15,000+',
+          desc: 'Residents inside subsidence hazard contour',
+        },
+        {
+          label: 'Sensors Calibrated',
+          value: '12 Units',
+          desc: 'Borehole geophones ready for deployment',
+        },
       ],
       targetOutcomes: [
-        { label: 'Evacuation Lead Time', value: '6 Hours', desc: 'Notice before surface ground fissure occurs' },
-        { label: 'False Alarm Rate', value: '< 2%', desc: 'Discriminator filtering heavy truck transit' },
-        { label: 'Ward Safety Coverage', value: '100%', desc: 'High-risk coal belt settlement protection' },
+        {
+          label: 'Evacuation Lead Time',
+          value: '6 Hours',
+          desc: 'Notice before surface ground fissure occurs',
+        },
+        {
+          label: 'False Alarm Rate',
+          value: '< 2%',
+          desc: 'Discriminator filtering heavy truck transit',
+        },
+        {
+          label: 'Ward Safety Coverage',
+          value: '100%',
+          desc: 'High-risk coal belt settlement protection',
+        },
       ],
       evidenceStatus: {
         baselineData: 'COLLECTED',
@@ -456,7 +517,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 1',
         period: 'Sep 2025',
         title: 'Soil Sample Baseline Mapping in Bishunpur',
-        description: 'Analyzed 120 soil cores from upland tribal farming plots across 6 Gram Panchayats.',
+        description:
+          'Analyzed 120 soil cores from upland tribal farming plots across 6 Gram Panchayats.',
         deliverables: ['Acidity Geographic Map', 'Nutrient Deficiency Profile'],
         owner: 'Birsa Agricultural University',
         status: 'COMPLETED',
@@ -466,7 +528,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 2',
         period: 'Nov 2025',
         title: 'Miniature Electrochemical Sensor Prototyping',
-        description: 'Built ion-selective electrode array calibrated specifically for acidic laterite substrates.',
+        description:
+          'Built ion-selective electrode array calibrated specifically for acidic laterite substrates.',
         deliverables: ['Working Probe Hardware', 'Calibration Algorithm'],
         owner: 'BAU & AgriTech Innovation Lab',
         status: 'COMPLETED',
@@ -476,7 +539,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 3',
         period: 'Jan 2026',
         title: 'Vernacular Audio Advisory Integration',
-        description: 'Created text-to-speech audio advisory generator in Sadri, Kurukh, and Mundari.',
+        description:
+          'Created text-to-speech audio advisory generator in Sadri, Kurukh, and Mundari.',
         deliverables: ['Vernacular Audio Library', 'Bluetooth Diagnostic App'],
         owner: 'Vikas Bharti Bishunpur',
         status: 'COMPLETED',
@@ -486,7 +550,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         phase: 'PHASE 4',
         period: 'Feb 2026 – Present',
         title: 'Farmer Field Trials Across 12 Villages',
-        description: 'Equipped 15 local Krishi Mitras with portable kits to test 500 smallholder plots before sowing.',
+        description:
+          'Equipped 15 local Krishi Mitras with portable kits to test 500 smallholder plots before sowing.',
         deliverables: ['500 Soil Cards Issued', 'Lime Distribution Tracking'],
         owner: 'Krishi Vigyan Kendra Gumla',
         status: 'IN_PROGRESS',
@@ -546,19 +611,22 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
         id: 'act-s1',
         timestamp: 'TODAY',
         title: 'Soil test cards issued to 45 additional smallholders',
-        description: 'Krishi Mitras in Banari village completed pre-sowing pH tests for upland millet plots.',
+        description:
+          'Krishi Mitras in Banari village completed pre-sowing pH tests for upland millet plots.',
       },
       {
         id: 'act-s2',
         timestamp: '4 DAYS AGO',
         title: 'Kurukh voice module successfully validated in field',
-        description: 'Elderly non-literate farmers successfully understood spoken audio fertilizer dosage instructions.',
+        description:
+          'Elderly non-literate farmers successfully understood spoken audio fertilizer dosage instructions.',
       },
       {
         id: 'act-s3',
         timestamp: '2 WEEKS AGO',
         title: 'Agricultural lime distribution hub established',
-        description: 'Cooperative depot established at Bishunpur KVK to supply low-cost soil neutralizing amendments.',
+        description:
+          'Cooperative depot established at Bishunpur KVK to supply low-cost soil neutralizing amendments.',
       },
     ],
     documents: [
@@ -579,14 +647,38 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
     ],
     impact: {
       currentOutputs: [
-        { label: 'Farmers Tested', value: '500+', desc: 'Tribal smallholders with verified soil cards' },
-        { label: 'Villages Covered', value: '12', desc: 'Hamlets in Bishunpur block active in pilot' },
-        { label: 'Krishi Mitras Trained', value: '15', desc: 'Local youths operating portable test kits' },
+        {
+          label: 'Farmers Tested',
+          value: '500+',
+          desc: 'Tribal smallholders with verified soil cards',
+        },
+        {
+          label: 'Villages Covered',
+          value: '12',
+          desc: 'Hamlets in Bishunpur block active in pilot',
+        },
+        {
+          label: 'Krishi Mitras Trained',
+          value: '15',
+          desc: 'Local youths operating portable test kits',
+        },
       ],
       targetOutcomes: [
-        { label: 'Millet Yield Increase', value: '28%', desc: 'Projected boost from pH neutralization' },
-        { label: 'Input Cost Savings', value: '₹4,200/ha', desc: 'Preventing wasted unabsorbed NPK fertilizer' },
-        { label: 'Turnaround Time', value: '3 Minutes', desc: 'Instant testing versus 4-month lab delay' },
+        {
+          label: 'Millet Yield Increase',
+          value: '28%',
+          desc: 'Projected boost from pH neutralization',
+        },
+        {
+          label: 'Input Cost Savings',
+          value: '₹4,200/ha',
+          desc: 'Preventing wasted unabsorbed NPK fertilizer',
+        },
+        {
+          label: 'Turnaround Time',
+          value: '3 Minutes',
+          desc: 'Instant testing versus 4-month lab delay',
+        },
       ],
       evidenceStatus: {
         baselineData: 'COLLECTED',
@@ -601,7 +693,8 @@ export const PROJECT_DETAILS_DATA: ProjectDetailMap = {
  * Returns customized or dynamically synthesized ProjectDetail for any projectId
  */
 export function buildProjectDetail(baseProject: Project): ProjectDetail {
-  const specific = PROJECT_DETAILS_DATA[baseProject.id] || PROJECT_DETAILS_DATA[baseProject.projectCode];
+  const specific =
+    PROJECT_DETAILS_DATA[baseProject.id] || PROJECT_DETAILS_DATA[baseProject.projectCode];
 
   if (specific) {
     return {
@@ -699,7 +792,9 @@ export function buildProjectDetail(baseProject: Project): ProjectDetail {
         currentOutputs: [
           {
             label: 'Potential Beneficiaries',
-            value: baseProject.beneficiaries ? `${baseProject.beneficiaries.toLocaleString()}+` : '1,500+',
+            value: baseProject.beneficiaries
+              ? `${baseProject.beneficiaries.toLocaleString()}+`
+              : '1,500+',
             desc: 'Direct community coverage',
           },
           {
@@ -828,7 +923,9 @@ export function buildProjectDetail(baseProject: Project): ProjectDetail {
       currentOutputs: [
         {
           label: 'Beneficiaries Covered',
-          value: baseProject.beneficiaries ? `${baseProject.beneficiaries.toLocaleString()}+` : '1,200+',
+          value: baseProject.beneficiaries
+            ? `${baseProject.beneficiaries.toLocaleString()}+`
+            : '1,200+',
           desc: 'Direct citizen reach',
         },
         {
@@ -893,7 +990,7 @@ function generateMilestonesForStage(p: Project): ProjectMilestone[] {
       title,
       description: `Structured milestone delivering verified outcomes for ${p.domain}.`,
       deliverables: [`Deliverable ${i + 1}.1`, `Audit Report ${i + 1}.2`],
-      owner: i % 2 === 0 ? p.leadInstitution : (p.partners[1]?.name || 'Consortium Team'),
+      owner: i % 2 === 0 ? p.leadInstitution : p.partners[1]?.name || 'Consortium Team',
       status,
     };
   });
@@ -926,7 +1023,8 @@ function generateTeamForProject(p: Project): ProjectMember[] {
       role: 'Field Coordinator',
       title: 'District Community Representative',
       specialty: 'Community Liaison & Ground Operations',
-      institution: partners.find((pt) => pt.type === 'COMMUNITY')?.name || `${p.district} Citizen Forum`,
+      institution:
+        partners.find((pt) => pt.type === 'COMMUNITY')?.name || `${p.district} Citizen Forum`,
       avatarInitials: 'MT',
     },
     {

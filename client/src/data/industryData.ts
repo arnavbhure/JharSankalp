@@ -12,7 +12,8 @@ import {
 export const INDUSTRY_PROFILE: IndustryProfile = {
   name: 'Innovation Partner Network',
   tagline: 'Partner Workspace',
-  description: 'Discover projects where your technology, expertise and resources can create real-world impact across Jharkhand.',
+  description:
+    'Discover projects where your technology, expertise and resources can create real-world impact across Jharkhand.',
   activeCommitments: 3,
   collaborationOpportunities: 5,
   projectsSupported: 2,
@@ -121,28 +122,32 @@ export const INDUSTRY_CAPABILITIES: IndustryCapability[] = [
     id: 'icap-1',
     title: 'IoT Hardware Prototyping',
     category: 'Hardware & Embedded',
-    description: 'Rapid turnaround PCB fabrication, sensor collar CNC machining, and ruggedized IP68 packaging.',
+    description:
+      'Rapid turnaround PCB fabrication, sensor collar CNC machining, and ruggedized IP68 packaging.',
     offeredResources: ['3D Printing', 'PCB SMT Line', 'RF Spectrum Analyzer'],
   },
   {
     id: 'icap-2',
     title: 'Precision Sensor Manufacturing',
     category: 'Advanced Manufacturing',
-    description: 'Electrochemical sensor tooling, microfluidic channels, and industrial testing calibration benches.',
+    description:
+      'Electrochemical sensor tooling, microfluidic channels, and industrial testing calibration benches.',
     offeredResources: ['Electrode Milling', 'Cleanroom Calibration', 'Automated QA'],
   },
   {
     id: 'icap-3',
     title: 'Field Deployment & Logistics',
     category: 'Operations',
-    description: 'Rural block delivery vehicles, solar panel mounting hardware, and field engineer dispatch network.',
+    description:
+      'Rural block delivery vehicles, solar panel mounting hardware, and field engineer dispatch network.',
     offeredResources: ['Logistics Fleet', 'Spares Inventory', 'Field Technicians'],
   },
   {
     id: 'icap-4',
     title: 'Cloud Infrastructure & Edge AI',
     category: 'Software & Compute',
-    description: 'GPU compute clusters, telemetry ingestion pipelines, and managed time-series databases.',
+    description:
+      'GPU compute clusters, telemetry ingestion pipelines, and managed time-series databases.',
     offeredResources: ['NVIDIA GPU Nodes', 'Kubernetes Clusters', 'GIS Tile Servers'],
   },
   {
@@ -156,7 +161,8 @@ export const INDUSTRY_CAPABILITIES: IndustryCapability[] = [
     id: 'icap-6',
     title: 'Technical Mentorship & Code Review',
     category: 'Advisory',
-    description: 'Industrial engineering design reviews, patent filing support, and ISO certification guidance.',
+    description:
+      'Industrial engineering design reviews, patent filing support, and ISO certification guidance.',
     offeredResources: ['Senior Engineers', 'IP Counsel', 'Regulatory Experts'],
   },
 ];
@@ -219,7 +225,8 @@ export const INDUSTRY_ACTIVITIES: IndustryActivity[] = [
   {
     id: 'iact-4',
     timestamp: '4 DAYS AGO',
-    message: 'A new Agriculture project matches your "Precision Sensor Manufacturing" capability profile.',
+    message:
+      'A new Agriculture project matches your "Precision Sensor Manufacturing" capability profile.',
     domain: 'Agriculture',
   },
 ];

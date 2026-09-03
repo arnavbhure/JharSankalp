@@ -35,9 +35,7 @@ export function PortfolioActivityTimeline({ activities }: PortfolioActivityTimel
           </h3>
         </div>
 
-        <span className="text-[12px] font-mono text-[#6B5845]">
-          Updated Real-time
-        </span>
+        <span className="text-[12px] font-mono text-[#6B5845]">Updated Real-time</span>
       </div>
 
       <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-[1.5px] before:bg-[#EEEAE1]">
@@ -63,13 +61,9 @@ export function PortfolioActivityTimeline({ activities }: PortfolioActivityTimel
                 )}
               </div>
 
-              <h4 className="text-[14px] font-bold text-[#1D2522]">
-                {item.title}
-              </h4>
+              <h4 className="text-[14px] font-bold text-[#1D2522]">{item.title}</h4>
 
-              <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                {item.description}
-              </p>
+              <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.description}</p>
             </div>
           </div>
         ))}

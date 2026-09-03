@@ -95,15 +95,8 @@ router.get('/:id', async (req, res, next) => {
  */
 router.post('/', async (req, res, next) => {
   try {
-    const {
-      title,
-      description,
-      domain,
-      district,
-      trlLevel,
-      submittedById,
-      relatedChallengeId,
-    } = req.body;
+    const { title, description, domain, district, trlLevel, submittedById, relatedChallengeId } =
+      req.body;
 
     if (!title || !description) {
       sendError(res, 400, 'VALIDATION_ERROR', 'Title and description are required', undefined, req);

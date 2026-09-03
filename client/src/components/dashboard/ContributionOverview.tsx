@@ -76,9 +76,7 @@ export function ContributionOverview({ stats }: ContributionOverviewProps) {
                 stats.actionRequired > 0 ? 'text-[#BE123C]' : 'text-[#6B5845]'
               }`}
             >
-              {stats.actionRequired > 0
-                ? 'Information Requested'
-                : 'All Requests Handled'}
+              {stats.actionRequired > 0 ? 'Information Requested' : 'All Requests Handled'}
             </span>
           </div>
         </div>

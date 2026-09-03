@@ -1,9 +1,5 @@
 export type ProjectStage =
-  | 'Exploring'
-  | 'Research'
-  | 'Prototyping'
-  | 'Pilot Stage'
-  | 'Implementation';
+  'Exploring' | 'Research' | 'Prototyping' | 'Pilot Stage' | 'Implementation';
 
 export interface CollaborationProject {
   id: string;

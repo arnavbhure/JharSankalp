@@ -32,7 +32,8 @@ export function ContributorList({ contributors }: ContributorListProps) {
         </div>
 
         <span className="text-[13px] font-mono text-[#6B5845]">
-          <strong className="text-[#1D2522] font-bold">{contributors.length}</strong> Active Contributors
+          <strong className="text-[#1D2522] font-bold">{contributors.length}</strong> Active
+          Contributors
         </span>
       </div>
 
@@ -53,13 +54,9 @@ export function ContributorList({ contributors }: ContributorListProps) {
                 <h3 className="text-[14.5px] font-bold text-[#1D2522] truncate leading-snug">
                   {c.name}
                 </h3>
-                <p className="text-[12.5px] text-[#6B5845] truncate">
-                  {c.title}
-                </p>
+                <p className="text-[12.5px] text-[#6B5845] truncate">{c.title}</p>
                 {c.institution && (
-                  <p className="text-[11.5px] font-mono text-[#123B2A] truncate">
-                    {c.institution}
-                  </p>
+                  <p className="text-[11.5px] font-mono text-[#123B2A] truncate">{c.institution}</p>
                 )}
               </div>
             </div>

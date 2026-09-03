@@ -10,7 +10,7 @@ interface RelatedEntitiesProps {
 export function RelatedEntities({ project }: RelatedEntitiesProps) {
   // Find other projects in same or complementary domain
   const sameDomainProjects = SEEDED_PROJECTS.filter(
-    (p) => p.id !== project.id && (p.domain === project.domain || p.district === project.district)
+    (p) => p.id !== project.id && (p.domain === project.domain || p.district === project.district),
   ).slice(0, 3);
 
   // Fallback if none found
@@ -31,7 +31,8 @@ export function RelatedEntities({ project }: RelatedEntitiesProps) {
             Related Challenges, Ideas & Projects
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            JharSankalp connects ground problems with collaborative ideas and active field projects across Jharkhand.
+            JharSankalp connects ground problems with collaborative ideas and active field projects
+            across Jharkhand.
           </p>
         </div>
 
@@ -45,9 +46,7 @@ export function RelatedEntities({ project }: RelatedEntitiesProps) {
                   <Target className="h-3.5 w-3.5" />
                   ORIGINAL CHALLENGE
                 </span>
-                <span className="text-[11px] font-mono text-[#6B5845]">
-                  {project.challenge.id}
-                </span>
+                <span className="text-[11px] font-mono text-[#6B5845]">{project.challenge.id}</span>
               </div>
 
               <h4 className="text-[15px] font-bold text-[#1D2522] leading-snug">

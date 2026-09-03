@@ -83,7 +83,8 @@ export function AdditionalInfoModal({
               Information Transmitted Successfully!
             </h4>
             <p className="text-[12.5px] text-[#166534]">
-              Thank you. The reviewing panel has been notified and will update your dossier within 24 hours.
+              Thank you. The reviewing panel has been notified and will update your dossier within
+              24 hours.
             </p>
           </div>
         ) : (

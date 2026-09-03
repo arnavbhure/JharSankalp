@@ -5,10 +5,7 @@ interface ImpactHeroProps {
   onReadStoryClick: () => void;
 }
 
-export function ImpactHero({
-  onExploreDataClick,
-  onReadStoryClick,
-}: ImpactHeroProps) {
+export function ImpactHero({ onExploreDataClick, onReadStoryClick }: ImpactHeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-[#EEEAE1] bg-[#F8F6F1] py-12 sm:py-16 text-left">
       {/* Subtle Background Geodetic Grid Accent */}
@@ -35,7 +32,8 @@ export function ImpactHero({
 
             {/* Supporting Copy */}
             <p className="text-[15.5px] sm:text-[16.5px] text-[#6B5845] max-w-2xl leading-relaxed font-normal">
-              Track how challenges submitted across Jharkhand are transformed into solutions, deployments and measurable improvements in people's lives.
+              Track how challenges submitted across Jharkhand are transformed into solutions,
+              deployments and measurable improvements in people's lives.
             </p>
 
             {/* CTAs */}
@@ -85,9 +83,7 @@ export function ImpactHero({
                   <div className="text-[1.8rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                     12,400+
                   </div>
-                  <div className="text-[11px] text-[#6B5845] font-medium">
-                    People Reached
-                  </div>
+                  <div className="text-[11px] text-[#6B5845] font-medium">People Reached</div>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1 text-left">
@@ -100,9 +96,7 @@ export function ImpactHero({
                   <div className="text-[1.8rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                     18
                   </div>
-                  <div className="text-[11px] text-[#6B5845] font-medium">
-                    Active Districts
-                  </div>
+                  <div className="text-[11px] text-[#6B5845] font-medium">Active Districts</div>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1 text-left">
@@ -130,9 +124,7 @@ export function ImpactHero({
                   <div className="text-[1.8rem] font-mono font-extrabold text-white leading-tight">
                     7
                   </div>
-                  <div className="text-[11px] text-white/80 font-medium">
-                    Field Deployments
-                  </div>
+                  <div className="text-[11px] text-white/80 font-medium">Field Deployments</div>
                 </div>
               </div>
             </div>

@@ -20,8 +20,7 @@ interface RoadmapTabProps {
 }
 
 export function RoadmapTab({ data, onRefresh }: RoadmapTabProps) {
-  const [selectedMilestone, setSelectedMilestone] =
-    useState<WorkspaceMilestone | null>(null);
+  const [selectedMilestone, setSelectedMilestone] = useState<WorkspaceMilestone | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editStatus, setEditStatus] = useState<MilestoneStatus>('IN_PROGRESS');
   const [editProgress, setEditProgress] = useState(0);
@@ -114,7 +113,8 @@ export function RoadmapTab({ data, onRefresh }: RoadmapTabProps) {
           Project Milestones & Delivery Schedule
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Manage contractual, academic, and field pilot milestones. Click any milestone to update progress, inspect deliverables, or mark completed.
+          Manage contractual, academic, and field pilot milestones. Click any milestone to update
+          progress, inspect deliverables, or mark completed.
         </p>
       </div>
 

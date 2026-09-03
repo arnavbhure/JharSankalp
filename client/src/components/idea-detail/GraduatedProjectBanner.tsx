@@ -33,14 +33,13 @@ export function GraduatedProjectBanner({ ideaId }: GraduatedProjectBannerProps) 
 
       <div className="space-y-1">
         <span className="text-[11px] font-mono text-[#6B5845]">
-          Project ID: <strong className="text-[#1D2522]">{project.projectCode}</strong> · Lead: <strong className="text-[#123B2A]">{project.leadInstitution}</strong>
+          Project ID: <strong className="text-[#1D2522]">{project.projectCode}</strong> · Lead:{' '}
+          <strong className="text-[#123B2A]">{project.leadInstitution}</strong>
         </span>
         <h4 className="text-[1.35rem] sm:text-[1.5rem] font-extrabold text-[#1D2522] font-sans">
           {project.title}
         </h4>
-        <p className="text-[13px] text-[#6B5845] leading-relaxed">
-          {project.summary}
-        </p>
+        <p className="text-[13px] text-[#6B5845] leading-relaxed">{project.summary}</p>
       </div>
 
       <div className="pt-2">

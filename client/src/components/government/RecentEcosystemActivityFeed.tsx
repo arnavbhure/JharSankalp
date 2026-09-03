@@ -19,7 +19,8 @@ export function RecentEcosystemActivityFeed({ activities }: RecentEcosystemActiv
             Recent Ecosystem Activity
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Real-time feed of challenge validations, university team mobilizations, and field milestones.
+            Real-time feed of challenge validations, university team mobilizations, and field
+            milestones.
           </p>
         </div>
 

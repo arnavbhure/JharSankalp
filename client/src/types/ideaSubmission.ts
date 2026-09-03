@@ -1,10 +1,5 @@
 export type IdeaStageType =
-  | 'CONCEPT'
-  | 'RESEARCH'
-  | 'PROTOTYPE'
-  | 'TESTING'
-  | 'PILOT'
-  | 'IMPLEMENTED';
+  'CONCEPT' | 'RESEARCH' | 'PROTOTYPE' | 'TESTING' | 'PILOT' | 'IMPLEMENTED';
 
 export interface SelectedChallenge {
   id: string;
@@ -19,7 +14,14 @@ export interface SelectedChallenge {
 export interface SupportingMaterial {
   id: string;
   name: string;
-  type: 'Research' | 'Prototype Link' | 'Presentation' | 'Document' | 'Image' | 'Video' | 'Other Reference';
+  type:
+    | 'Research'
+    | 'Prototype Link'
+    | 'Presentation'
+    | 'Document'
+    | 'Image'
+    | 'Video'
+    | 'Other Reference';
   url?: string;
   fileSize?: string;
 }

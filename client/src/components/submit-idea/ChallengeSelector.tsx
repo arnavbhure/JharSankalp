@@ -22,10 +22,7 @@ const DOMAINS = [
 
 const PRIORITIES = ['All Priorities', 'Critical', 'High', 'Medium'];
 
-export function ChallengeSelector({
-  selectedChallenge,
-  onSelect,
-}: ChallengeSelectorProps) {
+export function ChallengeSelector({ selectedChallenge, onSelect }: ChallengeSelectorProps) {
   const [query, setQuery] = useState('');
   const [domain, setDomain] = useState('All Domains');
   const [district, setDistrict] = useState('All Districts');
@@ -59,7 +56,8 @@ export function ChallengeSelector({
           What challenge does your idea address?
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Every idea on JharSankalp begins with a real problem identified by a community, local body, or public institution across Jharkhand.
+          Every idea on JharSankalp begins with a real problem identified by a community, local
+          body, or public institution across Jharkhand.
         </p>
       </div>
 
@@ -127,9 +125,7 @@ export function ChallengeSelector({
           </div>
         ) : challenges.length === 0 ? (
           <div className="p-8 rounded-2xl border border-[#EEEAE1] bg-white text-center space-y-1">
-            <p className="text-[14px] font-bold text-[#1D2522]">
-              No matching challenges found.
-            </p>
+            <p className="text-[14px] font-bold text-[#1D2522]">No matching challenges found.</p>
             <p className="text-[12.5px] text-[#6B5845]">
               Try adjusting your search terms or clearing the domain filters.
             </p>
@@ -158,8 +154,8 @@ export function ChallengeSelector({
                           c.priority === 'Critical'
                             ? 'bg-[#FEF2F2] text-[#BE123C]'
                             : c.priority === 'High'
-                            ? 'bg-[#FFFBEB] text-[#B45309]'
-                            : 'bg-[#F0FDF4] text-[#15803D]'
+                              ? 'bg-[#FFFBEB] text-[#B45309]'
+                              : 'bg-[#F0FDF4] text-[#15803D]'
                         }`}
                       >
                         {c.priority} Priority

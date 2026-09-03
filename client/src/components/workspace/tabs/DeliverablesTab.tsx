@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  WorkspaceData,
-  WorkspaceDeliverable,
-  DeliverableStatus,
-} from '../../../types/workspace';
+import { WorkspaceData, WorkspaceDeliverable, DeliverableStatus } from '../../../types/workspace';
 import { updateDeliverableStatus } from '../../../services/workspaceApi';
 import {
   FileCheck,
@@ -23,14 +19,13 @@ interface DeliverablesTabProps {
 }
 
 export function DeliverablesTab({ data, onRefresh }: DeliverablesTabProps) {
-  const [activeDeliverable, setActiveDeliverable] =
-    useState<WorkspaceDeliverable | null>(null);
+  const [activeDeliverable, setActiveDeliverable] = useState<WorkspaceDeliverable | null>(null);
   const [reviewComment, setReviewComment] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleStatusTransition = async (
     deliverable: WorkspaceDeliverable,
-    newStatus: DeliverableStatus
+    newStatus: DeliverableStatus,
   ) => {
     setIsUpdating(true);
     try {
@@ -38,7 +33,7 @@ export function DeliverablesTab({ data, onRefresh }: DeliverablesTabProps) {
         data.context.projectId,
         deliverable.id,
         newStatus,
-        reviewComment.trim() || undefined
+        reviewComment.trim() || undefined,
       );
       deliverable.status = newStatus;
       deliverable.lastUpdated = 'Just now';
@@ -113,7 +108,8 @@ export function DeliverablesTab({ data, onRefresh }: DeliverablesTabProps) {
           Project Deliverables & Governance Audit
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Formally submitted protocols, technical blueprints, and evaluation reports undergoing institutional review.
+          Formally submitted protocols, technical blueprints, and evaluation reports undergoing
+          institutional review.
         </p>
       </div>
 
@@ -154,12 +150,8 @@ export function DeliverablesTab({ data, onRefresh }: DeliverablesTabProps) {
                   <td className="py-4 px-4 font-mono text-[12px] text-[#6B5845]">
                     {del.milestoneTitle}
                   </td>
-                  <td className="py-4 px-4 font-semibold text-[#1D2522]">
-                    {del.owner}
-                  </td>
-                  <td className="py-4 px-4">
-                    {getStatusBadge(del.status)}
-                  </td>
+                  <td className="py-4 px-4 font-semibold text-[#1D2522]">{del.owner}</td>
+                  <td className="py-4 px-4">{getStatusBadge(del.status)}</td>
                   <td className="py-4 px-4 font-mono text-[11.5px] text-[#6B5845]">
                     {del.lastUpdated}
                   </td>
@@ -272,7 +264,9 @@ export function DeliverablesTab({ data, onRefresh }: DeliverablesTabProps) {
                       className="p-2.5 rounded-xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12px] space-y-0.5"
                     >
                       <div className="flex items-center justify-between font-mono text-[10.5px] text-[#6B5845]">
-                        <strong className="text-[#123B2A]">{c.author} ({c.role})</strong>
+                        <strong className="text-[#123B2A]">
+                          {c.author} ({c.role})
+                        </strong>
                         <span>{c.date}</span>
                       </div>
                       <p className="text-[#1D2522]">{c.text}</p>

@@ -39,9 +39,7 @@ export function ProposedApproach({ approach }: ProposedApproachProps) {
             <h3 className="text-[1.2rem] font-bold text-[#1D2522] leading-snug font-sans">
               Pump failures are detected too late.
             </h3>
-            <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-              {approach.problem}
-            </p>
+            <p className="text-[13.5px] text-[#6B5845] leading-relaxed">{approach.problem}</p>
           </div>
           <span className="text-[11px] font-mono text-[#BE123C] font-semibold">
             Status Quo: Manual Complaints
@@ -58,9 +56,7 @@ export function ProposedApproach({ approach }: ProposedApproachProps) {
             <h3 className="text-[1.2rem] font-bold text-[#1D2522] leading-snug font-sans">
               Install non-intrusive smart sensors.
             </h3>
-            <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-              {approach.approach}
-            </p>
+            <p className="text-[13.5px] text-[#6B5845] leading-relaxed">{approach.approach}</p>
           </div>
           <span className="text-[11px] font-mono text-[#123B2A] font-semibold">
             Core Engine: Edge Harmonic Telemetry
@@ -98,21 +94,20 @@ export function ProposedApproach({ approach }: ProposedApproachProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 items-center">
           {FLOW_STEPS.map((step, idx) => (
-            <div key={idx} className="relative flex flex-col items-center sm:items-start text-center sm:text-left space-y-1">
+            <div
+              key={idx}
+              className="relative flex flex-col items-center sm:items-start text-center sm:text-left space-y-1"
+            >
               <div className="flex items-center gap-2 w-full">
                 <span className="h-6 w-6 rounded-full bg-[#123B2A] text-white text-[11px] font-mono font-bold flex items-center justify-center shrink-0">
                   0{idx + 1}
                 </span>
-                <span className="text-[13px] font-bold text-[#1D2522] truncate">
-                  {step.label}
-                </span>
+                <span className="text-[13px] font-bold text-[#1D2522] truncate">{step.label}</span>
                 {idx < FLOW_STEPS.length - 1 && (
                   <ArrowRight className="hidden sm:block h-3.5 w-3.5 text-[#6B5845]/40 ml-auto shrink-0" />
                 )}
               </div>
-              <p className="text-[11px] text-[#6B5845] leading-tight">
-                {step.sub}
-              </p>
+              <p className="text-[11px] text-[#6B5845] leading-tight">{step.sub}</p>
             </div>
           ))}
         </div>

@@ -65,14 +65,12 @@ export function Solutions() {
           s.district.toLowerCase().includes(q) ||
           s.focusArea.toLowerCase().includes(q) ||
           s.technologyType.toLowerCase().includes(q) ||
-          s.technologyTags.some((t) => t.toLowerCase().includes(q))
+          s.technologyTags.some((t) => t.toLowerCase().includes(q)),
       );
     }
 
     if (techType !== 'All Technologies') {
-      list = list.filter(
-        (s) => s.technologyType.toLowerCase() === techType.toLowerCase()
-      );
+      list = list.filter((s) => s.technologyType.toLowerCase() === techType.toLowerCase());
     }
 
     return list;
@@ -113,10 +111,7 @@ export function Solutions() {
 
           {/* ── 3. Featured Solution ── */}
           {!hasActiveFilters && featuredSolution && (
-            <FeaturedSolution
-              solution={featuredSolution}
-              onOpenDetails={setSelectedSolution}
-            />
+            <FeaturedSolution solution={featuredSolution} onOpenDetails={setSelectedSolution} />
           )}
 
           {/* ── 4. Solution Discovery Controls ── */}
@@ -150,12 +145,8 @@ export function Solutions() {
           {!loading && error && (
             <div className="py-16 text-center rounded-3xl bg-[#FFF5F5] border border-[#FECDD3] p-8 space-y-3">
               <AlertCircle className="h-8 w-8 text-[#BE123C] mx-auto" />
-              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
-                Unable to load solutions
-              </h4>
-              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
-                {error}
-              </p>
+              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">Unable to load solutions</h4>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">{error}</p>
               <button
                 type="button"
                 onClick={loadSolutions}
@@ -177,7 +168,8 @@ export function Solutions() {
                     No solutions match your filter criteria
                   </h4>
                   <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-                    Try adjusting your search query or clearing the selected stage and technology filters.
+                    Try adjusting your search query or clearing the selected stage and technology
+                    filters.
                   </p>
                   <button
                     type="button"
@@ -213,10 +205,7 @@ export function Solutions() {
       <Footer />
 
       {/* ── 9. Solution Detail Modal ── */}
-      <SolutionDetailModal
-        solution={selectedSolution}
-        onClose={() => setSelectedSolution(null)}
-      />
+      <SolutionDetailModal solution={selectedSolution} onClose={() => setSelectedSolution(null)} />
     </div>
   );
 }

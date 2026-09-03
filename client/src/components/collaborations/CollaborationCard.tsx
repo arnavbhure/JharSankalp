@@ -21,10 +21,7 @@ interface CollaborationCardProps {
   onJoinToggle?: (id: string, isJoined: boolean) => void;
 }
 
-export function CollaborationCard({
-  project,
-  onJoinToggle,
-}: CollaborationCardProps) {
+export function CollaborationCard({ project, onJoinToggle }: CollaborationCardProps) {
   const navigate = useNavigate();
   const [joined, setJoined] = useState(project.isJoined ?? false);
   const [teamCount, setTeamCount] = useState(project.teamCount);
@@ -95,7 +92,7 @@ export function CollaborationCard({
 
           <span
             className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStageBadge(
-              project.stage
+              project.stage,
             )}`}
           >
             {project.stage}

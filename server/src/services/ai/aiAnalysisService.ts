@@ -12,11 +12,9 @@ export type { AnalyzeChallengeInput, AnalyzeChallengeResult };
  * Automatically selects configured AI provider or fallback rule-based analyzer.
  */
 export async function analyzeChallenge(
-  input: AnalyzeChallengeInput
+  input: AnalyzeChallengeInput,
 ): Promise<AnalyzeChallengeResult> {
-  const hasApiKey = Boolean(
-    process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY
-  );
+  const hasApiKey = Boolean(process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY);
 
   if (hasApiKey) {
     try {

@@ -3,7 +3,7 @@ import { UserRole } from '@jharsankalp/shared';
 import { useAuthStore } from '../../stores/authStore';
 import { BrandMark } from '../common/BrandMark';
 import { GlobalSearchModal } from '../common/GlobalSearchModal';
-import { Menu, ChevronDown, Check, Search } from 'lucide-react';
+import { Menu, X, ChevronDown, Check, Search, PlusCircle, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
@@ -31,16 +31,33 @@ const ROLE_LABELS: Record<UserRole, string> = {
   [UserRole.SUPER_ADMIN]: 'Super Admin',
 };
 
-export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
+const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Challenges', href: '/challenges' },
+  { label: 'Ideas', href: '/ideas' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Solutions', href: '/solutions' },
+  { label: 'Collaborations', href: '/collaborations' },
+  { label: 'Impact', href: '/impact' },
+  { label: 'About Us', href: '/about' },
+];
+
+export function Header({}: HeaderProps) {
   const { user } = useAuth();
   const setDemoRole = useAuthStore((s) => s.setDemoRole);
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isLandingPage = location.pathname === '/';
-  const isChallengesPage = location.pathname === '/challenges';
 
+  // Close mobile drawer on route transition
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setShowRoleSwitcher(false);
+  }, [location.pathname]);
+
+  // Global search shortcut (Ctrl+K)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -61,246 +78,239 @@ export function Header({ onMenuToggle, showMenuButton = true }: HeaderProps) {
     UserRole.SUPER_ADMIN,
   ];
 
+  const getDashboardPath = () => {
+    if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
+      return '/government/dashboard';
+    } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
+      return '/university/dashboard';
+    } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
+      return '/industry/dashboard';
+    }
+    return '/dashboard';
+  };
+
+  const getDashboardLabel = () => {
+    if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
+      return 'Command Center ↗';
+    } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
+      return 'University Workspace ↗';
+    } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
+      return 'Industry Workspace ↗';
+    }
+    return 'Dashboard ↗';
+  };
+
   return (
-    <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-[#EEEAE1] bg-[#F8F6F1] px-4 sm:px-8 shadow-xs select-none transition-all">
-      {/* Left: Brand Identity */}
-      <div className="flex items-center gap-3">
-        {showMenuButton && !isLandingPage && !isChallengesPage && (
+    <header className="sticky top-0 z-50 w-full border-b border-[#EEEAE1] bg-[#F8F6F1] select-none shadow-2xs">
+      <div className="flex h-16 w-full items-center justify-between px-4 sm:px-8">
+        {/* Left: Brand Identity & Mobile Menu Toggle */}
+        <div className="flex items-center gap-3">
           <button
-            onClick={onMenuToggle}
-            className="rounded-lg p-2 text-[#1D2522] hover:bg-[#EEEAE1] lg:hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#123B2A]"
-            aria-label="Toggle navigation"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="rounded-lg p-2 text-[#1D2522] hover:bg-[#EEEAE1] lg:hidden focus-visible:outline-none transition-colors cursor-pointer"
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
           >
-            <Menu className="h-5 w-5" />
-          </button>
-        )}
-
-        <Link to="/" className="flex items-center gap-3 group">
-          {/* Official Sacred Tree Emblem */}
-          <BrandMark size="sm" variant="forest" />
-          <div className="flex flex-col text-left">
-            <span className="text-[1.15rem] font-extrabold text-[#123B2A] tracking-tight leading-none group-hover:text-[#1F5A3D] transition-colors font-sans">
-              JharSankalp
-            </span>
-            <span className="text-[10px] font-semibold text-[#6B5845] tracking-wider uppercase mt-1">
-              Ideas · Collaboration · Impact
-            </span>
-          </div>
-        </Link>
-      </div>
-
-      {/* Center: Balanced Navigation (Exact Structure from Reference) */}
-      <nav className="hidden lg:flex items-center space-x-7 text-[14px] font-semibold text-[#1D2522]">
-        <Link
-          to="/"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            isLandingPage ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Home
-          {isLandingPage && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/challenges"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            isChallengesPage ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Challenges
-          {isChallengesPage && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/ideas"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/ideas' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Ideas
-          {location.pathname === '/ideas' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/projects"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/projects' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Projects
-          {location.pathname === '/projects' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/solutions"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/solutions' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Solutions
-          {location.pathname === '/solutions' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/collaborations"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/collaborations' || location.pathname === '/collaborators' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Collaborations
-          {(location.pathname === '/collaborations' || location.pathname === '/collaborators') && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/impact"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/impact' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          Impact
-          {location.pathname === '/impact' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-
-        <Link
-          to="/about"
-          className={cn(
-            'relative py-2 transition-colors hover:text-[#123B2A]',
-            location.pathname === '/about' ? 'text-[#123B2A] font-bold' : '',
-          )}
-        >
-          About Us
-          {location.pathname === '/about' && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
-          )}
-        </Link>
-      </nav>
-
-      {/* Right: Search + Login/Sign Up + Demo Role Switcher */}
-      <div className="flex items-center gap-3">
-        {/* Search Circular Icon Button */}
-        <button
-          onClick={() => setIsSearchOpen(true)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-white text-[#1D2522] hover:bg-[#EEEAE1] hover:text-[#123B2A] transition-colors shadow-xs cursor-pointer"
-          aria-label="Search initiatives (Ctrl+K)"
-          title="Search initiatives (Ctrl+K)"
-        >
-          <Search className="h-4 w-4 stroke-[2.2]" />
-        </button>
-
-        {/* Dashboard Shortcut Button */}
-        <button
-          onClick={() => {
-            if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
-              navigate('/government/dashboard');
-            } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
-              navigate('/university/dashboard');
-            } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
-              navigate('/industry/dashboard');
-            } else {
-              navigate('/dashboard');
-            }
-          }}
-          className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-2 text-[13px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#F8F6F1] active:scale-[0.98] transition-all cursor-pointer"
-        >
-          {user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN
-            ? 'Command Center ↗'
-            : user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY
-            ? 'University Workspace ↗'
-            : user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP
-            ? 'Industry Workspace ↗'
-            : 'Dashboard ↗'}
-        </button>
-
-        {/* Login / Sign Up Strong Rectangular Button */}
-        <button
-          onClick={() => navigate('/login')}
-          className="hidden sm:inline-flex items-center justify-center rounded-lg bg-[#123B2A] px-5 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-[#0D2B1E] active:scale-[0.98] transition-all"
-        >
-          Login / Sign Up
-        </button>
-
-        {/* Demo Role Switcher */}
-        <div className="relative">
-          <button
-            onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
-            className="flex items-center gap-1.5 rounded-lg border border-[#EEEAE1] bg-white px-3 py-1.5 text-caption font-semibold text-[#1D2522] hover:bg-[#F8F6F1] transition-colors shadow-xs"
-            aria-expanded={showRoleSwitcher}
-            aria-haspopup="true"
-          >
-            <span className="text-[#6B5845] hidden md:inline">Role:</span>
-            <span className="font-bold text-[#123B2A]">
-              {user ? ROLE_LABELS[user.role] : 'Guest'}
-            </span>
-            <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5 text-[#BE123C]" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
 
-          {showRoleSwitcher && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setShowRoleSwitcher(false)} />
-              <div className="absolute right-0 top-full mt-1.5 z-50 w-60 rounded-sm border border-neutral-200 bg-white py-1.5 shadow-medium">
-                <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400 border-b border-neutral-100 mb-1 text-left">
-                  Switch User Perspective
+          <Link to="/" className="flex items-center gap-3 group">
+            <BrandMark size="sm" variant="forest" />
+            <div className="flex flex-col text-left">
+              <span className="text-[1.15rem] font-extrabold text-[#123B2A] tracking-tight leading-none group-hover:text-[#1F5A3D] transition-colors font-sans">
+                JharSankalp
+              </span>
+              <span className="text-[10px] font-semibold text-[#6B5845] tracking-wider uppercase mt-1">
+                Ideas · Collaboration · Impact
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Center: Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center space-x-6 text-[14px] font-semibold text-[#1D2522]">
+          {NAV_LINKS.map((link) => {
+            const isActive =
+              link.href === '/'
+                ? location.pathname === '/'
+                : location.pathname.startsWith(link.href);
+
+            return (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  'relative py-2 transition-colors hover:text-[#123B2A]',
+                  isActive ? 'text-[#123B2A] font-bold' : 'text-[#1D2522]',
+                )}
+              >
+                {link.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#123B2A] rounded-full" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Right: Search + Action Buttons + Role Switcher */}
+        <div className="flex items-center gap-2.5">
+          {/* Search Circular Button */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-white text-[#1D2522] hover:bg-[#EEEAE1] hover:text-[#123B2A] transition-colors shadow-2xs cursor-pointer"
+            aria-label="Search initiatives (Ctrl+K)"
+            title="Search initiatives (Ctrl+K)"
+          >
+            <Search className="h-4 w-4 stroke-[2.2]" />
+          </button>
+
+          {/* Quick Problem Report Button (Desktop) */}
+          <Link
+            to="/report-challenge"
+            className="hidden xl:inline-flex items-center gap-1.5 rounded-lg border border-[#123B2A]/25 bg-white px-3 py-1.5 text-[12.5px] font-bold text-[#123B2A] hover:bg-[#FAF9F5] shadow-2xs transition-all"
+          >
+            <PlusCircle className="h-3.5 w-3.5 text-[#F5A623]" />
+            <span>Report Challenge</span>
+          </Link>
+
+          {/* Dedicated Workspace Shortcut */}
+          <button
+            onClick={() => navigate(getDashboardPath())}
+            className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-1.5 text-[12.5px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#FAF9F5] active:scale-[0.98] transition-all cursor-pointer"
+          >
+            {getDashboardLabel()}
+          </button>
+
+          {/* Login / Sign Up Button */}
+          <button
+            onClick={() => navigate('/login')}
+            className="hidden sm:inline-flex items-center justify-center rounded-lg bg-[#123B2A] px-4 py-1.5 text-[13px] font-bold text-white shadow-2xs hover:bg-[#0D2B1E] active:scale-[0.98] transition-all cursor-pointer"
+          >
+            Login
+          </button>
+
+          {/* Demo Role Switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+              className="flex items-center gap-1.5 rounded-lg border border-[#EEEAE1] bg-white px-3 py-1.5 text-caption font-semibold text-[#1D2522] hover:bg-[#F8F6F1] transition-colors shadow-2xs cursor-pointer"
+              aria-expanded={showRoleSwitcher}
+              aria-haspopup="true"
+            >
+              <span className="text-[#6B5845] hidden md:inline">Role:</span>
+              <span className="font-bold text-[#123B2A]">
+                {user ? ROLE_LABELS[user.role] : 'Guest'}
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
+            </button>
+
+            {showRoleSwitcher && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowRoleSwitcher(false)} />
+                <div className="absolute right-0 top-full mt-1.5 z-50 w-60 rounded-xl border border-[#EEEAE1] bg-white py-1.5 shadow-lg">
+                  <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#6B5845] border-b border-[#EEEAE1] mb-1 text-left">
+                    Switch User Perspective
+                  </div>
+                  {demoRoles.map((role) => {
+                    const isSelected = user?.role === role;
+                    return (
+                      <button
+                        key={role}
+                        onClick={() => {
+                          setDemoRole(role);
+                          setShowRoleSwitcher(false);
+                          if (role === UserRole.GOVERNMENT_OFFICER) {
+                            navigate('/government/dashboard');
+                          } else if (
+                            role === UserRole.UNIVERSITY_ADMIN ||
+                            role === UserRole.FACULTY
+                          ) {
+                            navigate('/university/dashboard');
+                          } else if (role === UserRole.INDUSTRY) {
+                            navigate('/industry/dashboard');
+                          } else if (role === UserRole.CITIZEN) {
+                            navigate('/dashboard');
+                          }
+                        }}
+                        className={cn(
+                          'flex items-center justify-between w-full px-3 py-2 text-left text-[13px] hover:bg-[#FAF9F5] transition-colors cursor-pointer',
+                          isSelected ? 'text-[#123B2A] font-bold bg-[#FAF9F5]' : 'text-[#1D2522]',
+                        )}
+                      >
+                        <span>{ROLE_LABELS[role]}</span>
+                        {isSelected && <Check className="h-3.5 w-3.5 text-[#123B2A]" />}
+                      </button>
+                    );
+                  })}
                 </div>
-                {demoRoles.map((role) => {
-                  const isSelected = user?.role === role;
-                  return (
-                    <button
-                      key={role}
-                      onClick={() => {
-                        setDemoRole(role);
-                        setShowRoleSwitcher(false);
-                        if (role === UserRole.GOVERNMENT_OFFICER) {
-                          navigate('/government/dashboard');
-                        } else if (role === UserRole.UNIVERSITY_ADMIN || role === UserRole.FACULTY) {
-                          navigate('/university/dashboard');
-                        } else if (role === UserRole.INDUSTRY) {
-                          navigate('/industry/dashboard');
-                        } else if (role === UserRole.CITIZEN) {
-                          navigate('/dashboard');
-                        }
-                      }}
-                      className={cn(
-                        'flex items-center justify-between w-full px-3 py-1.5 text-left text-small hover:bg-neutral-100 transition-colors',
-                        isSelected ? 'text-[#163D2B] font-bold bg-neutral-100' : 'text-neutral-800',
-                      )}
-                    >
-                      <span>{ROLE_LABELS[role]}</span>
-                      {isSelected && <Check className="h-3.5 w-3.5 text-[#163D2B]" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
 
+      {/* ── Mobile Navigation Drawer ── */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-[#EEEAE1] bg-[#F8F6F1] px-4 py-5 space-y-4 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="grid grid-cols-2 gap-2 text-left">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  'px-3 py-2 rounded-lg text-[13.5px] font-medium transition-colors',
+                  location.pathname === link.href
+                    ? 'bg-[#123B2A] text-white font-bold'
+                    : 'text-[#1D2522] hover:bg-[#EEEAE1]',
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="pt-3 border-t border-[#EEEAE1] flex flex-col gap-2.5">
+            <Link
+              to="/report-challenge"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#123B2A] text-white text-[13.5px] font-bold shadow-xs"
+            >
+              <PlusCircle className="h-4 w-4 text-[#F5A623]" />
+              <span>Report a Challenge</span>
+            </Link>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                navigate(getDashboardPath());
+              }}
+              className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[#123B2A] bg-white text-[#123B2A] text-[13.5px] font-bold"
+            >
+              <span>{getDashboardLabel()}</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                navigate('/login');
+              }}
+              className="flex items-center justify-center py-2 text-[13px] font-semibold text-[#6B5845] hover:text-[#123B2A]"
+            >
+              Sign In to Your Account
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Global Command / Ecosystem Search Modal */}
-      <GlobalSearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
+      <GlobalSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }

@@ -31,7 +31,8 @@ export function ApproachForm({
           How do you imagine this working?
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Help potential collaborators understand the path from idea to practical solution on the ground.
+          Help potential collaborators understand the path from idea to practical solution on the
+          ground.
         </p>
       </div>
 

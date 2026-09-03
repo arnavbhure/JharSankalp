@@ -56,7 +56,8 @@ export function ImpactJourney() {
           </h3>
         </div>
         <p className="text-[12.5px] text-[#6B5845] max-w-md text-left sm:text-right">
-          Every milestone is auditable — measuring how community observations become tangible village improvements.
+          Every milestone is auditable — measuring how community observations become tangible
+          village improvements.
         </p>
       </div>
 
@@ -70,7 +71,9 @@ export function ImpactJourney() {
               className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-2 relative group hover:border-[#123B2A]/30 transition-all text-left"
             >
               <div className="flex items-center justify-between">
-                <div className={`h-8 w-8 rounded-xl ${step.bg} flex items-center justify-center ${step.color}`}>
+                <div
+                  className={`h-8 w-8 rounded-xl ${step.bg} flex items-center justify-center ${step.color}`}
+                >
                   <Icon className="h-4 w-4" />
                 </div>
                 <span className="text-[10px] font-mono font-bold text-[#6B5845]">

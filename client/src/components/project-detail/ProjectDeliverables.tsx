@@ -66,18 +66,10 @@ export function ProjectDeliverables({ project }: ProjectDeliverablesProps) {
             <tbody className="divide-y divide-[#EEEAE1]/70 text-[13px]">
               {project.deliverables.map((del) => (
                 <tr key={del.id} className="hover:bg-[#FAF9F5] transition-colors">
-                  <td className="py-3.5 pr-4 font-bold text-[#1D2522]">
-                    {del.title}
-                  </td>
-                  <td className="py-3.5 px-4 font-mono text-[#6B5845]">
-                    {del.owner}
-                  </td>
-                  <td className="py-3.5 px-4">
-                    {getStatusBadge(del.status)}
-                  </td>
-                  <td className="py-3.5 pl-4 text-right font-mono text-[#6B5845]">
-                    {del.date}
-                  </td>
+                  <td className="py-3.5 pr-4 font-bold text-[#1D2522]">{del.title}</td>
+                  <td className="py-3.5 px-4 font-mono text-[#6B5845]">{del.owner}</td>
+                  <td className="py-3.5 px-4">{getStatusBadge(del.status)}</td>
+                  <td className="py-3.5 pl-4 text-right font-mono text-[#6B5845]">{del.date}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  PlusCircle,
-  Users,
-  ArrowRight,
-  Sparkles,
-  Edit3,
-  Trash2,
-  Bookmark,
-} from 'lucide-react';
+import { PlusCircle, Users, ArrowRight, Sparkles, Edit3, Trash2, Bookmark } from 'lucide-react';
 import { useInnovationStore, SubmittedIdea } from '../../stores/innovationStore';
 
 export function DashboardIdeas() {
@@ -31,9 +23,7 @@ export function DashboardIdeas() {
   ];
 
   const filteredIdeas =
-    activeTab === 'All'
-      ? userIdeas
-      : userIdeas.filter((i) => i.status === activeTab);
+    activeTab === 'All' ? userIdeas : userIdeas.filter((i) => i.status === activeTab);
 
   const getStatusBadge = (status: SubmittedIdea['status']) => {
     switch (status) {
@@ -75,9 +65,7 @@ export function DashboardIdeas() {
                 <span>{tab.label}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    activeTab === tab.id
-                      ? 'bg-white/20 text-white'
-                      : 'bg-[#FAF9F5] text-[#6B5845]'
+                    activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-[#FAF9F5] text-[#6B5845]'
                   }`}
                 >
                   {count}
@@ -102,9 +90,7 @@ export function DashboardIdeas() {
       {filteredIdeas.length === 0 ? (
         <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
           <Bookmark className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
-          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">
-            No ideas in this category
-          </h3>
+          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No ideas in this category</h3>
           <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
             Discover active civic challenges in Jharkhand and propose practical solutions.
           </p>
@@ -128,12 +114,10 @@ export function DashboardIdeas() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-[#6B5845]">
-                      {idea.id}
-                    </span>
+                    <span className="text-[11px] font-mono text-[#6B5845]">{idea.id}</span>
                     <span
                       className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStatusBadge(
-                        idea.status
+                        idea.status,
                       )}`}
                     >
                       {idea.status}
@@ -174,7 +158,8 @@ export function DashboardIdeas() {
                   <div className="flex items-center gap-3 text-[11px] font-mono text-[#6B5845]">
                     <span className="flex items-center gap-1">
                       <Users className="h-3 w-3 text-[#123B2A]" />
-                      {idea.collaboratorsCount} {idea.collaboratorsCount === 1 ? 'Author' : 'Collaborators'}
+                      {idea.collaboratorsCount}{' '}
+                      {idea.collaboratorsCount === 1 ? 'Author' : 'Collaborators'}
                     </span>
                     <span>·</span>
                     <span>{idea.submissionDate}</span>
@@ -193,9 +178,7 @@ export function DashboardIdeas() {
                         </button>
                         <button
                           type="button"
-                          onClick={() =>
-                            navigate(`/challenges/${idea.challengeId}/submit-idea`)
-                          }
+                          onClick={() => navigate(`/challenges/${idea.challengeId}/submit-idea`)}
                           className="inline-flex items-center gap-1 text-[12px] font-bold text-[#123B2A] hover:underline cursor-pointer"
                         >
                           <Edit3 className="h-3.5 w-3.5" />

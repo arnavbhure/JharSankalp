@@ -10,7 +10,7 @@ interface ChallengeMapProps {
 
 export function ChallengeMap({ challenges, onSelectChallenge }: ChallengeMapProps) {
   const [activeChallenge, setActiveChallenge] = useState<ChallengeItem | null>(
-    challenges.length > 0 ? challenges[0] : null
+    challenges.length > 0 ? challenges[0] : null,
   );
 
   return (
@@ -110,37 +110,125 @@ export function ChallengeMap({ challenges, onSelectChallenge }: ChallengeMapProp
             />
 
             {/* District Labels */}
-            <text x="53" y="52" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="53"
+              y="52"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Ranchi
             </text>
-            <text x="74" y="41" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="74"
+              y="41"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Dhanbad
             </text>
-            <text x="54" y="32" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="54"
+              y="32"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Hazaribagh
             </text>
-            <text x="26" y="24" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="26"
+              y="24"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Palamu
             </text>
-            <text x="48" y="69" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="48"
+              y="69"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Khunti
             </text>
-            <text x="28" y="67" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="28"
+              y="67"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Gumla
             </text>
-            <text x="32" y="88" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="32"
+              y="88"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Simdega
             </text>
-            <text x="58" y="86" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="58"
+              y="86"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               W. Singhbhum
             </text>
-            <text x="80" y="82" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="80"
+              y="82"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               E. Singhbhum
             </text>
-            <text x="86" y="30" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="86"
+              y="30"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Dumka
             </text>
-            <text x="76" y="23" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.6">
+            <text
+              x="76"
+              y="23"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.6"
+            >
               Deoghar
             </text>
           </svg>
@@ -236,7 +324,9 @@ export function ChallengeMap({ challenges, onSelectChallenge }: ChallengeMapProp
                 </div>
                 <div className="flex items-center justify-between text-[#6B5845]">
                   <span>Collaborators:</span>
-                  <strong className="text-[#123B2A]">{activeChallenge.collaboratorsCount} Active</strong>
+                  <strong className="text-[#123B2A]">
+                    {activeChallenge.collaboratorsCount} Active
+                  </strong>
                 </div>
                 <div className="flex items-center justify-between text-[#6B5845]">
                   <span>Status:</span>

@@ -23,7 +23,7 @@ export function mapDbCollabToUi(dbItem: any): CollaborationProject {
       .map((p: string) => p[0])
       .join('')
       .substring(0, 2)
-      .toUpperCase()
+      .toUpperCase(),
   );
 
   return {
@@ -44,18 +44,20 @@ export function mapDbCollabToUi(dbItem: any): CollaborationProject {
 }
 
 export async function fetchCollaborations(
-  params?: CollaborationQueryParams
+  params?: CollaborationQueryParams,
 ): Promise<CollaborationProject[]> {
   const query = new URLSearchParams();
   if (params?.domain && params.domain !== 'All Focus Areas') query.set('domain', params.domain);
-  if (params?.district && params.district !== 'All Districts') query.set('district', params.district);
+  if (params?.district && params.district !== 'All Districts')
+    query.set('district', params.district);
   if (params?.status && params.status !== 'All Statuses') query.set('status', params.status);
   if (params?.stage && params.stage !== 'All Stages') query.set('stage', params.stage);
 
   const queryString = query.toString();
   const endpoint = queryString ? `/collaborations?${queryString}` : '/collaborations';
-  const rawList = await api.get<any[]>(endpoint);
-  return (rawList || []).map(mapDbCollabToUi);
+  const rawList = await api.get<any>(endpoint);
+  const list = Array.isArray(rawList) ? rawList : rawList?.data || [];
+  return list.map(mapDbCollabToUi);
 }
 
 export async function fetchCollaborationById(id: string): Promise<any | null> {

@@ -16,7 +16,8 @@ export function ProjectsEmptyState({ onReset }: ProjectsEmptyStateProps) {
           No projects match these filters.
         </h3>
         <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-md mx-auto">
-          Try exploring another district, domain or project stage to discover active multi-stakeholder initiatives.
+          Try exploring another district, domain or project stage to discover active
+          multi-stakeholder initiatives.
         </p>
       </div>
 

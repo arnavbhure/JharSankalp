@@ -22,7 +22,8 @@ export function ProjectImpact({ project }: ProjectImpactProps) {
               Impact Tracking & Early Outcomes
             </h3>
             <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-              Tracking early progress, community reach, and anticipated societal improvements across Jharkhand.
+              Tracking early progress, community reach, and anticipated societal improvements across
+              Jharkhand.
             </p>
           </div>
 
@@ -54,9 +55,7 @@ export function ProjectImpact({ project }: ProjectImpactProps) {
                 <div className="text-[13px] font-bold text-[#1D2522] leading-tight">
                   {item.label}
                 </div>
-                <div className="text-[11px] text-[#6B5845] leading-snug">
-                  {item.desc}
-                </div>
+                <div className="text-[11px] text-[#6B5845] leading-snug">{item.desc}</div>
               </div>
             ))}
           </div>
@@ -80,12 +79,8 @@ export function ProjectImpact({ project }: ProjectImpactProps) {
                 <div className="text-[2rem] sm:text-[2.4rem] font-extrabold font-mono text-[#15803D] leading-none">
                   {item.value}
                 </div>
-                <div className="text-[14px] font-bold text-[#1D2522]">
-                  {item.label}
-                </div>
-                <div className="text-[11.5px] text-[#6B5845] leading-snug">
-                  {item.desc}
-                </div>
+                <div className="text-[14px] font-bold text-[#1D2522]">{item.label}</div>
+                <div className="text-[11.5px] text-[#6B5845] leading-snug">{item.desc}</div>
               </div>
             ))}
           </div>
@@ -96,7 +91,8 @@ export function ProjectImpact({ project }: ProjectImpactProps) {
           <AlertCircle className="h-5 w-5 text-[#B45309] shrink-0" />
           <div className="text-[12.5px] text-[#1D2522] leading-relaxed">
             <strong className="font-mono uppercase text-[#B45309] mr-1.5">Impact Status:</strong>
-            Full impact measurement and formal government baseline verification begins after pilot completion. All metrics presented above represent prototype field trial indicators.
+            Full impact measurement and formal government baseline verification begins after pilot
+            completion. All metrics presented above represent prototype field trial indicators.
           </div>
         </div>
       </div>

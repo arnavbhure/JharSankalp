@@ -26,7 +26,8 @@ export function GovernmentInsightCTA() {
 
         {/* Supporting copy */}
         <p className="text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed font-normal max-w-2xl">
-          JharSankalp helps government departments understand where challenges emerge, which institutions are responding, and where innovation is producing measurable outcomes.
+          JharSankalp helps government departments understand where challenges emerge, which
+          institutions are responding, and where innovation is producing measurable outcomes.
         </p>
 
         {/* Actions */}

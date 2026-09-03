@@ -26,7 +26,8 @@ export function DetailCTA({ onContributeIdea, onJoinCollaboration }: DetailCTAPr
         </h2>
 
         <p className="text-[15.5px] sm:text-[16.5px] text-white/85 max-w-2xl mx-auto leading-relaxed">
-          Bring your knowledge, ideas, technology or institutional expertise to help move this challenge forward.
+          Bring your knowledge, ideas, technology or institutional expertise to help move this
+          challenge forward.
         </p>
 
         <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">

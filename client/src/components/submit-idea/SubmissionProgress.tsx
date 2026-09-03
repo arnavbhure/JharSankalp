@@ -43,8 +43,8 @@ export function SubmissionProgress({
                       isCurrent
                         ? 'bg-[#123B2A] text-[#F5A623] ring-4 ring-[#123B2A]/10 shadow-xs'
                         : isCompleted
-                        ? 'bg-[#15803D] text-white shadow-2xs'
-                        : 'bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1]'
+                          ? 'bg-[#15803D] text-white shadow-2xs'
+                          : 'bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1]'
                     }`}
                   >
                     {isCompleted ? (
@@ -60,8 +60,8 @@ export function SubmissionProgress({
                         isCurrent
                           ? 'text-[#123B2A]'
                           : isCompleted
-                          ? 'text-[#1D2522]'
-                          : 'text-[#6B5845]'
+                            ? 'text-[#1D2522]'
+                            : 'text-[#6B5845]'
                       }`}
                     >
                       {s.title}

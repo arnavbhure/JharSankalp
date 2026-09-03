@@ -42,7 +42,8 @@ export function UniversityHeader({ profile }: UniversityHeaderProps) {
             {profile.name}
           </h1>
           <p className="text-[15.5px] sm:text-[17px] text-[#6B5845] max-w-3xl leading-relaxed">
-            {profile.tagline} — Channeling student engineers, faculty investigators, and laboratory capabilities into solving Jharkhand&apos;s real-world societal bottlenecks.
+            {profile.tagline} — Channeling student engineers, faculty investigators, and laboratory
+            capabilities into solving Jharkhand&apos;s real-world societal bottlenecks.
           </p>
         </div>
 
@@ -51,7 +52,8 @@ export function UniversityHeader({ profile }: UniversityHeaderProps) {
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-[#4C1E4F]" />
             <span>
-              <strong className="text-[#1D2522]">{profile.activeResearchers}</strong> Active Researchers
+              <strong className="text-[#1D2522]">{profile.activeResearchers}</strong> Active
+              Researchers
             </span>
           </div>
           <span className="text-[#6B5845]/40 hidden sm:inline">·</span>

@@ -103,7 +103,7 @@ export function IdeaCard({ idea, onSupportToggle, onSelect }: IdeaCardProps) {
 
           <span
             className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStatusBadge(
-              idea.status
+              idea.status,
             )}`}
           >
             {idea.status}

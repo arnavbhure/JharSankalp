@@ -19,11 +19,7 @@ export interface TimelineProps {
   className?: string;
 }
 
-export function Timeline({
-  steps,
-  orientation = 'horizontal',
-  className,
-}: TimelineProps) {
+export function Timeline({ steps, orientation = 'horizontal', className }: TimelineProps) {
   if (orientation === 'horizontal') {
     return (
       <div className={cn('w-full py-3 overflow-x-auto scrollbar-custom', className)}>
@@ -65,8 +61,8 @@ export function Timeline({
                         step.state === 'current'
                           ? 'text-neutral-900 font-semibold'
                           : step.state === 'completed'
-                          ? 'text-brand-purple'
-                          : 'text-neutral-600',
+                            ? 'text-brand-purple'
+                            : 'text-neutral-600',
                       )}
                     >
                       {step.label}
@@ -103,14 +99,11 @@ export function Timeline({
           <div
             className={cn(
               'absolute -left-6 top-1 flex items-center justify-center w-5 h-5 rounded-full border-2 text-[10px] font-bold bg-neutral-0 transition-colors',
-              step.state === 'completed' &&
-                'bg-brand-purple border-brand-purple text-neutral-0',
+              step.state === 'completed' && 'bg-brand-purple border-brand-purple text-neutral-0',
               step.state === 'current' &&
                 'border-brand-coral bg-neutral-0 text-brand-coral ring-3 ring-brand-coral/20',
-              step.state === 'upcoming' &&
-                'border-neutral-300 text-neutral-400',
-              step.state === 'failed' &&
-                'bg-status-danger border-status-danger text-neutral-0',
+              step.state === 'upcoming' && 'border-neutral-300 text-neutral-400',
+              step.state === 'failed' && 'bg-status-danger border-status-danger text-neutral-0',
             )}
           >
             {step.state === 'completed' ? (
@@ -131,9 +124,7 @@ export function Timeline({
                 </span>
               )}
             </div>
-            {step.sublabel && (
-              <p className="text-small text-neutral-600">{step.sublabel}</p>
-            )}
+            {step.sublabel && <p className="text-small text-neutral-600">{step.sublabel}</p>}
             {step.metadata && <div className="mt-2">{step.metadata}</div>}
           </div>
         </div>

@@ -1,4 +1,13 @@
-import { CheckCircle2, Home, Compass, ArrowRight, FileCheck, Layers, Users2, Activity } from 'lucide-react';
+import {
+  CheckCircle2,
+  Home,
+  Compass,
+  ArrowRight,
+  FileCheck,
+  Layers,
+  Users2,
+  Activity,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SubmissionResponse } from '../../types/submission';
 
@@ -49,7 +58,8 @@ export function SubmissionSuccess({ response }: SubmissionSuccessProps) {
             Your challenge is now part of Jharkhand&apos;s innovation ecosystem.
           </h1>
           <p className="text-[14.5px] sm:text-[15.5px] text-[#6B5845] max-w-lg mx-auto leading-relaxed">
-            Thank you for voicing this issue. Real societal innovation starts when citizens and local communities articulate the problems that need to be solved.
+            Thank you for voicing this issue. Real societal innovation starts when citizens and
+            local communities articulate the problems that need to be solved.
           </p>
         </div>
       </div>
@@ -70,9 +80,7 @@ export function SubmissionSuccess({ response }: SubmissionSuccessProps) {
             <span className="text-[11px] font-mono uppercase text-[#6B5845] block">
               Submitted Date
             </span>
-            <span className="text-[13px] font-bold text-[#1D2522]">
-              {response.submissionDate}
-            </span>
+            <span className="text-[13px] font-bold text-[#1D2522]">{response.submissionDate}</span>
           </div>
         </div>
 
@@ -120,9 +128,7 @@ export function SubmissionSuccess({ response }: SubmissionSuccessProps) {
                     {item.title}
                   </span>
                 </div>
-                <p className="text-[12px] text-[#6B5845] leading-relaxed pl-8">
-                  {item.desc}
-                </p>
+                <p className="text-[12px] text-[#6B5845] leading-relaxed pl-8">{item.desc}</p>
               </div>
             );
           })}

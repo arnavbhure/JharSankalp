@@ -20,8 +20,11 @@ export async function getDashboard(): Promise<IndustryDashboardData> {
         ...INDUSTRY_DASHBOARD_DATA,
         metrics: {
           ...INDUSTRY_DASHBOARD_DATA.metrics,
-          fieldPilotsSeekingPartners: res.kpis.fieldPilotsSupported ?? INDUSTRY_DASHBOARD_DATA.metrics.fieldPilotsSeekingPartners,
-          seekingTechnicalSupport: res.kpis.activeEngagements ?? INDUSTRY_DASHBOARD_DATA.metrics.seekingTechnicalSupport,
+          fieldPilotsSeekingPartners:
+            res.kpis.fieldPilotsSupported ??
+            INDUSTRY_DASHBOARD_DATA.metrics.fieldPilotsSeekingPartners,
+          seekingTechnicalSupport:
+            res.kpis.activeEngagements ?? INDUSTRY_DASHBOARD_DATA.metrics.seekingTechnicalSupport,
         },
       };
     }

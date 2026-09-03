@@ -31,7 +31,8 @@ export const WATER_PUMP_IDEA_DETAIL: IdeaDetail = {
   },
 
   proposedApproach: {
-    problem: 'Pump failures are detected too late, leaving entire hamlets without clean drinking water for weeks.',
+    problem:
+      'Pump failures are detected too late, leaving entire hamlets without clean drinking water for weeks.',
     approach:
       'Attach non-intrusive, solar/battery acoustic vibration sensors to pump riser heads that continuously log mechanical stroke rhythm and transmit failure signals before complete mechanical seizure occurs.',
     expectedOutcome:
@@ -42,32 +43,42 @@ export const WATER_PUMP_IDEA_DETAIL: IdeaDetail = {
     {
       stepNumber: '01',
       title: 'Monitor',
-      description: 'Low-cost clamped sensors track pump activity, stroke counts, and diurnal usage patterns non-intrusively.',
-      technicalDetail: 'Piezoelectric vibration sensor logging mechanical frequency profiles between 5 Hz and 200 Hz.',
+      description:
+        'Low-cost clamped sensors track pump activity, stroke counts, and diurnal usage patterns non-intrusively.',
+      technicalDetail:
+        'Piezoelectric vibration sensor logging mechanical frequency profiles between 5 Hz and 200 Hz.',
     },
     {
       stepNumber: '02',
       title: 'Detect',
-      description: 'Anomalous vibration harmonics and dry strokes indicate impending washer wear or drop in water aquifer table.',
-      technicalDetail: 'TinyML edge inference running on ultra-low-power ARM Cortex-M4 microcontroller.',
+      description:
+        'Anomalous vibration harmonics and dry strokes indicate impending washer wear or drop in water aquifer table.',
+      technicalDetail:
+        'TinyML edge inference running on ultra-low-power ARM Cortex-M4 microcontroller.',
     },
     {
       stepNumber: '03',
       title: 'Transmit',
-      description: 'Telemetry summaries are relayed through sub-gigahertz mesh gateways to rural base towers.',
-      technicalDetail: 'LoRaWAN 868 MHz protocol achieving 12 km rural transmission without needing SIM cards at each pump.',
+      description:
+        'Telemetry summaries are relayed through sub-gigahertz mesh gateways to rural base towers.',
+      technicalDetail:
+        'LoRaWAN 868 MHz protocol achieving 12 km rural transmission without needing SIM cards at each pump.',
     },
     {
       stepNumber: '04',
       title: 'Alert',
-      description: 'District water engineers and Gram Panchayat Jal Samiti members receive an automated actionable mobile notification.',
-      technicalDetail: 'Automated WhatsApp & SMS dispatch tickets specifying exact pump ID, GPS spot, and predicted spare part needs.',
+      description:
+        'District water engineers and Gram Panchayat Jal Samiti members receive an automated actionable mobile notification.',
+      technicalDetail:
+        'Automated WhatsApp & SMS dispatch tickets specifying exact pump ID, GPS spot, and predicted spare part needs.',
     },
     {
       stepNumber: '05',
       title: 'Respond',
-      description: 'Mobile mechanics replace the worn washer before seizure; service restoration is verified remotely by the sensor.',
-      technicalDetail: 'Telemetry acknowledges resumed stroke fluid resistance, automatically closing the open grievance docket.',
+      description:
+        'Mobile mechanics replace the worn washer before seizure; service restoration is verified remotely by the sensor.',
+      technicalDetail:
+        'Telemetry acknowledges resumed stroke fluid resistance, automatically closing the open grievance docket.',
     },
   ],
 
@@ -75,22 +86,26 @@ export const WATER_PUMP_IDEA_DETAIL: IdeaDetail = {
     {
       dateLabel: 'MARCH 2026',
       title: 'Prototype Architecture Finalized',
-      description: 'Schematic for low-power sensor collar completed and verified for mechanical fit on India Mark II pump cylinders.',
+      description:
+        'Schematic for low-power sensor collar completed and verified for mechanical fit on India Mark II pump cylinders.',
     },
     {
       dateLabel: 'FEBRUARY 2026',
       title: 'Hardware Components Evaluated',
-      description: 'Benchmarked 3 piezoelectric vibration transducers against ambient temperature spikes up to 45°C.',
+      description:
+        'Benchmarked 3 piezoelectric vibration transducers against ambient temperature spikes up to 45°C.',
     },
     {
       dateLabel: 'JANUARY 2026',
       title: 'Research Collaboration Formed',
-      description: 'Team formed with faculty advisors from BIT Sindri and community coordinators from Khunti Jal Samiti.',
+      description:
+        'Team formed with faculty advisors from BIT Sindri and community coordinators from Khunti Jal Samiti.',
     },
     {
       dateLabel: 'DECEMBER 2025',
       title: 'Idea Submitted to JharSankalp',
-      description: 'Initial concept docket drafted and matched with open societal challenge JS-2026-00024.',
+      description:
+        'Initial concept docket drafted and matched with open societal challenge JS-2026-00024.',
     },
   ],
 
@@ -225,7 +240,7 @@ export function getIdeaDetail(id?: string): IdeaDetail {
   }
 
   const canonical = CANONICAL_IDEAS.find(
-    (i) => i.id.toLowerCase() === normalized || i.referenceId?.toLowerCase() === normalized
+    (i) => i.id.toLowerCase() === normalized || i.referenceId?.toLowerCase() === normalized,
   );
 
   if (canonical) {

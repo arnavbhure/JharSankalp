@@ -24,7 +24,7 @@ export function ChallengeDetail() {
   const navigate = useNavigate();
 
   const [challenge, setChallenge] = useState<ChallengeDetailData>(() =>
-    getChallengeDetail(challengeId)
+    getChallengeDetail(challengeId),
   );
 
   useEffect(() => {
@@ -44,7 +44,10 @@ export function ChallengeDetail() {
             status: res.status ? res.status.toUpperCase() : prev.status,
             impactPriority: `${res.priority || 'High'} Impact Priority`,
             stats: {
-              collaboratorsCount: res._count?.collaborations || res.collaborations?.length || prev.stats.collaboratorsCount,
+              collaboratorsCount:
+                res._count?.collaborations ||
+                res.collaborations?.length ||
+                prev.stats.collaboratorsCount,
               ideasCount: res._count?.ideas || res.ideas?.length || prev.stats.ideasCount,
               followersCount: prev.stats.followersCount,
             },
@@ -61,6 +64,8 @@ export function ChallengeDetail() {
                 : prev.profile.dateSubmitted,
               trackingId: res.publicId || res.challengeCode || prev.profile.trackingId,
             },
+            evidenceFiles:
+              res.evidence && res.evidence.length > 0 ? res.evidence : prev.evidenceFiles,
           }));
         }
       })
@@ -73,7 +78,8 @@ export function ChallengeDetail() {
     };
   }, [challengeId]);
 
-  const { isChallengeJoined, joinChallenge, isChallengeSaved, saveChallenge } = useInnovationStore();
+  const { isChallengeJoined, joinChallenge, isChallengeSaved, saveChallenge } =
+    useInnovationStore();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const isJoined = isChallengeJoined(challenge.id);
@@ -88,7 +94,7 @@ export function ChallengeDetail() {
     if (justJoined) {
       setToastMessage("You've joined this challenge! Contributor status active.");
     } else {
-      setToastMessage("You are an active contributor on this challenge.");
+      setToastMessage('You are an active contributor on this challenge.');
     }
     setTimeout(() => {
       setToastMessage(null);
@@ -100,7 +106,7 @@ export function ChallengeDetail() {
     setToastMessage(
       !isSaved
         ? 'Challenge saved to your dashboard bookmark queue.'
-        : 'Challenge removed from your bookmarks.'
+        : 'Challenge removed from your bookmarks.',
     );
     setTimeout(() => {
       setToastMessage(null);
@@ -118,7 +124,10 @@ export function ChallengeDetail() {
       )}
 
       {/* ── Breadcrumb & Return Bar ── */}
-      <nav aria-label="Breadcrumb" className="border-b border-[#EEEAE1] bg-white/70 backdrop-blur-xs sticky top-0 z-30">
+      <nav
+        aria-label="Breadcrumb"
+        className="border-b border-[#EEEAE1] bg-white/70 backdrop-blur-xs sticky top-0 z-30"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-[12.5px] font-mono text-[#6B5845]">
             <Link to="/" className="hover:text-[#123B2A] transition-colors">

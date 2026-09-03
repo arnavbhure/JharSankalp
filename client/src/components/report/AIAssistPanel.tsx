@@ -1,4 +1,13 @@
-import { Sparkles, Check, CheckCircle2, ShieldAlert, Cpu, Users2, Compass, Activity } from 'lucide-react';
+import {
+  Sparkles,
+  Check,
+  CheckCircle2,
+  ShieldAlert,
+  Cpu,
+  Users2,
+  Compass,
+  Activity,
+} from 'lucide-react';
 import { AIAssistSuggestion } from '../../types/submission';
 
 interface AIAssistPanelProps {
@@ -58,9 +67,7 @@ export function AIAssistPanel({
             {suggestion.suggestedCategory}
           </div>
           {suggestion.subDomain && (
-            <div className="text-[11.5px] font-mono text-[#6B5845]">
-              ↳ {suggestion.subDomain}
-            </div>
+            <div className="text-[11.5px] font-mono text-[#6B5845]">↳ {suggestion.subDomain}</div>
           )}
         </div>
 
@@ -76,8 +83,8 @@ export function AIAssistPanel({
                 suggestion.suggestedPriority === 'CRITICAL'
                   ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
                   : suggestion.suggestedPriority === 'HIGH'
-                  ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
-                  : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                    ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
+                    : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
               }`}
             >
               {suggestion.suggestedPriority}

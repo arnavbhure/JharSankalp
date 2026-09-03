@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Sparkles,
-  Droplets,
-  Heart,
-  Users,
-  MapPin,
-  Clock,
-  ArrowRight,
-  Check,
-} from 'lucide-react';
+import { Sparkles, Droplets, Heart, Users, MapPin, Clock, ArrowRight, Check } from 'lucide-react';
 import { CommunityIdea } from '../../types/ideas';
 
 interface FeaturedIdeaProps {

@@ -54,15 +54,10 @@ export function DashboardNotifications() {
   };
 
   const toggleRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: !n.read } : n))
-    );
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: !n.read } : n)));
   };
 
-  const filtered =
-    filter === 'unread'
-      ? notifications.filter((n) => !n.read)
-      : notifications;
+  const filtered = filter === 'unread' ? notifications.filter((n) => !n.read) : notifications;
 
   return (
     <div className="space-y-6 text-left">
@@ -121,21 +116,13 @@ export function DashboardNotifications() {
 
             <div className="space-y-1 min-w-0 flex-1">
               <div className="flex items-center justify-between gap-2">
-                <h4 className="text-[14px] font-bold text-[#1D2522]">
-                  {item.title}
-                </h4>
-                <span className="text-[11px] font-mono text-[#6B5845] shrink-0">
-                  {item.time}
-                </span>
+                <h4 className="text-[14px] font-bold text-[#1D2522]">{item.title}</h4>
+                <span className="text-[11px] font-mono text-[#6B5845] shrink-0">{item.time}</span>
               </div>
-              <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                {item.desc}
-              </p>
+              <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.desc}</p>
             </div>
 
-            {!item.read && (
-              <span className="h-2.5 w-2.5 rounded-full bg-[#15803D] shrink-0 mt-2" />
-            )}
+            {!item.read && <span className="h-2.5 w-2.5 rounded-full bg-[#15803D] shrink-0 mt-2" />}
           </div>
         ))}
       </div>

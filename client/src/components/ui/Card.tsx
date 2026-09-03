@@ -33,7 +33,8 @@ export function Card({
       className={cn(
         'rounded-sm border border-neutral-200 bg-neutral-0 text-left',
         paddingStyles[padding],
-        hoverable && 'transition-all duration-150 hover:border-neutral-300 hover:shadow-subtle cursor-pointer',
+        hoverable &&
+          'transition-all duration-150 hover:border-neutral-300 hover:shadow-subtle cursor-pointer',
         onClick && 'cursor-pointer',
         className,
       )}
@@ -108,7 +109,12 @@ export function CardFooter({
   className?: string;
 }) {
   return (
-    <div className={cn('mt-4 pt-3 border-t border-neutral-200 flex items-center justify-between text-caption text-neutral-600', className)}>
+    <div
+      className={cn(
+        'mt-4 pt-3 border-t border-neutral-200 flex items-center justify-between text-caption text-neutral-600',
+        className,
+      )}
+    >
       {children}
     </div>
   );

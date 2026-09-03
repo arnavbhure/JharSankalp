@@ -90,7 +90,12 @@ export interface EcosystemActivity {
   message: string;
   domain: string;
   district: string;
-  type: 'CHALLENGE_VALIDATED' | 'TEAM_FORMED' | 'PARTNER_JOINED' | 'PILOT_MILESTONE' | 'GRANT_ALLOCATED';
+  type:
+    | 'CHALLENGE_VALIDATED'
+    | 'TEAM_FORMED'
+    | 'PARTNER_JOINED'
+    | 'PILOT_MILESTONE'
+    | 'GRANT_ALLOCATED';
 }
 
 export interface StateImpactSnapshot {

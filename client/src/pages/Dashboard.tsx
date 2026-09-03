@@ -42,10 +42,7 @@ export function Dashboard() {
           {/* Top Header */}
           <DashboardTopHeader
             greeting={data?.greeting || 'Good evening, Arnav 👋'}
-            subtitle={
-              data?.subtitle ||
-              'See how your ideas are creating change across Jharkhand.'
-            }
+            subtitle={data?.subtitle || 'See how your ideas are creating change across Jharkhand.'}
             currentRole={currentRole}
             onRoleChange={(r) => setCurrentRole(r)}
             onOpenMobileMenu={() => setMobileMenuOpen(true)}

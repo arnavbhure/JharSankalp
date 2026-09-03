@@ -96,7 +96,7 @@ const CATEGORY_OPTIONS: CategoryOption[] = [
 
 export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProps) {
   const [localSuggestion, setLocalSuggestion] = useState<AIAssistSuggestion | null>(
-    formData.aiSuggestions
+    formData.aiSuggestions,
   );
   const [isApplied, setIsApplied] = useState(Boolean(formData.aiSuggestions));
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -107,7 +107,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
   const handleTriggerAI = async () => {
     if (!formData.description || formData.description.trim().length < 15) {
       setAnalyzeError(
-        'Please write at least 15 characters in the description before requesting AI feedback.'
+        'Please write at least 15 characters in the description before requesting AI feedback.',
       );
       return;
     }
@@ -115,11 +115,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
     setIsAnalyzing(true);
     setAnalyzeError(null);
     try {
-      const res = await analyzeDescription(
-        formData.description,
-        formData.title,
-        formData.district
-      );
+      const res = await analyzeDescription(formData.description, formData.title, formData.district);
       if (res) {
         setLocalSuggestion(res);
         setIsApplied(false);
@@ -150,7 +146,8 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
           Describe the problem you are seeing.
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          You don&apos;t need technical terminology or administrative knowledge. Tell us in simple words what is happening in your area.
+          You don&apos;t need technical terminology or administrative knowledge. Tell us in simple
+          words what is happening in your area.
         </p>
       </div>
 
@@ -284,9 +281,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
               >
                 <div
                   className={`p-2 rounded-lg shrink-0 ${
-                    isSelected
-                      ? 'bg-[#123B2A] text-white'
-                      : 'bg-[#F8F6F1] text-[#6B5845]'
+                    isSelected ? 'bg-[#123B2A] text-white' : 'bg-[#F8F6F1] text-[#6B5845]'
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
@@ -299,9 +294,7 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
                   >
                     {cat.label}
                   </div>
-                  <div className="text-[11.5px] text-[#6B5845] leading-snug">
-                    {cat.desc}
-                  </div>
+                  <div className="text-[11.5px] text-[#6B5845] leading-snug">{cat.desc}</div>
                 </div>
               </button>
             );

@@ -18,7 +18,8 @@ export function ChallengePipelineFunnel({ stages }: ChallengePipelineFunnelProps
             Challenge-to-Impact Pipeline
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            How raw citizen problems transition through validation, academic matching, project formation, and verified impact.
+            How raw citizen problems transition through validation, academic matching, project
+            formation, and verified impact.
           </p>
         </div>
 
@@ -44,15 +45,15 @@ export function ChallengePipelineFunnel({ stages }: ChallengePipelineFunnelProps
                   0{idx + 1}
                 </span>
 
-                {stage.highlight && (
-                  <Sparkles className="h-3.5 w-3.5 text-[#FA7E61]" />
-                )}
+                {stage.highlight && <Sparkles className="h-3.5 w-3.5 text-[#FA7E61]" />}
               </div>
 
               <div className="space-y-1">
-                <div className={`text-[2rem] font-extrabold font-mono tracking-tight leading-none ${
-                  stage.highlight ? 'text-[#4C1E4F]' : 'text-[#1D2522]'
-                }`}>
+                <div
+                  className={`text-[2rem] font-extrabold font-mono tracking-tight leading-none ${
+                    stage.highlight ? 'text-[#4C1E4F]' : 'text-[#1D2522]'
+                  }`}
+                >
                   {stage.count.toLocaleString()}
                 </div>
 
@@ -62,9 +63,7 @@ export function ChallengePipelineFunnel({ stages }: ChallengePipelineFunnelProps
               </div>
 
               <div className="pt-2 border-t border-[#EEEAE1] space-y-1">
-                <p className="text-[11px] text-[#6B5845] leading-tight">
-                  {stage.description}
-                </p>
+                <p className="text-[11px] text-[#6B5845] leading-tight">{stage.description}</p>
 
                 {stage.dropoffRate && (
                   <span className="text-[9.5px] font-mono text-[#FA7E61] block pt-0.5">

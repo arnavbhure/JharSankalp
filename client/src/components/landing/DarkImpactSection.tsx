@@ -2,13 +2,17 @@ import { Users, Trophy, Heart, ArrowRight } from 'lucide-react';
 
 export function DarkImpactSection() {
   return (
-    <section id="impact" className="bg-[#123B2A] text-white py-20 lg:py-24 relative overflow-hidden border-y border-[#1F5A3D]">
+    <section
+      id="impact"
+      className="bg-[#123B2A] text-white py-20 lg:py-24 relative overflow-hidden border-y border-[#1F5A3D]"
+    >
       {/* Background Subtle Jharkhand Map Silhouette, Routes & Topographic Lines */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
-      >
-        <svg viewBox="0 0 1000 400" className="w-full h-full stroke-white fill-none" strokeWidth="0.8">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.08]">
+        <svg
+          viewBox="0 0 1000 400"
+          className="w-full h-full stroke-white fill-none"
+          strokeWidth="0.8"
+        >
           {/* Subtle Jharkhand rough geographic polygon contour */}
           <path
             d="M 120,80 L 280,60 L 480,90 L 680,50 L 820,110 L 920,220 L 840,320 L 620,360 L 380,340 L 220,370 L 110,260 Z"
@@ -44,7 +48,8 @@ export function DarkImpactSection() {
             </h2>
 
             <p className="text-[16px] text-white/80 max-w-md leading-relaxed">
-              From local communities to institutions and innovators, JharSankalp creates a transparent path from identifying a problem to delivering measurable impact.
+              From local communities to institutions and innovators, JharSankalp creates a
+              transparent path from identifying a problem to delivering measurable impact.
             </p>
 
             <div className="pt-2">
@@ -113,4 +118,3 @@ export function DarkImpactSection() {
     </section>
   );
 }
-

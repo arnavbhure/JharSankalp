@@ -44,7 +44,8 @@ export function ProjectParticipationCTA() {
             A project needs more than a good idea.
           </h2>
           <p className="text-[16px] sm:text-[17.5px] text-[#6B5845] leading-relaxed">
-            It needs people who understand the problem, institutions willing to support the work and partners capable of bringing solutions into the real world.
+            It needs people who understand the problem, institutions willing to support the work and
+            partners capable of bringing solutions into the real world.
           </p>
         </div>
 
@@ -66,9 +67,7 @@ export function ProjectParticipationCTA() {
                     {rc.role}
                   </h3>
 
-                  <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                    {rc.subtext}
-                  </p>
+                  <p className="text-[13px] text-[#6B5845] leading-relaxed">{rc.subtext}</p>
                 </div>
 
                 <button
@@ -91,9 +90,7 @@ export function ProjectParticipationCTA() {
               <span className="text-[11px] font-mono text-[#FA7E61] uppercase font-bold">
                 PARTNER ONBOARDING PIPELINE
               </span>
-              <div className="text-[14px] font-bold">
-                Connecting as: {selectedRole}
-              </div>
+              <div className="text-[14px] font-bold">Connecting as: {selectedRole}</div>
             </div>
 
             <div className="flex items-center gap-3">

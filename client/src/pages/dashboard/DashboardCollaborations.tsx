@@ -1,12 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Users,
-  Check,
-  X,
-  UserPlus,
-  ArrowRight,
-} from 'lucide-react';
+import { Users, Check, X, UserPlus, ArrowRight } from 'lucide-react';
 
 interface CollaborationRequest {
   id: string;
@@ -26,7 +20,8 @@ const INITIAL_REQUESTS: CollaborationRequest[] = [
     senderRole: 'Head of Embedded Systems Lab',
     organization: 'BIT Mesra',
     category: 'University',
-    projectContext: 'Wants to collaborate on acoustic sensor algorithm validation for Murhu water pilot',
+    projectContext:
+      'Wants to collaborate on acoustic sensor algorithm validation for Murhu water pilot',
     date: 'Yesterday',
     status: 'PENDING',
   },
@@ -36,7 +31,8 @@ const INITIAL_REQUESTS: CollaborationRequest[] = [
     senderRole: 'Assistant District Program Officer',
     organization: 'Khunti District Collectorate',
     category: 'Government',
-    projectContext: 'Requesting permission to add 5 new Gram Panchayat water points to sensor telemetry',
+    projectContext:
+      'Requesting permission to add 5 new Gram Panchayat water points to sensor telemetry',
     date: '3 days ago',
     status: 'PENDING',
   },
@@ -78,9 +74,7 @@ export function DashboardCollaborations() {
   const [requests, setRequests] = useState<CollaborationRequest[]>(INITIAL_REQUESTS);
 
   const handleAction = (id: string, newStatus: 'ACCEPTED' | 'DECLINED') => {
-    setRequests((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
-    );
+    setRequests((prev) => prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r)));
   };
 
   return (
@@ -135,9 +129,7 @@ export function DashboardCollaborations() {
                 <div className="font-bold text-[#1D2522]">
                   {req.senderName} ({req.senderRole} · {req.organization})
                 </div>
-                <p className="text-[12.5px] text-[#6B5845]">
-                  {req.projectContext}
-                </p>
+                <p className="text-[12.5px] text-[#6B5845]">{req.projectContext}</p>
               </div>
 
               {/* Action Buttons */}
@@ -195,9 +187,7 @@ export function DashboardCollaborations() {
                 <span className="text-[10.5px] font-mono uppercase font-bold text-[#123B2A] bg-white px-2 py-0.5 rounded border border-[#EEEAE1]">
                   {partner.type}
                 </span>
-                <span className="text-[11px] font-mono text-[#15803D] font-bold">
-                  ● Active
-                </span>
+                <span className="text-[11px] font-mono text-[#15803D] font-bold">● Active</span>
               </div>
 
               <div>

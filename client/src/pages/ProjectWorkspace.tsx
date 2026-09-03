@@ -30,9 +30,7 @@ export function ProjectWorkspace() {
   const navigate = useNavigate();
 
   const currentTab: WorkspaceTabId =
-    tab && VALID_TABS.includes(tab as WorkspaceTabId)
-      ? (tab as WorkspaceTabId)
-      : 'overview';
+    tab && VALID_TABS.includes(tab as WorkspaceTabId) ? (tab as WorkspaceTabId) : 'overview';
 
   const [activeTab, setActiveTab] = useState<WorkspaceTabId>(currentTab);
   const [data, setData] = useState<WorkspaceData | null>(null);
@@ -82,9 +80,7 @@ export function ProjectWorkspace() {
   if (!data) {
     return (
       <div className="min-h-screen bg-[#F8F6F1] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <h2 className="text-[1.8rem] font-bold text-[#1D2522]">
-          Workspace Not Available
-        </h2>
+        <h2 className="text-[1.8rem] font-bold text-[#1D2522]">Workspace Not Available</h2>
         <p className="text-[#6B5845]">
           Could not locate operational data for project ID {projectId}.
         </p>
@@ -99,12 +95,10 @@ export function ProjectWorkspace() {
   }
 
   const reviewDeliverablesCount = data.deliverables.filter(
-    (d) => d.status === 'UNDER_REVIEW'
+    (d) => d.status === 'UNDER_REVIEW',
   ).length;
 
-  const openIssuesCount = data.updates.filter(
-    (u) => u.type === 'issue' && !u.resolved
-  ).length;
+  const openIssuesCount = data.updates.filter((u) => u.type === 'issue' && !u.resolved).length;
 
   return (
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
@@ -124,39 +118,24 @@ export function ProjectWorkspace() {
         {/* Workspace Main Active View */}
         <main className="flex-1 p-4 sm:p-6 lg:p-10 max-w-6xl w-full min-w-0">
           {activeTab === 'overview' && (
-            <WorkspaceOverviewTab
-              data={data}
-              onNavigateTab={handleTabChange}
-            />
+            <WorkspaceOverviewTab data={data} onNavigateTab={handleTabChange} />
           )}
 
-          {activeTab === 'roadmap' && (
-            <RoadmapTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'roadmap' && <RoadmapTab data={data} onRefresh={loadWorkspace} />}
 
-          {activeTab === 'work' && (
-            <WorkManagementTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'work' && <WorkManagementTab data={data} onRefresh={loadWorkspace} />}
 
-          {activeTab === 'team' && (
-            <TeamManagementTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'team' && <TeamManagementTab data={data} onRefresh={loadWorkspace} />}
 
           {activeTab === 'deliverables' && (
             <DeliverablesTab data={data} onRefresh={loadWorkspace} />
           )}
 
-          {activeTab === 'documents' && (
-            <DocumentsTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'documents' && <DocumentsTab data={data} onRefresh={loadWorkspace} />}
 
-          {activeTab === 'updates' && (
-            <ProjectUpdatesTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'updates' && <ProjectUpdatesTab data={data} onRefresh={loadWorkspace} />}
 
-          {activeTab === 'impact' && (
-            <ImpactWorkspaceTab data={data} onRefresh={loadWorkspace} />
-          )}
+          {activeTab === 'impact' && <ImpactWorkspaceTab data={data} onRefresh={loadWorkspace} />}
         </main>
       </div>
 

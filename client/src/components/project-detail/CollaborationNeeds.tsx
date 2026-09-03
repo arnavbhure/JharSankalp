@@ -36,7 +36,8 @@ export function CollaborationNeeds({ project }: CollaborationNeedsProps) {
             Where this project needs support
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Active calls for academic specialists, industrial fabrication hubs, and district testing partners.
+            Active calls for academic specialists, industrial fabrication hubs, and district testing
+            partners.
           </p>
         </div>
 
@@ -59,9 +60,7 @@ export function CollaborationNeeds({ project }: CollaborationNeedsProps) {
                     </span>
                   </div>
 
-                  <h4 className="text-[15px] font-bold text-[#1D2522]">
-                    {cn.type}
-                  </h4>
+                  <h4 className="text-[15px] font-bold text-[#1D2522]">{cn.type}</h4>
 
                   <p className="text-[13px] text-[#6B5845] leading-relaxed max-w-2xl">
                     {cn.description ||
@@ -83,7 +82,8 @@ export function CollaborationNeeds({ project }: CollaborationNeedsProps) {
             ))
           ) : (
             <div className="p-8 rounded-2xl border border-[#EEEAE1] bg-[#FAF9F5] text-center text-[13px] text-[#6B5845]">
-              No public partner vacancies currently open. You can still reach out to the lead institution directly.
+              No public partner vacancies currently open. You can still reach out to the lead
+              institution directly.
             </div>
           )}
         </div>

@@ -40,7 +40,7 @@ export const SEED_CHALLENGES: SelectedChallenge[] = [
 
 export async function searchChallenges(
   query: string,
-  filters?: { domain?: string; district?: string; priority?: string }
+  filters?: { domain?: string; district?: string; priority?: string },
 ): Promise<SelectedChallenge[]> {
   try {
     const rawChallenges = await fetchChallenges({
@@ -58,13 +58,13 @@ export async function searchChallenges(
         c.impactLevel === 'Critical'
           ? 'Critical'
           : c.impactLevel === 'High Impact'
-          ? 'High'
-          : 'Medium',
+            ? 'High'
+            : 'Medium',
       affectedPopulation:
         c.metrics?.find(
           (m) =>
             m.label.toLowerCase().includes('population') ||
-            m.label.toLowerCase().includes('affected')
+            m.label.toLowerCase().includes('affected'),
         )?.value || '2,000+ Residents',
     }));
 
@@ -80,14 +80,12 @@ export async function searchChallenges(
           c.category.toLowerCase().includes(q) ||
           c.district.toLowerCase().includes(q) ||
           (c.block && c.block.toLowerCase().includes(q)) ||
-          c.id.toLowerCase().includes(q)
+          c.id.toLowerCase().includes(q),
       );
     }
 
     if (filters?.priority && filters.priority !== 'All Priorities') {
-      results = results.filter(
-        (c) => c.priority.toLowerCase() === filters.priority!.toLowerCase()
-      );
+      results = results.filter((c) => c.priority.toLowerCase() === filters.priority!.toLowerCase());
     }
 
     return results;
@@ -123,13 +121,11 @@ export function clearDraft(): void {
   }
 }
 
-export async function submitIdea(
-  data: IdeaSubmissionFormData
-): Promise<IdeaSubmissionResult> {
+export async function submitIdea(data: IdeaSubmissionFormData): Promise<IdeaSubmissionResult> {
   await new Promise((resolve) => setTimeout(resolve, 600));
 
   const referenceId = `JS-IDEA-${new Date().getFullYear()}-${String(
-    Math.floor(1000 + Math.random() * 9000)
+    Math.floor(1000 + Math.random() * 9000),
   )}`;
 
   const result: IdeaSubmissionResult = {
@@ -142,9 +138,7 @@ export async function submitIdea(
 
   try {
     const existingRaw = localStorage.getItem(SUBMITTED_STORAGE_KEY);
-    const existingList: IdeaSubmissionResult[] = existingRaw
-      ? JSON.parse(existingRaw)
-      : [];
+    const existingList: IdeaSubmissionResult[] = existingRaw ? JSON.parse(existingRaw) : [];
     existingList.unshift(result);
     localStorage.setItem(SUBMITTED_STORAGE_KEY, JSON.stringify(existingList));
   } catch (err) {

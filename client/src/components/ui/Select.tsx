@@ -17,12 +17,13 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="space-y-1 w-full text-left">
         {label && (
-          <label
-            htmlFor={selectId}
-            className="block text-small font-medium text-neutral-800"
-          >
+          <label htmlFor={selectId} className="block text-small font-medium text-neutral-800">
             {label}
-            {isRequired && <span className="text-status-danger ml-1" aria-hidden="true">*</span>}
+            {isRequired && (
+              <span className="text-status-danger ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
           </label>
         )}
         <div className="relative">
@@ -54,7 +55,11 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           </div>
         </div>
         {error && (
-          <p id={`${selectId}-error`} className="text-caption font-medium text-status-danger" role="alert">
+          <p
+            id={`${selectId}-error`}
+            className="text-caption font-medium text-status-danger"
+            role="alert"
+          >
             {error}
           </p>
         )}

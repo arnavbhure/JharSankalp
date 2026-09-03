@@ -13,7 +13,9 @@ export function RecommendedChallengesSection({ challenges }: RecommendedChalleng
 
   const handleExpressInterest = (challenge: RecommendedChallenge) => {
     setExpressedIds((prev) => [...prev, challenge.id]);
-    setFeedback(`Interest registered! University Innovation Cell dispatched preliminary response for ${challenge.challengeCode}.`);
+    setFeedback(
+      `Interest registered! University Innovation Cell dispatched preliminary response for ${challenge.challengeCode}.`,
+    );
     setTimeout(() => setFeedback(null), 3500);
   };
 
@@ -42,7 +44,8 @@ export function RecommendedChallengesSection({ challenges }: RecommendedChalleng
             Challenges Matching Your Capabilities
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Community-submitted problems automatically routed to your institution based on laboratory equipment, faculty patents, and student engineering strengths.
+            Community-submitted problems automatically routed to your institution based on
+            laboratory equipment, faculty patents, and student engineering strengths.
           </p>
         </div>
 
@@ -75,9 +78,11 @@ export function RecommendedChallengesSection({ challenges }: RecommendedChalleng
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className={`text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border ${getPriorityBadge(
-                    item.priority
-                  )}`}>
+                  <span
+                    className={`text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border ${getPriorityBadge(
+                      item.priority,
+                    )}`}
+                  >
                     ● {item.priority}
                   </span>
 

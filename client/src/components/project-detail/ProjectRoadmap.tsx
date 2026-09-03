@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { ProjectDetail, ProjectMilestone } from '../../types/projectDetail';
-import { Calendar, CheckCircle2, Radio, Clock, ChevronDown, ChevronUp, FileText, User } from 'lucide-react';
+import {
+  Calendar,
+  CheckCircle2,
+  Radio,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  User,
+} from 'lucide-react';
 
 interface ProjectRoadmapProps {
   project: ProjectDetail;
@@ -67,7 +76,9 @@ export function ProjectRoadmap({ project }: ProjectRoadmapProps) {
           <div className="space-y-1.5 sm:text-right shrink-0">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF9F5] border border-[#EEEAE1] text-[12.5px] font-mono font-bold text-[#1D2522]">
               <span className="h-2 w-2 rounded-full bg-[#15803D]" />
-              <span>{completedCount} of {totalCount} milestones completed</span>
+              <span>
+                {completedCount} of {totalCount} milestones completed
+              </span>
             </div>
             <div className="h-1.5 w-44 bg-[#EEEAE1] rounded-full overflow-hidden ml-auto">
               <div
@@ -138,9 +149,7 @@ export function ProjectRoadmap({ project }: ProjectRoadmapProps) {
                 {/* Expanded Details Panel */}
                 {isExpanded && (
                   <div className="px-5 pb-5 pt-1 border-t border-[#EEEAE1]/80 space-y-3 text-[13px] text-[#6B5845] bg-[#FAF9F5]/40 animate-in fade-in duration-150">
-                    <p className="leading-relaxed text-[#1D2522]">
-                      {ms.description}
-                    </p>
+                    <p className="leading-relaxed text-[#1D2522]">{ms.description}</p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                       <div className="space-y-1">
@@ -160,9 +169,7 @@ export function ProjectRoadmap({ project }: ProjectRoadmapProps) {
                           <User className="h-3 w-3" />
                           Responsible Owner:
                         </span>
-                        <div className="text-[12px] font-semibold text-[#1D2522]">
-                          {ms.owner}
-                        </div>
+                        <div className="text-[12px] font-semibold text-[#1D2522]">{ms.owner}</div>
                       </div>
                     </div>
                   </div>

@@ -19,7 +19,8 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
             Societal Domain Intelligence
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Distribution of citizen problem statements, priority concentrations, and university R&D focus across Jharkhand.
+            Distribution of citizen problem statements, priority concentrations, and university R&D
+            focus across Jharkhand.
           </p>
         </div>
 
@@ -42,7 +43,8 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
             Highest Volume of Reported Challenges →
           </div>
           <p className="text-[12px] text-[#6B5845] leading-snug">
-            Represents 27.4% of total state intake; widespread handpump mechanical failure in rural tribal blocks.
+            Represents 27.4% of total state intake; widespread handpump mechanical failure in rural
+            tribal blocks.
           </p>
         </Link>
 
@@ -58,7 +60,8 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
             Highest Priority Concentration →
           </div>
           <p className="text-[12px] text-[#6B5845] leading-snug">
-            78% of challenges classified as Critical/Life-Safety risk; strata subsidence and legacy fires in Dhanbad.
+            78% of challenges classified as Critical/Life-Safety risk; strata subsidence and legacy
+            fires in Dhanbad.
           </p>
         </Link>
 
@@ -74,7 +77,8 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
             Highest University Participation →
           </div>
           <p className="text-[12px] text-[#6B5845] leading-snug">
-            4 research institutions engaged; active soil acidity testing and solar cold storage interventions.
+            4 research institutions engaged; active soil acidity testing and solar cold storage
+            interventions.
           </p>
         </Link>
       </div>
@@ -101,9 +105,7 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
                   <strong className="text-[#1D2522] group-hover:text-[#4C1E4F] font-bold font-sans transition-colors">
                     {item.domain}
                   </strong>
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    ({item.percentage}%)
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">({item.percentage}%)</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-[11.5px] font-mono">
@@ -115,9 +117,7 @@ export function DomainIntelligencePanel({ analytics }: DomainIntelligencePanelPr
                     {item.activeProjectsCount} Active Projects
                   </span>
                   <span>·</span>
-                  <span className="text-[#6B5845]">
-                    {item.priorityConcentration}
-                  </span>
+                  <span className="text-[#6B5845]">{item.priorityConcentration}</span>
                 </div>
               </div>
 

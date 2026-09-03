@@ -18,9 +18,7 @@ export function IdeaContextSidebar({ idea, onContributeClick }: IdeaContextSideb
           <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
             IDEA WORKSPACE DOSSIER
           </span>
-          <span className="text-[10.5px] font-mono text-[#6B5845]">
-            {idea.referenceId}
-          </span>
+          <span className="text-[10.5px] font-mono text-[#6B5845]">{idea.referenceId}</span>
         </div>
 
         {/* 4 Metadata Points */}
@@ -31,9 +29,7 @@ export function IdeaContextSidebar({ idea, onContributeClick }: IdeaContextSideb
               <GitBranch className="h-3.5 w-3.5 text-[#123B2A]" />
               IDEA STAGE:
             </span>
-            <span className="font-bold text-[#15803D] text-right">
-              {idea.stageLabel}
-            </span>
+            <span className="font-bold text-[#15803D] text-right">{idea.stageLabel}</span>
           </div>
 
           {/* Contributors */}
@@ -92,7 +88,8 @@ export function IdeaContextSidebar({ idea, onContributeClick }: IdeaContextSideb
       <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex items-start gap-2.5 text-[12px] text-[#6B5845] leading-relaxed">
         <ShieldCheck className="h-4 w-4 text-[#123B2A] shrink-0 mt-0.5" />
         <span>
-          JharSankalp peer-reviews technical proposals with university faculty and district Jal Samitis before live field deployment.
+          JharSankalp peer-reviews technical proposals with university faculty and district Jal
+          Samitis before live field deployment.
         </span>
       </div>
     </div>

@@ -5,7 +5,7 @@ const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 
 
 if (!supabaseUrl || !supabasePublishableKey) {
   console.warn(
-    'JharSankalp: Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY. Please verify client environment configuration.'
+    'JharSankalp: Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY. Please verify client environment configuration.',
   );
 }
 
@@ -20,4 +20,4 @@ export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
   },
 });
 
-export const EVIDENCE_BUCKET = import.meta.env.VITE_EVIDENCE_BUCKET;
+export const EVIDENCE_BUCKET = import.meta.env.VITE_EVIDENCE_BUCKET || 'challenge-evidence';

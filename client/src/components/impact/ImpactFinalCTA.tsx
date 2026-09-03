@@ -16,7 +16,8 @@ export function ImpactFinalCTA() {
         </h2>
 
         <p className="text-[15px] sm:text-[16.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Submit a challenge, contribute an idea, collaborate on a solution, or help bring innovation to the communities that need it.
+          Submit a challenge, contribute an idea, collaborate on a solution, or help bring
+          innovation to the communities that need it.
         </p>
 
         <div className="flex items-center gap-3.5 flex-wrap pt-2">

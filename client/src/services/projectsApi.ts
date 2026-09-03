@@ -8,11 +8,7 @@ import {
   ProjectStatus,
 } from '../types/projects';
 import { ProjectDetail, ExpressInterestFormData } from '../types/projectDetail';
-import {
-  SEEDED_PROJECTS,
-  PORTFOLIO_METRICS,
-  PROJECT_ACTIVITIES,
-} from '../data/projectsData';
+import { SEEDED_PROJECTS, PORTFOLIO_METRICS, PROJECT_ACTIVITIES } from '../data/projectsData';
 import { buildProjectDetail } from '../data/projectDetailsData';
 import { api } from './api';
 
@@ -31,7 +27,11 @@ export const PORTFOLIO_STATS: PortfolioStats = {
 export async function getProjects(filters?: Partial<ProjectFiltersState>): Promise<Project[]> {
   try {
     const params = new URLSearchParams();
-    if (filters?.domain && filters.domain !== 'All Domains' && filters.domain !== 'All Focus Areas') {
+    if (
+      filters?.domain &&
+      filters.domain !== 'All Domains' &&
+      filters.domain !== 'All Focus Areas'
+    ) {
       params.set('domain', filters.domain);
     }
     if (filters?.district && filters.district !== 'All Districts') {
@@ -51,12 +51,15 @@ export async function getProjects(filters?: Partial<ProjectFiltersState>): Promi
       return dbProjects.map((p) => {
         const canonical =
           SEEDED_PROJECTS.find(
-            (cp) => cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() || cp.id === p.id
+            (cp) =>
+              cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() ||
+              cp.id === p.id,
           ) || SEEDED_PROJECTS[0];
 
         const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
         const completedMilestones =
-          p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ?? canonical.milestoneProgress.completed;
+          p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ??
+          canonical.milestoneProgress.completed;
         const firstMetric = p.impactMetrics?.[0];
 
         return {
@@ -73,12 +76,16 @@ export async function getProjects(filters?: Partial<ProjectFiltersState>): Promi
           block: p.block || canonical.block,
           beneficiaries: p.affectedPopulation || canonical.beneficiaries,
           potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
-          impactMetric: firstMetric ? `${firstMetric.currentValue} ${firstMetric.unit}` : canonical.impactMetric,
+          impactMetric: firstMetric
+            ? `${firstMetric.currentValue} ${firstMetric.unit}`
+            : canonical.impactMetric,
           milestoneProgress: {
             completed: completedMilestones,
             total: totalMilestones,
           },
-          progressPercentage: Math.round((completedMilestones / Math.max(totalMilestones, 1)) * 100),
+          progressPercentage: Math.round(
+            (completedMilestones / Math.max(totalMilestones, 1)) * 100,
+          ),
         };
       });
     }
@@ -101,22 +108,18 @@ export async function getProjects(filters?: Partial<ProjectFiltersState>): Promi
         p.domain.toLowerCase().includes(q) ||
         p.district.toLowerCase().includes(q) ||
         (p.block && p.block.toLowerCase().includes(q)) ||
-        p.leadInstitution.toLowerCase().includes(q)
+        p.leadInstitution.toLowerCase().includes(q),
     );
   }
 
   // Domain filter
   if (filters.domain && filters.domain !== 'All Domains' && filters.domain !== 'All Focus Areas') {
-    results = results.filter(
-      (p) => p.domain.toLowerCase() === filters.domain!.toLowerCase()
-    );
+    results = results.filter((p) => p.domain.toLowerCase() === filters.domain!.toLowerCase());
   }
 
   // District filter
   if (filters.district && filters.district !== 'All Districts') {
-    results = results.filter(
-      (p) => p.district.toLowerCase() === filters.district!.toLowerCase()
-    );
+    results = results.filter((p) => p.district.toLowerCase() === filters.district!.toLowerCase());
   }
 
   // Stage filter
@@ -130,8 +133,8 @@ export async function getProjects(filters?: Partial<ProjectFiltersState>): Promi
       (p) =>
         p.leadInstitution.toLowerCase().includes(filters.institution!.toLowerCase()) ||
         p.partners.some((partner) =>
-          partner.name.toLowerCase().includes(filters.institution!.toLowerCase())
-        )
+          partner.name.toLowerCase().includes(filters.institution!.toLowerCase()),
+        ),
     );
   }
 
@@ -150,12 +153,15 @@ export async function getProjectById(id: string): Promise<Project | null> {
     if (p) {
       const canonical =
         SEEDED_PROJECTS.find(
-          (cp) => cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() || cp.id === p.id
+          (cp) =>
+            cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() ||
+            cp.id === p.id,
         ) || SEEDED_PROJECTS[0];
 
       const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
       const completedMilestones =
-        p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ?? canonical.milestoneProgress.completed;
+        p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ??
+        canonical.milestoneProgress.completed;
       const firstMetric = p.impactMetrics?.[0];
 
       return {
@@ -172,7 +178,9 @@ export async function getProjectById(id: string): Promise<Project | null> {
         block: p.block || canonical.block,
         beneficiaries: p.affectedPopulation || canonical.beneficiaries,
         potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
-        impactMetric: firstMetric ? `${firstMetric.currentValue} ${firstMetric.unit}` : canonical.impactMetric,
+        impactMetric: firstMetric
+          ? `${firstMetric.currentValue} ${firstMetric.unit}`
+          : canonical.impactMetric,
         milestoneProgress: {
           completed: completedMilestones,
           total: totalMilestones,
@@ -185,7 +193,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
   }
 
   const found = SEEDED_PROJECTS.find(
-    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId
+    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId,
   );
   return found || null;
 }
@@ -244,7 +252,9 @@ export async function getPortfolioActivity(): Promise<any[]> {
   }));
 }
 
-export async function getCollaborationOpportunities(): Promise<Array<{ project: Project; need: string }>> {
+export async function getCollaborationOpportunities(): Promise<
+  Array<{ project: Project; need: string }>
+> {
   await new Promise((resolve) => setTimeout(resolve, 40));
   return [
     {
@@ -305,7 +315,7 @@ export async function getProjectDetail(id: string): Promise<ProjectDetail | null
 
 export async function expressInterest(
   projectId: string,
-  _formData: ExpressInterestFormData
+  _formData: ExpressInterestFormData,
 ): Promise<{ success: boolean; referenceNumber: string }> {
   await new Promise((resolve) => setTimeout(resolve, 250));
   return {

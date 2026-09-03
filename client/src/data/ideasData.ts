@@ -30,10 +30,34 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Gram Panchayat SMS dispatch alert when flow stops for >4 hours',
     ],
     contributors: [
-      { id: 'c1', name: 'Dr. Anand Verma', role: 'Telemetry Lead', avatarInitials: 'AV', institution: 'BIT Mesra' },
-      { id: 'c2', name: 'Priya Soren', role: 'Embedded Systems', avatarInitials: 'PS', institution: 'IIT ISM Dhanbad' },
-      { id: 'c3', name: 'Rahul Murmu', role: 'Field Lead', avatarInitials: 'RM', institution: 'Khunti Jal Samiti' },
-      { id: 'c4', name: 'Sunita Das', role: 'Hardware Testing', avatarInitials: 'SD', institution: 'Ranchi Makerspace' },
+      {
+        id: 'c1',
+        name: 'Dr. Anand Verma',
+        role: 'Telemetry Lead',
+        avatarInitials: 'AV',
+        institution: 'BIT Mesra',
+      },
+      {
+        id: 'c2',
+        name: 'Priya Soren',
+        role: 'Embedded Systems',
+        avatarInitials: 'PS',
+        institution: 'IIT ISM Dhanbad',
+      },
+      {
+        id: 'c3',
+        name: 'Rahul Murmu',
+        role: 'Field Lead',
+        avatarInitials: 'RM',
+        institution: 'Khunti Jal Samiti',
+      },
+      {
+        id: 'c4',
+        name: 'Sunita Das',
+        role: 'Hardware Testing',
+        avatarInitials: 'SD',
+        institution: 'Ranchi Makerspace',
+      },
       { id: 'c5', name: 'Amit Roy', role: 'Firmware Dev', avatarInitials: 'AR' },
       { id: 'c6', name: 'Vikas Kumar', role: 'Panchayat Coordinator', avatarInitials: 'VK' },
     ],
@@ -42,13 +66,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n1',
         roleCategory: 'Engineering',
         label: 'IoT Hardware Development',
-        description: 'Need engineers experienced with low-power LoRa firmware and solar harvesting circuits.',
+        description:
+          'Need engineers experienced with low-power LoRa firmware and solar harvesting circuits.',
       },
       {
         id: 'n2',
         roleCategory: 'Field Testing',
         label: 'Village Handpump Pilots',
-        description: 'Looking for local volunteers to install and monitor vibration collars on 10 handpumps.',
+        description:
+          'Looking for local volunteers to install and monitor vibration collars on 10 handpumps.',
       },
     ],
   },
@@ -72,8 +98,20 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Constructed with local brick and double-wall husk insulation for low thermal conductivity',
     ],
     contributors: [
-      { id: 'c7', name: 'Prof. Ramesh Tirkey', role: 'Thermal Researcher', avatarInitials: 'RT', institution: 'Birsa Agricultural University' },
-      { id: 'c8', name: 'Kavita Singh', role: 'Solar Architect', avatarInitials: 'KS', institution: 'NIT Jamshedpur' },
+      {
+        id: 'c7',
+        name: 'Prof. Ramesh Tirkey',
+        role: 'Thermal Researcher',
+        avatarInitials: 'RT',
+        institution: 'Birsa Agricultural University',
+      },
+      {
+        id: 'c8',
+        name: 'Kavita Singh',
+        role: 'Solar Architect',
+        avatarInitials: 'KS',
+        institution: 'NIT Jamshedpur',
+      },
       { id: 'c9', name: 'Deepak Mahto', role: 'FPO Representative', avatarInitials: 'DM' },
       { id: 'c10', name: 'Neha Kumari', role: 'Agritech Intern', avatarInitials: 'NK' },
     ],
@@ -82,13 +120,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n3',
         roleCategory: 'Research',
         label: 'PCM Material Optimization',
-        description: 'Seeking chemical engineers to optimize paraffin and salt hydrate phase transitions.',
+        description:
+          'Seeking chemical engineers to optimize paraffin and salt hydrate phase transitions.',
       },
       {
         id: 'n4',
         roleCategory: 'Mentorship',
         label: 'Agricultural Supply Chains',
-        description: 'Advisory needed on mandi logistics integration and farmer cooperative business models.',
+        description:
+          'Advisory needed on mandi logistics integration and farmer cooperative business models.',
       },
     ],
   },
@@ -112,7 +152,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Multi-sensor spatial triangulation locating underground fracture epicenters within 15 meters',
     ],
     contributors: [
-      { id: 'c11', name: 'Dr. Sudhir Sen', role: 'Mining Geologist', avatarInitials: 'SS', institution: 'IIT (ISM) Dhanbad' },
+      {
+        id: 'c11',
+        name: 'Dr. Sudhir Sen',
+        role: 'Mining Geologist',
+        avatarInitials: 'SS',
+        institution: 'IIT (ISM) Dhanbad',
+      },
       { id: 'c12', name: 'Aarav Gupta', role: 'ML Engineer', avatarInitials: 'AG' },
       { id: 'c13', name: 'Rohit Kispotta', role: 'Seismic Telemetry', avatarInitials: 'RK' },
       { id: 'c14', name: 'Pooja Agarwal', role: 'GIS Specialist', avatarInitials: 'PA' },
@@ -126,13 +172,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n5',
         roleCategory: 'Research',
         label: 'Geospatial Data Analysis',
-        description: 'Need specialists in satellite InSAR interferometry and borehole sensor cross-validation.',
+        description:
+          'Need specialists in satellite InSAR interferometry and borehole sensor cross-validation.',
       },
       {
         id: 'n6',
         roleCategory: 'Mentorship',
         label: 'Mining Safety Expertise',
-        description: 'Seeking senior DGMS or CMPDI technical fellows to validate early-alert thresholds.',
+        description:
+          'Seeking senior DGMS or CMPDI technical fellows to validate early-alert thresholds.',
       },
     ],
   },
@@ -156,7 +204,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Dual-language gamified math exercises mapped directly to JCERT curriculum',
     ],
     contributors: [
-      { id: 'c19', name: 'Meera Munda', role: 'Curriculum Designer', avatarInitials: 'MM', institution: 'Kolhan University' },
+      {
+        id: 'c19',
+        name: 'Meera Munda',
+        role: 'Curriculum Designer',
+        avatarInitials: 'MM',
+        institution: 'Kolhan University',
+      },
       { id: 'c20', name: 'Rajeev Sinha', role: 'Hardware Lead', avatarInitials: 'RS' },
       { id: 'c21', name: 'Shweta Paul', role: 'UI/UX Educator', avatarInitials: 'SP' },
       { id: 'c22', name: 'Devendra Oraon', role: 'Language Specialist', avatarInitials: 'DO' },
@@ -167,13 +221,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n7',
         roleCategory: 'Funding',
         label: 'Batch Kit Hardware Sponsorship',
-        description: 'Looking for CSR partners to sponsor component kits for 25 high school pilot pods.',
+        description:
+          'Looking for CSR partners to sponsor component kits for 25 high school pilot pods.',
       },
       {
         id: 'n8',
         roleCategory: 'Design',
         label: 'Vernacular Audio Narration',
-        description: 'Need native speakers to record Ho and Mundari pronunciation guides for scientific terms.',
+        description:
+          'Need native speakers to record Ho and Mundari pronunciation guides for scientific terms.',
       },
     ],
   },
@@ -197,7 +253,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Real-time Bluetooth temperature logger alert sent to ANM smartphone',
     ],
     contributors: [
-      { id: 'c24', name: 'Dr. Smita Ekka', role: 'Public Health Lead', avatarInitials: 'SE', institution: 'RIMS Ranchi' },
+      {
+        id: 'c24',
+        name: 'Dr. Smita Ekka',
+        role: 'Public Health Lead',
+        avatarInitials: 'SE',
+        institution: 'RIMS Ranchi',
+      },
       { id: 'c25', name: 'Tariq Ansari', role: 'Industrial Designer', avatarInitials: 'TA' },
       { id: 'c26', name: 'Gautam Bose', role: 'Power Electronics', avatarInitials: 'GB' },
     ],
@@ -206,13 +268,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n9',
         roleCategory: 'Engineering',
         label: 'Thermal Insulator Prototyping',
-        description: 'Need engineers to model vacuum insulation panels for prolonged 45°C ambient heat waves.',
+        description:
+          'Need engineers to model vacuum insulation panels for prolonged 45°C ambient heat waves.',
       },
       {
         id: 'n10',
         roleCategory: 'Field Testing',
         label: 'District ANM Trials',
-        description: 'Seeking coordination with block medical officers for pilot test runs in remote sub-centers.',
+        description:
+          'Seeking coordination with block medical officers for pilot test runs in remote sub-centers.',
       },
     ],
   },
@@ -236,7 +300,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Local organic compost sold back to urban terrace gardens and peri-urban vegetable farms',
     ],
     contributors: [
-      { id: 'c27', name: 'Abhishek Roy', role: 'Project Lead', avatarInitials: 'AR', institution: 'Ranchi Municipal Ward Committee' },
+      {
+        id: 'c27',
+        name: 'Abhishek Roy',
+        role: 'Project Lead',
+        avatarInitials: 'AR',
+        institution: 'Ranchi Municipal Ward Committee',
+      },
       { id: 'c28', name: 'Pallavi Jha', role: 'Compost Agronomist', avatarInitials: 'PJ' },
       { id: 'c29', name: 'Ritesh Minz', role: 'App Dev', avatarInitials: 'RM' },
       { id: 'c30', name: 'Kiran Devi', role: 'Self Help Group Lead', avatarInitials: 'KD' },
@@ -249,7 +319,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n11',
         roleCategory: 'Field Testing',
         label: 'Municipal Logistics Scale-Up',
-        description: 'Looking for ward supervisors to test morning collection workflows in 3 additional municipal wards.',
+        description:
+          'Looking for ward supervisors to test morning collection workflows in 3 additional municipal wards.',
       },
     ],
   },
@@ -273,7 +344,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Reduces fluoride levels from 4.5 mg/L down to WHO compliant < 1.0 mg/L',
     ],
     contributors: [
-      { id: 'c34', name: 'Dr. Nilima Toppo', role: 'Materials Chemist', avatarInitials: 'NT', institution: 'Ranchi University' },
+      {
+        id: 'c34',
+        name: 'Dr. Nilima Toppo',
+        role: 'Materials Chemist',
+        avatarInitials: 'NT',
+        institution: 'Ranchi University',
+      },
       { id: 'c35', name: 'Birendra Kumbhakar', role: 'Master Potter', avatarInitials: 'BK' },
       { id: 'c36', name: 'Shyamal Ghosh', role: 'Water Quality Analyst', avatarInitials: 'SG' },
       { id: 'c37', name: 'Madhu Tirkey', role: 'Field Researcher', avatarInitials: 'MT' },
@@ -284,13 +361,15 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n12',
         roleCategory: 'Research',
         label: 'Spectrophotometric Testing',
-        description: 'Seeking certified environmental chemistry laboratory access for mass breakthrough curve analysis.',
+        description:
+          'Seeking certified environmental chemistry laboratory access for mass breakthrough curve analysis.',
       },
       {
         id: 'n13',
         roleCategory: 'Funding',
         label: 'Pilot Kiln Batch Capital',
-        description: 'Need grant support to sponsor pilot firing trials for 200 ceramic filter units.',
+        description:
+          'Need grant support to sponsor pilot firing trials for 200 ceramic filter units.',
       },
     ],
   },
@@ -314,7 +393,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Direct auction bidding bypassing commission intermediaries, increasing tribal incomes by 32%',
     ],
     contributors: [
-      { id: 'c39', name: 'Chandan Kumar', role: 'Spectroscopy Engineer', avatarInitials: 'CK', institution: 'ICAR-IINRG Namkum' },
+      {
+        id: 'c39',
+        name: 'Chandan Kumar',
+        role: 'Spectroscopy Engineer',
+        avatarInitials: 'CK',
+        institution: 'ICAR-IINRG Namkum',
+      },
       { id: 'c40', name: 'Roshan Kujur', role: 'Cooperative President', avatarInitials: 'RK' },
       { id: 'c41', name: 'Divya Sen', role: 'Blockchain Dev', avatarInitials: 'DS' },
       { id: 'c42', name: 'Manjula Hembrom', role: 'Field Organizer', avatarInitials: 'MH' },
@@ -324,7 +409,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n14',
         roleCategory: 'Engineering',
         label: 'Optical Calibration Optimization',
-        description: 'Need engineers to refine ambient light compensation filters for open-air haat bazaars.',
+        description:
+          'Need engineers to refine ambient light compensation filters for open-air haat bazaars.',
       },
     ],
   },
@@ -349,7 +435,12 @@ export const IDEAS_DATA: IdeaItem[] = [
     ],
     contributors: [
       { id: 'c43', name: 'Manoj Oraon', role: 'Hydraulic Tech', avatarInitials: 'MO' },
-      { id: 'c44', name: 'Dr. Vivek Swaminathan', role: 'Agricultural Engineer', avatarInitials: 'VS' },
+      {
+        id: 'c44',
+        name: 'Dr. Vivek Swaminathan',
+        role: 'Agricultural Engineer',
+        avatarInitials: 'VS',
+      },
       { id: 'c45', name: 'Saloni Tigga', role: 'Agronomy Lead', avatarInitials: 'ST' },
       { id: 'c46', name: 'Girish Chandra', role: 'Field Technician', avatarInitials: 'GC' },
       { id: 'c47', name: 'Preeti Soren', role: 'Farmer Liaison', avatarInitials: 'PS' },
@@ -359,7 +450,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n15',
         roleCategory: 'Field Testing',
         label: 'Hill Slope Elevation Pilots',
-        description: 'Looking for 3 farming families with > 15 degree slope terraced land in Gumla to test manifold valves.',
+        description:
+          'Looking for 3 farming families with > 15 degree slope terraced land in Gumla to test manifold valves.',
       },
     ],
   },
@@ -383,7 +475,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Night-time surface temperature gradient mapping pinpointing subterranean fire fronts',
     ],
     contributors: [
-      { id: 'c48', name: 'Dr. R. K. Mukherjee', role: 'Remote Sensing Scientist', avatarInitials: 'RM', institution: 'IIT (ISM) Dhanbad' },
+      {
+        id: 'c48',
+        name: 'Dr. R. K. Mukherjee',
+        role: 'Remote Sensing Scientist',
+        avatarInitials: 'RM',
+        institution: 'IIT (ISM) Dhanbad',
+      },
       { id: 'c49', name: 'Ananya Roy', role: 'Geospatial Analyst', avatarInitials: 'AR' },
       { id: 'c50', name: 'Satyendra Prasad', role: 'Railway Safety Advisor', avatarInitials: 'SP' },
       { id: 'c51', name: 'Nikhil Kashyap', role: 'Cloud Pipeline Dev', avatarInitials: 'NK' },
@@ -396,7 +494,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n16',
         roleCategory: 'Mentorship',
         label: 'Railway Geotechnical Standards',
-        description: 'Seeking experienced railway track safety advisors to benchmark emergency stop alert trigger tolerances.',
+        description:
+          'Seeking experienced railway track safety advisors to benchmark emergency stop alert trigger tolerances.',
       },
     ],
   },
@@ -432,7 +531,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n17',
         roleCategory: 'Funding',
         label: 'Field Unit Fabrication Batch',
-        description: 'Seeking corporate CSR or incubation grant to build 5 demonstration units for village cluster trials.',
+        description:
+          'Seeking corporate CSR or incubation grant to build 5 demonstration units for village cluster trials.',
       },
     ],
   },
@@ -456,7 +556,13 @@ export const IDEAS_DATA: IdeaItem[] = [
       'Voice-acted by local community healthcare workers for high cultural trust',
     ],
     contributors: [
-      { id: 'c61', name: 'Dr. Archana Kiro', role: 'Maternal Health Specialist', avatarInitials: 'AK', institution: 'Simdega Sadar Hospital' },
+      {
+        id: 'c61',
+        name: 'Dr. Archana Kiro',
+        role: 'Maternal Health Specialist',
+        avatarInitials: 'AK',
+        institution: 'Simdega Sadar Hospital',
+      },
       { id: 'c62', name: 'Varun Sen', role: 'Telecom IVR Dev', avatarInitials: 'VS' },
       { id: 'c63', name: 'Pramila Devi', role: 'ASHA Facilitator', avatarInitials: 'PD' },
       { id: 'c64', name: 'Sanjay Toppo', role: 'Linguistic Lead', avatarInitials: 'ST' },
@@ -466,7 +572,8 @@ export const IDEAS_DATA: IdeaItem[] = [
         id: 'n18',
         roleCategory: 'Research',
         label: 'Clinical Script Verification',
-        description: 'Need obstetricians to audit voice medical prompts against National Health Mission protocols.',
+        description:
+          'Need obstetricians to audit voice medical prompts against National Health Mission protocols.',
       },
     ],
   },

@@ -30,7 +30,8 @@ export function ResearchCapabilityProfile({ capabilities }: ResearchCapabilityPr
             Research & Engineering Capability Profile
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Domain areas registered with the state innovation clearinghouse to guide intelligent problem matching and grant allocations.
+            Domain areas registered with the state innovation clearinghouse to guide intelligent
+            problem matching and grant allocations.
           </p>
         </div>
 
@@ -54,25 +55,25 @@ export function ResearchCapabilityProfile({ capabilities }: ResearchCapabilityPr
 
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${getStrengthBadge(
-                    cap.strength
+                    cap.strength,
                   )}`}
                 >
                   ● {cap.strength} STRENGTH
                 </span>
               </div>
 
-              <h4 className="text-[15px] font-bold text-[#1D2522] leading-tight">
-                {cap.name}
-              </h4>
+              <h4 className="text-[15px] font-bold text-[#1D2522] leading-tight">{cap.name}</h4>
 
-              <p className="text-[12px] text-[#6B5845] leading-relaxed">
-                {cap.description}
-              </p>
+              <p className="text-[12px] text-[#6B5845] leading-relaxed">{cap.description}</p>
             </div>
 
             <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between text-[11px] font-mono text-[#6B5845]">
-              <span>Linked: <strong className="text-[#1D2522]">{cap.projectsLinked} Projects</strong></span>
-              <span>Faculty: <strong className="text-[#4C1E4F]">{cap.facultyCount} PIs</strong></span>
+              <span>
+                Linked: <strong className="text-[#1D2522]">{cap.projectsLinked} Projects</strong>
+              </span>
+              <span>
+                Faculty: <strong className="text-[#4C1E4F]">{cap.facultyCount} PIs</strong>
+              </span>
             </div>
           </div>
         ))}

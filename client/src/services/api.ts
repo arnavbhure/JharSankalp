@@ -10,10 +10,7 @@ interface FetchOptions extends RequestInit {
 /**
  * Typed API client with auth headers and error handling.
  */
-async function request<T>(
-  endpoint: string,
-  options: FetchOptions = {},
-): Promise<T> {
+async function request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
   const { skipAuth, ...fetchOptions } = options;
   const token = useAuthStore.getState().token;
 

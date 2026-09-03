@@ -109,13 +109,14 @@ export function FinalCTA() {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-[1.1rem] tracking-normal text-[#1D2522] font-sans">
-                unicef <span className="font-normal text-[11px] block -mt-1 text-[#6B5845]">for every child</span>
+                unicef{' '}
+                <span className="font-normal text-[11px] block -mt-1 text-[#6B5845]">
+                  for every child
+                </span>
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-[1rem] tracking-wide text-[#1D2522]">
-                BIT SINDRI
-              </span>
+              <span className="font-bold text-[1rem] tracking-wide text-[#1D2522]">BIT SINDRI</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-[1rem] tracking-wide text-[#1D2522]">
@@ -138,4 +139,3 @@ export function FinalCTA() {
     </section>
   );
 }
-

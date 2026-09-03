@@ -7,13 +7,17 @@ interface RecommendedOpportunitiesSectionProps {
   opportunities: RecommendedOpportunity[];
 }
 
-export function RecommendedOpportunitiesSection({ opportunities }: RecommendedOpportunitiesSectionProps) {
+export function RecommendedOpportunitiesSection({
+  opportunities,
+}: RecommendedOpportunitiesSectionProps) {
   const [expressedIds, setExpressedIds] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const handleExpressInterest = (opp: RecommendedOpportunity) => {
     setExpressedIds((prev) => [...prev, opp.id]);
-    setFeedback(`Collaboration inquiry dispatched to lead research institution for ${opp.projectCode}!`);
+    setFeedback(
+      `Collaboration inquiry dispatched to lead research institution for ${opp.projectCode}!`,
+    );
     setTimeout(() => setFeedback(null), 3500);
   };
 
@@ -30,7 +34,8 @@ export function RecommendedOpportunitiesSection({ opportunities }: RecommendedOp
             Where Your Expertise Can Make a Difference
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Vetted societal innovation projects seeking industrial co-engineering, precision fabrication tooling, and field deployment resources.
+            Vetted societal innovation projects seeking industrial co-engineering, precision
+            fabrication tooling, and field deployment resources.
           </p>
         </div>
 
@@ -67,9 +72,7 @@ export function RecommendedOpportunitiesSection({ opportunities }: RecommendedOp
                     ● {opp.stageLabel}
                   </span>
 
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {opp.projectCode}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{opp.projectCode}</span>
                 </div>
 
                 <div className="space-y-1">
@@ -93,9 +96,7 @@ export function RecommendedOpportunitiesSection({ opportunities }: RecommendedOp
                     <Briefcase className="h-3.5 w-3.5" />
                     <span>Project Need:</span>
                   </div>
-                  <div className="text-[13px] font-bold text-[#1D2522]">
-                    {opp.need}
-                  </div>
+                  <div className="text-[13px] font-bold text-[#1D2522]">{opp.need}</div>
                   <div className="text-[11.5px] text-[#6B5845]">
                     Required: {opp.requiredCapability}
                   </div>

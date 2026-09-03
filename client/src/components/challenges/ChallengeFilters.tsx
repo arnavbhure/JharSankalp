@@ -157,7 +157,9 @@ export function ChallengeFilters({
               }`}
             >
               <span>{selectedCategory}</span>
-              <ChevronDown className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'category' ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'category' ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {openDropdown === 'category' && (
@@ -194,7 +196,9 @@ export function ChallengeFilters({
               }`}
             >
               <span>{selectedDistrict}</span>
-              <ChevronDown className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'district' ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'district' ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {openDropdown === 'district' && (
@@ -231,7 +235,9 @@ export function ChallengeFilters({
               }`}
             >
               <span>{selectedStatus}</span>
-              <ChevronDown className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'status' ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'status' ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {openDropdown === 'status' && (
@@ -268,7 +274,9 @@ export function ChallengeFilters({
               }`}
             >
               <span>{selectedImpact}</span>
-              <ChevronDown className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'impact' ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-[#6B5845] transition-transform ${openDropdown === 'impact' ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {openDropdown === 'impact' && (

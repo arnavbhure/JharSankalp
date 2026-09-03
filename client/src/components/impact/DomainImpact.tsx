@@ -44,7 +44,8 @@ export function DomainImpact({ domains }: DomainImpactProps) {
           Where Innovation Is Making a Difference
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-xl leading-relaxed">
-          Cross-cutting societal domains delivering measurable outcomes across tribal and rural Jharkhand.
+          Cross-cutting societal domains delivering measurable outcomes across tribal and rural
+          Jharkhand.
         </p>
       </div>
 
@@ -67,12 +68,8 @@ export function DomainImpact({ domains }: DomainImpactProps) {
 
               {/* Title & Description */}
               <div className="space-y-1">
-                <h3 className="text-[1.2rem] font-bold text-[#1D2522]">
-                  {dom.name}
-                </h3>
-                <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                  {dom.description}
-                </p>
+                <h3 className="text-[1.2rem] font-bold text-[#1D2522]">{dom.name}</h3>
+                <p className="text-[13px] text-[#6B5845] leading-relaxed">{dom.description}</p>
               </div>
 
               {/* Highlight Metric Pill */}
@@ -80,9 +77,7 @@ export function DomainImpact({ domains }: DomainImpactProps) {
                 <span className="text-[10px] font-mono font-bold uppercase text-[#15803D] block">
                   MEASURED COMMUNITY PROGRESS:
                 </span>
-                <span className="font-bold text-[#1D2522] block">
-                  {dom.highlightMetric}
-                </span>
+                <span className="font-bold text-[#1D2522] block">{dom.highlightMetric}</span>
               </div>
             </div>
 

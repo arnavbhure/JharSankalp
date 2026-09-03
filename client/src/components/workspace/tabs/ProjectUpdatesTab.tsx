@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {
-  WorkspaceData,
-  UpdateType,
-} from '../../../types/workspace';
+import { WorkspaceData, UpdateType } from '../../../types/workspace';
 import { createUpdate, resolveIssue } from '../../../services/workspaceApi';
 import {
   MessageSquare,
@@ -102,7 +99,8 @@ export function ProjectUpdatesTab({ data, onRefresh }: ProjectUpdatesTabProps) {
           Project Updates & Field Dispatch
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Broadcast telemetry observations, governance decisions, and field obstacles directly to the project team.
+          Broadcast telemetry observations, governance decisions, and field obstacles directly to
+          the project team.
         </p>
       </div>
 
@@ -116,13 +114,7 @@ export function ProjectUpdatesTab({ data, onRefresh }: ProjectUpdatesTabProps) {
           {/* Type Selector Pills */}
           <div className="flex items-center gap-1.5 flex-wrap">
             {(
-              [
-                'field_observation',
-                'progress',
-                'decision',
-                'issue',
-                'announcement',
-              ] as UpdateType[]
+              ['field_observation', 'progress', 'decision', 'issue', 'announcement'] as UpdateType[]
             ).map((t) => (
               <button
                 key={t}
@@ -159,7 +151,8 @@ export function ProjectUpdatesTab({ data, onRefresh }: ProjectUpdatesTabProps) {
 
           <div className="flex items-center justify-between pt-1">
             <span className="text-[11px] font-mono text-[#6B5845]">
-              Posting as <strong className="text-[#1D2522]">{data.context.currentUserName}</strong> ({data.context.currentUserRole})
+              Posting as <strong className="text-[#1D2522]">{data.context.currentUserName}</strong>{' '}
+              ({data.context.currentUserRole})
             </span>
 
             <button
@@ -197,23 +190,18 @@ export function ProjectUpdatesTab({ data, onRefresh }: ProjectUpdatesTabProps) {
                     <span>{badge.label}</span>
                   </span>
                   <span className="text-[#EEEAE1]">·</span>
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {upd.createdAt}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{upd.createdAt}</span>
                 </div>
 
                 <div className="text-[11.5px] font-mono text-[#6B5845]">
-                  Posted by <strong className="text-[#1D2522]">{upd.authorName}</strong> ({upd.authorRole})
+                  Posted by <strong className="text-[#1D2522]">{upd.authorName}</strong> (
+                  {upd.authorRole})
                 </div>
               </div>
 
-              <h3 className="text-[15px] font-bold text-[#1D2522]">
-                {upd.title}
-              </h3>
+              <h3 className="text-[15px] font-bold text-[#1D2522]">{upd.title}</h3>
 
-              <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
-                {upd.content}
-              </p>
+              <p className="text-[13.5px] text-[#1D2522] leading-relaxed">{upd.content}</p>
 
               {/* Issue Resolution Action */}
               {upd.type === 'issue' && !upd.resolved && (

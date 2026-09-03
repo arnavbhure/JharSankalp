@@ -20,7 +20,8 @@ export function ProjectsList({ projects, onResetFilters }: ProjectsListProps) {
             Across Jharkhand
           </h3>
           <p className="text-[13.5px] text-[#6B5845]">
-            Projects currently moving from research and experimentation toward ground implementation.
+            Projects currently moving from research and experimentation toward ground
+            implementation.
           </p>
         </div>
 

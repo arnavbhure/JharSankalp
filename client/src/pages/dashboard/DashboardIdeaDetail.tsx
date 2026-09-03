@@ -1,13 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import {
-  ArrowLeft,
-  Clock,
-  Share2,
-  ExternalLink,
-  ChevronRight,
-  FileText,
-} from 'lucide-react';
+import { ArrowLeft, Clock, Share2, ExternalLink, ChevronRight, FileText } from 'lucide-react';
 import { useInnovationStore } from '../../stores/innovationStore';
 
 const RECOMMENDED_PARTNERS = [
@@ -57,9 +50,7 @@ export function DashboardIdeaDetail() {
     return (
       <div className="py-16 text-center space-y-4 rounded-3xl bg-white border border-[#EEEAE1] p-8">
         <FileText className="h-10 w-10 text-[#6B5845] mx-auto opacity-50" />
-        <h2 className="text-[1.2rem] font-bold text-[#1D2522]">
-          Idea Case File Not Found
-        </h2>
+        <h2 className="text-[1.2rem] font-bold text-[#1D2522]">Idea Case File Not Found</h2>
         <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
           The requested idea ID could not be loaded from your active innovation workspace session.
         </p>
@@ -138,9 +129,7 @@ export function DashboardIdeaDetail() {
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div className="space-y-1.5 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-mono text-[#6B5845]">
-                {idea.id}
-              </span>
+              <span className="text-[11px] font-mono text-[#6B5845]">{idea.id}</span>
               <span className="text-[10px] font-mono uppercase font-bold px-2.5 py-0.5 rounded border border-[#BBF7D0] bg-[#F0FDF4] text-[#15803D]">
                 ● {idea.status}
               </span>
@@ -175,9 +164,7 @@ export function DashboardIdeaDetail() {
           <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
             RESPONDING TO CIVIC CHALLENGE
           </span>
-          <p className="font-bold text-[#1D2522]">
-            {idea.challengeTitle}
-          </p>
+          <p className="font-bold text-[#1D2522]">{idea.challengeTitle}</p>
         </div>
       </div>
 
@@ -205,8 +192,8 @@ export function DashboardIdeaDetail() {
                   isCurrent
                     ? 'bg-[#123B2A] text-white shadow-xs'
                     : isCompleted
-                    ? 'bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D]'
-                    : 'bg-[#FAF9F5] border border-[#EEEAE1] text-[#6B5845]/70'
+                      ? 'bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D]'
+                      : 'bg-[#FAF9F5] border border-[#EEEAE1] text-[#6B5845]/70'
                 }`}
               >
                 <div
@@ -214,8 +201,8 @@ export function DashboardIdeaDetail() {
                     isCurrent
                       ? 'bg-[#F5A623] text-[#123B2A]'
                       : isCompleted
-                      ? 'bg-[#15803D] text-white'
-                      : 'bg-[#EEEAE1] text-[#6B5845]'
+                        ? 'bg-[#15803D] text-white'
+                        : 'bg-[#EEEAE1] text-[#6B5845]'
                   }`}
                 >
                   {isCompleted ? '✓' : stage.num}
@@ -243,9 +230,7 @@ export function DashboardIdeaDetail() {
                 <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
                   SUMMARY
                 </span>
-                <p className="text-[#1D2522] leading-relaxed">
-                  {idea.summary}
-                </p>
+                <p className="text-[#1D2522] leading-relaxed">{idea.summary}</p>
               </div>
 
               {idea.description && (
@@ -253,9 +238,7 @@ export function DashboardIdeaDetail() {
                   <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
                     HOW IT WORKS
                   </span>
-                  <p className="text-[#6B5845] leading-relaxed">
-                    {idea.description}
-                  </p>
+                  <p className="text-[#6B5845] leading-relaxed">{idea.description}</p>
                 </div>
               )}
 
@@ -284,9 +267,7 @@ export function DashboardIdeaDetail() {
                   <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
                     IMPLEMENTATION APPROACH & RESOURCES
                   </span>
-                  <p className="text-[#1D2522] leading-relaxed">
-                    {idea.approach}
-                  </p>
+                  <p className="text-[#1D2522] leading-relaxed">{idea.approach}</p>
                   {idea.resources && (
                     <p className="text-[#6B5845] text-[12px] font-mono">
                       Materials: {idea.resources}
@@ -321,16 +302,10 @@ export function DashboardIdeaDetail() {
                   </div>
                   <div className="space-y-0.5 flex-1">
                     <div className="flex items-center justify-between">
-                      <strong className="text-[#1D2522] font-sans">
-                        {item.title}
-                      </strong>
-                      <span className="text-[11px] font-mono text-[#6B5845]">
-                        {item.date}
-                      </span>
+                      <strong className="text-[#1D2522] font-sans">{item.title}</strong>
+                      <span className="text-[11px] font-mono text-[#6B5845]">{item.date}</span>
                     </div>
-                    <p className="text-[12px] text-[#6B5845]">
-                      {item.desc}
-                    </p>
+                    <p className="text-[12px] text-[#6B5845]">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -345,11 +320,10 @@ export function DashboardIdeaDetail() {
               <span className="text-[10.5px] font-mono uppercase tracking-wider text-[#123B2A] font-bold">
                 ECOSYSTEM MATCHING
               </span>
-              <h3 className="text-[1.2rem] font-bold text-[#1D2522]">
-                Recommended Partners
-              </h3>
+              <h3 className="text-[1.2rem] font-bold text-[#1D2522]">Recommended Partners</h3>
               <p className="text-[12px] text-[#6B5845]">
-                Institutions and research teams that can provide lab equipment, field access, or mentoring.
+                Institutions and research teams that can provide lab equipment, field access, or
+                mentoring.
               </p>
             </div>
 
@@ -372,9 +346,7 @@ export function DashboardIdeaDetail() {
                     {partner.name}
                   </strong>
 
-                  <p className="text-[12px] text-[#6B5845]">
-                    {partner.focus}
-                  </p>
+                  <p className="text-[12px] text-[#6B5845]">{partner.focus}</p>
 
                   <div className="pt-1.5 border-t border-[#EEEAE1] flex items-center justify-between text-[11px] font-mono">
                     <span className="text-[#6B5845]">POC: {partner.contact}</span>

@@ -3,7 +3,10 @@ import { BrandMark } from '../common/BrandMark';
 
 export function EcosystemDiagram() {
   return (
-    <section id="ecosystem" className="py-20 border-b border-[#EEEAE1] bg-[#F8F6F1] text-left relative">
+    <section
+      id="ecosystem"
+      className="py-20 border-b border-[#EEEAE1] bg-[#F8F6F1] text-left relative"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="border-b border-[#EEEAE1] pb-6 mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
@@ -17,7 +20,8 @@ export function EcosystemDiagram() {
             </h2>
           </div>
           <p className="max-w-md text-[14px] text-[#6B5845] leading-relaxed">
-            JharSankalp eliminates departmental silos by synchronizing citizen ground reality, state oversight, university research, and industrial scale.
+            JharSankalp eliminates departmental silos by synchronizing citizen ground reality, state
+            oversight, university research, and industrial scale.
           </p>
         </div>
 
@@ -39,8 +43,8 @@ export function EcosystemDiagram() {
                 Citizens & Gram Panchayats
               </h3>
               <p className="text-[13.5px] text-[#1D2522]/80 mt-2 leading-relaxed">
-                Observe infrastructural and societal bottlenecks on the ground. Submit geotagged photos,
-                voice notes, and community observations from all 24 districts of Jharkhand.
+                Observe infrastructural and societal bottlenecks on the ground. Submit geotagged
+                photos, voice notes, and community observations from all 24 districts of Jharkhand.
               </p>
             </div>
 
@@ -66,8 +70,10 @@ export function EcosystemDiagram() {
                 State Government & District Authorities
               </h3>
               <p className="text-[13.5px] text-white/85 mt-2 leading-relaxed">
-                Triage incoming challenges into three action tracks: <strong>Resolve</strong> (routine civic works), <strong>Research</strong> (academic R&D), or <strong>Innovate</strong> (consortium).
-                Issue funding grants and validate field pilot outcomes.
+                Triage incoming challenges into three action tracks: <strong>Resolve</strong>{' '}
+                (routine civic works), <strong>Research</strong> (academic R&D), or{' '}
+                <strong>Innovate</strong> (consortium). Issue funding grants and validate field
+                pilot outcomes.
               </p>
             </div>
 
@@ -89,7 +95,8 @@ export function EcosystemDiagram() {
                   JharSankalp Orchestration Engine
                 </h4>
                 <p className="text-[13px] text-[#6B5845] mt-1.5">
-                  Continuously harmonizing: Challenge Intake → AI Triage → Capability Graph → Impact Contract → Ground Pilot → Verified Policy
+                  Continuously harmonizing: Challenge Intake → AI Triage → Capability Graph → Impact
+                  Contract → Ground Pilot → Verified Policy
                 </p>
               </div>
             </div>
@@ -130,7 +137,8 @@ export function EcosystemDiagram() {
               </h3>
               <p className="text-[13.5px] text-white/90 mt-2 leading-relaxed">
                 BIT Sindri, BIT Mesra, BAU, and engineering colleges deploy faculty researchers,
-                student innovators, and specialized testing laboratories to develop functional hardware and software prototypes.
+                student innovators, and specialized testing laboratories to develop functional
+                hardware and software prototypes.
               </p>
             </div>
 
@@ -156,8 +164,8 @@ export function EcosystemDiagram() {
                 Industry, Startups & MSMEs
               </h3>
               <p className="text-[13.5px] text-[#1D2522]/80 mt-2 leading-relaxed">
-                Commit manufacturing tooling, IoT sensors, hardware testing rigs, and corporate CSR funding
-                to take laboratory prototypes into robust field mass-production.
+                Commit manufacturing tooling, IoT sensors, hardware testing rigs, and corporate CSR
+                funding to take laboratory prototypes into robust field mass-production.
               </p>
             </div>
 
@@ -171,4 +179,3 @@ export function EcosystemDiagram() {
     </section>
   );
 }
-

@@ -36,7 +36,7 @@ export function ReviewStep({
   error,
 }: ReviewStepProps) {
   const [aiSuggestion, setAiSuggestion] = useState<AIAssistSuggestion | null>(
-    formData.aiSuggestions
+    formData.aiSuggestions,
   );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
@@ -51,11 +51,7 @@ export function ReviewStep({
     setIsAnalyzing(true);
     setAnalyzeError(null);
     try {
-      const res = await analyzeDescription(
-        formData.description,
-        formData.title,
-        formData.district
-      );
+      const res = await analyzeDescription(formData.description, formData.title, formData.district);
       if (res) {
         setAiSuggestion(res);
         setIsApplied(false);
@@ -96,7 +92,8 @@ export function ReviewStep({
           Review your challenge
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Please review the summary below. You can use our AI assistant to help structure your problem statement, or edit any details before submitting.
+          Please review the summary below. You can use our AI assistant to help structure your
+          problem statement, or edit any details before submitting.
         </p>
       </div>
 
@@ -141,7 +138,9 @@ export function ReviewStep({
         <div className="flex items-start gap-2 bg-white/70 p-3 rounded-xl border border-[#123B2A]/10 text-[12px] text-[#6B5845]">
           <Info className="h-4 w-4 text-[#123B2A] shrink-0 mt-0.5" />
           <span>
-            <strong className="text-[#1D2522]">AI Transparency:</strong> Suggestions assist with classification, prioritization, and stakeholder mapping. Real district officers, university researchers, and domain experts review and validate all submissions.
+            <strong className="text-[#1D2522]">AI Transparency:</strong> Suggestions assist with
+            classification, prioritization, and stakeholder mapping. Real district officers,
+            university researchers, and domain experts review and validate all submissions.
           </span>
         </div>
 
@@ -202,8 +201,8 @@ export function ReviewStep({
                       aiSuggestion.suggestedPriority === 'CRITICAL'
                         ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
                         : aiSuggestion.suggestedPriority === 'HIGH'
-                        ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
-                        : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                          ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
+                          : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
                     }`}
                   >
                     {aiSuggestion.suggestedPriority}
@@ -222,9 +221,7 @@ export function ReviewStep({
                   <ShieldCheck className="h-3 w-3 text-[#123B2A]" />
                   Review Protocol
                 </span>
-                <div className="text-[13px] font-bold text-[#1D2522]">
-                  Human Validation
-                </div>
+                <div className="text-[13px] font-bold text-[#1D2522]">Human Validation</div>
                 <div className="text-[11px] text-[#6B5845]">
                   Awaiting review by district engineering desk.
                 </div>
@@ -350,9 +347,7 @@ export function ReviewStep({
         {/* Affected Groups & Context */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px]">
           <div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">
-              Impacted Population
-            </span>
+            <span className="text-[11px] font-mono text-[#6B5845] block">Impacted Population</span>
             <div className="font-semibold text-[#1D2522] pt-0.5">
               {formData.affectedGroups && formData.affectedGroups.length > 0
                 ? formData.affectedGroups.join(', ')
@@ -360,9 +355,7 @@ export function ReviewStep({
             </div>
           </div>
           <div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">
-              First Observed
-            </span>
+            <span className="text-[11px] font-mono text-[#6B5845] block">First Observed</span>
             <div className="font-semibold text-[#1D2522] pt-0.5">
               {formData.firstNoticed || 'Recently'}
             </div>
@@ -413,7 +406,9 @@ export function ReviewStep({
             className="mt-0.5 h-4 w-4 accent-[#123B2A]"
           />
           <div className="text-[12.5px] text-[#1D2522] leading-relaxed">
-            I declare that this challenge describes a genuine issue observed in Jharkhand. I understand that the information will be processed with AI assistance and reviewed by public authorities and research institutions.
+            I declare that this challenge describes a genuine issue observed in Jharkhand. I
+            understand that the information will be processed with AI assistance and reviewed by
+            public authorities and research institutions.
           </div>
         </label>
 

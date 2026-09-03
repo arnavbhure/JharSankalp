@@ -4,14 +4,9 @@ import type { ApiSuccessResponse, ApiErrorResponse } from '@jharsankalp/shared';
 /**
  * Send a standardized success response.
  */
-export function sendSuccess<T>(
-  res: Response,
-  data: T,
-  statusCode = 200,
-  req?: Request,
-): void {
+export function sendSuccess<T>(res: Response, data: T, statusCode = 200, req?: Request): void {
   const requestId = req
-    ? (req as unknown as Record<string, unknown>).requestId as string
+    ? ((req as unknown as Record<string, unknown>).requestId as string)
     : undefined;
 
   const response: ApiSuccessResponse<T> = {
@@ -35,7 +30,7 @@ export function sendError(
   req?: Request,
 ): void {
   const requestId = req
-    ? (req as unknown as Record<string, unknown>).requestId as string
+    ? ((req as unknown as Record<string, unknown>).requestId as string)
     : undefined;
 
   const response: ApiErrorResponse = {

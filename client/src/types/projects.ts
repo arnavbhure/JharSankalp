@@ -6,11 +6,7 @@ export type ProjectStage =
   | 'IMPLEMENTATION'
   | 'IMPACT_VERIFICATION';
 
-export type ProjectStatus =
-  | 'ACTIVE'
-  | 'ON_HOLD'
-  | 'COMPLETED'
-  | 'ARCHIVED';
+export type ProjectStatus = 'ACTIVE' | 'ON_HOLD' | 'COMPLETED' | 'ARCHIVED';
 
 export type ProjectHealth = 'ON_TRACK' | 'AT_RISK' | 'NEEDS_ATTENTION';
 

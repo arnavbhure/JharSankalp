@@ -81,7 +81,8 @@ export function ReportChallenge() {
         errs.title = 'Please provide a short title for the challenge.';
       }
       if (!formData.description.trim() || formData.description.trim().length < 10) {
-        errs.description = 'Please describe the problem in a bit more detail (at least 10 characters).';
+        errs.description =
+          'Please describe the problem in a bit more detail (at least 10 characters).';
       }
     } else if (step === 2) {
       if (!formData.district) {
@@ -113,12 +114,12 @@ export function ReportChallenge() {
   };
 
   const handleCancelAndBack = async () => {
-    const paths = formData.evidenceFiles
-      ?.map((f) => f.storagePath)
-      .filter((p): p is string => Boolean(p)) || [];
+    const paths =
+      formData.evidenceFiles?.map((f) => f.storagePath).filter((p): p is string => Boolean(p)) ||
+      [];
     if (paths.length > 0) {
       const confirmLeave = window.confirm(
-        'Exit challenge report? Any unsubmitted uploaded files will be discarded from storage.'
+        'Exit challenge report? Any unsubmitted uploaded files will be discarded from storage.',
       );
       if (!confirmLeave) return;
       await cleanupOrphanedEvidence(paths);
@@ -141,8 +142,7 @@ export function ReportChallenge() {
       console.error('Submission failed', err);
       setErrors({
         submit:
-          err?.message ||
-          'Submission failed. Please check your internet connection and try again.',
+          err?.message || 'Submission failed. Please check your internet connection and try again.',
       });
     } finally {
       setSubmitting(false);
@@ -200,7 +200,9 @@ export function ReportChallenge() {
               </h1>
 
               <p className="text-[14.5px] sm:text-[15.5px] text-[#6B5845] leading-relaxed">
-                You do not need to have the solution. Tell us what you are seeing, who it affects, and where it is happening. JharSankalp will help connect the challenge with the right people and institutions.
+                You do not need to have the solution. Tell us what you are seeing, who it affects,
+                and where it is happening. JharSankalp will help connect the challenge with the
+                right people and institutions.
               </p>
             </div>
 
@@ -217,27 +219,14 @@ export function ReportChallenge() {
             {/* ── Dynamic Step Body ── */}
             <div className="pt-4">
               {currentStep === 1 && (
-                <ProblemStep
-                  formData={formData}
-                  onChange={updateFormData}
-                  errors={errors}
-                />
+                <ProblemStep formData={formData} onChange={updateFormData} errors={errors} />
               )}
 
               {currentStep === 2 && (
-                <LocationStep
-                  formData={formData}
-                  onChange={updateFormData}
-                  errors={errors}
-                />
+                <LocationStep formData={formData} onChange={updateFormData} errors={errors} />
               )}
 
-              {currentStep === 3 && (
-                <EvidenceStep
-                  formData={formData}
-                  onChange={updateFormData}
-                />
-              )}
+              {currentStep === 3 && <EvidenceStep formData={formData} onChange={updateFormData} />}
 
               {currentStep === 4 && (
                 <ReviewStep

@@ -9,7 +9,7 @@ import {
  * If credentials are configured, can call LLM. Otherwise delegates gracefully to mock provider.
  */
 export async function analyzeChallengeOpenAI(
-  input: AnalyzeChallengeInput
+  input: AnalyzeChallengeInput,
 ): Promise<AnalyzeChallengeResult> {
   const apiKey = process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY;
 
@@ -54,9 +54,7 @@ Affected Population: ${input.affectedPopulation || 500}`;
           : {}),
       },
       body: JSON.stringify({
-        model: process.env.OPENROUTER_API_KEY
-          ? 'google/gemini-2.5-flash'
-          : 'gpt-4o-mini',
+        model: process.env.OPENROUTER_API_KEY ? 'google/gemini-2.5-flash' : 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
@@ -67,7 +65,9 @@ Affected Population: ${input.affectedPopulation || 500}`;
     });
 
     if (!response.ok) {
-      console.warn(`External AI provider returned ${response.status}, using deterministic fallback.`);
+      console.warn(
+        `External AI provider returned ${response.status}, using deterministic fallback.`,
+      );
       return analyzeChallengeMock(input);
     }
 

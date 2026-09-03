@@ -46,7 +46,8 @@ export function ActiveProjectsSnapshotTable({ projects }: ActiveProjectsSnapshot
             Active Projects Portfolio Snapshot
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            State-level monitoring of university and industry teams delivering field prototypes and pilots.
+            State-level monitoring of university and industry teams delivering field prototypes and
+            pilots.
           </p>
         </div>
 
@@ -76,7 +77,7 @@ export function ActiveProjectsSnapshotTable({ projects }: ActiveProjectsSnapshot
           <tbody className="divide-y divide-[#EEEAE1] text-[13px]">
             {projects.map((proj) => {
               const progressPct = Math.round(
-                (proj.milestonesCompleted / proj.milestonesTotal) * 100
+                (proj.milestonesCompleted / proj.milestonesTotal) * 100,
               );
 
               return (
@@ -135,9 +136,7 @@ export function ActiveProjectsSnapshotTable({ projects }: ActiveProjectsSnapshot
                   </td>
 
                   {/* Health */}
-                  <td className="py-3.5 px-4 whitespace-nowrap">
-                    {getHealthBadge(proj.health)}
-                  </td>
+                  <td className="py-3.5 px-4 whitespace-nowrap">{getHealthBadge(proj.health)}</td>
 
                   {/* Action */}
                   <td className="py-3.5 px-4 whitespace-nowrap text-right">

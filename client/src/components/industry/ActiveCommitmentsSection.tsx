@@ -39,7 +39,8 @@ export function ActiveCommitmentsSection({ commitments }: ActiveCommitmentsSecti
             Active Industrial Commitments
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Projects where your organization is an executed consortium partner supplying tooling, hardware fabrication, or compute grants.
+            Projects where your organization is an executed consortium partner supplying tooling,
+            hardware fabrication, or compute grants.
           </p>
         </div>
 

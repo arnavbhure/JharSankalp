@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {
-  WorkspaceData,
-  TeamRoleCategory,
-} from '../../../types/workspace';
+import { WorkspaceData, TeamRoleCategory } from '../../../types/workspace';
 import { addTeamMember } from '../../../services/workspaceApi';
 import { Users, UserPlus, Building2, X } from 'lucide-react';
 
@@ -61,13 +58,18 @@ export function TeamManagementTab({ data, onRefresh }: TeamManagementTabProps) {
     }
   };
 
-  const groupedMembers = (['LEADERSHIP', 'RESEARCH_DEV', 'FIELD_IMPLEMENTATION', 'PARTNER_CONTRIBUTORS'] as TeamRoleCategory[]).map(
-    (cat) => ({
-      category: cat,
-      title: CATEGORY_TITLES[cat],
-      members: data.teamMembers.filter((m) => m.roleCategory === cat),
-    })
-  );
+  const groupedMembers = (
+    [
+      'LEADERSHIP',
+      'RESEARCH_DEV',
+      'FIELD_IMPLEMENTATION',
+      'PARTNER_CONTRIBUTORS',
+    ] as TeamRoleCategory[]
+  ).map((cat) => ({
+    category: cat,
+    title: CATEGORY_TITLES[cat],
+    members: data.teamMembers.filter((m) => m.roleCategory === cat),
+  }));
 
   return (
     <div className="space-y-6 text-left">
@@ -82,7 +84,8 @@ export function TeamManagementTab({ data, onRefresh }: TeamManagementTabProps) {
             Project Team & Collaborators
           </h2>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Faculty leads, research fellows, field coordinators, and industrial partners assigned to this project.
+            Faculty leads, research fellows, field coordinators, and industrial partners assigned to
+            this project.
           </p>
         </div>
 
@@ -148,8 +151,8 @@ export function TeamManagementTab({ data, onRefresh }: TeamManagementTabProps) {
                           member.currentWorkload === 'High'
                             ? 'bg-[#FFF5F5] text-[#BE123C]'
                             : member.currentWorkload === 'Light'
-                            ? 'bg-[#FAF9F5] text-[#6B5845]'
-                            : 'bg-[#F0FDF4] text-[#15803D]'
+                              ? 'bg-[#FAF9F5] text-[#6B5845]'
+                              : 'bg-[#F0FDF4] text-[#15803D]'
                         }`}
                       >
                         {member.currentWorkload} Load

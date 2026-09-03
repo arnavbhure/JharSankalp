@@ -105,9 +105,7 @@ export function WorkspaceSidebar({
                 >
                   <div className="flex items-center gap-3">
                     <Icon
-                      className={`h-4 w-4 ${
-                        isActive ? 'text-[#F5A623]' : 'text-[#DDD6FE]/60'
-                      }`}
+                      className={`h-4 w-4 ${isActive ? 'text-[#F5A623]' : 'text-[#DDD6FE]/60'}`}
                     />
                     <span>{item.label}</span>
                   </div>
@@ -133,9 +131,7 @@ export function WorkspaceSidebar({
             <span>Logged Contributor</span>
             <span className="text-[#4ADE80]">● Active</span>
           </div>
-          <p className="text-[12.5px] font-bold text-white truncate">
-            Dr. Ananya Singh
-          </p>
+          <p className="text-[12.5px] font-bold text-white truncate">Dr. Ananya Singh</p>
           <p className="text-[11px] font-mono text-[#DDD6FE]/70 truncate">
             Lead Research Investigator
           </p>

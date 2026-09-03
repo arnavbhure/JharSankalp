@@ -6,7 +6,10 @@ interface ImpactAtAGlanceProps {
 
 export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
   return (
-    <section id="human-impact" className="relative overflow-hidden bg-[#123B2A] text-white py-14 sm:py-18 border-y border-[#1F5A3D] text-left">
+    <section
+      id="human-impact"
+      className="relative overflow-hidden bg-[#123B2A] text-white py-14 sm:py-18 border-y border-[#1F5A3D] text-left"
+    >
       {/* Background Topographic Matrix */}
       <div
         aria-hidden="true"
@@ -36,7 +39,8 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
               Residents Potentially Affected
             </div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Directly living in the immediate subsidence subsidence buffer zones across Jharia Sector 4.
+              Directly living in the immediate subsidence subsidence buffer zones across Jharia
+              Sector 4.
             </p>
           </div>
 
@@ -49,7 +53,8 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
               High-Risk Locations Identified
             </div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Critical structural fissures and localized sinkhole formations verified by geotechnical teams.
+              Critical structural fissures and localized sinkhole formations verified by
+              geotechnical teams.
             </p>
           </div>
 
@@ -58,11 +63,10 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
             <div className="text-[2.75rem] sm:text-[3.25rem] font-extrabold font-mono text-white leading-none">
               {challenge.impactMetrics.communitiesInvolved}
             </div>
-            <div className="text-[15px] font-bold text-white/95">
-              Local Communities Involved
-            </div>
+            <div className="text-[15px] font-bold text-white/95">Local Communities Involved</div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Gram panchayats, labor cooperatives, and ward citizen action committees actively participating.
+              Gram panchayats, labor cooperatives, and ward citizen action committees actively
+              participating.
             </p>
           </div>
         </div>
@@ -73,7 +77,8 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
             &ldquo;{challenge.impactMetrics.statement}&rdquo;
           </p>
           <div className="mt-3 text-[12px] font-mono text-[#F8F6F1]/60">
-            Dhanbad District Civil Administration & State Disaster Management Authority Consensus Note
+            Dhanbad District Civil Administration & State Disaster Management Authority Consensus
+            Note
           </div>
         </div>
       </div>

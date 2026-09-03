@@ -26,14 +26,9 @@ const LIFECYCLE_STAGES = [
   { key: 'SCALING', label: 'Scaling' },
 ];
 
-export function WorkspaceOverviewTab({
-  data,
-  onNavigateTab,
-}: WorkspaceOverviewTabProps) {
+export function WorkspaceOverviewTab({ data, onNavigateTab }: WorkspaceOverviewTabProps) {
   const { context, priorities, recentActivities } = data;
-  const currentStageIdx = LIFECYCLE_STAGES.findIndex(
-    (s) => s.key === context.stage
-  );
+  const currentStageIdx = LIFECYCLE_STAGES.findIndex((s) => s.key === context.stage);
 
   return (
     <div className="space-y-8 text-left">
@@ -106,9 +101,7 @@ export function WorkspaceOverviewTab({
             <div className="text-[2rem] sm:text-[2.3rem] font-extrabold font-mono text-[#1D2522] leading-tight">
               03
             </div>
-            <span className="text-[11px] text-[#6B5845] block">
-              Deploy, Data & Maintenance
-            </span>
+            <span className="text-[11px] text-[#6B5845] block">Deploy, Data & Maintenance</span>
           </div>
 
           {/* 4. Deliverables in Review */}
@@ -182,11 +175,15 @@ export function WorkspaceOverviewTab({
                 </h4>
 
                 <div className="flex items-center justify-between pt-1 text-[11.5px] text-[#6B5845]">
-                  <span>Owner: <strong className="text-[#1D2522]">{item.owner}</strong></span>
+                  <span>
+                    Owner: <strong className="text-[#1D2522]">{item.owner}</strong>
+                  </span>
                   {item.actionText && (
                     <button
                       type="button"
-                      onClick={() => onNavigateTab(item.level === 'REVIEW_REQUIRED' ? 'deliverables' : 'work')}
+                      onClick={() =>
+                        onNavigateTab(item.level === 'REVIEW_REQUIRED' ? 'deliverables' : 'work')
+                      }
                       className="text-[#123B2A] font-bold hover:underline inline-flex items-center gap-1 cursor-pointer"
                     >
                       <span>{item.actionText}</span>
@@ -258,8 +255,8 @@ export function WorkspaceOverviewTab({
                   isCurrent
                     ? 'border-2 border-[#123B2A] bg-[#FFFDF9]'
                     : isCompleted
-                    ? 'border-[#BBF7D0] bg-[#F0FDF4]'
-                    : 'border-[#EEEAE1] bg-[#FAF9F5]/40 opacity-70'
+                      ? 'border-[#BBF7D0] bg-[#F0FDF4]'
+                      : 'border-[#EEEAE1] bg-[#FAF9F5]/40 opacity-70'
                 }`}
               >
                 <div className="flex items-center justify-between text-[10px] font-mono">

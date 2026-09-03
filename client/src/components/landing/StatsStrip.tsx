@@ -37,9 +37,7 @@ export function StatsStrip() {
             return (
               <div
                 key={idx}
-                className={`flex items-center gap-3.5 pt-4 lg:pt-0 ${
-                  idx > 0 ? 'lg:pl-6' : ''
-                }`}
+                className={`flex items-center gap-3.5 pt-4 lg:pt-0 ${idx > 0 ? 'lg:pl-6' : ''}`}
               >
                 <div
                   className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${stat.iconBg}`}
@@ -50,9 +48,7 @@ export function StatsStrip() {
                   <div className="text-[1.65rem] font-extrabold font-mono text-[#1D2522] leading-none tracking-tight">
                     {stat.number}
                   </div>
-                  <div className="text-[12.5px] font-medium text-[#6B5845] mt-1">
-                    {stat.label}
-                  </div>
+                  <div className="text-[12.5px] font-medium text-[#6B5845] mt-1">{stat.label}</div>
                 </div>
               </div>
             );
@@ -62,4 +58,3 @@ export function StatsStrip() {
     </div>
   );
 }
-

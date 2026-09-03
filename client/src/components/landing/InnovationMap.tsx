@@ -34,7 +34,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'PILOT',
     population: '2,000 residents',
     coordinates: { x: 48, y: 64 },
-    summary: 'Hand pumps in 5 tribal villages experiencing repeated mechanical failures with 10-14 days downtime per incident.',
+    summary:
+      'Hand pumps in 5 tribal villages experiencing repeated mechanical failures with 10-14 days downtime per incident.',
     consortium: 'BIT Sindri (Mechanical) + AgriSens Technologies (MSME)',
     metricLabel: 'Downtime Reduction',
     metricValue: '12.4d → 3.2d',
@@ -51,7 +52,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'MATCHING',
     population: '5,000 farmers',
     coordinates: { x: 28, y: 62 },
-    summary: 'Lack of real-time soil nutrient testing leading to chronic nitrogen/phosphorus imbalance in rainfed uplands.',
+    summary:
+      'Lack of real-time soil nutrient testing leading to chronic nitrogen/phosphorus imbalance in rainfed uplands.',
     consortium: 'Birsa Agricultural University + Tribal Farmer Producer Org',
     metricLabel: 'NPK Testing Speed',
     metricValue: '14 days → 15 mins',
@@ -68,7 +70,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'UNDER_VALIDATION',
     population: '15,000 residents',
     coordinates: { x: 74, y: 44 },
-    summary: 'Ground shifting hazard over abandoned subterranean coal seam fires requiring continuous acoustic telemetry.',
+    summary:
+      'Ground shifting hazard over abandoned subterranean coal seam fires requiring continuous acoustic telemetry.',
     consortium: 'IIT (ISM) Dhanbad Geotechnical Lab + CMPDI',
     metricLabel: 'Warning Lead Time',
     metricValue: '+48 Hours Alert',
@@ -85,7 +88,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'SUBMITTED',
     population: '8,000 residents',
     coordinates: { x: 32, y: 84 },
-    summary: 'Primary healthcare centers over 40 km away; need solar offline-first diagnostic imaging consultation pods.',
+    summary:
+      'Primary healthcare centers over 40 km away; need solar offline-first diagnostic imaging consultation pods.',
     consortium: 'RIMS Ranchi Pediatrics + HealthTech Accelerator',
     metricLabel: 'Hamlets Connected',
     metricValue: '12 Hamlets',
@@ -102,7 +106,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'SUBMITTED',
     population: '3,000 farmers',
     coordinates: { x: 54, y: 36 },
-    summary: 'Post-harvest vegetable spoilage exceeds 35% during summer due to lack of village-level cold storage.',
+    summary:
+      'Post-harvest vegetable spoilage exceeds 35% during summer due to lack of village-level cold storage.',
     consortium: 'BIT Mesra Energy Dept. + GreenGrid Startups',
     metricLabel: 'Spoilage Avoidance',
     metricValue: '-75% Loss',
@@ -119,7 +124,8 @@ const DISTRICT_CHALLENGES: DistrictChallengeNode[] = [
     stage: 'PROJECT',
     population: 'Statewide Impact',
     coordinates: { x: 53, y: 55 },
-    summary: 'Central command telemetry coordinating university lab testing, government challenge grants, and field pilots.',
+    summary:
+      'Central command telemetry coordinating university lab testing, government challenge grants, and field pilots.',
     consortium: 'State Higher & Technical Education Dept.',
     metricLabel: 'Active Missions',
     metricValue: '42 Projects',
@@ -131,7 +137,10 @@ export function InnovationMap() {
   const navigate = useNavigate();
 
   return (
-    <section id="innovation-map" className="py-16 border-b border-neutral-200 bg-neutral-0 text-left">
+    <section
+      id="innovation-map"
+      className="py-16 border-b border-neutral-200 bg-neutral-0 text-left"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="border-b border-neutral-200 pb-5 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -144,7 +153,8 @@ export function InnovationMap() {
               Challenges don&apos;t exist in isolation.
             </h2>
             <p className="text-small text-neutral-600 max-w-xl">
-              Explore where problems are emerging across Jharkhand and how communities are responding.
+              Explore where problems are emerging across Jharkhand and how communities are
+              responding.
             </p>
           </div>
 
@@ -196,10 +206,7 @@ export function InnovationMap() {
               </svg>
 
               {/* Stylized State Silhouette with Soft Apricot Plateau Fill & Deep Purple Outlines */}
-              <svg
-                viewBox="0 0 100 100"
-                className="absolute inset-0 w-full h-full"
-              >
+              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
                 {/* State Silhouette Polygon */}
                 <polygon
                   points="18,32 30,16 54,12 70,22 84,24 88,40 82,54 84,72 70,86 52,90 32,88 22,76 14,56 12,42"
@@ -210,9 +217,27 @@ export function InnovationMap() {
                 />
 
                 {/* Sub-Plateau Boundaries (Chota Nagpur & Santhal Pargana) */}
-                <path d="M30,36 Q50,42 70,38" fill="none" stroke="#B5A886" strokeWidth="1.5" strokeDasharray="3,3" />
-                <path d="M24,60 Q52,58 80,62" fill="none" stroke="#B5A886" strokeWidth="1.5" strokeDasharray="3,3" />
-                <path d="M48,15 L52,88" fill="none" stroke="#B5A886" strokeWidth="1.5" strokeDasharray="3,3" />
+                <path
+                  d="M30,36 Q50,42 70,38"
+                  fill="none"
+                  stroke="#B5A886"
+                  strokeWidth="1.5"
+                  strokeDasharray="3,3"
+                />
+                <path
+                  d="M24,60 Q52,58 80,62"
+                  fill="none"
+                  stroke="#B5A886"
+                  strokeWidth="1.5"
+                  strokeDasharray="3,3"
+                />
+                <path
+                  d="M48,15 L52,88"
+                  fill="none"
+                  stroke="#B5A886"
+                  strokeWidth="1.5"
+                  strokeDasharray="3,3"
+                />
               </svg>
 
               {/* Interactive District Nodes */}
@@ -239,9 +264,7 @@ export function InnovationMap() {
                     <div
                       style={{ backgroundColor: node.domainColor }}
                       className={`h-5 w-5 rounded-full border-2 border-white shadow-md transition-all duration-200 ${
-                        isSelected
-                          ? 'scale-125 ring-4 ring-brand-purple'
-                          : 'group-hover:scale-110'
+                        isSelected ? 'scale-125 ring-4 ring-brand-purple' : 'group-hover:scale-110'
                       }`}
                     />
 
@@ -263,7 +286,9 @@ export function InnovationMap() {
             {/* Instruction Footer */}
             <div className="mt-3 flex items-center justify-between text-caption text-neutral-600 font-medium">
               <span>Hover or click any district node to inspect challenge telemetry</span>
-              <span className="font-mono text-brand-purple font-bold">6 SATELLITE NODES ACTIVE</span>
+              <span className="font-mono text-brand-purple font-bold">
+                6 SATELLITE NODES ACTIVE
+              </span>
             </div>
           </div>
 
@@ -276,7 +301,9 @@ export function InnovationMap() {
             >
               <div className="flex items-center gap-2 font-mono text-caption font-bold tracking-wider uppercase">
                 <MapPin className="h-4 w-4" />
-                <span>{selectedNode.district} · {selectedNode.block}</span>
+                <span>
+                  {selectedNode.district} · {selectedNode.block}
+                </span>
               </div>
               <span className="px-2 py-0.5 bg-white/20 rounded-pill text-[11px] font-extrabold uppercase tracking-wide">
                 {selectedNode.domain}

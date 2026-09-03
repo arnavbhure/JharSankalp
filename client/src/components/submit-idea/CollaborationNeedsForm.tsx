@@ -72,7 +72,8 @@ export function CollaborationNeedsForm({
           What would help move this idea forward?
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Great ideas often need expertise, resources, and institutional partnerships to become real solutions.
+          Great ideas often need expertise, resources, and institutional partnerships to become real
+          solutions.
         </p>
       </div>
 

@@ -33,10 +33,7 @@ export function PageHeader({
               <li key={i} className="flex items-center gap-1.5">
                 {i > 0 && <ChevronRight className="h-3 w-3 text-neutral-300" />}
                 {crumb.href ? (
-                  <a
-                    href={crumb.href}
-                    className="hover:text-neutral-900 transition-colors"
-                  >
+                  <a href={crumb.href} className="hover:text-neutral-900 transition-colors">
                     {crumb.label}
                   </a>
                 ) : (
@@ -63,11 +60,7 @@ export function PageHeader({
           )}
         </div>
 
-        {actions && (
-          <div className="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
-            {actions}
-          </div>
-        )}
+        {actions && <div className="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">{actions}</div>}
       </div>
     </div>
   );

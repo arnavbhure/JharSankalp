@@ -12,31 +12,14 @@ export type AffectedGroup =
   | 'Other';
 
 export type NoticeTimeframe =
-  | 'Recently'
-  | 'A few months ago'
-  | 'More than a year ago'
-  | 'It has existed for several years';
+  'Recently' | 'A few months ago' | 'More than a year ago' | 'It has existed for several years';
 
 export type EstimatedAffectedPopulation =
-  | 'Less than 50'
-  | '50 – 500'
-  | '500 – 2,000'
-  | '2,000 – 10,000'
-  | 'More than 10,000'
-  | 'Not sure';
+  'Less than 50' | '50 – 500' | '500 – 2,000' | '2,000 – 10,000' | 'More than 10,000' | 'Not sure';
 
-export type ProblemFrequency =
-  | 'One-time issue'
-  | 'Occasional'
-  | 'Frequent'
-  | 'Daily / Ongoing';
+export type ProblemFrequency = 'One-time issue' | 'Occasional' | 'Frequent' | 'Daily / Ongoing';
 
-export type SeverityLevel =
-  | 'Needs attention'
-  | 'Important'
-  | 'Urgent'
-  | 'Critical'
-  | 'Not sure';
+export type SeverityLevel = 'Needs attention' | 'Important' | 'Urgent' | 'Critical' | 'Not sure';
 
 export type PreviousAttempts = 'Yes' | 'No' | "I'm not sure";
 

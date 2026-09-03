@@ -41,10 +41,8 @@ export function MyChallengeList({ challenges, onOpenResponseModal }: MyChallenge
           </h2>
           <p className="text-[13.5px] text-[#6B5845] mt-0.5">
             Showing{' '}
-            <strong className="text-[#1D2522] font-bold">
-              {filteredChallenges.length}
-            </strong>{' '}
-            of {challenges.length} total submissions
+            <strong className="text-[#1D2522] font-bold">{filteredChallenges.length}</strong> of{' '}
+            {challenges.length} total submissions
           </p>
         </div>
 
@@ -93,7 +91,8 @@ export function MyChallengeList({ challenges, onOpenResponseModal }: MyChallenge
               You haven&apos;t reported a challenge yet in this view.
             </h3>
             <p className="text-[14px] text-[#6B5845] leading-relaxed">
-              Every meaningful solution begins with someone identifying a problem. Your voice can mobilize researchers, innovators, and district authorities.
+              Every meaningful solution begins with someone identifying a problem. Your voice can
+              mobilize researchers, innovators, and district authorities.
             </p>
           </div>
 

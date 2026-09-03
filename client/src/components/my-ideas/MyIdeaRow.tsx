@@ -75,7 +75,7 @@ export function MyIdeaRow({ idea }: MyIdeaRowProps) {
         <div className="flex items-center gap-2">
           <span
             className={`text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded-md border uppercase tracking-wider ${getStatusBadge(
-              idea.status
+              idea.status,
             )}`}
           >
             {idea.statusLabel}
@@ -124,7 +124,8 @@ export function MyIdeaRow({ idea }: MyIdeaRowProps) {
                 <span>·</span>
                 <span className="flex items-center gap-1 text-[#B45309] font-bold bg-[#FFFBEB] px-2 py-0.5 rounded border border-[#FDE68A]">
                   <Radio className="h-3 w-3 animate-pulse" />
-                  {idea.collaborationRequests} New Request{idea.collaborationRequests > 1 ? 's' : ''}
+                  {idea.collaborationRequests} New Request
+                  {idea.collaborationRequests > 1 ? 's' : ''}
                 </span>
               </>
             )}
@@ -137,9 +138,7 @@ export function MyIdeaRow({ idea }: MyIdeaRowProps) {
             <span className="font-bold uppercase tracking-wider text-[#123B2A]">
               PROGRESS LIFECYCLE
             </span>
-            <span className="font-bold text-[#1D2522]">
-              Stage: {idea.stage}
-            </span>
+            <span className="font-bold text-[#1D2522]">Stage: {idea.stage}</span>
           </div>
 
           <div className="grid grid-cols-5 gap-1.5 text-center">
@@ -154,8 +153,8 @@ export function MyIdeaRow({ idea }: MyIdeaRowProps) {
                       isCompleted
                         ? 'bg-[#15803D]'
                         : isCurrent
-                        ? 'bg-[#123B2A] ring-2 ring-[#123B2A]/20'
-                        : 'bg-[#EEEAE1]'
+                          ? 'bg-[#123B2A] ring-2 ring-[#123B2A]/20'
+                          : 'bg-[#EEEAE1]'
                     }`}
                   />
                   <span
@@ -163,8 +162,8 @@ export function MyIdeaRow({ idea }: MyIdeaRowProps) {
                       isCurrent
                         ? 'font-bold text-[#123B2A]'
                         : isCompleted
-                        ? 'text-[#1D2522]'
-                        : 'text-[#6B5845]/60'
+                          ? 'text-[#1D2522]'
+                          : 'text-[#6B5845]/60'
                     }`}
                   >
                     {s.label}

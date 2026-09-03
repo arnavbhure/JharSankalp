@@ -6,10 +6,7 @@ interface IdeaCollaborationNeedsProps {
   onOfferSupport: (need?: CollaborationOpportunity) => void;
 }
 
-export function IdeaCollaborationNeeds({
-  needs,
-  onOfferSupport,
-}: IdeaCollaborationNeedsProps) {
+export function IdeaCollaborationNeeds({ needs, onOfferSupport }: IdeaCollaborationNeedsProps) {
   const getIcon = (cat: string) => {
     if (cat.includes('HARDWARE')) return <Wrench className="h-4 w-4 text-[#123B2A]" />;
     if (cat.includes('TESTING')) return <MapPin className="h-4 w-4 text-[#15803D]" />;
@@ -29,7 +26,8 @@ export function IdeaCollaborationNeeds({
           What this idea needs next
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          The idea has technical momentum, but moving toward a field pilot requires additional expertise and institutional partnerships.
+          The idea has technical momentum, but moving toward a field pilot requires additional
+          expertise and institutional partnerships.
         </p>
       </div>
 
@@ -77,9 +75,7 @@ export function IdeaCollaborationNeeds({
                   {need.title}
                 </h3>
 
-                <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-                  {need.description}
-                </p>
+                <p className="text-[13.5px] text-[#6B5845] leading-relaxed">{need.description}</p>
               </div>
 
               {/* Offer Support Action Button */}

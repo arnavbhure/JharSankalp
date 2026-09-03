@@ -11,7 +11,10 @@ interface IdeaModalProps {
   idea: IdeaItem | null;
   onClose: () => void;
   onShareSubmit: (newIdea: Partial<IdeaItem>) => Promise<void>;
-  onJoinSubmit: (ideaId: string, applicant: { name: string; role: string; message: string }) => Promise<void>;
+  onJoinSubmit: (
+    ideaId: string,
+    applicant: { name: string; role: string; message: string },
+  ) => Promise<void>;
 }
 
 export function IdeaModal({
@@ -105,9 +108,7 @@ export function IdeaModal({
           <div className="py-12 text-center space-y-3 animate-in zoom-in-95">
             <CheckCircle2 className="h-12 w-12 text-[#15803D] mx-auto" />
             <h3 className="text-[1.4rem] font-bold text-[#1D2522]">
-              {mode === 'SHARE'
-                ? 'Idea Successfully Published!'
-                : 'Application Transmitted!'}
+              {mode === 'SHARE' ? 'Idea Successfully Published!' : 'Application Transmitted!'}
             </h3>
             <p className="text-[14px] text-[#6B5845] max-w-sm mx-auto">
               {mode === 'SHARE'
@@ -127,7 +128,8 @@ export function IdeaModal({
                 Share a Solution Idea
               </h3>
               <p className="text-[13.5px] text-[#6B5845]">
-                Propose an engineering hypothesis, research concept, or grassroots approach for challenges in Jharkhand.
+                Propose an engineering hypothesis, research concept, or grassroots approach for
+                challenges in Jharkhand.
               </p>
             </div>
 

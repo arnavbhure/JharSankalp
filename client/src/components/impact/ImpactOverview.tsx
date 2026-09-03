@@ -6,10 +6,30 @@ interface ImpactOverviewProps {
 }
 
 const LIFECYCLE_STAGES_STATS = [
-  { name: 'Research', count: 12, percent: 26, color: 'bg-[#FFFBEB] text-[#B45309] border-[#FDE68A]' },
-  { name: 'Prototype', count: 18, percent: 39, color: 'bg-[#F0F9FF] text-[#0284C7] border-[#BAE6FD]' },
-  { name: 'Testing', count: 14, percent: 30, color: 'bg-[#FAF5FF] text-[#7E22CE] border-[#E9D5FF]' },
-  { name: 'Field Pilot', count: 7, percent: 15, color: 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]' },
+  {
+    name: 'Research',
+    count: 12,
+    percent: 26,
+    color: 'bg-[#FFFBEB] text-[#B45309] border-[#FDE68A]',
+  },
+  {
+    name: 'Prototype',
+    count: 18,
+    percent: 39,
+    color: 'bg-[#F0F9FF] text-[#0284C7] border-[#BAE6FD]',
+  },
+  {
+    name: 'Testing',
+    count: 14,
+    percent: 30,
+    color: 'bg-[#FAF5FF] text-[#7E22CE] border-[#E9D5FF]',
+  },
+  {
+    name: 'Field Pilot',
+    count: 7,
+    percent: 15,
+    color: 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]',
+  },
   { name: 'Deployment', count: 4, percent: 9, color: 'bg-[#123B2A] text-white border-[#123B2A]' },
   { name: 'Scaling', count: 2, percent: 4, color: 'bg-[#F5A623] text-[#123B2A] border-[#F5A623]' },
 ];
@@ -34,7 +54,8 @@ export function ImpactOverview({ districts }: ImpactOverviewProps) {
           Jharkhand Impact Overview
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-xl leading-relaxed">
-          Comprehensive telemetry tracking societal challenges, geographic reach, and solution readiness across the state.
+          Comprehensive telemetry tracking societal challenges, geographic reach, and solution
+          readiness across the state.
         </p>
       </div>
 
@@ -54,9 +75,7 @@ export function ImpactOverview({ districts }: ImpactOverviewProps) {
                 Domain Impact Distribution
               </h4>
             </div>
-            <span className="text-[11px] font-mono text-[#6B5845]">
-              By Projects & Reach
-            </span>
+            <span className="text-[11px] font-mono text-[#6B5845]">By Projects & Reach</span>
           </div>
 
           <div className="space-y-3 pt-1">
@@ -97,10 +116,7 @@ export function ImpactOverview({ districts }: ImpactOverviewProps) {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
             {LIFECYCLE_STAGES_STATS.map((s) => (
-              <div
-                key={s.name}
-                className={`p-3 rounded-2xl border text-left space-y-1 ${s.color}`}
-              >
+              <div key={s.name} className={`p-3 rounded-2xl border text-left space-y-1 ${s.color}`}>
                 <span className="text-[10.5px] font-mono font-bold uppercase block opacity-80">
                   {s.name}
                 </span>
@@ -118,7 +134,8 @@ export function ImpactOverview({ districts }: ImpactOverviewProps) {
             <strong className="text-[#123B2A] font-bold block pb-0.5">
               Pipeline Velocity Note:
             </strong>
-            4 solutions moved from Prototyping to Field Pilot in Q1 2026 with support from state academic labs and district CSR partners.
+            4 solutions moved from Prototyping to Field Pilot in Q1 2026 with support from state
+            academic labs and district CSR partners.
           </div>
         </div>
       </div>

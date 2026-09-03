@@ -21,7 +21,8 @@ export function ProjectLineage({ project }: ProjectLineageProps) {
             How this project began
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Every active project on JharSankalp originates from a community-reported societal problem and an evaluated solution hypothesis.
+            Every active project on JharSankalp originates from a community-reported societal
+            problem and an evaluated solution hypothesis.
           </p>
         </div>
 
@@ -38,9 +39,7 @@ export function ProjectLineage({ project }: ProjectLineageProps) {
                   <Target className="h-3 w-3" />
                   01 CHALLENGE
                 </span>
-                <span className="text-[10px] font-mono text-[#6B5845]">
-                  {project.challenge.id}
-                </span>
+                <span className="text-[10px] font-mono text-[#6B5845]">{project.challenge.id}</span>
               </div>
 
               <h4 className="text-[14px] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
@@ -74,9 +73,7 @@ export function ProjectLineage({ project }: ProjectLineageProps) {
                   02 PROPOSED IDEA
                 </span>
                 {project.idea && (
-                  <span className="text-[10px] font-mono text-[#6B5845]">
-                    {project.idea.id}
-                  </span>
+                  <span className="text-[10px] font-mono text-[#6B5845]">{project.idea.id}</span>
                 )}
               </div>
 
@@ -108,9 +105,7 @@ export function ProjectLineage({ project }: ProjectLineageProps) {
                 </span>
               </div>
 
-              <h4 className="text-[14px] font-bold text-[#1D2522] leading-snug">
-                {project.title}
-              </h4>
+              <h4 className="text-[14px] font-bold text-[#1D2522] leading-snug">{project.title}</h4>
 
               <p className="text-[11.5px] text-[#6B5845]">
                 Committed multi-institution consortium actively testing in {project.location}.

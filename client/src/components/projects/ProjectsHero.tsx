@@ -48,7 +48,8 @@ export function ProjectsHero() {
 
             {/* Supporting Copy */}
             <p className="text-[16px] sm:text-[18px] text-[#6B5845] max-w-2xl leading-relaxed font-normal">
-              Explore collaborative projects where communities, universities, industry and government are working together to turn societal challenges into practical solutions.
+              Explore collaborative projects where communities, universities, industry and
+              government are working together to turn societal challenges into practical solutions.
             </p>
 
             {/* Action Buttons */}
@@ -84,9 +85,7 @@ export function ProjectsHero() {
                 Multi-Sector Consortia
               </span>
               <span>·</span>
-              <span className="text-[#FA7E61] font-bold">
-                Ideas are not the end. Execution is.
-              </span>
+              <span className="text-[#FA7E61] font-bold">Ideas are not the end. Execution is.</span>
             </div>
           </div>
 

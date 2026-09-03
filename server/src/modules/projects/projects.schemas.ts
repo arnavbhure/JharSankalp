@@ -10,16 +10,18 @@ export const createProjectSchema = z.object({
   domain: z.string().optional().nullable(),
   district: z.string().optional().nullable(),
   block: z.string().optional().nullable(),
-  stage: z.enum([
-    'FORMATION',
-    'RESEARCH_DESIGN',
-    'PROTOTYPE',
-    'LAB_TESTING',
-    'FIELD_PILOT',
-    'IMPLEMENTATION',
-    'IMPACT_VERIFICATION',
-    'SCALE',
-  ]).default('FORMATION'),
+  stage: z
+    .enum([
+      'FORMATION',
+      'RESEARCH_DESIGN',
+      'PROTOTYPE',
+      'LAB_TESTING',
+      'FIELD_PILOT',
+      'IMPLEMENTATION',
+      'IMPACT_VERIFICATION',
+      'SCALE',
+    ])
+    .default('FORMATION'),
   status: z.enum(['ACTIVE', 'ON_HOLD', 'COMPLETED', 'DELAYED', 'CANCELLED']).default('ACTIVE'),
   startDate: z.string().datetime().optional().nullable(),
   expectedEndDate: z.string().datetime().optional().nullable(),

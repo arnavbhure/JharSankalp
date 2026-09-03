@@ -87,7 +87,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'ws-field',
       title: 'FIELD DEPLOYMENT',
-      description: 'Install and calibrate sensor modules across 20 selected water points in Murhu Block.',
+      description:
+        'Install and calibrate sensor modules across 20 selected water points in Murhu Block.',
       status: 'ACTIVE',
       progressText: '14 / 20 Sites Complete',
       metric: '70% Complete',
@@ -96,7 +97,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-1',
           workstreamId: 'ws-field',
           title: 'Install Sensor Module – Murhu Cluster A',
-          description: 'Deploy solar telemetry collars on 4 India Mark II pumps in Buruhatu village.',
+          description:
+            'Deploy solar telemetry collars on 4 India Mark II pumps in Buruhatu village.',
           status: 'IN_PROGRESS',
           progress: 75,
           ownerName: 'Priya Verma',
@@ -107,7 +109,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
               id: 'c1',
               authorName: 'Priya Verma',
               authorRole: 'Field Coordinator',
-              content: '3 nodes installed successfully. Final collar scheduled for tomorrow morning.',
+              content:
+                '3 nodes installed successfully. Final collar scheduled for tomorrow morning.',
               createdAt: 'Yesterday',
             },
           ],
@@ -116,7 +119,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-2',
           workstreamId: 'ws-field',
           title: 'Jal Sahiya Verification & Orientation',
-          description: 'Brief 6 village water care committee volunteers on optical status indicator checks.',
+          description:
+            'Brief 6 village water care committee volunteers on optical status indicator checks.',
           status: 'COMPLETED',
           progress: 100,
           ownerName: 'Field Team',
@@ -128,7 +132,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-3',
           workstreamId: 'ws-field',
           title: 'Mounting Bracket Fabrication for Cluster B',
-          description: 'Receive machined aluminum casing batches from local MSME partner for remaining sites.',
+          description:
+            'Receive machined aluminum casing batches from local MSME partner for remaining sites.',
           status: 'IN_PROGRESS',
           progress: 40,
           ownerName: 'Ravi Kumar',
@@ -141,7 +146,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'ws-data',
       title: 'DATA COLLECTION',
-      description: 'Collect operational stroke telemetry, noise vibration metrics, and battery levels over LoRa gateways.',
+      description:
+        'Collect operational stroke telemetry, noise vibration metrics, and battery levels over LoRa gateways.',
       status: 'ACTIVE',
       progressText: 'Collecting Pilot Data',
       metric: '18,400 Packets Synced',
@@ -150,7 +156,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-4',
           workstreamId: 'ws-data',
           title: 'Validate Data Transmission Reliability',
-          description: 'Calculate packet loss ratios across hills and dense sal forest foliage in Murhu Block.',
+          description:
+            'Calculate packet loss ratios across hills and dense sal forest foliage in Murhu Block.',
           status: 'IN_REVIEW',
           progress: 90,
           ownerName: 'Ravi Kumar',
@@ -183,7 +190,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'ws-maint',
       title: 'MAINTENANCE WORKFLOW',
-      description: 'Validate automated maintenance alert routing from edge gateways to district mechanics.',
+      description:
+        'Validate automated maintenance alert routing from edge gateways to district mechanics.',
       status: 'IN_REVIEW',
       progressText: 'Workflow Validation',
       metric: '6 Verified Alerts',
@@ -192,7 +200,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-6',
           workstreamId: 'ws-maint',
           title: 'Prepare Maintenance Response SOP',
-          description: 'Define exact escalation timelines between BDO office, block mechanics, and district van.',
+          description:
+            'Define exact escalation timelines between BDO office, block mechanics, and district van.',
           status: 'IN_REVIEW',
           progress: 85,
           ownerName: 'Khunti District Admin',
@@ -204,7 +213,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           id: 'wi-7',
           workstreamId: 'ws-maint',
           title: 'WhatsApp Alert Bot Gateway Hook',
-          description: 'Deploy automated Hindi SMS and WhatsApp trigger to local Jal Samiti coordinators.',
+          description:
+            'Deploy automated Hindi SMS and WhatsApp trigger to local Jal Samiti coordinators.',
           status: 'NOT_STARTED',
           progress: 0,
           ownerName: 'IoT Team',
@@ -221,7 +231,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 01',
       period: 'JAN 2026',
       title: 'Problem Validation',
-      description: 'Conducted field baseline across 25 villages in Murhu Block, verifying breakdown patterns.',
+      description:
+        'Conducted field baseline across 25 villages in Murhu Block, verifying breakdown patterns.',
       status: 'COMPLETED',
       progress: 100,
       startDate: 'Jan 05, 2026',
@@ -234,7 +245,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 02',
       period: 'FEB 2026',
       title: 'System Architecture',
-      description: 'Designed low-power LoRa mesh topology, piezoelectric transducer collar, and energy circuit.',
+      description:
+        'Designed low-power LoRa mesh topology, piezoelectric transducer collar, and energy circuit.',
       status: 'COMPLETED',
       progress: 100,
       startDate: 'Feb 01, 2026',
@@ -247,7 +259,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 03',
       period: 'MAR 2026',
       title: 'Prototype Development',
-      description: 'Fabricated bench prototypes and tested stroke frequency anomaly detection in test rigs.',
+      description:
+        'Fabricated bench prototypes and tested stroke frequency anomaly detection in test rigs.',
       status: 'COMPLETED',
       progress: 100,
       startDate: 'Mar 01, 2026',
@@ -260,12 +273,17 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 04',
       period: 'APR – JUN 2026',
       title: 'Field Pilot',
-      description: 'Installing and operating 20 telemetry nodes on working India Mark II handpumps across Murhu Block.',
+      description:
+        'Installing and operating 20 telemetry nodes on working India Mark II handpumps across Murhu Block.',
       status: 'IN_PROGRESS',
       progress: 70,
       startDate: 'Apr 05, 2026',
       targetDate: 'Jun 30, 2026',
-      deliverables: ['14 Installed Field Nodes', 'Daily Dashboard Sync', 'Jal Samiti WhatsApp Integration'],
+      deliverables: [
+        '14 Installed Field Nodes',
+        'Daily Dashboard Sync',
+        'Jal Samiti WhatsApp Integration',
+      ],
       owner: 'Joint Consortium',
     },
     {
@@ -273,7 +291,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 05',
       period: 'JUL 2026',
       title: 'Impact Evaluation',
-      description: 'Measure response turnaround times, false-positive alert frequencies, and community satisfaction.',
+      description:
+        'Measure response turnaround times, false-positive alert frequencies, and community satisfaction.',
       status: 'UPCOMING',
       progress: 0,
       startDate: 'Jul 01, 2026',
@@ -286,7 +305,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
       phase: 'PHASE 06',
       period: 'AUG 2026',
       title: 'Scale Recommendation',
-      description: 'Submit policy brief and commercialization tender specifications to Jharkhand DWSD.',
+      description:
+        'Submit policy brief and commercialization tender specifications to Jharkhand DWSD.',
       status: 'PLANNED',
       progress: 0,
       startDate: 'Aug 01, 2026',
@@ -318,7 +338,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'del-2',
       title: 'Field Installation Protocol',
-      description: 'Standard operating procedure for non-invasive mounting on India Mark II pump heads.',
+      description:
+        'Standard operating procedure for non-invasive mounting on India Mark II pump heads.',
       milestoneTitle: 'Field Pilot',
       owner: 'Rural Innovation Lab',
       status: 'COMPLETED',
@@ -329,7 +350,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'del-3',
       title: 'Maintenance Alert Workflow',
-      description: 'Escalation rules, SMS syntax, and automated triage protocol for block maintenance vans.',
+      description:
+        'Escalation rules, SMS syntax, and automated triage protocol for block maintenance vans.',
       milestoneTitle: 'Field Pilot',
       owner: 'District Administration',
       status: 'UNDER_REVIEW',
@@ -348,7 +370,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
     {
       id: 'del-4',
       title: 'Pilot Evaluation Report',
-      description: 'First 60-day telemetry audit analyzing mean time to repair and false positives.',
+      description:
+        'First 60-day telemetry audit analyzing mean time to repair and false positives.',
       milestoneTitle: 'Impact Evaluation',
       owner: 'Research Team',
       status: 'DRAFT',
@@ -529,7 +552,8 @@ const DEFAULT_WORKSPACE_DATA: WorkspaceData = {
           date: 'June 18, 2026',
           collectedBy: 'BIT Mesra Research Team',
           verificationStatus: 'VERIFIED',
-          notes: 'Mean time to detection reduced from 10 days to 3.8 hours across 14 monitored units.',
+          notes:
+            'Mean time to detection reduced from 10 days to 3.8 hours across 14 monitored units.',
         },
         {
           id: 'ev-2',
@@ -568,7 +592,9 @@ const WORKSPACES_STORE: Record<string, WorkspaceData> = {
 };
 
 function generateFallbackWorkspace(projectId: string): WorkspaceData {
-  const base = SEED_PROJECTS.find((p) => p.id === projectId || p.projectCode === projectId) || SEED_PROJECTS[0];
+  const base =
+    SEED_PROJECTS.find((p) => p.id === projectId || p.projectCode === projectId) ||
+    SEED_PROJECTS[0];
 
   return {
     context: {
@@ -655,7 +681,10 @@ function generateFallbackWorkspace(projectId: string): WorkspaceData {
         period: 'Q2 2026',
         title: 'Engineering & Field Testing',
         description: `Operating deployment units in ${base.location}.`,
-        status: (base.stage === 'RESEARCH_DESIGN' || (base.stage as string) === 'DESIGN') ? 'IN_PROGRESS' : 'COMPLETED',
+        status:
+          base.stage === 'RESEARCH_DESIGN' || (base.stage as string) === 'DESIGN'
+            ? 'IN_PROGRESS'
+            : 'COMPLETED',
         progress: base.progressPercentage || 50,
         startDate: 'Apr 2026',
         targetDate: 'Jun 2026',
@@ -754,7 +783,7 @@ export async function getWorkspace(projectId: string): Promise<WorkspaceData> {
 export async function updateMilestone(
   projectId: string,
   milestoneId: string,
-  updates: Partial<WorkspaceMilestone>
+  updates: Partial<WorkspaceMilestone>,
 ): Promise<WorkspaceMilestone | null> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);
@@ -769,7 +798,7 @@ export async function updateMilestone(
 export async function updateWorkItemStatus(
   projectId: string,
   itemId: string,
-  newStatus: WorkStatus
+  newStatus: WorkStatus,
 ): Promise<WorkItem | null> {
   await new Promise((r) => setTimeout(r, 60));
   const ws = await getWorkspace(projectId);
@@ -787,7 +816,7 @@ export async function updateWorkItemStatus(
 export async function addWorkItem(
   projectId: string,
   workstreamId: string,
-  item: Omit<WorkItem, 'id' | 'workstreamId' | 'comments'>
+  item: Omit<WorkItem, 'id' | 'workstreamId' | 'comments'>,
 ): Promise<WorkItem> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);
@@ -804,7 +833,7 @@ export async function addWorkItem(
 
 export async function addTeamMember(
   projectId: string,
-  member: Omit<WorkspaceTeamMember, 'id'>
+  member: Omit<WorkspaceTeamMember, 'id'>,
 ): Promise<WorkspaceTeamMember> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);
@@ -820,7 +849,7 @@ export async function updateDeliverableStatus(
   projectId: string,
   deliverableId: string,
   newStatus: DeliverableStatus,
-  reviewComment?: string
+  reviewComment?: string,
 ): Promise<WorkspaceDeliverable | null> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);
@@ -844,7 +873,7 @@ export async function updateDeliverableStatus(
 
 export async function createUpdate(
   projectId: string,
-  update: Omit<WorkspaceUpdate, 'id' | 'createdAt'>
+  update: Omit<WorkspaceUpdate, 'id' | 'createdAt'>,
 ): Promise<WorkspaceUpdate> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);
@@ -857,10 +886,7 @@ export async function createUpdate(
   return newUpdate;
 }
 
-export async function resolveIssue(
-  projectId: string,
-  updateId: string
-): Promise<boolean> {
+export async function resolveIssue(projectId: string, updateId: string): Promise<boolean> {
   await new Promise((r) => setTimeout(r, 60));
   const ws = await getWorkspace(projectId);
   const target = ws.updates.find((u) => u.id === updateId);
@@ -873,7 +899,7 @@ export async function resolveIssue(
 
 export async function uploadDocument(
   projectId: string,
-  doc: Omit<WorkspaceDocument, 'id' | 'uploadDate'>
+  doc: Omit<WorkspaceDocument, 'id' | 'uploadDate'>,
 ): Promise<WorkspaceDocument> {
   await new Promise((r) => setTimeout(r, 80));
   const ws = await getWorkspace(projectId);

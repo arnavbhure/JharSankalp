@@ -18,7 +18,8 @@ export function IndustryCapabilityProfile({ capabilities }: IndustryCapabilityPr
             Industry Capability & Resource Profile
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Declared competencies, manufacturing lines, and engineering mentors registered to receive targeted project requests.
+            Declared competencies, manufacturing lines, and engineering mentors registered to
+            receive targeted project requests.
           </p>
         </div>
 
@@ -38,13 +39,9 @@ export function IndustryCapabilityProfile({ capabilities }: IndustryCapabilityPr
                 {cap.category}
               </span>
 
-              <h4 className="text-[15px] font-bold text-[#1D2522] leading-tight">
-                {cap.title}
-              </h4>
+              <h4 className="text-[15px] font-bold text-[#1D2522] leading-tight">{cap.title}</h4>
 
-              <p className="text-[12px] text-[#6B5845] leading-relaxed">
-                {cap.description}
-              </p>
+              <p className="text-[12px] text-[#6B5845] leading-relaxed">{cap.description}</p>
             </div>
 
             <div className="pt-2 border-t border-[#EEEAE1] space-y-1.5">

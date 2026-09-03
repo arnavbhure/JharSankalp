@@ -1,19 +1,11 @@
 import { DashboardActivityItem } from '../../types/dashboard';
-import {
-  Sparkles,
-  MessageSquare,
-  Award,
-  Rocket,
-  CheckCircle2,
-} from 'lucide-react';
+import { Sparkles, MessageSquare, Award, Rocket, CheckCircle2 } from 'lucide-react';
 
 interface RecentActivitySectionProps {
   activities: DashboardActivityItem[];
 }
 
-export function RecentActivitySection({
-  activities,
-}: RecentActivitySectionProps) {
+export function RecentActivitySection({ activities }: RecentActivitySectionProps) {
   const getActivityIcon = (type: DashboardActivityItem['type']) => {
     switch (type) {
       case 'shortlist':
@@ -37,9 +29,7 @@ export function RecentActivitySection({
         <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
           CHRONOLOGICAL DISPATCH
         </span>
-        <span className="text-[11px] font-mono text-[#6B5845]">
-          Live Updates
-        </span>
+        <span className="text-[11px] font-mono text-[#6B5845]">Live Updates</span>
       </div>
 
       <h2 className="text-[1.35rem] sm:text-[1.5rem] font-extrabold text-[#1D2522] font-sans">
@@ -67,9 +57,7 @@ export function RecentActivitySection({
                 </span>
               </div>
 
-              <p className="text-[12px] text-[#6B5845] truncate">
-                {item.target}
-              </p>
+              <p className="text-[12px] text-[#6B5845] truncate">{item.target}</p>
             </div>
           </div>
         ))}

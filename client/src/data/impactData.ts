@@ -1,9 +1,4 @@
-import {
-  DistrictImpact,
-  DomainImpactItem,
-  CommunityQuote,
-  ImpactFeedItem,
-} from '../types/impact';
+import { DistrictImpact, DomainImpactItem, CommunityQuote, ImpactFeedItem } from '../types/impact';
 
 export const DISTRICTS_IMPACT_DATA: DistrictImpact[] = [
   {
@@ -87,7 +82,8 @@ export const DOMAINS_IMPACT_DATA: DomainImpactItem[] = [
     projectsCount: 12,
     peopleReached: 4800,
     highlightMetric: '45.8% downtime reduction',
-    description: 'IoT telemetry, acoustic handpump collars, and village Jal Sahiya early warning dispatch.',
+    description:
+      'IoT telemetry, acoustic handpump collars, and village Jal Sahiya early warning dispatch.',
     color: 'text-[#0284C7]',
     bg: 'bg-[#F0F9FF] border-[#BAE6FD]',
   },
@@ -107,7 +103,8 @@ export const DOMAINS_IMPACT_DATA: DomainImpactItem[] = [
     projectsCount: 5,
     peopleReached: 2100,
     highlightMetric: '2,100 Citizens Reached',
-    description: 'Backpack diagnostic labs for tribal ASHA workers with non-invasive hemoglobinometers.',
+    description:
+      'Backpack diagnostic labs for tribal ASHA workers with non-invasive hemoglobinometers.',
     color: 'text-[#BE123C]',
     bg: 'bg-[#FFF1F2] border-[#FECDD3]',
   },
@@ -117,7 +114,8 @@ export const DOMAINS_IMPACT_DATA: DomainImpactItem[] = [
     projectsCount: 4,
     peopleReached: 1700,
     highlightMetric: '1,700 Students Supported',
-    description: 'Offline solar micro-servers broadcasting bilingual Ol Chiki and Hindi modules to village tablets.',
+    description:
+      'Offline solar micro-servers broadcasting bilingual Ol Chiki and Hindi modules to village tablets.',
     color: 'text-[#7E22CE]',
     bg: 'bg-[#FAF5FF] border-[#E9D5FF]',
   },
@@ -127,7 +125,8 @@ export const DOMAINS_IMPACT_DATA: DomainImpactItem[] = [
     projectsCount: 3,
     peopleReached: 600,
     highlightMetric: '600 Workers Covered',
-    description: 'InSAR radar and borehole extensometers delivering 48-hour subsidence advance alerts.',
+    description:
+      'InSAR radar and borehole extensometers delivering 48-hour subsidence advance alerts.',
     color: 'text-[#B45309]',
     bg: 'bg-[#FFFBEB] border-[#FDE68A]',
   },
@@ -137,7 +136,8 @@ export const DOMAINS_IMPACT_DATA: DomainImpactItem[] = [
     projectsCount: 6,
     peopleReached: 1100,
     highlightMetric: 'Communities Engaged',
-    description: 'Canopy audio classifiers detecting chainsaw signatures to stop illegal forest felling.',
+    description:
+      'Canopy audio classifiers detecting chainsaw signatures to stop illegal forest felling.',
     color: 'text-[#15803D]',
     bg: 'bg-[#F0FDF4] border-[#BBF7D0]',
   },
@@ -160,7 +160,8 @@ export const COMMUNITY_QUOTES: CommunityQuote[] = [
   },
   {
     id: 'q-3',
-    quote: 'The pilot gave us confidence that local innovation can actually scale across rural districts.',
+    quote:
+      'The pilot gave us confidence that local innovation can actually scale across rural districts.',
     author: 'Sanjay Oraon',
     role: 'District Implementation Partner',
     location: 'Ranchi District Innovation Cell',

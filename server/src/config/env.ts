@@ -2,16 +2,25 @@ import { z } from 'zod';
 import dotenv from 'dotenv';
 import path from 'node:path';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-// Look for .env in current working directory first, then parent
-const candidates = [
+// Deterministically locate .env files relative to this config file and cwd
+const currentFileDir = path.dirname(fileURLToPath(import.meta.url));
+const serverRootDir = path.resolve(currentFileDir, '..', '..');
+const repoRootDir = path.resolve(serverRootDir, '..');
+
+const candidateEnvFiles = [
+  path.resolve(repoRootDir, '.env'),
+  path.resolve(serverRootDir, '.env'),
   path.resolve(process.cwd(), '.env'),
-  path.resolve(process.cwd(), '../.env'),
+  path.resolve(process.cwd(), 'server', '.env'),
+  path.resolve(process.cwd(), '..', '.env'),
 ];
-for (const candidate of candidates) {
-  if (fs.existsSync(candidate)) {
-    dotenv.config({ path: candidate });
-    break;
+
+// Load all existing .env files without breaking, so values are merged
+for (const envPath of candidateEnvFiles) {
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath });
   }
 }
 

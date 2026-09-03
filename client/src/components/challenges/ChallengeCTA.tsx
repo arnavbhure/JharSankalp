@@ -26,7 +26,9 @@ export function ChallengeCTA() {
             </h2>
 
             <p className="text-[14.5px] sm:text-[15px] text-[#1D2522]/80 leading-relaxed">
-              Share a challenge you&apos;ve observed and help connect the right people to solve it. Grassroots observations are reviewed by district authorities and matched with university labs.
+              Share a challenge you&apos;ve observed and help connect the right people to solve it.
+              Grassroots observations are reviewed by district authorities and matched with
+              university labs.
             </p>
           </div>
 

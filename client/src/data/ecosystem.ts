@@ -1,6 +1,6 @@
 /**
  * Centralized Ecosystem Source of Truth for JharSankalp
- * 
+ *
  * Defines standardized domains, lifecycle stages, and the core
  * relationship graph: Challenge -> Idea -> Project -> Impact.
  */
@@ -16,7 +16,7 @@ export const ECOSYSTEM_DOMAINS = [
   'Rural Livelihood',
 ] as const;
 
-export type EcosystemDomain = typeof ECOSYSTEM_DOMAINS[number];
+export type EcosystemDomain = (typeof ECOSYSTEM_DOMAINS)[number];
 
 export const PROJECT_STAGES = [
   'FORMATION',
@@ -27,7 +27,7 @@ export const PROJECT_STAGES = [
   'IMPACT_VERIFICATION',
 ] as const;
 
-export type ProjectStage = typeof PROJECT_STAGES[number];
+export type ProjectStage = (typeof PROJECT_STAGES)[number];
 
 export interface UnifiedChallenge {
   id: string;
@@ -96,7 +96,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Water Management',
     district: 'Khunti',
     block: 'Murhu Block',
-    summary: 'Over 18 rural hamlets face recurring drinking water disruptions due to sub-surface mechanical valve fatigue in India Mark II handpumps.',
+    summary:
+      'Over 18 rural hamlets face recurring drinking water disruptions due to sub-surface mechanical valve fatigue in India Mark II handpumps.',
     status: 'ACTIVE PILOT',
     priority: 'HIGH',
     dateReported: '10 March 2026',
@@ -112,7 +113,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Mining Safety',
     district: 'Dhanbad',
     block: 'Jharia Sector 4',
-    summary: 'Subterranean coal seam fires and abandoned legacy voids threaten 15,000+ residents with sudden strata collapse without prior visual warning.',
+    summary:
+      'Subterranean coal seam fires and abandoned legacy voids threaten 15,000+ residents with sudden strata collapse without prior visual warning.',
     status: 'ACTIVE PILOT',
     priority: 'CRITICAL',
     dateReported: '12 March 2026',
@@ -128,7 +130,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Agriculture',
     district: 'Gumla',
     block: 'Raidih Block',
-    summary: 'High aluminum toxicity and rapid soil acidification across 12 tribal villages cause 40% losses in pulse and millet yields.',
+    summary:
+      'High aluminum toxicity and rapid soil acidification across 12 tribal villages cause 40% losses in pulse and millet yields.',
     status: 'ACTIVE PILOT',
     priority: 'HIGH',
     dateReported: '24 February 2026',
@@ -144,7 +147,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Education',
     district: 'West Singhbhum',
     block: 'Chaibasa Block',
-    summary: 'Primary students whose mother tongue is Ho or Santhali experience learning stagnation due to state-mandated Hindi/English textbooks.',
+    summary:
+      'Primary students whose mother tongue is Ho or Santhali experience learning stagnation due to state-mandated Hindi/English textbooks.',
     status: 'ACTIVE PILOT',
     priority: 'HIGH',
     dateReported: '15 January 2026',
@@ -160,7 +164,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Agriculture / Livelihoods',
     district: 'Latehar',
     block: 'Garu Block',
-    summary: 'Smallholder tomato and ginger farmers lose up to 35% of harvested volume during transit to urban markets due to zero cold chain infrastructure.',
+    summary:
+      'Smallholder tomato and ginger farmers lose up to 35% of harvested volume during transit to urban markets due to zero cold chain infrastructure.',
     status: 'OPEN FOR COLLABORATION',
     priority: 'HIGH',
     dateReported: '18 February 2026',
@@ -176,7 +181,8 @@ export const CANONICAL_CHALLENGES: UnifiedChallenge[] = [
     domain: 'Environment',
     district: 'East Singhbhum',
     block: 'Musabani Block',
-    summary: 'Industrial mine tailings generate acidic runoff contaminating regional stream networks and inhibiting natural vegetative ground recovery.',
+    summary:
+      'Industrial mine tailings generate acidic runoff contaminating regional stream networks and inhibiting natural vegetative ground recovery.',
     status: 'ACTIVE PILOT',
     priority: 'MEDIUM',
     dateReported: '05 November 2025',
@@ -202,7 +208,8 @@ export const CANONICAL_IDEAS: UnifiedIdea[] = [
     projectTitle: 'Smart Rural Water Reliability Network',
     stage: 'PROTOTYPE',
     stageLabel: 'PROTOTYPE DEVELOPMENT',
-    summary: 'A clamped acoustic vibration collar tracking pump stroke rhythm and transmitting failure alerts over LoRaWAN before complete seizure occurs.',
+    summary:
+      'A clamped acoustic vibration collar tracking pump stroke rhythm and transmitting failure alerts over LoRaWAN before complete seizure occurs.',
     authorOrTeam: 'BIT Mesra Telemetry Cell',
     likesCount: 128,
   },
@@ -219,7 +226,8 @@ export const CANONICAL_IDEAS: UnifiedIdea[] = [
     projectTitle: 'Portable Electrochemical Soil Chemistry Probes',
     stage: 'PROTOTYPE',
     stageLabel: 'PROTOTYPE DEVELOPMENT',
-    summary: 'Handheld diagnostic device delivering on-the-spot pH and NPK readings to village Kisan Mitras via Bluetooth vernacular app.',
+    summary:
+      'Handheld diagnostic device delivering on-the-spot pH and NPK readings to village Kisan Mitras via Bluetooth vernacular app.',
     authorOrTeam: 'Birsa Agricultural University AgriTech Hub',
     likesCount: 94,
   },
@@ -236,7 +244,8 @@ export const CANONICAL_IDEAS: UnifiedIdea[] = [
     projectTitle: 'Predictive Mine Subsidence Early Warning System',
     stage: 'PROTOTYPE',
     stageLabel: 'LABORATORY BENCH TESTING',
-    summary: 'Distributed borehole geophones and satellite InSAR correlation generating 48-hour advance ground subsidence warnings.',
+    summary:
+      'Distributed borehole geophones and satellite InSAR correlation generating 48-hour advance ground subsidence warnings.',
     authorOrTeam: 'BIT Sindri & IIT ISM Strata Cell',
     likesCount: 112,
   },
@@ -253,7 +262,8 @@ export const CANONICAL_IDEAS: UnifiedIdea[] = [
     projectTitle: 'Santhali & Ho Vernacular Speech-to-Text Engine',
     stage: 'PILOT',
     stageLabel: 'FIELD TESTING',
-    summary: 'AI speech-to-text models trained on Ol Chiki and Warang Chiti phonetics to narrate primary math and science concepts in children mother tongue.',
+    summary:
+      'AI speech-to-text models trained on Ol Chiki and Warang Chiti phonetics to narrate primary math and science concepts in children mother tongue.',
     authorOrTeam: 'Kolhan University Linguistics Lab',
     likesCount: 76,
   },
@@ -279,7 +289,8 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'ON_TRACK',
     beneficiariesCount: '2,000+ Residents',
-    summary: 'Low-cost clamped vibration sensors and LoRaWAN telemetry installed on India Mark II handpumps to predict breakdown events.',
+    summary:
+      'Low-cost clamped vibration sensors and LoRaWAN telemetry installed on India Mark II handpumps to predict breakdown events.',
   },
   {
     id: 'PRJ-2026-0009',
@@ -299,7 +310,8 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'NEEDS_ATTENTION',
     beneficiariesCount: '15,000+ Residents',
-    summary: 'Downhole sensor mesh integrating acoustic emissions, borehole tiltmetry, and satellite InSAR telemetry to predict void collapse.',
+    summary:
+      'Downhole sensor mesh integrating acoustic emissions, borehole tiltmetry, and satellite InSAR telemetry to predict void collapse.',
   },
   {
     id: 'PRJ-2026-0007',
@@ -319,7 +331,8 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'ON_TRACK',
     beneficiariesCount: '4,500+ Farmers',
-    summary: 'Handheld ion-selective sensor arrays for instantaneous soil pH, electrical conductivity, and primary nutrient diagnostics.',
+    summary:
+      'Handheld ion-selective sensor arrays for instantaneous soil pH, electrical conductivity, and primary nutrient diagnostics.',
   },
   {
     id: 'PRJ-2025-0031',
@@ -339,7 +352,8 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'ON_TRACK',
     beneficiariesCount: '1,800+ Students',
-    summary: 'Acoustic voice models and interactive learning modules narrating science and numeracy concepts in Santhali and Ho.',
+    summary:
+      'Acoustic voice models and interactive learning modules narrating science and numeracy concepts in Santhali and Ho.',
   },
   {
     id: 'PRJ-2026-0014',
@@ -357,7 +371,8 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'DELAYED',
     beneficiariesCount: '3,200+ Farmers',
-    summary: 'Phase-change thermal battery units on mobile farm carts preserving perishable tomato and green vegetable harvests.',
+    summary:
+      'Phase-change thermal battery units on mobile farm carts preserving perishable tomato and green vegetable harvests.',
   },
   {
     id: 'PRJ-2025-0026',
@@ -375,6 +390,7 @@ export const CANONICAL_PROJECTS: UnifiedProject[] = [
     milestonesTotal: 6,
     health: 'ON_TRACK',
     beneficiariesCount: '8,000+ Residents',
-    summary: 'Slow-pyrolysis biochar soil amendments immobilizing copper/arsenic runoff and restoring native grass vegetation.',
+    summary:
+      'Slow-pyrolysis biochar soil amendments immobilizing copper/arsenic runoff and restoring native grass vegetation.',
   },
 ];

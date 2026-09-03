@@ -55,7 +55,9 @@ export function GovernmentHeader({
               className="p-1.5 rounded-lg border border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#6B5845] transition-colors cursor-pointer"
               title="Refresh Telemetry Data"
             >
-              <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? 'animate-spin text-[#123B2A]' : ''}`} />
+              <RefreshCw
+                className={`h-3.5 w-3.5 ${refreshing ? 'animate-spin text-[#123B2A]' : ''}`}
+              />
             </button>
           </div>
         </div>
@@ -66,7 +68,8 @@ export function GovernmentHeader({
             Jharkhand Societal Innovation Ecosystem
           </h1>
           <p className="text-[15.5px] sm:text-[17px] text-[#6B5845] max-w-3xl leading-relaxed">
-            Real-time administrative command overview of community challenges, academic research consortia, and ground deployments across the state.
+            Real-time administrative command overview of community challenges, academic research
+            consortia, and ground deployments across the state.
           </p>
         </div>
 

@@ -54,44 +54,28 @@ export function LifecycleProgress({ challenge }: LifecycleProgressProps) {
       name: 'Under Review',
       shortDesc: 'District authorities & domain desk corroborating ground truth.',
       status:
-        currentStageIndex > 2
-          ? 'completed'
-          : currentStageIndex === 2
-          ? 'current'
-          : 'upcoming',
+        currentStageIndex > 2 ? 'completed' : currentStageIndex === 2 ? 'current' : 'upcoming',
     },
     {
       id: 'matching',
       name: 'Institution Matching',
       shortDesc: 'Assigned to university engineering cells and incubators.',
       status:
-        currentStageIndex > 3
-          ? 'completed'
-          : currentStageIndex === 3
-          ? 'current'
-          : 'upcoming',
+        currentStageIndex > 3 ? 'completed' : currentStageIndex === 3 ? 'current' : 'upcoming',
     },
     {
       id: 'solution',
       name: 'Solution Development',
       shortDesc: 'Consortium members prototyping feasibility and field hardware.',
       status:
-        currentStageIndex > 4
-          ? 'completed'
-          : currentStageIndex === 4
-          ? 'current'
-          : 'upcoming',
+        currentStageIndex > 4 ? 'completed' : currentStageIndex === 4 ? 'current' : 'upcoming',
     },
     {
       id: 'implementation',
       name: 'Project Implementation',
       shortDesc: 'Field deployment, district pilot testing, and impact tracking.',
       status:
-        currentStageIndex >= 6
-          ? 'completed'
-          : currentStageIndex === 5
-          ? 'current'
-          : 'upcoming',
+        currentStageIndex >= 6 ? 'completed' : currentStageIndex === 5 ? 'current' : 'upcoming',
     },
   ];
 
@@ -108,7 +92,8 @@ export function LifecycleProgress({ challenge }: LifecycleProgressProps) {
           Challenge Lifecycle & Progression
         </h2>
         <p className="text-[14px] text-[#6B5845] max-w-xl">
-          Full transparency from raw citizen submission to validated state-wide public policy intervention.
+          Full transparency from raw citizen submission to validated state-wide public policy
+          intervention.
         </p>
       </div>
 
@@ -123,9 +108,7 @@ export function LifecycleProgress({ challenge }: LifecycleProgressProps) {
             <div className="text-[1.25rem] font-extrabold text-[#123B2A] font-sans mt-0.5">
               {currentActive.name}
             </div>
-            <div className="text-[12.5px] text-[#6B5845]">
-              {currentActive.shortDesc}
-            </div>
+            <div className="text-[12.5px] text-[#6B5845]">{currentActive.shortDesc}</div>
           </div>
 
           <div className="flex items-center gap-2 text-[12px] font-mono text-[#B45309] bg-[#FEF6E9] px-3 py-1 rounded-md border border-[#F8CCA5] font-bold self-start sm:self-auto">
@@ -147,8 +130,8 @@ export function LifecycleProgress({ challenge }: LifecycleProgressProps) {
                   isCurrent
                     ? 'border-[#123B2A] bg-[#123B2A]/5 ring-2 ring-[#123B2A]/20 shadow-xs'
                     : isCompleted
-                    ? 'border-[#BBF7D0] bg-[#F0FDF4]'
-                    : 'border-[#EEEAE1] bg-[#FAF9F5] opacity-70'
+                      ? 'border-[#BBF7D0] bg-[#F0FDF4]'
+                      : 'border-[#EEEAE1] bg-[#FAF9F5] opacity-70'
                 }`}
               >
                 <div className="space-y-1.5">

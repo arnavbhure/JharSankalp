@@ -64,7 +64,9 @@ async function getDashboardOverview(req: Request, res: Response, next: NextFunct
     const challengesAgg = await prisma.challenge.aggregate({
       _sum: { affectedPopulation: true },
     });
-    const totalPeopleImpacted = (projectsAgg._sum.affectedPopulation || 0) + (challengesAgg._sum.affectedPopulation || 0) || 32000;
+    const totalPeopleImpacted =
+      (projectsAgg._sum.affectedPopulation || 0) + (challengesAgg._sum.affectedPopulation || 0) ||
+      32000;
 
     // Count distinct districts with projects or challenges
     const distinctDistricts = await prisma.challenge.findMany({
@@ -113,7 +115,9 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
     ] = await Promise.all([
       prisma.challenge.count(),
       prisma.challenge.count({ where: { verificationStatus: 'VERIFIED' } }),
-      prisma.project.count({ where: { stage: { in: ['FIELD_PILOT', 'IMPLEMENTATION', 'SCALE'] } } }),
+      prisma.project.count({
+        where: { stage: { in: ['FIELD_PILOT', 'IMPLEMENTATION', 'SCALE'] } },
+      }),
       prisma.challenge.findMany({
         where: { priority: 'HIGH' },
         take: 5,
@@ -160,12 +164,7 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
  */
 async function getUniversityDashboard(req: Request, res: Response, next: NextFunction) {
   try {
-    const [
-      totalIdeas,
-      activeProjects,
-      universityProjects,
-      recentIdeas,
-    ] = await Promise.all([
+    const [totalIdeas, activeProjects, universityProjects, recentIdeas] = await Promise.all([
       prisma.idea.count(),
       prisma.project.count({ where: { status: 'ACTIVE' } }),
       prisma.project.findMany({
@@ -217,35 +216,31 @@ async function getUniversityDashboard(req: Request, res: Response, next: NextFun
  */
 async function getIndustryDashboard(req: Request, res: Response, next: NextFunction) {
   try {
-    const [
-      totalProjects,
-      fieldPilots,
-      partnerCommitments,
-      participatingProjects,
-    ] = await Promise.all([
-      prisma.project.count(),
-      prisma.project.count({ where: { stage: 'FIELD_PILOT' } }),
-      prisma.projectParticipant.count({
-        where: {
-          organization: { type: 'INDUSTRY' },
-        },
-      }),
-      prisma.project.findMany({
-        where: {
-          participants: {
-            some: {
-              organization: { type: 'INDUSTRY' },
+    const [totalProjects, fieldPilots, partnerCommitments, participatingProjects] =
+      await Promise.all([
+        prisma.project.count(),
+        prisma.project.count({ where: { stage: 'FIELD_PILOT' } }),
+        prisma.projectParticipant.count({
+          where: {
+            organization: { type: 'INDUSTRY' },
+          },
+        }),
+        prisma.project.findMany({
+          where: {
+            participants: {
+              some: {
+                organization: { type: 'INDUSTRY' },
+              },
             },
           },
-        },
-        include: {
-          leadOrganization: true,
-          participants: { include: { organization: true } },
-          milestones: true,
-          impactMetrics: true,
-        },
-      }),
-    ]);
+          include: {
+            leadOrganization: true,
+            participants: { include: { organization: true } },
+            milestones: true,
+            impactMetrics: true,
+          },
+        }),
+      ]);
 
     sendSuccess(
       res,

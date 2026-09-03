@@ -132,7 +132,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'HIGH',
     projectsLinked: 3,
     facultyCount: 4,
-    description: 'Low-power LoRaWAN gateways, telemetry firmware, battery optimization for rural infrastructure.',
+    description:
+      'Low-power LoRaWAN gateways, telemetry firmware, battery optimization for rural infrastructure.',
   },
   {
     id: 'cap-2',
@@ -140,7 +141,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'HIGH',
     projectsLinked: 2,
     facultyCount: 3,
-    description: 'Acoustic anomaly detection, edge ML model compression, predictive maintenance pipelines.',
+    description:
+      'Acoustic anomaly detection, edge ML model compression, predictive maintenance pipelines.',
   },
   {
     id: 'cap-3',
@@ -148,7 +150,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'HIGH',
     projectsLinked: 2,
     facultyCount: 2,
-    description: 'Borewell hydraulics, aquifer recharge analysis, participatory community water management.',
+    description:
+      'Borewell hydraulics, aquifer recharge analysis, participatory community water management.',
   },
   {
     id: 'cap-4',
@@ -156,7 +159,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'MEDIUM',
     projectsLinked: 1,
     facultyCount: 2,
-    description: 'Subsidence modeling, strata seismic analysis, void cavity backfilling assessment.',
+    description:
+      'Subsidence modeling, strata seismic analysis, void cavity backfilling assessment.',
   },
   {
     id: 'cap-5',
@@ -164,7 +168,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'MEDIUM',
     projectsLinked: 1,
     facultyCount: 2,
-    description: 'Decentralized PV charging controllers, thermal phase-change materials for cold storage.',
+    description:
+      'Decentralized PV charging controllers, thermal phase-change materials for cold storage.',
   },
   {
     id: 'cap-6',
@@ -172,7 +177,8 @@ export const RESEARCH_CAPABILITIES: ResearchCapability[] = [
     strength: 'EMERGING',
     projectsLinked: 1,
     facultyCount: 1,
-    description: 'Low-resource speech corpus curation for Santhali, Mundari, and Ho vernacular education.',
+    description:
+      'Low-resource speech corpus curation for Santhali, Mundari, and Ho vernacular education.',
   },
 ];
 
@@ -219,25 +225,29 @@ export const UNIVERSITY_ACTIVITIES: UniversityActivity[] = [
   {
     id: 'uact-1',
     timestamp: '15 MINS AGO',
-    message: 'A new challenge "Solar Cold Storage Hub" was recommended based on your Renewable Energy capability.',
+    message:
+      'A new challenge "Solar Cold Storage Hub" was recommended based on your Renewable Energy capability.',
     category: 'MATCH',
   },
   {
     id: 'uact-2',
     timestamp: 'YESTERDAY',
-    message: 'Water Reliability Project (PRJ-2026-0012) completed Milestone 04: Field Pilot Calibration in Murhu.',
+    message:
+      'Water Reliability Project (PRJ-2026-0012) completed Milestone 04: Field Pilot Calibration in Murhu.',
     category: 'MILESTONE',
   },
   {
     id: 'uact-3',
     timestamp: '2 DAYS AGO',
-    message: 'Two M.Tech students joined the Soil Intelligence research team for electrochemical probe calibration.',
+    message:
+      'Two M.Tech students joined the Soil Intelligence research team for electrochemical probe calibration.',
     category: 'TALENT',
   },
   {
     id: 'uact-4',
     timestamp: '4 DAYS AGO',
-    message: 'Industry mentor from Rural Innovation Lab provided telemetry feedback on the Mine Safety prototype.',
+    message:
+      'Industry mentor from Rural Innovation Lab provided telemetry feedback on the Mine Safety prototype.',
     category: 'INDUSTRY',
   },
 ];

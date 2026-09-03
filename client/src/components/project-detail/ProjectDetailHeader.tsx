@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectDetail } from '../../types/projectDetail';
@@ -20,10 +19,7 @@ interface ProjectDetailHeaderProps {
   onJoinClick: () => void;
 }
 
-export function ProjectDetailHeader({
-  project,
-  onJoinClick,
-}: ProjectDetailHeaderProps) {
+export function ProjectDetailHeader({ project, onJoinClick }: ProjectDetailHeaderProps) {
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -46,8 +42,7 @@ export function ProjectDetailHeader({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasOpenOpportunities =
-    project.collaborationNeeds && project.collaborationNeeds.length > 0;
+  const hasOpenOpportunities = project.collaborationNeeds && project.collaborationNeeds.length > 0;
 
   return (
     <section className="border-b border-[#EEEAE1] bg-white pt-10 pb-8 sm:pt-12 sm:pb-10 text-left">
@@ -64,9 +59,7 @@ export function ProjectDetailHeader({
               {project.location}
             </span>
             <span className="text-[#6B5845]/60">·</span>
-            <span className="text-[#6B5845] font-mono font-semibold">
-              {project.projectCode}
-            </span>
+            <span className="text-[#6B5845] font-mono font-semibold">{project.projectCode}</span>
           </div>
 
           <div className="flex items-center gap-2.5">
@@ -78,7 +71,10 @@ export function ProjectDetailHeader({
               <Radio className="h-3 w-3 animate-pulse text-[#FA7E61]" />
               {project.stageLabel}
             </span>
-            <ProjectHealthIndicator health={project.health || 'ON_TRACK'} label={project.healthLabel || 'ON TRACK'} />
+            <ProjectHealthIndicator
+              health={project.health || 'ON_TRACK'}
+              label={project.healthLabel || 'ON TRACK'}
+            />
           </div>
         </div>
 
@@ -97,7 +93,9 @@ export function ProjectDetailHeader({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-[#EEEAE1]">
           <div className="flex items-center gap-2 text-[13px] text-[#6B5845] font-mono">
             <Building2 className="h-4 w-4 text-[#123B2A]" />
-            <span>Lead: <strong className="text-[#1D2522]">{project.leadInstitution}</strong></span>
+            <span>
+              Lead: <strong className="text-[#1D2522]">{project.leadInstitution}</strong>
+            </span>
           </div>
 
           <div className="flex items-center gap-2.5 flex-wrap">
@@ -109,7 +107,9 @@ export function ProjectDetailHeader({
                 className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#B5A886]/50 bg-[#FAF9F5] hover:bg-[#FEE1C7]/40 text-[#4C1E4F] text-[13px] font-bold transition-all cursor-pointer shadow-2xs"
               >
                 <span>View Linked Challenge</span>
-                <span className="text-[11px] font-mono text-[#FA7E61]">({project.challenge.id})</span>
+                <span className="text-[11px] font-mono text-[#FA7E61]">
+                  ({project.challenge.id})
+                </span>
               </button>
             )}
 
@@ -117,10 +117,11 @@ export function ProjectDetailHeader({
             <button
               type="button"
               onClick={() => setIsFollowing(!isFollowing)}
-              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-[13px] font-bold transition-all cursor-pointer ${isFollowing
-                ? 'border-[#15803D] bg-[#F0FDF4] text-[#15803D]'
-                : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522]'
-                }`}
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-[13px] font-bold transition-all cursor-pointer ${
+                isFollowing
+                  ? 'border-[#15803D] bg-[#F0FDF4] text-[#15803D]'
+                  : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5] text-[#1D2522]'
+              }`}
             >
               {isFollowing ? (
                 <>

@@ -46,22 +46,15 @@ export function RecentActivityTimeline({ activities }: RecentActivityTimelinePro
               <span className="text-[10px] font-mono font-bold text-[#123B2A] uppercase tracking-wider bg-[#F8F6F1] px-2 py-0.5 rounded border border-[#EEEAE1]">
                 {act.timeframeLabel}
               </span>
-              <span className="text-[11px] font-mono text-[#6B5845]">
-                {act.dateStr}
-              </span>
+              <span className="text-[11px] font-mono text-[#6B5845]">{act.dateStr}</span>
             </div>
 
             {/* Narrative text */}
-            <p className="text-[13px] text-[#1D2522] leading-relaxed font-medium">
-              {act.text}
-            </p>
+            <p className="text-[13px] text-[#1D2522] leading-relaxed font-medium">{act.text}</p>
 
             {/* Associated Challenge Link */}
             <div className="text-[11.5px] text-[#6B5845] mt-1">
-              Target:{' '}
-              <span className="font-semibold text-[#123B2A]">
-                {act.challengeTitle}
-              </span>
+              Target: <span className="font-semibold text-[#123B2A]">{act.challengeTitle}</span>
             </div>
           </div>
         ))}

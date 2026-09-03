@@ -19,7 +19,8 @@ export function SolutionApproaches({ challenge, onProposeIdea }: SolutionApproac
             Ideas being explored
           </h2>
           <p className="text-[14px] text-[#6B5845] max-w-xl">
-            Multiple parallel hypotheses under technical investigation. No single technology has been finalized as the definitive answer.
+            Multiple parallel hypotheses under technical investigation. No single technology has
+            been finalized as the definitive answer.
           </p>
         </div>
 

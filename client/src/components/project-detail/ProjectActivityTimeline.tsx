@@ -20,9 +20,7 @@ export function ProjectActivityTimeline({ project }: ProjectActivityTimelineProp
             </h3>
           </div>
 
-          <span className="text-[12px] font-mono text-[#6B5845]">
-            Live Activity Stream
-          </span>
+          <span className="text-[12px] font-mono text-[#6B5845]">Live Activity Stream</span>
         </div>
 
         {/* Vertical Timeline */}
@@ -39,13 +37,9 @@ export function ProjectActivityTimeline({ project }: ProjectActivityTimelineProp
                   {item.timestamp}
                 </span>
 
-                <h4 className="text-[14px] font-bold text-[#1D2522]">
-                  {item.title}
-                </h4>
+                <h4 className="text-[14px] font-bold text-[#1D2522]">{item.title}</h4>
 
-                <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                  {item.description}
-                </p>
+                <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.description}</p>
               </div>
             </div>
           ))}

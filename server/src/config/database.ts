@@ -19,7 +19,9 @@ export async function connectDatabase(): Promise<boolean> {
     console.log('✅ Database connected');
     return true;
   } catch (error) {
-    console.warn('⚠️  Database connection failed — running in degraded mode. Verify DATABASE_URL in .env.');
+    console.warn(
+      '⚠️  Database connection failed — running in degraded mode. Verify DATABASE_URL in .env.',
+    );
     return false;
   }
 }

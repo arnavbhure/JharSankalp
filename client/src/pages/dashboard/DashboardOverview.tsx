@@ -54,10 +54,7 @@ export function DashboardOverview() {
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Main Functional Area: Active Challenges */}
         <div className="lg:col-span-8 space-y-6">
-          <ActiveChallengesSection
-            title={data.challengesTitle}
-            challenges={data.challenges}
-          />
+          <ActiveChallengesSection title={data.challengesTitle} challenges={data.challenges} />
         </div>
 
         {/* Right Side Column: Featured Challenge + Recent Activity */}

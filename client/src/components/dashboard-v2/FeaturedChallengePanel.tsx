@@ -24,10 +24,7 @@ export function FeaturedChallengePanel({ featured }: FeaturedChallengePanelProps
           strokeDasharray="4,4"
           className="opacity-40"
         />
-        <path
-          d="M -20 220 Q 80 180 200 230 T 400 200"
-          className="opacity-20"
-        />
+        <path d="M -20 220 Q 80 180 200 230 T 400 200" className="opacity-20" />
       </svg>
 
       <div className="space-y-4 relative z-10">
@@ -52,7 +49,8 @@ export function FeaturedChallengePanel({ featured }: FeaturedChallengePanelProps
         </div>
 
         <p className="text-[13px] text-[#F7F5F0]/80 leading-relaxed">
-          High-priority district problem call uniting youth innovation squads, university engineering labs, and local Jal Samitis.
+          High-priority district problem call uniting youth innovation squads, university
+          engineering labs, and local Jal Samitis.
         </p>
 
         {/* Supporting Metrics Strip */}

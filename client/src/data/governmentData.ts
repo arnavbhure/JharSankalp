@@ -49,7 +49,8 @@ export const DISTRICT_ACTIVITIES: DistrictActivity[] = [
     priority: 'MEDIUM',
     leadInstitution: 'Ranchi University & BIT Mesra',
     coordinates: { x: 50, y: 53 },
-    statusNote: 'Highest volume of civic tech ideas; urban drainage and tactile STEM kits in pilot.',
+    statusNote:
+      'Highest volume of civic tech ideas; urban drainage and tactile STEM kits in pilot.',
   },
   {
     district: 'Gumla',
@@ -481,7 +482,8 @@ export const ATTENTION_ITEMS: AttentionItem[] = [
     category: 'CHALLENGES',
     severity: 'HIGH',
     count: 12,
-    description: 'Civic challenges in rural sanitation & irrigation have passed triage without receiving academic allocation.',
+    description:
+      'Civic challenges in rural sanitation & irrigation have passed triage without receiving academic allocation.',
     recommendedAction: 'Dispatch auto-routing notifications to BIT Mesra & BAU Innovation Cells.',
     actionPrompt: 'Trigger University Allocation',
   },
@@ -491,8 +493,10 @@ export const ATTENTION_ITEMS: AttentionItem[] = [
     category: 'PROJECTS',
     severity: 'CRITICAL',
     count: 3,
-    description: 'Mining safety telemetry arrays in Dhanbad pending BCCL surface drilling approval.',
-    recommendedAction: 'Issue administrative facilitation letter from Directorate to District Collectorate.',
+    description:
+      'Mining safety telemetry arrays in Dhanbad pending BCCL surface drilling approval.',
+    recommendedAction:
+      'Issue administrative facilitation letter from Directorate to District Collectorate.',
     actionPrompt: 'Issue State Facilitation Memo',
   },
   {
@@ -501,7 +505,8 @@ export const ATTENTION_ITEMS: AttentionItem[] = [
     category: 'PILOTS',
     severity: 'HIGH',
     count: 2,
-    description: 'Cold-storage micro-hub in Latehar delayed due to transformer delay; sensor supply chain stalled.',
+    description:
+      'Cold-storage micro-hub in Latehar delayed due to transformer delay; sensor supply chain stalled.',
     recommendedAction: 'Reallocate buffer hardware from Ranchi centralized prototyping inventory.',
     actionPrompt: 'Review Logistics Bottleneck',
   },
@@ -511,8 +516,10 @@ export const ATTENTION_ITEMS: AttentionItem[] = [
     category: 'DISTRICTS',
     severity: 'WARNING',
     count: 4,
-    description: 'Simdega, Pakur, Jamtara, and Khunti have fewer than 2 academic consortia active on the ground.',
-    recommendedAction: 'Mandate affiliated regional engineering colleges to adopt high-priority rural blocks.',
+    description:
+      'Simdega, Pakur, Jamtara, and Khunti have fewer than 2 academic consortia active on the ground.',
+    recommendedAction:
+      'Mandate affiliated regional engineering colleges to adopt high-priority rural blocks.',
     actionPrompt: 'Deploy Mobile KVK Taskforce',
   },
 ];
@@ -553,7 +560,8 @@ export const ECOSYSTEM_ACTIVITIES: EcosystemActivity[] = [
   {
     id: 'act-gov-5',
     timestamp: '4 DAYS AGO',
-    message: 'Directorate approved seed pilot allocation for Ho/Santhali Vernacular Education Engine.',
+    message:
+      'Directorate approved seed pilot allocation for Ho/Santhali Vernacular Education Engine.',
     domain: 'Education',
     district: 'West Singhbhum',
     type: 'GRANT_ALLOCATED',

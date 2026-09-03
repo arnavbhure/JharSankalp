@@ -98,11 +98,10 @@ export function DashboardSettings() {
                 className="mt-1 accent-[#123B2A] cursor-pointer"
               />
               <div>
-                <strong className="text-[#1D2522] block">
-                  Urgent Field Telemetry SMS Alerts
-                </strong>
+                <strong className="text-[#1D2522] block">Urgent Field Telemetry SMS Alerts</strong>
                 <span className="text-[12px] text-[#6B5845]">
-                  Instant notification when a monitored drinking water pump triggers a breakdown alert.
+                  Instant notification when a monitored drinking water pump triggers a breakdown
+                  alert.
                 </span>
               </div>
             </label>
@@ -115,11 +114,10 @@ export function DashboardSettings() {
                 className="mt-1 accent-[#123B2A] cursor-pointer"
               />
               <div>
-                <strong className="text-[#1D2522] block">
-                  Weekly Civic Innovation Digest
-                </strong>
+                <strong className="text-[#1D2522] block">Weekly Civic Innovation Digest</strong>
                 <span className="text-[12px] text-[#6B5845]">
-                  Summary of newly posted challenges, collaborator invitations, and university prototype updates.
+                  Summary of newly posted challenges, collaborator invitations, and university
+                  prototype updates.
                 </span>
               </div>
             </label>

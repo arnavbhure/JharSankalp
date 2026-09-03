@@ -30,7 +30,8 @@ export function CitizenDashboardHeader({ userName = 'Arnav' }: CitizenDashboardH
 
           {/* Supporting Copy */}
           <p className="text-[14.5px] sm:text-[15.5px] text-[#6B5845] leading-relaxed">
-            Track your submissions, follow progress, and stay connected as communities, academic labs, and local institutions work toward sustainable solutions across Jharkhand.
+            Track your submissions, follow progress, and stay connected as communities, academic
+            labs, and local institutions work toward sustainable solutions across Jharkhand.
           </p>
         </div>
 

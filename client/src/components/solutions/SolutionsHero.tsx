@@ -34,7 +34,8 @@ export function SolutionsHero({ onExploreClick }: SolutionsHeroProps) {
 
             {/* Supporting Copy */}
             <p className="text-[15.5px] sm:text-[16.5px] text-[#6B5845] max-w-2xl leading-relaxed font-normal">
-              Explore prototypes, technologies and community-led innovations developed through the JharSankalp ecosystem to address real challenges across Jharkhand.
+              Explore prototypes, technologies and community-led innovations developed through the
+              JharSankalp ecosystem to address real challenges across Jharkhand.
             </p>
 
             {/* CTAs */}
@@ -83,9 +84,7 @@ export function SolutionsHero({ onExploreClick }: SolutionsHeroProps) {
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         28
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Active Solutions
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Active Solutions</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#15803D] font-bold bg-[#F0FDF4] px-2 py-0.5 rounded border border-[#BBF7D0]">
@@ -102,9 +101,7 @@ export function SolutionsHero({ onExploreClick }: SolutionsHeroProps) {
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         11
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Field Pilots
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Field Pilots</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#0284C7] font-bold bg-[#F0F9FF] px-2 py-0.5 rounded border border-[#BAE6FD]">
@@ -121,9 +118,7 @@ export function SolutionsHero({ onExploreClick }: SolutionsHeroProps) {
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         6
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Ready to Scale
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Ready to Scale</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#B45309] font-bold bg-[#FFFBEB] px-2 py-0.5 rounded border border-[#FDE68A]">

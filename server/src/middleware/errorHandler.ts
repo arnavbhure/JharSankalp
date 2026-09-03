@@ -35,8 +35,7 @@ export const errors = {
       `${entity.toUpperCase().replace(/\s/g, '_')}_NOT_FOUND`,
     ),
 
-  unauthorized: (message = 'Authentication required') =>
-    new AppError(message, 401, 'UNAUTHORIZED'),
+  unauthorized: (message = 'Authentication required') => new AppError(message, 401, 'UNAUTHORIZED'),
 
   forbidden: (message = 'You do not have permission to perform this action') =>
     new AppError(message, 403, 'FORBIDDEN'),
@@ -44,14 +43,11 @@ export const errors = {
   validation: (message: string, details?: Record<string, unknown>) =>
     new AppError(message, 400, 'VALIDATION_ERROR', details),
 
-  conflict: (message: string) =>
-    new AppError(message, 409, 'CONFLICT'),
+  conflict: (message: string) => new AppError(message, 409, 'CONFLICT'),
 
-  businessRule: (message: string, code: string) =>
-    new AppError(message, 422, code),
+  businessRule: (message: string, code: string) => new AppError(message, 422, code),
 
-  rateLimit: () =>
-    new AppError('Too many requests, please try again later', 429, 'RATE_LIMITED'),
+  rateLimit: () => new AppError('Too many requests, please try again later', 429, 'RATE_LIMITED'),
 
   internal: (message = 'An unexpected error occurred') =>
     new AppError(message, 500, 'INTERNAL_ERROR'),
@@ -68,12 +64,7 @@ function getRequestId(req: Request): string | undefined {
 
 // ── Global Error Handler Middleware ──────────────────────────
 
-export function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response,
-  _next: NextFunction,
-): void {
+export function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction): void {
   const requestId = getRequestId(req);
 
   if (err instanceof AppError) {
@@ -104,9 +95,7 @@ export function errorHandler(
     success: false,
     error: {
       code: 'INTERNAL_ERROR',
-      message: env.NODE_ENV === 'production'
-        ? 'An unexpected error occurred'
-        : err.message,
+      message: env.NODE_ENV === 'production' ? 'An unexpected error occurred' : err.message,
     },
     requestId,
   };

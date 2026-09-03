@@ -43,14 +43,13 @@ export function Hero() {
               <br />
               Collective Solutions.
               <br />
-              <span className="text-[#F5A623] inline-block mt-0.5">
-                Lasting Impact.
-              </span>
+              <span className="text-[#F5A623] inline-block mt-0.5">Lasting Impact.</span>
             </h1>
 
             {/* Description Copy */}
             <p className="text-[16px] sm:text-[17px] text-[#1D2522]/80 max-w-xl leading-relaxed font-normal">
-              JharSankalp connects citizens, institutions and innovators to identify real-world challenges and build solutions that create meaningful change across Jharkhand.
+              JharSankalp connects citizens, institutions and innovators to identify real-world
+              challenges and build solutions that create meaningful change across Jharkhand.
             </p>
 
             {/* Primary Calls to Action (Strong Rectangular Buttons) */}

@@ -18,7 +18,8 @@ export function CollaborationPipelineSection({ pipeline }: CollaborationPipeline
             Industry Collaboration Pipeline
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Tracking partnerships from initial challenge RFP discovery to formal consortium MOUs and field pilots.
+            Tracking partnerships from initial challenge RFP discovery to formal consortium MOUs and
+            field pilots.
           </p>
         </div>
 
@@ -42,15 +43,15 @@ export function CollaborationPipelineSection({ pipeline }: CollaborationPipeline
                 0{idx + 1}
               </span>
 
-              {stage.highlight && (
-                <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
-              )}
+              {stage.highlight && <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />}
             </div>
 
             <div className="space-y-1">
-              <div className={`text-[2rem] font-extrabold font-mono tracking-tight leading-none ${
-                stage.highlight ? 'text-[#123B2A]' : 'text-[#1D2522]'
-              }`}>
+              <div
+                className={`text-[2rem] font-extrabold font-mono tracking-tight leading-none ${
+                  stage.highlight ? 'text-[#123B2A]' : 'text-[#1D2522]'
+                }`}
+              >
                 {stage.count}
               </div>
 
@@ -60,9 +61,7 @@ export function CollaborationPipelineSection({ pipeline }: CollaborationPipeline
             </div>
 
             <div className="pt-2 border-t border-[#EEEAE1]">
-              <p className="text-[11px] text-[#6B5845] leading-tight">
-                {stage.description}
-              </p>
+              <p className="text-[11px] text-[#6B5845] leading-tight">{stage.description}</p>
             </div>
           </div>
         ))}

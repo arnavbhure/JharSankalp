@@ -112,10 +112,26 @@ export function IndustryLayout() {
                       </div>
 
                       {[
-                        { role: UserRole.INDUSTRY, label: 'Industry Partner', target: '/industry/dashboard' },
-                        { role: UserRole.UNIVERSITY_ADMIN, label: 'University Admin (BIT Mesra)', target: '/university/dashboard' },
-                        { role: UserRole.GOVERNMENT_OFFICER, label: 'Government Officer', target: '/government/dashboard' },
-                        { role: UserRole.CITIZEN, label: 'Citizen Innovator', target: '/dashboard' },
+                        {
+                          role: UserRole.INDUSTRY,
+                          label: 'Industry Partner',
+                          target: '/industry/dashboard',
+                        },
+                        {
+                          role: UserRole.UNIVERSITY_ADMIN,
+                          label: 'University Admin (BIT Mesra)',
+                          target: '/university/dashboard',
+                        },
+                        {
+                          role: UserRole.GOVERNMENT_OFFICER,
+                          label: 'Government Officer',
+                          target: '/government/dashboard',
+                        },
+                        {
+                          role: UserRole.CITIZEN,
+                          label: 'Citizen Innovator',
+                          target: '/dashboard',
+                        },
                       ].map((item) => (
                         <button
                           key={item.role}
@@ -129,13 +145,11 @@ export function IndustryLayout() {
                             'w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-colors text-left cursor-pointer',
                             user?.role === item.role
                               ? 'bg-[#FAF9F5] font-bold text-[#123B2A]'
-                              : 'text-[#1D2522] hover:bg-[#FAF9F5]'
+                              : 'text-[#1D2522] hover:bg-[#FAF9F5]',
                           )}
                         >
                           <span>{item.label}</span>
-                          {user?.role === item.role && (
-                            <Check className="h-4 w-4 text-[#123B2A]" />
-                          )}
+                          {user?.role === item.role && <Check className="h-4 w-4 text-[#123B2A]" />}
                         </button>
                       ))}
                     </div>
@@ -159,7 +173,7 @@ export function IndustryLayout() {
                       'inline-flex items-center gap-2 py-1.5 px-3 rounded-lg text-[12.5px] font-semibold transition-all whitespace-nowrap',
                       isActive
                         ? 'bg-[#123B2A] text-white font-bold shadow-2xs'
-                        : 'text-[#6B5845] hover:text-[#1D2522] hover:bg-[#FAF9F5]'
+                        : 'text-[#6B5845] hover:text-[#1D2522] hover:bg-[#FAF9F5]',
                     )
                   }
                 >
@@ -178,10 +192,7 @@ export function IndustryLayout() {
       </div>
 
       {/* Global Search Modal */}
-      <GlobalSearchModal
-        isOpen={showSearch}
-        onClose={() => setShowSearch(false)}
-      />
+      <GlobalSearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </div>
   );
 }

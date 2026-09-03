@@ -47,17 +47,17 @@ export async function getIdeas(filters?: Partial<IdeaFilterState>): Promise<Idea
               i.title.toLowerCase().includes(q) ||
               i.summary.toLowerCase().includes(q) ||
               i.category.toLowerCase().includes(q) ||
-              i.district.toLowerCase().includes(q)
+              i.district.toLowerCase().includes(q),
           );
         }
         if (filters.category && filters.category !== 'All Focus Areas') {
           results = results.filter(
-            (i) => i.category.toLowerCase() === filters.category!.toLowerCase()
+            (i) => i.category.toLowerCase() === filters.category!.toLowerCase(),
           );
         }
         if (filters.district && filters.district !== 'All Districts') {
           results = results.filter(
-            (i) => i.district.toLowerCase() === filters.district!.toLowerCase()
+            (i) => i.district.toLowerCase() === filters.district!.toLowerCase(),
           );
         }
       }
@@ -77,18 +77,14 @@ export async function getIdeas(filters?: Partial<IdeaFilterState>): Promise<Idea
           i.title.toLowerCase().includes(q) ||
           i.summary.toLowerCase().includes(q) ||
           i.category.toLowerCase().includes(q) ||
-          i.district.toLowerCase().includes(q)
+          i.district.toLowerCase().includes(q),
       );
     }
     if (filters.category && filters.category !== 'All Focus Areas') {
-      results = results.filter(
-        (i) => i.category.toLowerCase() === filters.category!.toLowerCase()
-      );
+      results = results.filter((i) => i.category.toLowerCase() === filters.category!.toLowerCase());
     }
     if (filters.district && filters.district !== 'All Districts') {
-      results = results.filter(
-        (i) => i.district.toLowerCase() === filters.district!.toLowerCase()
-      );
+      results = results.filter((i) => i.district.toLowerCase() === filters.district!.toLowerCase());
     }
   }
   return results;
@@ -198,7 +194,7 @@ export async function submitIdea(newIdea: Partial<IdeaItem>): Promise<IdeaItem> 
 
 export async function joinIdeaTeam(
   ideaId: string,
-  applicant: { name: string; role: string; message: string }
+  applicant: { name: string; role: string; message: string },
 ): Promise<boolean> {
   inMemoryIdeas = inMemoryIdeas.map((idea) => {
     if (idea.id === ideaId) {

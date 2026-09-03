@@ -17,12 +17,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-1 w-full text-left">
         {label && (
-          <label
-            htmlFor={inputId}
-            className="block text-small font-medium text-neutral-800"
-          >
+          <label htmlFor={inputId} className="block text-small font-medium text-neutral-800">
             {label}
-            {isRequired && <span className="text-status-danger ml-1" aria-hidden="true">*</span>}
+            {isRequired && (
+              <span className="text-status-danger ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
           </label>
         )}
         <div className="relative flex items-center">
@@ -50,13 +51,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightElement && (
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              {rightElement}
-            </div>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">{rightElement}</div>
           )}
         </div>
         {error && (
-          <p id={`${inputId}-error`} className="text-caption font-medium text-status-danger" role="alert">
+          <p
+            id={`${inputId}-error`}
+            className="text-caption font-medium text-status-danger"
+            role="alert"
+          >
             {error}
           </p>
         )}

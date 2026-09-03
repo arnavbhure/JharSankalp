@@ -21,7 +21,8 @@ export function ProjectActivityFeed({ activities }: ProjectActivityFeedProps) {
               What is happening now
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#6B5845]">
-              Real-time progress, telemetry milestone completions, and partnership updates across Jharkhand.
+              Real-time progress, telemetry milestone completions, and partnership updates across
+              Jharkhand.
             </p>
           </div>
         </div>
@@ -53,9 +54,7 @@ export function ProjectActivityFeed({ activities }: ProjectActivityFeedProps) {
                     </span>
                   </div>
 
-                  <p className="text-[13.5px] text-[#6B5845] leading-relaxed">
-                    {act.activity}
-                  </p>
+                  <p className="text-[13.5px] text-[#6B5845] leading-relaxed">{act.activity}</p>
                 </div>
               </div>
 

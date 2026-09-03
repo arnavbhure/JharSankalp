@@ -5,14 +5,7 @@ import {
   EstimatedAffectedPopulation,
 } from '../../types/submission';
 import { JHARKHAND_DISTRICTS } from '../../data/challengesData';
-import {
-  MapPin,
-  Navigation,
-  ShieldCheck,
-  AlertCircle,
-  Users,
-  AlertTriangle,
-} from 'lucide-react';
+import { MapPin, Navigation, ShieldCheck, AlertCircle, Users, AlertTriangle } from 'lucide-react';
 
 interface LocationStepProps {
   formData: ChallengeFormState;
@@ -82,7 +75,7 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
           setLocating(false);
           setGpsSuccess(true);
         },
-        { timeout: 5000 }
+        { timeout: 5000 },
       );
     } else {
       onChange({
@@ -118,7 +111,8 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
           Location & Community Impact
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Tell us where this problem is taking place and who is impacted. This helps district officers, university research teams, and local panchayats assess the scope.
+          Tell us where this problem is taking place and who is impacted. This helps district
+          officers, university research teams, and local panchayats assess the scope.
         </p>
       </div>
 
@@ -244,9 +238,7 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
             <Users className="h-4 w-4 text-[#F5A623]" />
             <span>Who is affected?</span>
           </label>
-          <p className="text-[12.5px] text-[#6B5845]">
-            Select all groups impacted in this area.
-          </p>
+          <p className="text-[12.5px] text-[#6B5845]">Select all groups impacted in this area.</p>
 
           <div className="flex flex-wrap gap-2">
             {AFFECTED_OPTIONS.map((opt) => {
@@ -333,9 +325,7 @@ export function LocationStep({ formData, onChange, errors = {} }: LocationStepPr
                   >
                     {choice.label}
                   </div>
-                  <div className="text-[11.5px] text-[#6B5845] leading-snug">
-                    {choice.desc}
-                  </div>
+                  <div className="text-[11.5px] text-[#6B5845] leading-snug">{choice.desc}</div>
                 </button>
               );
             })}

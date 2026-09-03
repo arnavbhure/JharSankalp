@@ -28,7 +28,8 @@ export function IdeasCTA({ onOpenSubmitModal, onOpenExplainer }: IdeasCTAProps) 
 
         {/* Supporting text */}
         <p className="text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed font-normal max-w-2xl">
-          Share a problem you understand, an opportunity you see or a solution worth exploring. Your idea will be visible to innovators, students, and district officers across Jharkhand.
+          Share a problem you understand, an opportunity you see or a solution worth exploring. Your
+          idea will be visible to innovators, students, and district officers across Jharkhand.
         </p>
 
         {/* Actions */}

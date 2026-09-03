@@ -123,7 +123,8 @@ export function ChallengeCard({ challenge, onViewDetails }: ChallengeCardProps) 
           <span className="flex items-center gap-1">
             <Users className="h-3.5 w-3.5 text-[#123B2A]" />
             <span>
-              <strong className="text-[#1D2522]">{challenge.collaboratorsCount}</strong> Collaborators
+              <strong className="text-[#1D2522]">{challenge.collaboratorsCount}</strong>{' '}
+              Collaborators
             </span>
           </span>
 
@@ -143,8 +144,8 @@ export function ChallengeCard({ challenge, onViewDetails }: ChallengeCardProps) 
             challenge.impactLevel === 'Critical'
               ? 'bg-[#FEF0F4] text-[#BE123C]'
               : challenge.impactLevel === 'High Impact'
-              ? 'bg-[#FEF6E9] text-[#B45309]'
-              : 'bg-[#F2FBF5] text-[#1F5A3D]'
+                ? 'bg-[#FEF6E9] text-[#B45309]'
+                : 'bg-[#F2FBF5] text-[#1F5A3D]'
           }`}
         >
           {challenge.impactLevel}

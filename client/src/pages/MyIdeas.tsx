@@ -39,7 +39,9 @@ export function MyIdeas() {
   });
   const [requests, setRequests] = useState<ContributorRequest[]>([]);
   const [activities, setActivities] = useState<IdeaActivityItem[]>([]);
-  const [updates, setUpdates] = useState<Array<{ id: string; text: string; time: string; link?: string }>>([]);
+  const [updates, setUpdates] = useState<
+    Array<{ id: string; text: string; time: string; link?: string }>
+  >([]);
   const [readinessCriteria, setReadinessCriteria] = useState<ProjectReadinessCriteria[]>([]);
   const [currentTab, setCurrentTab] = useState('All');
   const [loading, setLoading] = useState(true);
@@ -48,21 +50,15 @@ export function MyIdeas() {
 
   const loadDashboard = async () => {
     try {
-      const [
-        ideasData,
-        statsData,
-        requestsData,
-        activitiesData,
-        updatesData,
-        readinessData,
-      ] = await Promise.all([
-        getMyIdeas(currentTab),
-        getContributorStats(),
-        getContributionRequests(),
-        getIdeaActivities(),
-        getIdeaUpdates(),
-        getProjectReadiness('IDEA-2026-0001'),
-      ]);
+      const [ideasData, statsData, requestsData, activitiesData, updatesData, readinessData] =
+        await Promise.all([
+          getMyIdeas(currentTab),
+          getContributorStats(),
+          getContributionRequests(),
+          getIdeaActivities(),
+          getIdeaUpdates(),
+          getProjectReadiness('IDEA-2026-0001'),
+        ]);
 
       setIdeas(ideasData);
       setStats(statsData);
@@ -81,10 +77,7 @@ export function MyIdeas() {
     loadDashboard();
   }, [currentTab]);
 
-  const handleRespondToRequest = async (
-    requestId: string,
-    action: 'ACCEPTED' | 'DECLINED'
-  ) => {
+  const handleRespondToRequest = async (requestId: string, action: 'ACCEPTED' | 'DECLINED') => {
     await respondToContributionRequest(requestId, action);
     await loadDashboard();
   };
@@ -104,8 +97,7 @@ export function MyIdeas() {
   };
 
   // Find most active idea (momentum)
-  const momentumIdea =
-    ideas.find((i) => i.id === 'IDEA-2026-0001') || ideas[0];
+  const momentumIdea = ideas.find((i) => i.id === 'IDEA-2026-0001') || ideas[0];
 
   const actionRequiredIdea = ideas.find((i) => i.hasActionRequired);
 
@@ -131,10 +123,7 @@ export function MyIdeas() {
             <div className="lg:col-span-8 space-y-12">
               {/* Featured Idea Momentum Panel */}
               {momentumIdea && (
-                <IdeaMomentumPanel
-                  idea={momentumIdea}
-                  onViewCollaboration={scrollToRequests}
-                />
+                <IdeaMomentumPanel idea={momentumIdea} onViewCollaboration={scrollToRequests} />
               )}
 
               {/* Action Required Banner */}
@@ -147,18 +136,11 @@ export function MyIdeas() {
               />
 
               {/* All Your Ideas List */}
-              <MyIdeasList
-                ideas={ideas}
-                currentTab={currentTab}
-                onTabChange={setCurrentTab}
-              />
+              <MyIdeasList ideas={ideas} currentTab={currentTab} onTabChange={setCurrentTab} />
 
               {/* Incoming Collaboration Requests Triage */}
               <div ref={requestsRef}>
-                <IdeaCollaborationRequests
-                  requests={requests}
-                  onRespond={handleRespondToRequest}
-                />
+                <IdeaCollaborationRequests requests={requests} onRespond={handleRespondToRequest} />
               </div>
 
               {/* Project Formation Signal */}

@@ -6,9 +6,15 @@ interface CollaborationSectionProps {
   onJoinCollaboration: () => void;
 }
 
-export function CollaborationSection({ challenge, onJoinCollaboration }: CollaborationSectionProps) {
+export function CollaborationSection({
+  challenge,
+  onJoinCollaboration,
+}: CollaborationSectionProps) {
   return (
-    <section id="active-collaboration" className="py-12 sm:py-16 border-b border-[#EEEAE1] text-left">
+    <section
+      id="active-collaboration"
+      className="py-12 sm:py-16 border-b border-[#EEEAE1] text-left"
+    >
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div className="space-y-1">
           <div className="inline-flex items-center gap-2 text-caption font-mono uppercase tracking-widest text-[#123B2A] font-bold">
@@ -19,7 +25,8 @@ export function CollaborationSection({ challenge, onJoinCollaboration }: Collabo
             People and institutions working on this challenge
           </h2>
           <p className="text-[14px] text-[#6B5845] max-w-xl">
-            A collaborative coalition of academic researchers, industrial telemetry specialists, and grassroots citizen observers.
+            A collaborative coalition of academic researchers, industrial telemetry specialists, and
+            grassroots citizen observers.
           </p>
         </div>
 
@@ -55,9 +62,7 @@ export function CollaborationSection({ challenge, onJoinCollaboration }: Collabo
                       {group.categoryName}
                     </h3>
                   </div>
-                  <p className="text-[12px] text-[#6B5845] leading-relaxed">
-                    {group.description}
-                  </p>
+                  <p className="text-[12px] text-[#6B5845] leading-relaxed">{group.description}</p>
                 </div>
 
                 {/* Partner Cards */}
@@ -76,9 +81,7 @@ export function CollaborationSection({ challenge, onJoinCollaboration }: Collabo
                         </span>
                       </div>
 
-                      <div className="text-[12px] font-medium text-[#123B2A]">
-                        {partner.role}
-                      </div>
+                      <div className="text-[12px] font-medium text-[#123B2A]">{partner.role}</div>
 
                       <p className="text-[12px] text-[#1D2522]/80 leading-relaxed pt-0.5">
                         {partner.contributionArea}

@@ -62,9 +62,7 @@ export function Dialog({
         <div className="flex items-start justify-between border-b border-neutral-200 px-5 py-3.5 bg-neutral-25">
           <div>
             <h3 className="text-body font-semibold text-neutral-900 leading-snug">{title}</h3>
-            {description && (
-              <p className="mt-0.5 text-small text-neutral-600">{description}</p>
-            )}
+            {description && <p className="mt-0.5 text-small text-neutral-600">{description}</p>}
           </div>
           <button
             onClick={onClose}

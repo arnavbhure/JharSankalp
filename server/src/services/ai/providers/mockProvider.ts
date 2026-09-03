@@ -38,7 +38,7 @@ function hasAny(text: string, words: string[]): boolean {
  * Operates reliably offline without requiring any external AI API keys.
  */
 export async function analyzeChallengeMock(
-  input: AnalyzeChallengeInput
+  input: AnalyzeChallengeInput,
 ): Promise<AnalyzeChallengeResult> {
   const text = `${input.title} ${input.description}`.toLowerCase();
   const district = input.district || 'Jharkhand';
@@ -47,7 +47,8 @@ export async function analyzeChallengeMock(
   let domain = 'Water Management';
   let subcategory = 'Rural Drinking Water Infrastructure';
   let priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'HIGH';
-  let priorityReason = 'Disruption to daily drinking water access creates immediate sanitation and public health risks.';
+  let priorityReason =
+    'Disruption to daily drinking water access creates immediate sanitation and public health risks.';
   let keywords = ['Water Supply', 'Hand Pump Maintenance', 'Groundwater', 'Rural Infrastructure'];
   let potentialImpactAreas = [
     'Daily household drinking water security',
@@ -85,7 +86,8 @@ export async function analyzeChallengeMock(
     domain = 'Water Management';
     subcategory = 'Rural Drinking Water Infrastructure';
     priority = population >= 1000 ? 'HIGH' : 'MEDIUM';
-    priorityReason = 'Disruption to daily drinking water access creates immediate sanitation and public health risks.';
+    priorityReason =
+      'Disruption to daily drinking water access creates immediate sanitation and public health risks.';
     keywords = ['Water Supply', 'Hand Pump Maintenance', 'Groundwater', 'Rural Infrastructure'];
     potentialImpactAreas = [
       'Daily household drinking water security',
@@ -120,7 +122,8 @@ export async function analyzeChallengeMock(
     domain = 'Agriculture';
     subcategory = 'Soil Health & Resilient Cropping';
     priority = population > 1000 ? 'HIGH' : 'MEDIUM';
-    priorityReason = 'Smallholder agricultural productivity directly impacts tribal farmer income and food stability.';
+    priorityReason =
+      'Smallholder agricultural productivity directly impacts tribal farmer income and food stability.';
     keywords = ['Soil Acidity', 'Crop Health', 'Agronomy', 'Irrigation Systems', 'Organic Biochar'];
     potentialImpactAreas = [
       'Smallholder crop yields and household income',
@@ -154,8 +157,14 @@ export async function analyzeChallengeMock(
     domain = 'Mining Safety';
     subcategory = 'Mine Subsidence & Geological Hazard Warning';
     priority = 'CRITICAL';
-    priorityReason = 'Subsurface subsidence and ground fissures directly endanger resident safety and public structures.';
-    keywords = ['Subsidence Early Warning', 'InSAR Geophysics', 'Underground Fire', 'Structural Safety'];
+    priorityReason =
+      'Subsurface subsidence and ground fissures directly endanger resident safety and public structures.';
+    keywords = [
+      'Subsidence Early Warning',
+      'InSAR Geophysics',
+      'Underground Fire',
+      'Structural Safety',
+    ];
     potentialImpactAreas = [
       'Protection of human lives in mining periphery settlements',
       'Integrity of village housing, schools, and connecting roads',
@@ -190,8 +199,14 @@ export async function analyzeChallengeMock(
     domain = 'Education';
     subcategory = 'Vernacular Primary & STEM EdTech';
     priority = 'MEDIUM';
-    priorityReason = 'Bridging the foundational language barrier ensures equitable learning outcomes in rural primary schools.';
-    keywords = ['Indigenous Languages', 'Primary Education', 'Digital Learning', 'Experiential STEM'];
+    priorityReason =
+      'Bridging the foundational language barrier ensures equitable learning outcomes in rural primary schools.';
+    keywords = [
+      'Indigenous Languages',
+      'Primary Education',
+      'Digital Learning',
+      'Experiential STEM',
+    ];
     potentialImpactAreas = [
       'Foundational literacy and numeracy in tribal mother tongues',
       'Student retention and reduction in primary school dropouts',
@@ -224,7 +239,8 @@ export async function analyzeChallengeMock(
     domain = 'Healthcare';
     subcategory = 'Point-of-Care Diagnostics & Maternal Health';
     priority = 'HIGH';
-    priorityReason = 'Delayed diagnostics and lack of cold-chain transport in remote hamlets present critical health risks.';
+    priorityReason =
+      'Delayed diagnostics and lack of cold-chain transport in remote hamlets present critical health risks.';
     keywords = ['Point-of-Care Diagnostics', 'Maternal Anemia', 'ASHA Toolkit', 'Tele-Triage'];
     potentialImpactAreas = [
       'Rapid detection of severe anemia in adolescent girls and mothers',
@@ -256,8 +272,14 @@ export async function analyzeChallengeMock(
     domain = 'Environment';
     subcategory = 'Forest Conservation & Bio-Diversity Monitoring';
     priority = text.includes('elephant') || text.includes('wildfire') ? 'HIGH' : 'MEDIUM';
-    priorityReason = 'Protection of community forest corridors and prevention of human-wildlife conflict preserves ecology.';
-    keywords = ['Wildlife Corridor Telemetry', 'Acoustic Surveillance', 'Forest Fire Warning', 'Bio-Fencing'];
+    priorityReason =
+      'Protection of community forest corridors and prevention of human-wildlife conflict preserves ecology.';
+    keywords = [
+      'Wildlife Corridor Telemetry',
+      'Acoustic Surveillance',
+      'Forest Fire Warning',
+      'Bio-Fencing',
+    ];
     potentialImpactAreas = [
       'Prevention of human-elephant conflict in migration routes',
       'Rapid suppression of dry-season forest canopy fires',
@@ -286,8 +308,14 @@ export async function analyzeChallengeMock(
     domain = 'Accessibility';
     subcategory = 'Inclusive Public Infrastructure & Assistive Tech';
     priority = 'MEDIUM';
-    priorityReason = 'Physical and digital accessibility barriers restrict full participation of persons with disabilities.';
-    keywords = ['Universal Accessibility', 'Tactile Paving', 'Assistive Devices', 'Public Facility Retrofit'];
+    priorityReason =
+      'Physical and digital accessibility barriers restrict full participation of persons with disabilities.';
+    keywords = [
+      'Universal Accessibility',
+      'Tactile Paving',
+      'Assistive Devices',
+      'Public Facility Retrofit',
+    ];
     potentialImpactAreas = [
       'Barrier-free access to schools, hospitals, and transit hubs',
       'Independent mobility for visually and physically impaired citizens',
@@ -318,8 +346,14 @@ export async function analyzeChallengeMock(
     domain = 'Rural Livelihood';
     subcategory = 'Tribal Bio-Economy & Forest Produce Value Addition';
     priority = 'MEDIUM';
-    priorityReason = 'Empowering village SHGs with micro-processing machinery increases household income retention.';
-    keywords = ['Tussar Silk Reeling', 'Lac Processing', 'NTFP Value Addition', 'Solar Cold Storage'];
+    priorityReason =
+      'Empowering village SHGs with micro-processing machinery increases household income retention.';
+    keywords = [
+      'Tussar Silk Reeling',
+      'Lac Processing',
+      'NTFP Value Addition',
+      'Solar Cold Storage',
+    ];
     potentialImpactAreas = [
       'Local value retention before wholesale merchant export',
       'Economic self-reliance for tribal women SHG collectives',
@@ -348,8 +382,14 @@ export async function analyzeChallengeMock(
     domain = 'Urban Development';
     subcategory = 'Urban Drainage & Municipal Sanitation';
     priority = 'MEDIUM';
-    priorityReason = 'Municipal drainage congestion creates waterlogging and urban vector-borne health risks during monsoons.';
-    keywords = ['Urban Drainage', 'Solid Waste Segregation', 'Road Quality', 'Municipal Sanitation'];
+    priorityReason =
+      'Municipal drainage congestion creates waterlogging and urban vector-borne health risks during monsoons.';
+    keywords = [
+      'Urban Drainage',
+      'Solid Waste Segregation',
+      'Road Quality',
+      'Municipal Sanitation',
+    ];
     potentialImpactAreas = [
       'Prevention of urban flash waterlogging in low-lying localities',
       'Improvement in arterial connectivity and road commute safety',
@@ -379,7 +419,8 @@ export async function analyzeChallengeMock(
     domain = 'Public Services';
     subcategory = 'Rural Energy Access & Public Infrastructure';
     priority = population > 1000 ? 'HIGH' : 'MEDIUM';
-    priorityReason = 'Grid instability and critical transformer failures interrupt essential lighting, study, and irrigation.';
+    priorityReason =
+      'Grid instability and critical transformer failures interrupt essential lighting, study, and irrigation.';
     keywords = ['Transformer Health', 'Solar Micro-Grid', 'PDS Last-Mile', 'Rural Electrification'];
     potentialImpactAreas = [
       'Uninterrupted nighttime lighting for student learning and safety',
@@ -411,7 +452,8 @@ export async function analyzeChallengeMock(
     population >= 5000
   ) {
     priority = 'CRITICAL';
-    priorityReason = 'High severity hazard flagged with immediate community impact and potential safety implications.';
+    priorityReason =
+      'High severity hazard flagged with immediate community impact and potential safety implications.';
   } else if (text.includes('frequent') || text.includes('months') || population >= 1000) {
     priority = 'HIGH';
   }

@@ -1,14 +1,6 @@
 import { useState } from 'react';
-import {
-  WorkspaceData,
-  WorkspaceWorkstream,
-  WorkItem,
-  WorkStatus,
-} from '../../../types/workspace';
-import {
-  updateWorkItemStatus,
-  addWorkItem,
-} from '../../../services/workspaceApi';
+import { WorkspaceData, WorkspaceWorkstream, WorkItem, WorkStatus } from '../../../types/workspace';
+import { updateWorkItemStatus, addWorkItem } from '../../../services/workspaceApi';
 import {
   Layers,
   CheckCircle2,
@@ -138,7 +130,8 @@ export function WorkManagementTab({ data, onRefresh }: WorkManagementTabProps) {
           Work Management & Task Allocation
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Structured workstreams aligned to research, prototype fabrication, and gram panchayat installation.
+          Structured workstreams aligned to research, prototype fabrication, and gram panchayat
+          installation.
         </p>
       </div>
 
@@ -166,9 +159,7 @@ export function WorkManagementTab({ data, onRefresh }: WorkManagementTabProps) {
                       {stream.status}
                     </span>
                   </div>
-                  <p className="text-[13px] text-[#6B5845]">
-                    {stream.description}
-                  </p>
+                  <p className="text-[13px] text-[#6B5845]">{stream.description}</p>
                 </div>
 
                 <div className="flex items-center gap-4 shrink-0">
@@ -209,7 +200,9 @@ export function WorkManagementTab({ data, onRefresh }: WorkManagementTabProps) {
                               {item.title}
                             </h4>
                             <div className="flex items-center gap-3 text-[11px] font-mono text-[#6B5845]">
-                              <span>Owner: <strong className="text-[#1D2522]">{item.ownerName}</strong></span>
+                              <span>
+                                Owner: <strong className="text-[#1D2522]">{item.ownerName}</strong>
+                              </span>
                               <span>·</span>
                               <span>Due: {item.dueDate}</span>
                               {item.comments.length > 0 && (
@@ -304,25 +297,31 @@ export function WorkManagementTab({ data, onRefresh }: WorkManagementTabProps) {
                 Workflow Status:
               </label>
               <div className="flex items-center gap-1.5 flex-wrap">
-                {(['NOT_STARTED', 'IN_PROGRESS', 'IN_REVIEW', 'COMPLETED', 'BLOCKED'] as WorkStatus[]).map(
-                  (st) => {
-                    const isCurrent = activeItem.status === st;
-                    return (
-                      <button
-                        key={st}
-                        type="button"
-                        onClick={() => handleStatusChange(activeItem, st)}
-                        className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                          isCurrent
-                            ? 'bg-[#123B2A] text-white shadow-2xs'
-                            : 'bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1] hover:bg-white'
-                        }`}
-                      >
-                        {st.replace('_', ' ')}
-                      </button>
-                    );
-                  }
-                )}
+                {(
+                  [
+                    'NOT_STARTED',
+                    'IN_PROGRESS',
+                    'IN_REVIEW',
+                    'COMPLETED',
+                    'BLOCKED',
+                  ] as WorkStatus[]
+                ).map((st) => {
+                  const isCurrent = activeItem.status === st;
+                  return (
+                    <button
+                      key={st}
+                      type="button"
+                      onClick={() => handleStatusChange(activeItem, st)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'bg-[#123B2A] text-white shadow-2xs'
+                          : 'bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1] hover:bg-white'
+                      }`}
+                    >
+                      {st.replace('_', ' ')}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

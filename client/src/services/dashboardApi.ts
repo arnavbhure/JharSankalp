@@ -6,7 +6,7 @@ const CITIZEN_DATA: DashboardRoleData = {
   roleLabel: 'Citizen Innovator',
   userName: 'Arnav',
   greeting: 'Good evening, Arnav 👋',
-  subtitle: "See how your ideas are creating change across Jharkhand.",
+  subtitle: 'See how your ideas are creating change across Jharkhand.',
   impact: {
     title: 'Your Contribution Impact',
     mainCount: 12,
@@ -443,7 +443,7 @@ const ROLES_STORE: Record<DashboardRole, DashboardRoleData> = {
 };
 
 export async function getDashboardData(
-  role: DashboardRole = 'citizen'
+  role: DashboardRole = 'citizen',
 ): Promise<DashboardRoleData> {
   const baseData = { ...(ROLES_STORE[role] || ROLES_STORE.citizen) };
 

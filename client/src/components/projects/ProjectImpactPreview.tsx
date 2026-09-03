@@ -1,5 +1,13 @@
 import { PortfolioMetrics } from '../../types/projects';
-import { ArrowRight, Sparkles, Activity, Globe2, BookOpen, Lightbulb, TrendingUp } from 'lucide-react';
+import {
+  ArrowRight,
+  Sparkles,
+  Activity,
+  Globe2,
+  BookOpen,
+  Lightbulb,
+  TrendingUp,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ProjectImpactPreviewProps {
@@ -74,7 +82,8 @@ export function ProjectImpactPreview({ metrics }: ProjectImpactPreviewProps) {
               <span className="text-[#FEE1C7]">Impact matters more.</span>
             </h2>
             <p className="text-[15px] sm:text-[17px] text-[#FEE1C7]/80 leading-relaxed font-normal">
-              JharSankalp tracks whether projects create meaningful improvements beyond prototypes and presentations.
+              JharSankalp tracks whether projects create meaningful improvements beyond prototypes
+              and presentations.
             </p>
           </div>
 
@@ -109,13 +118,13 @@ export function ProjectImpactPreview({ metrics }: ProjectImpactPreviewProps) {
                     <Icon className={`h-4 w-4 ${card.accent}`} />
                   </div>
 
-                  <div className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold leading-none font-sans ${card.accent}`}>
+                  <div
+                    className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold leading-none font-sans ${card.accent}`}
+                  >
                     {card.metric}
                   </div>
 
-                  <div className="text-[14px] font-bold text-white leading-snug">
-                    {card.label}
-                  </div>
+                  <div className="text-[14px] font-bold text-white leading-snug">{card.label}</div>
                 </div>
 
                 <div className="text-[11.5px] text-[#FEE1C7]/60 font-mono leading-relaxed pt-2 border-t border-white/10">

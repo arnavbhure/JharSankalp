@@ -2,18 +2,15 @@ import React from 'react';
 import { cn } from '../../lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export function Table({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function Table({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn('w-full overflow-x-auto rounded-sm border border-neutral-200 bg-neutral-0', className)}>
-      <table className="w-full text-left border-collapse text-body-sm">
-        {children}
-      </table>
+    <div
+      className={cn(
+        'w-full overflow-x-auto rounded-sm border border-neutral-200 bg-neutral-0',
+        className,
+      )}
+    >
+      <table className="w-full text-left border-collapse text-body-sm">{children}</table>
     </div>
   );
 }
@@ -26,7 +23,12 @@ export function TableHeader({
   className?: string;
 }) {
   return (
-    <thead className={cn('bg-neutral-50 border-b border-neutral-200 text-neutral-800 text-caption font-semibold uppercase tracking-wider', className)}>
+    <thead
+      className={cn(
+        'bg-neutral-50 border-b border-neutral-200 text-neutral-800 text-caption font-semibold uppercase tracking-wider',
+        className,
+      )}
+    >
       {children}
     </thead>
   );
@@ -124,12 +126,23 @@ export function TablePagination({
   className?: string;
 }) {
   return (
-    <div className={cn('flex items-center justify-between px-3.5 py-2.5 border-t border-neutral-200 bg-neutral-50 text-small text-neutral-600', className)}>
+    <div
+      className={cn(
+        'flex items-center justify-between px-3.5 py-2.5 border-t border-neutral-200 bg-neutral-50 text-small text-neutral-600',
+        className,
+      )}
+    >
       <div>
         {totalItems !== undefined ? (
-          <span>Showing page <strong className="text-neutral-900">{currentPage}</strong> of <strong className="text-neutral-900">{totalPages}</strong> ({totalItems} total items)</span>
+          <span>
+            Showing page <strong className="text-neutral-900">{currentPage}</strong> of{' '}
+            <strong className="text-neutral-900">{totalPages}</strong> ({totalItems} total items)
+          </span>
         ) : (
-          <span>Page <strong className="text-neutral-900">{currentPage}</strong> of <strong className="text-neutral-900">{totalPages}</strong></span>
+          <span>
+            Page <strong className="text-neutral-900">{currentPage}</strong> of{' '}
+            <strong className="text-neutral-900">{totalPages}</strong>
+          </span>
         )}
       </div>
       <div className="flex items-center gap-1">

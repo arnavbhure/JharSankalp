@@ -36,62 +36,206 @@ function generateDeterministicAnalysis(input: ChallengeInput): ChallengeAnalysis
   let subDomain = 'Rural Water Infrastructure';
   let problemType = 'Infrastructure Breakdown';
   let priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'HIGH';
-  let reason = 'Essential public service disruption affecting rural community drinking water access.';
-  let stakeholders = ['Rural Residents', 'Gram Panchayat', 'Jal Sahiya Collective', 'Block Development Office'];
-  let causes = ['Mechanical fatigue of pump valves', 'Lack of real-time monitoring', 'Delayed maintenance reporting'];
-  let approaches = ['IoT Vibration & Telemetry Collars', 'Automated SMS Alerts to BDO Mechanics', 'Community Spare Parts Buffer'];
-  let expertise = ['Embedded IoT Systems', 'LoRaWAN Networks', 'Hydraulic Engineering', 'Community Governance'];
+  let reason =
+    'Essential public service disruption affecting rural community drinking water access.';
+  let stakeholders = [
+    'Rural Residents',
+    'Gram Panchayat',
+    'Jal Sahiya Collective',
+    'Block Development Office',
+  ];
+  let causes = [
+    'Mechanical fatigue of pump valves',
+    'Lack of real-time monitoring',
+    'Delayed maintenance reporting',
+  ];
+  let approaches = [
+    'IoT Vibration & Telemetry Collars',
+    'Automated SMS Alerts to BDO Mechanics',
+    'Community Spare Parts Buffer',
+  ];
+  let expertise = [
+    'Embedded IoT Systems',
+    'LoRaWAN Networks',
+    'Hydraulic Engineering',
+    'Community Governance',
+  ];
 
-  if (text.includes('soil') || text.includes('crop') || text.includes('farmer') || text.includes('fertiliz') || text.includes('agri')) {
+  if (
+    text.includes('soil') ||
+    text.includes('crop') ||
+    text.includes('farmer') ||
+    text.includes('fertiliz') ||
+    text.includes('agri')
+  ) {
     domain = 'Agriculture';
     subDomain = 'Soil Health Monitoring';
     problemType = 'Agricultural Productivity & Input Optimization';
     priority = 'HIGH';
-    reason = 'Widespread crop yield decline and unguided fertilizer expenditure affecting smallholder tribal livelihoods.';
-    stakeholders = ['Smallholder Farmers', 'Krishi Vigyan Kendra', 'Department of Agriculture', 'Farmer Producer Orgs'];
-    causes = ['Lack of rapid soil testing facilities', 'Over-application of chemical fertilizers', 'Soil acidification in laterite belts'];
-    approaches = ['Handheld Optical Soil Spectrometers', 'Vernacular Voice-Assisted Mobile Recommendations', 'Organic Biochar Soil Conditioning'];
-    expertise = ['Agronomy', 'Spectroscopy & Optical Sensing', 'Mobile App Development', 'Soil Chemistry'];
-  } else if (text.includes('subside') || text.includes('mine') || text.includes('coal') || text.includes('crack') || text.includes('inundat')) {
+    reason =
+      'Widespread crop yield decline and unguided fertilizer expenditure affecting smallholder tribal livelihoods.';
+    stakeholders = [
+      'Smallholder Farmers',
+      'Krishi Vigyan Kendra',
+      'Department of Agriculture',
+      'Farmer Producer Orgs',
+    ];
+    causes = [
+      'Lack of rapid soil testing facilities',
+      'Over-application of chemical fertilizers',
+      'Soil acidification in laterite belts',
+    ];
+    approaches = [
+      'Handheld Optical Soil Spectrometers',
+      'Vernacular Voice-Assisted Mobile Recommendations',
+      'Organic Biochar Soil Conditioning',
+    ];
+    expertise = [
+      'Agronomy',
+      'Spectroscopy & Optical Sensing',
+      'Mobile App Development',
+      'Soil Chemistry',
+    ];
+  } else if (
+    text.includes('subside') ||
+    text.includes('mine') ||
+    text.includes('coal') ||
+    text.includes('crack') ||
+    text.includes('inundat')
+  ) {
     domain = 'Mining Safety';
     subDomain = 'Mine Subsidence Early Warning';
     problemType = 'Geological Hazard & Structural Risk';
     priority = 'CRITICAL';
-    reason = 'Catastrophic ground subsidence and underground coal instability directly threatening human settlements and structures.';
-    stakeholders = ['Mining Settlement Residents', 'Directorate General of Mines Safety', 'District Disaster Management', 'Mining Corporation'];
-    causes = ['Legacy unmapped underground extraction galleries', 'Subsurface coal seam fires weakening rock strata', 'Lack of continuous ground telemetry'];
-    approaches = ['Subsurface Extensometer & MEMS Tilt Arrays', 'Satellite InSAR Surface Deformation Fusion', 'Automated Community Evacuation Sirens'];
-    expertise = ['Mining Geophysics', 'Rock Mechanics', 'Remote Sensing / InSAR', 'Emergency Civil Defence'];
-  } else if (text.includes('school') || text.includes('student') || text.includes('educat') || text.includes('learn') || text.includes('teach')) {
+    reason =
+      'Catastrophic ground subsidence and underground coal instability directly threatening human settlements and structures.';
+    stakeholders = [
+      'Mining Settlement Residents',
+      'Directorate General of Mines Safety',
+      'District Disaster Management',
+      'Mining Corporation',
+    ];
+    causes = [
+      'Legacy unmapped underground extraction galleries',
+      'Subsurface coal seam fires weakening rock strata',
+      'Lack of continuous ground telemetry',
+    ];
+    approaches = [
+      'Subsurface Extensometer & MEMS Tilt Arrays',
+      'Satellite InSAR Surface Deformation Fusion',
+      'Automated Community Evacuation Sirens',
+    ];
+    expertise = [
+      'Mining Geophysics',
+      'Rock Mechanics',
+      'Remote Sensing / InSAR',
+      'Emergency Civil Defence',
+    ];
+  } else if (
+    text.includes('school') ||
+    text.includes('student') ||
+    text.includes('educat') ||
+    text.includes('learn') ||
+    text.includes('teach')
+  ) {
     domain = 'Education';
     subDomain = 'Vernacular Educational Infrastructure';
     problemType = 'Educational Equity & Resource Accessibility';
     priority = 'MEDIUM';
-    reason = 'Educational resource gap limiting experiential learning and mother-tongue foundational numeracy for rural students.';
-    stakeholders = ['Primary School Students', 'Tribal Community Educators', 'District Education Department', 'SMC Committees'];
-    causes = ['Lack of grid electricity and internet connectivity', 'Scarcity of mother-tongue (Ol Chiki / Mundari) digital learning tools', 'Absence of physical laboratory apparatus'];
-    approaches = ['Solar Offline Wi-Fi Micro-Servers', 'Bilingual Interactive Ol Chiki Multimedia Modules', 'Modular Experiential STEM Science Kits'];
-    expertise = ['EdTech Systems', 'Vernacular Curriculum Localization', 'Solar Micro-Power Hardware', 'Pedagogy'];
-  } else if (text.includes('health') || text.includes('doctor') || text.includes('anemia') || text.includes('diagnos') || text.includes('medic') || text.includes('asha')) {
+    reason =
+      'Educational resource gap limiting experiential learning and mother-tongue foundational numeracy for rural students.';
+    stakeholders = [
+      'Primary School Students',
+      'Tribal Community Educators',
+      'District Education Department',
+      'SMC Committees',
+    ];
+    causes = [
+      'Lack of grid electricity and internet connectivity',
+      'Scarcity of mother-tongue (Ol Chiki / Mundari) digital learning tools',
+      'Absence of physical laboratory apparatus',
+    ];
+    approaches = [
+      'Solar Offline Wi-Fi Micro-Servers',
+      'Bilingual Interactive Ol Chiki Multimedia Modules',
+      'Modular Experiential STEM Science Kits',
+    ];
+    expertise = [
+      'EdTech Systems',
+      'Vernacular Curriculum Localization',
+      'Solar Micro-Power Hardware',
+      'Pedagogy',
+    ];
+  } else if (
+    text.includes('health') ||
+    text.includes('doctor') ||
+    text.includes('anemia') ||
+    text.includes('diagnos') ||
+    text.includes('medic') ||
+    text.includes('asha')
+  ) {
     domain = 'Healthcare';
     subDomain = 'Point-of-Care Diagnostics';
     problemType = 'Diagnostic Healthcare Accessibility';
     priority = 'HIGH';
-    reason = 'Delayed diagnosis of severe health conditions due to remote geography and lack of point-of-care diagnostics.';
-    stakeholders = ['Mothers and Children', 'Frontline ASHA & ANM Workers', 'Primary Health Center Staff', 'District Health Society'];
-    causes = ['Prohibitive transit distance to referral medical centers', 'Lack of battery-powered diagnostic instruments for remote hamlets', 'Delayed triage'];
-    approaches = ['Portable Solar-Charged Diagnostic Backpacks', 'Store-and-Forward Telemedicine Telemetry', 'Non-Invasive Rapid Vitals Screening'];
-    expertise = ['Biomedical Engineering', 'Frontline Community Health Protocols', 'Mobile Telemetry', 'Point-of-Care Testing'];
-  } else if (text.includes('forest') || text.includes('wildfire') || text.includes('elephant') || text.includes('logging') || text.includes('tree')) {
+    reason =
+      'Delayed diagnosis of severe health conditions due to remote geography and lack of point-of-care diagnostics.';
+    stakeholders = [
+      'Mothers and Children',
+      'Frontline ASHA & ANM Workers',
+      'Primary Health Center Staff',
+      'District Health Society',
+    ];
+    causes = [
+      'Prohibitive transit distance to referral medical centers',
+      'Lack of battery-powered diagnostic instruments for remote hamlets',
+      'Delayed triage',
+    ];
+    approaches = [
+      'Portable Solar-Charged Diagnostic Backpacks',
+      'Store-and-Forward Telemedicine Telemetry',
+      'Non-Invasive Rapid Vitals Screening',
+    ];
+    expertise = [
+      'Biomedical Engineering',
+      'Frontline Community Health Protocols',
+      'Mobile Telemetry',
+      'Point-of-Care Testing',
+    ];
+  } else if (
+    text.includes('forest') ||
+    text.includes('wildfire') ||
+    text.includes('elephant') ||
+    text.includes('logging') ||
+    text.includes('tree')
+  ) {
     domain = 'Environment';
     subDomain = 'Forest Conservation & Wildlife Telemetry';
     problemType = 'Ecosystem Preservation & Biodiversity Protection';
     priority = 'MEDIUM';
-    reason = 'Illegal extraction and environmental degradation impacting community forest rights and biodiversity corridors.';
-    stakeholders = ['Forest Protection Committees (Van Suraksha Samitis)', 'Forest Department Rangers', 'Indigenous Forest Produce Collectors'];
-    causes = ['Undetected illegal felling in remote buffer zones', 'Human-wildlife conflict along seasonal corridors', 'Lack of perimeter acoustic surveillance'];
-    approaches = ['Canopy Acoustic Listening Nodes with Edge ML', 'Bio-Fencing & Early Warning Trip-Lines', 'Community Vernacular Alert App'];
-    expertise = ['Acoustic Machine Learning', 'Wildlife Biology', 'Forestry Management', 'Hardware Weatherproofing'];
+    reason =
+      'Illegal extraction and environmental degradation impacting community forest rights and biodiversity corridors.';
+    stakeholders = [
+      'Forest Protection Committees (Van Suraksha Samitis)',
+      'Forest Department Rangers',
+      'Indigenous Forest Produce Collectors',
+    ];
+    causes = [
+      'Undetected illegal felling in remote buffer zones',
+      'Human-wildlife conflict along seasonal corridors',
+      'Lack of perimeter acoustic surveillance',
+    ];
+    approaches = [
+      'Canopy Acoustic Listening Nodes with Edge ML',
+      'Bio-Fencing & Early Warning Trip-Lines',
+      'Community Vernacular Alert App',
+    ];
+    expertise = [
+      'Acoustic Machine Learning',
+      'Wildlife Biology',
+      'Forestry Management',
+      'Hardware Weatherproofing',
+    ];
   }
 
   return {
@@ -105,7 +249,8 @@ function generateDeterministicAnalysis(input: ChallengeInput): ChallengeAnalysis
     possibleRootCauses: causes,
     suggestedApproach: approaches,
     requiredExpertise: expertise,
-    estimatedImpactLevel: input.affectedPopulation && input.affectedPopulation > 5000 ? 'DISTRICT' : 'LOCAL',
+    estimatedImpactLevel:
+      input.affectedPopulation && input.affectedPopulation > 5000 ? 'DISTRICT' : 'LOCAL',
     confidence: 0.88,
     needsHumanReview: priority === 'CRITICAL' || input.description.length < 50,
   };
@@ -124,7 +269,9 @@ async function analyzeChallengeNode(state: typeof ChallengeAnalysisGraphState.St
   };
 
   if (!isOpenRouterConfigured()) {
-    console.log('[AI LangGraph]: OpenRouter API key not detected or in mock mode. Executing deterministic intelligence node.');
+    console.log(
+      '[AI LangGraph]: OpenRouter API key not detected or in mock mode. Executing deterministic intelligence node.',
+    );
     const fallbackAnalysis = generateDeterministicAnalysis(input);
     return {
       analysis: fallbackAnalysis,
@@ -149,7 +296,10 @@ async function analyzeChallengeNode(state: typeof ChallengeAnalysisGraphState.St
       isMockFallback: false,
     };
   } catch (error) {
-    console.warn('[AI LangGraph]: OpenRouter execution error, using deterministic fallback:', error);
+    console.warn(
+      '[AI LangGraph]: OpenRouter execution error, using deterministic fallback:',
+      error,
+    );
     const fallbackAnalysis = generateDeterministicAnalysis(input);
     return {
       analysis: fallbackAnalysis,

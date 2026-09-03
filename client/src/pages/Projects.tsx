@@ -56,15 +56,13 @@ export function Projects() {
 
   // Load initial projects data
   useEffect(() => {
-    Promise.all([
-      getFeaturedProject(),
-      getProjectMetrics(),
-      getProjectActivity(),
-    ]).then(([featured, metricsData, activityData]) => {
-      setFeaturedProject(featured);
-      setMetrics(metricsData);
-      setActivities(activityData);
-    });
+    Promise.all([getFeaturedProject(), getProjectMetrics(), getProjectActivity()]).then(
+      ([featured, metricsData, activityData]) => {
+        setFeaturedProject(featured);
+        setMetrics(metricsData);
+        setActivities(activityData);
+      },
+    );
   }, []);
 
   // Filter projects when criteria changes
@@ -110,16 +108,16 @@ export function Projects() {
         <ProjectMetricsBand metrics={metrics} />
 
         {/* ── SECTION 3: Project Stage Explorer ── */}
-        <ProjectStageExplorer
-          selectedStage={filters.stage}
-          onSelectStage={handleStageSelect}
-        />
+        <ProjectStageExplorer selectedStage={filters.stage} onSelectStage={handleStageSelect} />
 
         {/* ── SECTION 4: Featured Project In Focus ── */}
         {featuredProject && <FeaturedProject project={featuredProject} />}
 
         {/* ── SECTION 5: Explore Projects (Portfolio & Map Views) ── */}
-        <div id="project-portfolio" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+        <div
+          id="project-portfolio"
+          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8"
+        >
           <div className="space-y-2 border-b border-[#EEEAE1] pb-5">
             <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#4C1E4F] font-bold">
               <span className="h-2 w-2 rounded-full bg-[#FA7E61]" />
@@ -129,7 +127,8 @@ export function Projects() {
               Projects across the innovation ecosystem
             </h2>
             <p className="text-[15px] sm:text-[17px] text-[#6B5845] max-w-3xl leading-relaxed">
-              Explore ongoing work by sector, location, development stage and participating institutions.
+              Explore ongoing work by sector, location, development stage and participating
+              institutions.
             </p>
           </div>
 
@@ -149,10 +148,7 @@ export function Projects() {
               Retrieving active project sprints...
             </div>
           ) : viewMode === 'list' ? (
-            <ProjectPortfolio
-              projects={projects}
-              onResetFilters={handleResetFilters}
-            />
+            <ProjectPortfolio projects={projects} onResetFilters={handleResetFilters} />
           ) : (
             <ProjectMapView
               projects={projects}

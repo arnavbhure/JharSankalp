@@ -1,4 +1,13 @@
-import { BookOpen, Heart, Sprout, Droplets, TreePine, Users, ShieldAlert, ArrowRight } from 'lucide-react';
+import {
+  BookOpen,
+  Heart,
+  Sprout,
+  Droplets,
+  TreePine,
+  Users,
+  ShieldAlert,
+  ArrowRight,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export function FocusAreas() {
@@ -13,7 +22,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#1F5A3D]/10',
       accentBorder: 'hover:border-[#1F5A3D]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#1F5A3D]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#1F5A3D]"
+          strokeWidth="1"
+        >
           <path d="M10,35 L30,20 L50,35 Z" />
           <rect x="65" y="15" width="30" height="20" rx="2" />
           <polygon points="60,15 80,5 100,15" />
@@ -30,7 +43,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#C2410C]/10',
       accentBorder: 'hover:border-[#C2410C]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#C2410C]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#C2410C]"
+          strokeWidth="1"
+        >
           <rect x="20" y="15" width="35" height="20" rx="2" />
           <polygon points="15,15 37,5 60,15" />
           <path d="M75,25 H95 M85,15 V35" strokeWidth="2" />
@@ -46,7 +63,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#15803D]/10',
       accentBorder: 'hover:border-[#15803D]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#15803D]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#15803D]"
+          strokeWidth="1"
+        >
           <path d="M10,35 Q30,15 50,35 Q70,15 90,35 Q110,15 130,35" />
           <path d="M40,25 Q45,10 50,25" />
           <path d="M80,25 Q85,10 90,25" />
@@ -61,7 +82,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#0284C7]/10',
       accentBorder: 'hover:border-[#0284C7]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#0284C7]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#0284C7]"
+          strokeWidth="1"
+        >
           <path d="M10,25 Q35,15 60,25 T110,25 T160,25" />
           <path d="M10,32 Q35,22 60,32 T110,32 T160,32" />
         </svg>
@@ -75,7 +100,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#123B2A]/10',
       accentBorder: 'hover:border-[#123B2A]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#123B2A]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#123B2A]"
+          strokeWidth="1"
+        >
           <polygon points="30,35 20,20 40,20" />
           <polygon points="30,22 23,12 37,12" />
           <polygon points="75,35 65,18 85,18" />
@@ -91,7 +120,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#6B5845]/10',
       accentBorder: 'hover:border-[#6B5845]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#6B5845]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#6B5845]"
+          strokeWidth="1"
+        >
           <circle cx="35" cy="18" r="8" />
           <path d="M22,35 C22,27 48,27 48,35" />
           <circle cx="75" cy="18" r="8" />
@@ -109,7 +142,11 @@ export function FocusAreas() {
       iconBg: 'bg-[#B45309]/10',
       accentBorder: 'hover:border-[#B45309]/40',
       sketch: (
-        <svg viewBox="0 0 160 40" className="w-full h-9 opacity-35 fill-none stroke-[#B45309]" strokeWidth="1">
+        <svg
+          viewBox="0 0 160 40"
+          className="w-full h-9 opacity-35 fill-none stroke-[#B45309]"
+          strokeWidth="1"
+        >
           <polygon points="20,35 45,15 70,35" />
           <polygon points="65,35 90,10 115,35" />
           <line x1="90" y1="10" x2="140" y2="35" />
@@ -119,7 +156,10 @@ export function FocusAreas() {
   ];
 
   return (
-    <section id="focus-areas" className="py-20 bg-[#F8F6F1] border-b border-[#EEEAE1] text-left relative">
+    <section
+      id="focus-areas"
+      className="py-20 bg-[#F8F6F1] border-b border-[#EEEAE1] text-left relative"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header matching Reference Design */}
         <div className="text-center space-y-2 mb-12">
@@ -145,26 +185,22 @@ export function FocusAreas() {
               >
                 {/* Top: Icon */}
                 <div className="flex items-center justify-between">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.iconBg} ${item.iconColor}`}>
+                  <div
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.iconBg} ${item.iconColor}`}
+                  >
                     <Icon className="h-5 w-5 stroke-[2]" />
                   </div>
                 </div>
 
                 {/* Center: Title & Challenge Count */}
                 <div>
-                  <h3 className="text-[14px] font-bold text-[#1D2522] leading-snug">
-                    {item.name}
-                  </h3>
-                  <p className="text-[12px] text-[#6B5845] font-medium mt-0.5">
-                    {item.challenges}
-                  </p>
+                  <h3 className="text-[14px] font-bold text-[#1D2522] leading-snug">{item.name}</h3>
+                  <p className="text-[12px] text-[#6B5845] font-medium mt-0.5">{item.challenges}</p>
                 </div>
 
                 {/* Bottom: Contextual Line Sketch + Circle Arrow Action */}
                 <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between">
-                  <div className="flex-1 overflow-hidden pr-2">
-                    {item.sketch}
-                  </div>
+                  <div className="flex-1 overflow-hidden pr-2">{item.sketch}</div>
                   <button
                     aria-label={`Explore ${item.name}`}
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#123B2A] text-white hover:bg-[#0D2B1E] transition-colors shadow-2xs"
@@ -180,4 +216,3 @@ export function FocusAreas() {
     </section>
   );
 }
-

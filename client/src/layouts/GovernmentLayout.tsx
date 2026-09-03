@@ -98,7 +98,9 @@ export function GovernmentLayout() {
                 >
                   <span className="text-[#6B5845] hidden sm:inline">Role:</span>
                   <span className="font-bold text-[#4C1E4F]">
-                    {user?.role === UserRole.GOVERNMENT_OFFICER ? 'Government Officer' : 'State Directorate'}
+                    {user?.role === UserRole.GOVERNMENT_OFFICER
+                      ? 'Government Officer'
+                      : 'State Directorate'}
                   </span>
                   <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
                 </button>
@@ -115,10 +117,26 @@ export function GovernmentLayout() {
                       </div>
 
                       {[
-                        { role: UserRole.GOVERNMENT_OFFICER, label: 'Government Officer', target: '/government/dashboard' },
-                        { role: UserRole.CITIZEN, label: 'Citizen Innovator', target: '/dashboard' },
-                        { role: UserRole.UNIVERSITY_ADMIN, label: 'University Admin', target: '/projects' },
-                        { role: UserRole.INDUSTRY, label: 'Industry Partner', target: '/collaborations' },
+                        {
+                          role: UserRole.GOVERNMENT_OFFICER,
+                          label: 'Government Officer',
+                          target: '/government/dashboard',
+                        },
+                        {
+                          role: UserRole.CITIZEN,
+                          label: 'Citizen Innovator',
+                          target: '/dashboard',
+                        },
+                        {
+                          role: UserRole.UNIVERSITY_ADMIN,
+                          label: 'University Admin',
+                          target: '/projects',
+                        },
+                        {
+                          role: UserRole.INDUSTRY,
+                          label: 'Industry Partner',
+                          target: '/collaborations',
+                        },
                       ].map((item) => (
                         <button
                           key={item.role}
@@ -132,13 +150,11 @@ export function GovernmentLayout() {
                             'w-full flex items-center justify-between px-3 py-2 text-[13px] rounded-lg transition-colors text-left cursor-pointer',
                             user?.role === item.role
                               ? 'bg-[#FAF9F5] font-bold text-[#123B2A]'
-                              : 'text-[#1D2522] hover:bg-[#FAF9F5]'
+                              : 'text-[#1D2522] hover:bg-[#FAF9F5]',
                           )}
                         >
                           <span>{item.label}</span>
-                          {user?.role === item.role && (
-                            <Check className="h-4 w-4 text-[#123B2A]" />
-                          )}
+                          {user?.role === item.role && <Check className="h-4 w-4 text-[#123B2A]" />}
                         </button>
                       ))}
                     </div>
@@ -162,7 +178,7 @@ export function GovernmentLayout() {
                       'inline-flex items-center gap-2 py-1.5 px-3 rounded-lg text-[12.5px] font-semibold transition-all whitespace-nowrap',
                       isActive
                         ? 'bg-[#4C1E4F] text-white font-bold shadow-2xs'
-                        : 'text-[#6B5845] hover:text-[#1D2522] hover:bg-[#FAF9F5]'
+                        : 'text-[#6B5845] hover:text-[#1D2522] hover:bg-[#FAF9F5]',
                     )
                   }
                 >
@@ -181,10 +197,7 @@ export function GovernmentLayout() {
       </div>
 
       {/* Global Search Modal */}
-      <GlobalSearchModal
-        isOpen={showSearch}
-        onClose={() => setShowSearch(false)}
-      />
+      <GlobalSearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </div>
   );
 }

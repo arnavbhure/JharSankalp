@@ -20,7 +20,8 @@ export function ProjectMission({ project }: ProjectMissionProps) {
             The mission & success criteria
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            The engineering hypothesis, delivery methodology, and audited baseline goals governing this consortium.
+            The engineering hypothesis, delivery methodology, and audited baseline goals governing
+            this consortium.
           </p>
         </div>
 
@@ -32,9 +33,7 @@ export function ProjectMission({ project }: ProjectMissionProps) {
               <ShieldAlert className="h-4 w-4" />
               <span>THE PROBLEM</span>
             </div>
-            <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
-              {mission.problem}
-            </p>
+            <p className="text-[13.5px] text-[#1D2522] leading-relaxed">{mission.problem}</p>
           </div>
 
           {/* Approach Card */}
@@ -43,9 +42,7 @@ export function ProjectMission({ project }: ProjectMissionProps) {
               <Cpu className="h-4 w-4 text-[#F5A623]" />
               <span>THE APPROACH</span>
             </div>
-            <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
-              {mission.approach}
-            </p>
+            <p className="text-[13.5px] text-[#1D2522] leading-relaxed">{mission.approach}</p>
           </div>
 
           {/* Outcome Card */}
@@ -73,9 +70,7 @@ export function ProjectMission({ project }: ProjectMissionProps) {
                 key={idx}
                 className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-2 text-left"
               >
-                <span className="text-[12.5px] font-bold text-[#1D2522] block">
-                  {crit.label}
-                </span>
+                <span className="text-[12.5px] font-bold text-[#1D2522] block">{crit.label}</span>
 
                 <div className="flex items-center gap-2 text-[11.5px] font-mono">
                   <span className="text-[#BE123C] bg-white px-2 py-0.5 rounded border border-[#EEEAE1]">

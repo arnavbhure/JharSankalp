@@ -1,12 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Building2,
-  MapPin,
-  ArrowRight,
-  Search,
-  CheckCircle2,
-} from 'lucide-react';
+import { Building2, MapPin, ArrowRight, Search, CheckCircle2 } from 'lucide-react';
 
 interface CollaboratorOrg {
   id: string;
@@ -89,14 +83,11 @@ export function Collaborators() {
   const categories = ['All', 'University', 'Government', 'Industry', 'Grassroots'];
 
   const filtered = ORGANIZATIONS.filter((org) => {
-    const matchesCat =
-      activeCategory === 'All' || org.category === activeCategory;
+    const matchesCat = activeCategory === 'All' || org.category === activeCategory;
     const matchesSearch =
       org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       org.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      org.focusAreas.some((f) =>
-        f.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      org.focusAreas.some((f) => f.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCat && matchesSearch;
   });
 
@@ -115,7 +106,8 @@ export function Collaborators() {
           </h1>
 
           <p className="text-[15px] sm:text-[16px] text-[#6B5845] max-w-2xl leading-relaxed">
-            The universities, district administrations, startup innovators, and grassroots collectives building real-world solutions across Jharkhand.
+            The universities, district administrations, startup innovators, and grassroots
+            collectives building real-world solutions across Jharkhand.
           </p>
 
           {/* Search & Category Filter Bar */}

@@ -1,4 +1,3 @@
-import { useAuth } from '../hooks/useAuth';
 import { Hero } from '../components/landing/Hero';
 import { StatsStrip } from '../components/landing/StatsStrip';
 import { FocusAreas } from '../components/landing/FocusAreas';
@@ -8,26 +7,8 @@ import { ActiveChallengeFeed } from '../components/landing/ActiveChallengeFeed';
 import { EcosystemDiagram } from '../components/landing/EcosystemDiagram';
 import { FinalCTA } from '../components/landing/FinalCTA';
 import { Footer } from '../components/layout/Footer';
-import { useNavigate } from 'react-router-dom';
 
 export function Landing() {
-  const { isGovernment, isUniversity, isIndustry } = useAuth();
-  const navigate = useNavigate();
-
-  // If already authenticated with government/university/industry role, direct to their dedicated workspace
-  if (isGovernment) {
-    navigate('/government');
-    return null;
-  }
-  if (isUniversity) {
-    navigate('/university');
-    return null;
-  }
-  if (isIndustry) {
-    navigate('/industry');
-    return null;
-  }
-
   return (
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans">
       {/* ── 1. Hero Section (with authentic Landing page frame.png illustration) ── */}
@@ -59,4 +40,3 @@ export function Landing() {
     </div>
   );
 }
-

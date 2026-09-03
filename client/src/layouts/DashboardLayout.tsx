@@ -20,7 +20,7 @@ const ROLE_USER_NAMES: Record<DashboardRole, string> = {
 const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string }> = {
   citizen: {
     greeting: 'Good evening, Arnav 👋',
-    subtitle: "See how your ideas are creating change across Jharkhand.",
+    subtitle: 'See how your ideas are creating change across Jharkhand.',
   },
   institution: {
     greeting: 'Welcome back, BIT Mesra 🏛️',
@@ -50,8 +50,7 @@ export function DashboardLayout() {
     if (path === '/dashboard/challenges') {
       return {
         greeting: 'My Challenges',
-        subtitle:
-          'Track the challenges you care about and the change you are helping create.',
+        subtitle: 'Track the challenges you care about and the change you are helping create.',
       };
     }
     if (path === '/dashboard/ideas') {
@@ -71,15 +70,13 @@ export function DashboardLayout() {
     if (path === '/dashboard/solutions') {
       return {
         greeting: 'My Solutions',
-        subtitle:
-          'Track solutions you have contributed to or supported across Jharkhand.',
+        subtitle: 'Track solutions you have contributed to or supported across Jharkhand.',
       };
     }
     if (path === '/dashboard/collaborations') {
       return {
         greeting: 'My Collaborations',
-        subtitle:
-          'Active academic, industrial, and community networks powering your initiatives.',
+        subtitle: 'Active academic, industrial, and community networks powering your initiatives.',
       };
     }
     if (path === '/dashboard/notifications') {
@@ -92,8 +89,7 @@ export function DashboardLayout() {
     if (path === '/dashboard/impact') {
       return {
         greeting: 'My Impact & Achievements',
-        subtitle:
-          'Your verified civic contributions, badges, and societal value generated.',
+        subtitle: 'Your verified civic contributions, badges, and societal value generated.',
       };
     }
     if (path === '/dashboard/settings') {

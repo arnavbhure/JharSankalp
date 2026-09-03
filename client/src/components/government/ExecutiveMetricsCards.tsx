@@ -100,7 +100,9 @@ export function ExecutiveMetricsCards({ metrics }: ExecutiveMetricsCardsProps) {
               </div>
 
               <div className="space-y-1">
-                <div className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold font-mono tracking-tight leading-none ${card.accent}`}>
+                <div
+                  className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold font-mono tracking-tight leading-none ${card.accent}`}
+                >
                   {card.value}
                 </div>
                 <div className="text-[14px] font-bold text-[#1D2522] leading-snug">
@@ -124,16 +126,20 @@ export function ExecutiveMetricsCards({ metrics }: ExecutiveMetricsCardsProps) {
               className={`sm:col-span-1 lg:col-span-2 p-5 rounded-2xl border ${card.border} ${card.bg} shadow-2xs hover:shadow-xs transition-all space-y-3 flex flex-col justify-between`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                  card.highlight ? 'bg-[#15803D] text-white' : 'bg-[#FAF9F5] text-[#4C1E4F]'
-                }`}>
+                <span
+                  className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                    card.highlight ? 'bg-[#15803D] text-white' : 'bg-[#FAF9F5] text-[#4C1E4F]'
+                  }`}
+                >
                   {card.badge}
                 </span>
                 <Icon className={`h-4 w-4 ${card.accent}`} />
               </div>
 
               <div className="space-y-1">
-                <div className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold font-mono tracking-tight leading-none ${card.accent}`}>
+                <div
+                  className={`text-[2.2rem] sm:text-[2.6rem] font-extrabold font-mono tracking-tight leading-none ${card.accent}`}
+                >
                   {card.value}
                 </div>
                 <div className="text-[14px] font-bold text-[#1D2522] leading-snug">

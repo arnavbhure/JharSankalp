@@ -19,7 +19,8 @@ export function IndustryActivityFeed({ activities }: IndustryActivityFeedProps) 
             Recent Partner Activity & RFP Alerts
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Live sprint signals, university collaboration requests, and technical milestone completions.
+            Live sprint signals, university collaboration requests, and technical milestone
+            completions.
           </p>
         </div>
 

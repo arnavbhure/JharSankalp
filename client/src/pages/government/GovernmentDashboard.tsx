@@ -140,10 +140,7 @@ export function GovernmentDashboard() {
       {/* ── Main Command Workspace Stream ── */}
       <main className="flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full space-y-10 sm:space-y-12">
         {/* ── 11. Quick Actions Fast-Track Toolbar ── */}
-        <QuickActionsToolbar
-          onExportReport={handleExportReport}
-          exporting={exporting}
-        />
+        <QuickActionsToolbar onExportReport={handleExportReport} exporting={exporting} />
 
         {/* ── 2. Executive Metrics (Grouped Layout) ── */}
         <ExecutiveMetricsCards metrics={metrics} />

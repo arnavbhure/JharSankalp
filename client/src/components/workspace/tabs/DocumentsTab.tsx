@@ -1,18 +1,7 @@
 import { useState } from 'react';
-import {
-  WorkspaceData,
-  WorkspaceDocument,
-  DocumentCategory,
-} from '../../../types/workspace';
+import { WorkspaceData, WorkspaceDocument, DocumentCategory } from '../../../types/workspace';
 import { uploadDocument } from '../../../services/workspaceApi';
-import {
-  FileText,
-  Upload,
-  Download,
-  Eye,
-  X,
-  Check,
-} from 'lucide-react';
+import { FileText, Upload, Download, Eye, X, Check } from 'lucide-react';
 
 interface DocumentsTabProps {
   data: WorkspaceData;
@@ -82,7 +71,8 @@ export function DocumentsTab({ data, onRefresh }: DocumentsTabProps) {
             Structured Project Documentation
           </h2>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Technical schematics, telemetry logs, SOPs, and administrative accords archived for long-term institutional provenance.
+            Technical schematics, telemetry logs, SOPs, and administrative accords archived for
+            long-term institutional provenance.
           </p>
         </div>
 
@@ -120,9 +110,7 @@ export function DocumentsTab({ data, onRefresh }: DocumentsTabProps) {
                 type="button"
                 onClick={() => setActiveCategory(cat)}
                 className={`px-3 py-1.5 rounded-lg text-[12px] font-mono font-bold transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-[#123B2A] text-white'
-                    : 'text-[#6B5845] hover:text-[#1D2522]'
+                  isSelected ? 'bg-[#123B2A] text-white' : 'text-[#6B5845] hover:text-[#1D2522]'
                 }`}
               >
                 {cat} ({count})
@@ -154,9 +142,7 @@ export function DocumentsTab({ data, onRefresh }: DocumentsTabProps) {
                 <span>{doc.size}</span>
               </div>
 
-              <h4 className="text-[14px] font-bold text-[#1D2522] leading-snug">
-                {doc.title}
-              </h4>
+              <h4 className="text-[14px] font-bold text-[#1D2522] leading-snug">{doc.title}</h4>
 
               <div className="text-[11.5px] text-[#6B5845] font-mono">
                 <span>Uploaded by {doc.uploadedBy}</span> · <span>{doc.uploadDate}</span>
@@ -164,9 +150,7 @@ export function DocumentsTab({ data, onRefresh }: DocumentsTabProps) {
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t border-[#EEEAE1] text-[12px]">
-              <span className="font-mono text-[11px] text-[#123B2A] font-bold">
-                {doc.type}
-              </span>
+              <span className="font-mono text-[11px] text-[#123B2A] font-bold">{doc.type}</span>
 
               <div className="flex items-center gap-1">
                 <button
@@ -212,10 +196,21 @@ export function DocumentsTab({ data, onRefresh }: DocumentsTabProps) {
             </div>
 
             <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1 text-[12.5px] text-[#6B5845]">
-              <p>Category: <strong className="text-[#1D2522]">{selectedDoc.category}</strong></p>
-              <p>Format: <strong className="text-[#1D2522]">{selectedDoc.type} ({selectedDoc.size})</strong></p>
-              <p>Archived by: <strong className="text-[#1D2522]">{selectedDoc.uploadedBy}</strong></p>
-              <p>Timestamp: <strong className="text-[#1D2522]">{selectedDoc.uploadDate}</strong></p>
+              <p>
+                Category: <strong className="text-[#1D2522]">{selectedDoc.category}</strong>
+              </p>
+              <p>
+                Format:{' '}
+                <strong className="text-[#1D2522]">
+                  {selectedDoc.type} ({selectedDoc.size})
+                </strong>
+              </p>
+              <p>
+                Archived by: <strong className="text-[#1D2522]">{selectedDoc.uploadedBy}</strong>
+              </p>
+              <p>
+                Timestamp: <strong className="text-[#1D2522]">{selectedDoc.uploadDate}</strong>
+              </p>
             </div>
 
             <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#EEEAE1]">

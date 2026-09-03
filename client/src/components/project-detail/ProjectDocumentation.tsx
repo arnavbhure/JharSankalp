@@ -43,7 +43,8 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
     },
   ];
 
-  const filteredDocs = activeTab === 'ALL' ? allDocs : allDocs.filter((d) => d.category === activeTab);
+  const filteredDocs =
+    activeTab === 'ALL' ? allDocs : allDocs.filter((d) => d.category === activeTab);
 
   const handleDownload = (doc: any) => {
     setDownloadNotice(`Downloading ${doc.title}...`);
@@ -63,7 +64,8 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
               Documentation, Field Reports & Evidence
             </h3>
             <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-              Open technical blueprints, ground inspection datasets, and multi-media evidence published by the project team.
+              Open technical blueprints, ground inspection datasets, and multi-media evidence
+              published by the project team.
             </p>
           </div>
 
@@ -110,9 +112,7 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
                 </div>
 
                 <div className="space-y-0.5 min-w-0">
-                  <h4 className="text-[13.5px] font-bold text-[#1D2522] truncate">
-                    {doc.title}
-                  </h4>
+                  <h4 className="text-[13.5px] font-bold text-[#1D2522] truncate">{doc.title}</h4>
                   <div className="flex items-center gap-2 text-[11px] font-mono text-[#6B5845]">
                     <span className="font-semibold text-[#123B2A]">{doc.type}</span>
                     <span>·</span>
@@ -172,7 +172,9 @@ export function ProjectDocumentation({ project }: ProjectDocumentationProps) {
 
             <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-2 text-[13px] text-[#1D2522]">
               <p className="leading-relaxed">
-                This verified open-access dossier documents the engineering specifications, telemetry calibration logs, and local community review signatures recorded in {project.location}.
+                This verified open-access dossier documents the engineering specifications,
+                telemetry calibration logs, and local community review signatures recorded in{' '}
+                {project.location}.
               </p>
             </div>
 

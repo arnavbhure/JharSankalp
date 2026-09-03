@@ -36,10 +36,7 @@ export function IdeaDetail() {
   return (
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col">
       {/* ── Editorial Hero ── */}
-      <IdeaDetailHero
-        idea={idea}
-        onContributeClick={() => handleOpenContribute()}
-      />
+      <IdeaDetailHero idea={idea} onContributeClick={() => handleOpenContribute()} />
 
       {/* ── Compact Sticky Sub-Navigation ── */}
       <IdeaStickyNav
@@ -89,10 +86,7 @@ export function IdeaDetail() {
 
           {/* ── Right Column: Sticky Context Sidebar (4 Columns) ── */}
           <div className="lg:col-span-4">
-            <IdeaContextSidebar
-              idea={idea}
-              onContributeClick={() => handleOpenContribute()}
-            />
+            <IdeaContextSidebar idea={idea} onContributeClick={() => handleOpenContribute()} />
           </div>
         </div>
       </main>

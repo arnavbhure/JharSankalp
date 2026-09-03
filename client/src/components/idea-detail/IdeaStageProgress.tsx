@@ -44,7 +44,8 @@ export function IdeaStageProgress({
           Where the idea stands today
         </h2>
         <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Track this innovation&apos;s journey from napkin sketch to verified field deployment in Jharkhand villages.
+          Track this innovation&apos;s journey from napkin sketch to verified field deployment in
+          Jharkhand villages.
         </p>
       </div>
 
@@ -72,8 +73,8 @@ export function IdeaStageProgress({
                       isCompleted
                         ? 'bg-[#123B2A] text-white ring-4 ring-white shadow-2xs'
                         : isCurrent
-                        ? 'bg-[#F5A623] text-white ring-4 ring-[#F5A623]/25 scale-110 shadow-xs'
-                        : 'bg-white text-[#6B5845] border-2 border-[#EEEAE1]'
+                          ? 'bg-[#F5A623] text-white ring-4 ring-[#F5A623]/25 scale-110 shadow-xs'
+                          : 'bg-white text-[#6B5845] border-2 border-[#EEEAE1]'
                     }`}
                   >
                     {isCompleted ? (
@@ -91,8 +92,8 @@ export function IdeaStageProgress({
                         isCurrent
                           ? 'text-[#123B2A]'
                           : isCompleted
-                          ? 'text-[#1D2522]'
-                          : 'text-[#6B5845]/70'
+                            ? 'text-[#1D2522]'
+                            : 'text-[#6B5845]/70'
                       }`}
                     >
                       {item.label}
@@ -118,9 +119,7 @@ export function IdeaStageProgress({
               <Target className="h-4 w-4 text-[#F5A623]" />
               <span>CURRENT FOCUS</span>
             </div>
-            <p className="text-[14px] text-[#1D2522] leading-relaxed font-medium">
-              {currentFocus}
-            </p>
+            <p className="text-[14px] text-[#1D2522] leading-relaxed font-medium">{currentFocus}</p>
           </div>
 
           {/* Next Milestone */}

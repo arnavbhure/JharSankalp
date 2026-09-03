@@ -51,11 +51,12 @@ export function mapDbRecordToFeedItem(rec: any, idx: number): ImpactFeedItem {
 }
 
 export async function fetchImpactAnalytics(
-  params?: ImpactQueryParams
+  params?: ImpactQueryParams,
 ): Promise<ImpactAnalyticsResponse | null> {
   const query = new URLSearchParams();
   if (params?.domain && params.domain !== 'All Focus Areas') query.set('domain', params.domain);
-  if (params?.district && params.district !== 'All Districts') query.set('district', params.district);
+  if (params?.district && params.district !== 'All Districts')
+    query.set('district', params.district);
 
   const queryString = query.toString();
   const endpoint = queryString ? `/impact?${queryString}` : '/impact';

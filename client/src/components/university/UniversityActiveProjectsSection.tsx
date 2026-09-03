@@ -6,7 +6,9 @@ interface UniversityActiveProjectsSectionProps {
   projects: UniversityActiveProject[];
 }
 
-export function UniversityActiveProjectsSection({ projects }: UniversityActiveProjectsSectionProps) {
+export function UniversityActiveProjectsSection({
+  projects,
+}: UniversityActiveProjectsSectionProps) {
   return (
     <section className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-xs text-left space-y-6">
       <div className="space-y-1 border-b border-[#EEEAE1] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
@@ -19,7 +21,8 @@ export function UniversityActiveProjectsSection({ projects }: UniversityActivePr
             Active Research & Implementation Projects
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Live societal projects where BIT Mesra departments lead hardware prototyping, field pilots, and community validation.
+            Live societal projects where BIT Mesra departments lead hardware prototyping, field
+            pilots, and community validation.
           </p>
         </div>
 
@@ -35,9 +38,7 @@ export function UniversityActiveProjectsSection({ projects }: UniversityActivePr
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {projects.map((proj) => {
-          const progressPct = Math.round(
-            (proj.milestonesCompleted / proj.milestonesTotal) * 100
-          );
+          const progressPct = Math.round((proj.milestonesCompleted / proj.milestonesTotal) * 100);
 
           return (
             <div
@@ -50,14 +51,10 @@ export function UniversityActiveProjectsSection({ projects }: UniversityActivePr
                     ● {proj.stageLabel}
                   </span>
 
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {proj.projectCode}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{proj.projectCode}</span>
                 </div>
 
-                <h4 className="text-[16px] font-bold text-[#1D2522] leading-snug">
-                  {proj.title}
-                </h4>
+                <h4 className="text-[16px] font-bold text-[#1D2522] leading-snug">{proj.title}</h4>
 
                 <div className="text-[12px] font-mono text-[#123B2A]">
                   Dept: <strong>{proj.department}</strong>

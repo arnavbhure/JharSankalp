@@ -15,7 +15,8 @@ export function MyIdeasEmptyState() {
           You haven&apos;t shared an idea yet.
         </h3>
         <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-md mx-auto">
-          An idea doesn&apos;t need to be complete before it enters the right conversation. Propose an engineering hypothesis or community approach for any societal challenge in Jharkhand.
+          An idea doesn&apos;t need to be complete before it enters the right conversation. Propose
+          an engineering hypothesis or community approach for any societal challenge in Jharkhand.
         </p>
       </div>
 

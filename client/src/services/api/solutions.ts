@@ -47,23 +47,24 @@ export function mapDbSolutionToUi(dbItem: any): SolutionItem {
       { name: 'Panchayat Pilot Installation', date: 'Feb 2026', completed: true },
       { name: 'Automated BDO Dashboard Integration', date: 'May 2026', completed: false },
     ],
-    nextMilestone: 'Integration with District Jal Jeevan Mission API & statewide repair team dispatch',
+    nextMilestone:
+      'Integration with District Jal Jeevan Mission API & statewide repair team dispatch',
     image: dbItem.imageUrl || '/rural_water_iot.jpg',
   };
 }
 
-export async function fetchSolutions(
-  params?: SolutionQueryParams
-): Promise<SolutionItem[]> {
+export async function fetchSolutions(params?: SolutionQueryParams): Promise<SolutionItem[]> {
   const query = new URLSearchParams();
   if (params?.domain && params.domain !== 'All Focus Areas') query.set('domain', params.domain);
-  if (params?.district && params.district !== 'All Districts') query.set('district', params.district);
+  if (params?.district && params.district !== 'All Districts')
+    query.set('district', params.district);
   if (params?.stage && params.stage !== 'All Stages') query.set('stage', params.stage);
 
   const queryString = query.toString();
   const endpoint = queryString ? `/solutions?${queryString}` : '/solutions';
-  const rawList = await api.get<any[]>(endpoint);
-  return (rawList || []).map(mapDbSolutionToUi);
+  const rawList = await api.get<any>(endpoint);
+  const list = Array.isArray(rawList) ? rawList : rawList?.data || [];
+  return list.map(mapDbSolutionToUi);
 }
 
 export async function fetchSolutionById(id: string): Promise<any | null> {

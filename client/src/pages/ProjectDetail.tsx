@@ -106,10 +106,7 @@ export function ProjectDetail() {
       </div>
 
       {/* ── 1. Project Header Section ── */}
-      <ProjectDetailHeader
-        project={project}
-        onJoinClick={() => setGeneralJoinOpen(true)}
-      />
+      <ProjectDetailHeader project={project} onJoinClick={() => setGeneralJoinOpen(true)} />
 
       {/* ── 2. Project Meta Strip ── */}
       <ProjectMetaStrip project={project} />

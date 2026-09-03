@@ -16,7 +16,7 @@ export function ProjectMapView({
 }: ProjectMapViewProps) {
   const navigate = useNavigate();
   const [activeProject, setActiveProject] = useState<Project | null>(
-    projects.length > 0 ? projects[0] : null
+    projects.length > 0 ? projects[0] : null,
   );
 
   const getMarkerColor = (stage: string) => {
@@ -94,25 +94,81 @@ export function ProjectMapView({
               className="drop-shadow-xs"
             />
             {/* Regional Labels */}
-            <text x="50" y="53" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="50"
+              y="53"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Ranchi
             </text>
-            <text x="74" y="47" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="74"
+              y="47"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Dhanbad
             </text>
-            <text x="51" y="66" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="51"
+              y="66"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Khunti
             </text>
-            <text x="34" y="64" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="34"
+              y="64"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Gumla
             </text>
-            <text x="61" y="85" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="61"
+              y="85"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               West Singhbhum
             </text>
-            <text x="78" y="80" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="78"
+              y="80"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               East Singhbhum
             </text>
-            <text x="86" y="37" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="86"
+              y="37"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Dumka
             </text>
           </svg>
@@ -202,7 +258,9 @@ export function ProjectMapView({
                     Beneficiaries
                   </span>
                   <div className="text-[13.5px] font-bold text-[#123B2A]">
-                    {activeProject.beneficiaries ? activeProject.beneficiaries.toLocaleString() : 'Covered'}
+                    {activeProject.beneficiaries
+                      ? activeProject.beneficiaries.toLocaleString()
+                      : 'Covered'}
                   </div>
                 </div>
 
@@ -211,7 +269,8 @@ export function ProjectMapView({
                     Milestones
                   </span>
                   <div className="text-[13.5px] font-bold text-[#4C1E4F]">
-                    {activeProject.milestoneProgress.completed} / {activeProject.milestoneProgress.total} Done
+                    {activeProject.milestoneProgress.completed} /{' '}
+                    {activeProject.milestoneProgress.total} Done
                   </div>
                 </div>
               </div>

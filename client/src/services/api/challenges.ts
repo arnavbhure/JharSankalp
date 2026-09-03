@@ -1,5 +1,10 @@
 import { api } from '../api';
-import { ChallengeItem, ChallengeCategory, ChallengeStatusType, ImpactLevel } from '../../types/challenges';
+import {
+  ChallengeItem,
+  ChallengeCategory,
+  ChallengeStatusType,
+  ImpactLevel,
+} from '../../types/challenges';
 
 export interface ChallengeQueryParams {
   domain?: string;
@@ -50,7 +55,9 @@ export function mapDbChallengeToUi(dbItem: any): ChallengeItem {
     metrics: [
       {
         label: 'Affected Population',
-        value: dbItem.affectedPopulation ? `${dbItem.affectedPopulation.toLocaleString()}` : '2,000+',
+        value: dbItem.affectedPopulation
+          ? `${dbItem.affectedPopulation.toLocaleString()}`
+          : '2,000+',
       },
       { label: 'Priority', value: dbItem.priority || 'High' },
       { label: 'Status', value: dbItem.status || 'Active' },
@@ -66,13 +73,15 @@ export function mapDbChallengeToUi(dbItem: any): ChallengeItem {
 export async function fetchChallenges(params?: ChallengeQueryParams): Promise<ChallengeItem[]> {
   const query = new URLSearchParams();
   if (params?.domain && params.domain !== 'All Focus Areas') query.set('domain', params.domain);
-  if (params?.district && params.district !== 'All Districts') query.set('district', params.district);
+  if (params?.district && params.district !== 'All Districts')
+    query.set('district', params.district);
   if (params?.status && params.status !== 'All Statuses') query.set('status', params.status);
 
   const queryString = query.toString();
   const endpoint = queryString ? `/challenges?${queryString}` : '/challenges';
-  const rawList = await api.get<any[]>(endpoint);
-  return (rawList || []).map(mapDbChallengeToUi);
+  const rawList = await api.get<any>(endpoint);
+  const list = Array.isArray(rawList) ? rawList : rawList?.data || [];
+  return list.map(mapDbChallengeToUi);
 }
 
 export async function fetchChallengeById(id: string): Promise<any | null> {

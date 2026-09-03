@@ -19,7 +19,8 @@ export function UniversityActivityFeed({ activities }: UniversityActivityFeedPro
             Recent Institutional Activity
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Live sprint updates, milestone completions, and external partner exchanges involving BIT Mesra teams.
+            Live sprint updates, milestone completions, and external partner exchanges involving BIT
+            Mesra teams.
           </p>
         </div>
 

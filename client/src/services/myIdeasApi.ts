@@ -139,7 +139,8 @@ const SEED_ACTIVITIES: IdeaActivityItem[] = [
     id: 'act-3',
     timestamp: '3 DAYS AGO',
     title: 'Idea Published for Collaboration',
-    description: 'Passed initial triage and opened for student & research contributor applications.',
+    description:
+      'Passed initial triage and opened for student & research contributor applications.',
     ideaTitle: 'Low-Cost IoT Monitoring for Rural Water Pumps',
     type: 'publish',
   },
@@ -216,7 +217,9 @@ export async function getContributorStats(): Promise<ContributorOverviewStats> {
   return {
     ideasSubmitted: ideas.length,
     underReview: ideas.filter((i) => i.status === 'UNDER_REVIEW').length,
-    openForCollaboration: ideas.filter((i) => i.status === 'ACTIVE_COLLABORATION' || i.status === 'PUBLISHED').length,
+    openForCollaboration: ideas.filter(
+      (i) => i.status === 'ACTIVE_COLLABORATION' || i.status === 'PUBLISHED',
+    ).length,
     movingTowardProjectFormation: ideas.filter((i) => i.status === 'PROJECT_FORMATION').length,
   };
 }
@@ -228,7 +231,7 @@ export async function getContributionRequests(): Promise<ContributorRequest[]> {
 
 export async function respondToContributionRequest(
   requestId: string,
-  action: 'ACCEPTED' | 'DECLINED'
+  action: 'ACCEPTED' | 'DECLINED',
 ): Promise<boolean> {
   await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -261,7 +264,7 @@ export async function respondToContributionRequest(
 
 export async function respondToActionRequired(
   ideaId: string,
-  _replyText: string
+  _replyText: string,
 ): Promise<boolean> {
   await new Promise((resolve) => setTimeout(resolve, 300));
   inMemoryMyIdeas = inMemoryMyIdeas.map((idea) => {
@@ -278,7 +281,9 @@ export async function getIdeaActivities(): Promise<IdeaActivityItem[]> {
   return SEED_ACTIVITIES;
 }
 
-export async function getIdeaUpdates(): Promise<Array<{ id: string; text: string; time: string; link?: string }>> {
+export async function getIdeaUpdates(): Promise<
+  Array<{ id: string; text: string; time: string; link?: string }>
+> {
   await new Promise((resolve) => setTimeout(resolve, 60));
   return [
     {

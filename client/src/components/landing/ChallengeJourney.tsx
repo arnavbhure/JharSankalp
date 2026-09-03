@@ -55,7 +55,10 @@ export function ChallengeJourney() {
   ];
 
   return (
-    <section id="how-it-works" className="py-20 border-b border-[#EEEAE1] bg-[#FAF9F5] text-left relative overflow-hidden">
+    <section
+      id="how-it-works"
+      className="py-20 border-b border-[#EEEAE1] bg-[#FAF9F5] text-left relative overflow-hidden"
+    >
       {/* Subtle background dot matrix */}
       <div
         aria-hidden="true"
@@ -75,7 +78,8 @@ export function ChallengeJourney() {
             </h2>
           </div>
           <p className="max-w-md text-[14px] text-[#6B5845] leading-relaxed">
-            Every citizen observation moves through a transparent, institutional journey from local identification to verified statewide scaling.
+            Every citizen observation moves through a transparent, institutional journey from local
+            identification to verified statewide scaling.
           </p>
         </div>
 
@@ -98,7 +102,9 @@ export function ChallengeJourney() {
                   {/* Step Node Marker on Line */}
                   <div className="flex items-center justify-center mb-4">
                     <div className="relative flex items-center justify-center">
-                      <div className={`flex h-11 w-11 items-center justify-center rounded-lg border-2 border-white shadow-sm ${step.accentBg} transition-colors group-hover:scale-110`}>
+                      <div
+                        className={`flex h-11 w-11 items-center justify-center rounded-lg border-2 border-white shadow-sm ${step.accentBg} transition-colors group-hover:scale-110`}
+                      >
                         <Icon className="h-5 w-5 stroke-[2.2]" />
                       </div>
                       {/* Step Number Tag */}
@@ -127,7 +133,9 @@ export function ChallengeJourney() {
 
                     {/* Actor Badge */}
                     <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase ${step.tagBg}`}>
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase ${step.tagBg}`}
+                      >
                         {step.actor}
                       </span>
                     </div>
@@ -150,7 +158,9 @@ export function ChallengeJourney() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${step.accentBg}`}>
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-lg ${step.accentBg}`}
+                    >
                       <Icon className="h-5 w-5 stroke-[2.2]" />
                     </div>
                     <div>
@@ -162,14 +172,14 @@ export function ChallengeJourney() {
                       </h3>
                     </div>
                   </div>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase ${step.tagBg}`}>
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase ${step.tagBg}`}
+                  >
                     {step.actor}
                   </span>
                 </div>
 
-                <p className="text-[13px] text-[#1D2522]/80 leading-relaxed">
-                  {step.desc}
-                </p>
+                <p className="text-[13px] text-[#1D2522]/80 leading-relaxed">{step.desc}</p>
               </div>
             );
           })}
@@ -178,4 +188,3 @@ export function ChallengeJourney() {
     </section>
   );
 }
-

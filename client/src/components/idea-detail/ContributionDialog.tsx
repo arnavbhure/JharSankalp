@@ -88,7 +88,8 @@ export function ContributionDialog({
               Contribution Request Sent!
             </h3>
             <p className="text-[14px] text-[#6B5845] max-w-sm mx-auto">
-              The project team has received your details and message. They will reach out to coordinate next steps.
+              The project team has received your details and message. They will reach out to
+              coordinate next steps.
             </p>
           </div>
         ) : (

@@ -6,10 +6,7 @@ interface ProjectStageExplorerProps {
   onSelectStage: (stage: string) => void;
 }
 
-export function ProjectStageExplorer({
-  selectedStage,
-  onSelectStage,
-}: ProjectStageExplorerProps) {
+export function ProjectStageExplorer({ selectedStage, onSelectStage }: ProjectStageExplorerProps) {
   return (
     <section className="border-b border-[#EEEAE1] bg-[#FAF9F5] py-12 sm:py-16 text-left">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
@@ -24,7 +21,8 @@ export function ProjectStageExplorer({
               Where solutions are in their journey.
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#6B5845] max-w-2xl">
-              Every project moves through a different path from research to real-world implementation.
+              Every project moves through a different path from research to real-world
+              implementation.
             </p>
           </div>
 
@@ -62,9 +60,7 @@ export function ProjectStageExplorer({
                 <div className="flex items-center justify-between mb-3">
                   <span
                     className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded ${
-                      isSelected
-                        ? 'bg-white/15 text-[#FEE1C7]'
-                        : 'bg-[#F8F6F1] text-[#6B5845]'
+                      isSelected ? 'bg-white/15 text-[#FEE1C7]' : 'bg-[#F8F6F1] text-[#6B5845]'
                     }`}
                   >
                     {stageItem.stepNumber}

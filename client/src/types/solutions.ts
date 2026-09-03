@@ -1,10 +1,5 @@
 export type SolutionStage =
-  | 'Research'
-  | 'Prototype'
-  | 'Testing'
-  | 'Field Pilot'
-  | 'Deployment'
-  | 'Scaling';
+  'Research' | 'Prototype' | 'Testing' | 'Field Pilot' | 'Deployment' | 'Scaling';
 
 export interface MilestoneItem {
   name: string;

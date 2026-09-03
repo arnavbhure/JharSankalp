@@ -61,8 +61,7 @@ export function DashboardTopHeader({
     },
   ];
 
-  const activeRoleObj =
-    ROLES_LIST.find((r) => r.id === currentRole) || ROLES_LIST[0];
+  const activeRoleObj = ROLES_LIST.find((r) => r.id === currentRole) || ROLES_LIST[0];
 
   return (
     <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EEEAE1] text-left select-none">
@@ -80,9 +79,7 @@ export function DashboardTopHeader({
           <h1 className="text-[1.75rem] sm:text-[2.1rem] font-extrabold text-[#1D2522] tracking-tight font-sans leading-tight">
             {greeting}
           </h1>
-          <p className="text-[13.5px] text-[#6B5845] font-normal">
-            {subtitle}
-          </p>
+          <p className="text-[13.5px] text-[#6B5845] font-normal">{subtitle}</p>
         </div>
       </div>
 
@@ -117,9 +114,7 @@ export function DashboardTopHeader({
                 <span className="text-[11px] font-mono font-bold uppercase text-[#123B2A]">
                   NOTIFICATIONS
                 </span>
-                <span className="text-[10.5px] font-mono text-[#BE123C] font-semibold">
-                  2 New
-                </span>
+                <span className="text-[10.5px] font-mono text-[#BE123C] font-semibold">2 New</span>
               </div>
               <div className="space-y-2 text-[12px]">
                 <div className="p-2 rounded-xl bg-[#FAF9F5] space-y-0.5">
@@ -174,12 +169,14 @@ export function DashboardTopHeader({
                         : 'text-[#1D2522] hover:bg-[#FAF9F5]'
                     }`}
                   >
-                    <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${isSelected ? 'text-[#F5A623]' : 'text-[#123B2A]'}`} />
+                    <Icon
+                      className={`h-4 w-4 mt-0.5 shrink-0 ${isSelected ? 'text-[#F5A623]' : 'text-[#123B2A]'}`}
+                    />
                     <div className="space-y-0.5 min-w-0">
-                      <span className="text-[12px] font-bold block leading-tight">
-                        {r.label}
-                      </span>
-                      <span className={`text-[10.5px] block line-clamp-1 ${isSelected ? 'text-white/80' : 'text-[#6B5845]'}`}>
+                      <span className="text-[12px] font-bold block leading-tight">{r.label}</span>
+                      <span
+                        className={`text-[10.5px] block line-clamp-1 ${isSelected ? 'text-white/80' : 'text-[#6B5845]'}`}
+                      >
                         {r.desc}
                       </span>
                     </div>

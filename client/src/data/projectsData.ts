@@ -1,9 +1,4 @@
-import {
-  Project,
-  ProjectActivityItem,
-  PortfolioMetrics,
-  StageCount,
-} from '../types/projects';
+import { Project, ProjectActivityItem, PortfolioMetrics, StageCount } from '../types/projects';
 
 export const PORTFOLIO_METRICS: PortfolioMetrics = {
   activeProjects: 12,
@@ -195,8 +190,7 @@ const RAW_PROJECTS: Array<
       'Rugged handheld spectrometer providing instant N-P-K soil diagnostics and vernacular crop recommendations.',
     description:
       'Smallholder tribal farmers in Bishunpur struggle with acidic laterite soil degradation and excessive fertilizer spend. This field pilot equips Krishi Mitras with handheld optical scanners, generating personalized Sadri/Hindi soil advisory cards in under 5 minutes.',
-    summary:
-      'Pocket spectrometer testing soil health in 14 villages with zero reagent wait times.',
+    summary: 'Pocket spectrometer testing soil health in 14 villages with zero reagent wait times.',
     coordinates: { x: 34, y: 62 },
     createdAt: '2026-01-28',
     partners: [
@@ -336,8 +330,7 @@ const RAW_PROJECTS: Array<
       'Audio-tactile low-energy BLE beacon network enabling independent transit for visually impaired commuters.',
     description:
       'Crowded transit junctions in Jamshedpur present severe hazards for persons with visual impairments. This completed deployment installed 140 Bluetooth LE orientation beacons across 12 transit hubs, paired with voice navigation in Hindi, Santali, and Bengali.',
-    summary:
-      'Audible indoor transit beacon grid verified across 12 busiest bus interchanges.',
+    summary: 'Audible indoor transit beacon grid verified across 12 busiest bus interchanges.',
     coordinates: { x: 78, y: 78 },
     createdAt: '2025-10-04',
     partners: [
@@ -430,8 +423,7 @@ const RAW_PROJECTS: Array<
       'Phase-change thermal storage micro-coolers preserving seasonal forest produce and wild honey.',
     description:
       'Perishable forest produce such as Mahua blossoms and wild mangoes suffer 40% post-harvest spoilage due to lack of grid power in Latehar valleys. This prototype uses solar-charged phase-change wax batteries that maintain 4°C cooling for up to 72 hours without continuous electricity.',
-    summary:
-      'Passive phase-change solar cold storage preserving non-timber forest produce.',
+    summary: 'Passive phase-change solar cold storage preserving non-timber forest produce.',
     coordinates: { x: 38, y: 44 },
     createdAt: '2026-01-19',
     partners: [
@@ -640,9 +632,7 @@ export const SEEDED_PROJECTS: Project[] = RAW_PROJECTS.map((p) => ({
   health: 'ON_TRACK',
   healthLabel: 'ON TRACK',
   startedAt: 'January 2026',
-  progressPercentage: Math.round(
-    (p.milestoneProgress.completed / p.milestoneProgress.total) * 100
-  ),
+  progressPercentage: Math.round((p.milestoneProgress.completed / p.milestoneProgress.total) * 100),
   potentialBeneficiaries: p.beneficiaries || 2000,
   collaborationNeeds: [
     {
@@ -660,7 +650,8 @@ export const PROJECT_ACTIVITIES: ProjectActivityItem[] = [
     timestamp: 'TODAY',
     projectTitle: 'Smart Rural Water Reliability Network',
     projectId: 'PRJ-2026-0012',
-    activity: 'Completed Field Pilot Milestone 03: Telemetry collars successfully verified across all 18 test borewells.',
+    activity:
+      'Completed Field Pilot Milestone 03: Telemetry collars successfully verified across all 18 test borewells.',
     stage: 'FIELD_PILOT',
     stageLabel: 'FIELD PILOT',
   },
@@ -669,7 +660,8 @@ export const PROJECT_ACTIVITIES: ProjectActivityItem[] = [
     timestamp: 'YESTERDAY',
     projectTitle: 'Predictive Mine Subsidence Warning System',
     projectId: 'PRJ-2026-0009',
-    activity: 'BIT Sindri research team published sensor evaluation report verifying 0.5mm micro-shift detection.',
+    activity:
+      'BIT Sindri research team published sensor evaluation report verifying 0.5mm micro-shift detection.',
     stage: 'PROTOTYPE',
     stageLabel: 'PROTOTYPE',
   },
@@ -678,7 +670,8 @@ export const PROJECT_ACTIVITIES: ProjectActivityItem[] = [
     timestamp: '2 DAYS AGO',
     projectTitle: 'Portable Soil Intelligence System',
     projectId: 'PRJ-2026-0007',
-    activity: 'Onboarded a new AgriTech startup partner to miniaturize the optical scanning chamber.',
+    activity:
+      'Onboarded a new AgriTech startup partner to miniaturize the optical scanning chamber.',
     stage: 'FIELD_PILOT',
     stageLabel: 'FIELD PILOT',
   },
@@ -687,7 +680,8 @@ export const PROJECT_ACTIVITIES: ProjectActivityItem[] = [
     timestamp: '4 DAYS AGO',
     projectTitle: 'Offline Learning Access Network',
     projectId: 'PRJ-2025-0031',
-    activity: 'Began implementation across 8 additional middle schools in deep Saranda forest buffer hamlets.',
+    activity:
+      'Began implementation across 8 additional middle schools in deep Saranda forest buffer hamlets.',
     stage: 'IMPLEMENTATION',
     stageLabel: 'IMPLEMENTATION',
   },

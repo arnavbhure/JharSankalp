@@ -19,7 +19,8 @@ export const IMAGES = {
     id: 'hero-waterfall',
     url: 'https://images.unsplash.com/photo-1546768292-fb12f6c92568?auto=format&fit=crop&w=1200&q=80',
     title: 'Jharkhand Waterfall & Community Pioneers',
-    caption: 'Hundru & Dassam falls eco-corridor with student innovators exploring regional terrain',
+    caption:
+      'Hundru & Dassam falls eco-corridor with student innovators exploring regional terrain',
     credit: 'Pradeep Gaurs / Unsplash',
     alt: 'Lush green waterfall canyon with young innovators looking forward',
   },
@@ -69,7 +70,8 @@ export const IMAGES = {
     id: 'uni-lab',
     url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80',
     title: 'IoT & Embedded Systems Prototyping',
-    caption: 'Birsa Institute of Technology faculty and student research team developing low-power telemetry',
+    caption:
+      'Birsa Institute of Technology faculty and student research team developing low-power telemetry',
     credit: 'ThisisEngineering / Unsplash',
     alt: 'Engineering students in an electronics lab testing sensor circuits and breadboards',
   },
@@ -79,7 +81,8 @@ export const IMAGES = {
     id: 'mining-safety',
     url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=1000&q=80',
     title: 'Subsidence Monitoring & Topography',
-    caption: 'Geotechnical monitoring equipment deployed near reclaimed mine zones in Jharia, Dhanbad',
+    caption:
+      'Geotechnical monitoring equipment deployed near reclaimed mine zones in Jharia, Dhanbad',
     credit: 'Ricardo Gomez Angel / Unsplash',
     alt: 'Industrial surveying and seismic measurement equipment in a mining region',
   },
@@ -89,7 +92,8 @@ export const IMAGES = {
     id: 'community-assembly',
     url: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=1000&q=80',
     title: 'Panchayat Ground Verification',
-    caption: 'Village council and residents reviewing field pilot outcomes during a community social audit',
+    caption:
+      'Village council and residents reviewing field pilot outcomes during a community social audit',
     credit: 'Annie Spratt / Unsplash',
     alt: 'Community group meeting outdoors for deliberation and planning',
   },

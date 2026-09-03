@@ -103,7 +103,7 @@ export function MyChallengeRow({ challenge, onOpenResponseModal }: MyChallengeRo
 
           <span
             className={`text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded-md border uppercase tracking-wider ${getStatusBadge(
-              challenge.status
+              challenge.status,
             )}`}
           >
             {challenge.statusLabel}
@@ -120,7 +120,8 @@ export function MyChallengeRow({ challenge, onOpenResponseModal }: MyChallengeRo
           {challenge.title}
         </h3>
         <p className="text-[13px] text-[#6B5845] font-medium">
-          {challenge.district} {challenge.block ? `· ${challenge.block}` : ''} · Submitted on {challenge.submittedDate}
+          {challenge.district} {challenge.block ? `· ${challenge.block}` : ''} · Submitted on{' '}
+          {challenge.submittedDate}
         </p>
       </div>
 
@@ -142,8 +143,8 @@ export function MyChallengeRow({ challenge, onOpenResponseModal }: MyChallengeRo
                     isCompleted
                       ? 'bg-[#123B2A] text-white ring-2 ring-white'
                       : isCurrent
-                      ? 'bg-[#F5A623] text-white ring-3 ring-[#F5A623]/30 scale-110'
-                      : 'bg-white text-[#6B5845] border border-[#EEEAE1]'
+                        ? 'bg-[#F5A623] text-white ring-3 ring-[#F5A623]/30 scale-110'
+                        : 'bg-white text-[#6B5845] border border-[#EEEAE1]'
                   }`}
                 >
                   {isCompleted ? (
@@ -158,12 +159,14 @@ export function MyChallengeRow({ challenge, onOpenResponseModal }: MyChallengeRo
                     isCurrent
                       ? 'font-bold text-[#123B2A]'
                       : isCompleted
-                      ? 'text-[#1D2522] font-semibold'
-                      : 'text-[#6B5845]/70'
+                        ? 'text-[#1D2522] font-semibold'
+                        : 'text-[#6B5845]/70'
                   }`}
                 >
                   {st.label}
-                  {isCurrent && <span className="block text-[8.5px] text-[#B45309] font-bold">● ACTIVE</span>}
+                  {isCurrent && (
+                    <span className="block text-[8.5px] text-[#B45309] font-bold">● ACTIVE</span>
+                  )}
                 </span>
               </div>
             );
@@ -175,7 +178,8 @@ export function MyChallengeRow({ challenge, onOpenResponseModal }: MyChallengeRo
       <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-between text-[12.5px] text-[#6B5845] flex-wrap gap-2">
         <div className="flex items-center gap-4">
           <span>
-            <strong className="text-[#1D2522]">{challenge.collaboratorsCount}</strong> Collaborators matched
+            <strong className="text-[#1D2522]">{challenge.collaboratorsCount}</strong> Collaborators
+            matched
           </span>
           <span>·</span>
           <span>

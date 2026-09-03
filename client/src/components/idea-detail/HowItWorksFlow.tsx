@@ -34,7 +34,8 @@ export function HowItWorksFlow({ steps }: HowItWorksFlowProps) {
           How the system could work
         </h2>
         <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-2xl">
-          A concept blueprint for non-intrusive edge sensing and decentralized mesh telemetry designed for rugged Chota Nagpur rural terrains.
+          A concept blueprint for non-intrusive edge sensing and decentralized mesh telemetry
+          designed for rugged Chota Nagpur rural terrains.
         </p>
       </div>
 
@@ -56,13 +57,9 @@ export function HowItWorksFlow({ steps }: HowItWorksFlowProps) {
                   </div>
                 </div>
 
-                <h3 className="text-[1.15rem] font-bold text-[#1D2522] font-sans">
-                  {step.title}
-                </h3>
+                <h3 className="text-[1.15rem] font-bold text-[#1D2522] font-sans">{step.title}</h3>
 
-                <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                  {step.description}
-                </p>
+                <p className="text-[13px] text-[#6B5845] leading-relaxed">{step.description}</p>
               </div>
 
               {/* Technical Detail Note */}

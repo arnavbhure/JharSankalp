@@ -25,7 +25,8 @@ export function ChallengeEcosystemBanner({ challengeId }: ChallengeEcosystemBann
             </div>
 
             <span className="text-[11.5px] font-mono text-[#6B5845]">
-              This challenge has generated <strong>{linkedIdeas.length} Idea(s)</strong> and <strong>{linkedProjects.length} Active Project(s)</strong>
+              This challenge has generated <strong>{linkedIdeas.length} Idea(s)</strong> and{' '}
+              <strong>{linkedProjects.length} Active Project(s)</strong>
             </span>
           </div>
 

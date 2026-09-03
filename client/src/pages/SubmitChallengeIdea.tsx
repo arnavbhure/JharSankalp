@@ -25,10 +25,7 @@ const COLLAB_OPTIONS = [
 export function SubmitChallengeIdea() {
   const { challengeId } = useParams<{ challengeId: string }>();
   const navigate = useNavigate();
-  const challenge = useMemo(
-    () => getChallengeDetail(challengeId),
-    [challengeId]
-  );
+  const challenge = useMemo(() => getChallengeDetail(challengeId), [challengeId]);
 
   const { submitIdea, saveDraftIdea } = useInnovationStore();
 
@@ -52,10 +49,7 @@ export function SubmitChallengeIdea() {
     complexity: 'Medium' as 'Low' | 'Medium' | 'High',
     // Step 4
     seekingCollaborators: true,
-    collaborationNeeds: [
-      'Technical Expertise',
-      'Government Partnership',
-    ] as string[],
+    collaborationNeeds: ['Technical Expertise', 'Government Partnership'] as string[],
     // Step 5
     confirmedOriginal: false,
   });
@@ -82,11 +76,7 @@ export function SubmitChallengeIdea() {
         'Acoustic vibration sensors, STM32 MCU, LoRa transmitter, 3.6V LiFePO4 battery, CNC milled mounting brackets.',
       complexity: 'Medium',
       seekingCollaborators: true,
-      collaborationNeeds: [
-        'Technical Expertise',
-        'Research Support',
-        'Government Partnership',
-      ],
+      collaborationNeeds: ['Technical Expertise', 'Research Support', 'Government Partnership'],
       confirmedOriginal: true,
     });
   };
@@ -103,8 +93,7 @@ export function SubmitChallengeIdea() {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
       if (!formData.title.trim()) newErrors.title = 'Please enter an idea title';
-      if (!formData.summary.trim())
-        newErrors.summary = 'Please provide a short summary';
+      if (!formData.summary.trim()) newErrors.summary = 'Please provide a short summary';
       if (!formData.description.trim())
         newErrors.description = 'Please describe how your idea works';
     } else if (step === 2) {
@@ -112,8 +101,7 @@ export function SubmitChallengeIdea() {
         newErrors.problemPart = 'Please explain which part of the challenge this addresses';
       if (!formData.expectedImpact.trim())
         newErrors.expectedImpact = 'Please estimate the expected societal impact';
-      if (!formData.beneficiaries.trim())
-        newErrors.beneficiaries = 'Please state who benefits';
+      if (!formData.beneficiaries.trim()) newErrors.beneficiaries = 'Please state who benefits';
     } else if (step === 3) {
       if (!formData.approach.trim())
         newErrors.approach = 'Please outline your implementation approach';
@@ -230,7 +218,8 @@ export function SubmitChallengeIdea() {
                 Idea Submitted
               </h1>
               <p className="text-[15px] text-[#6B5845] leading-relaxed">
-                Your idea has entered the JharSankalp innovation pipeline. It is now queued for district triage and academic partner review.
+                Your idea has entered the JharSankalp innovation pipeline. It is now queued for
+                district triage and academic partner review.
               </p>
             </div>
 
@@ -240,17 +229,13 @@ export function SubmitChallengeIdea() {
                 <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
                   SUBMISSION ID
                 </span>
-                <span className="font-mono font-bold text-[#123B2A]">
-                  {submittedId}
-                </span>
+                <span className="font-mono font-bold text-[#123B2A]">{submittedId}</span>
               </div>
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
                   SUBMISSION DATE
                 </span>
-                <span className="font-semibold text-[#1D2522]">
-                  {todayFormatted}
-                </span>
+                <span className="font-semibold text-[#1D2522]">{todayFormatted}</span>
               </div>
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
@@ -264,9 +249,7 @@ export function SubmitChallengeIdea() {
                 <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
                   NEXT STAGE
                 </span>
-                <span className="font-semibold text-[#123B2A] truncate block">
-                  Initial Review
-                </span>
+                <span className="font-semibold text-[#123B2A] truncate block">Initial Review</span>
               </div>
             </div>
 
@@ -275,9 +258,7 @@ export function SubmitChallengeIdea() {
               <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845]">
                 IN RESPONSE TO CIVIC CHALLENGE
               </span>
-              <div className="text-[14px] font-bold text-[#1D2522]">
-                {challenge.title}
-              </div>
+              <div className="text-[14px] font-bold text-[#1D2522]">{challenge.title}</div>
               <div className="text-[12px] text-[#6B5845]">
                 {challenge.district} District · Focus: {challenge.category}
               </div>
@@ -408,27 +389,28 @@ export function SubmitChallengeIdea() {
             Turn an observation into an idea.
           </h1>
           <p className="text-[15.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Share a practical approach that could help address this challenge. Your submission will be matched with university labs, mentors, and field pilot resources.
+            Share a practical approach that could help address this challenge. Your submission will
+            be matched with university labs, mentors, and field pilot resources.
           </p>
         </div>
 
         {/* ── Compact Challenge Context Card ── */}
         <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#EEEAE1] shadow-2xs space-y-2">
           <div className="flex items-center justify-between text-[11px] font-mono">
-            <span className="text-[#6B5845] uppercase font-bold">
-              RESPONDING TO CHALLENGE
-            </span>
+            <span className="text-[#6B5845] uppercase font-bold">RESPONDING TO CHALLENGE</span>
             <span className="text-[#123B2A] font-bold bg-[#FAF9F5] px-2 py-0.5 rounded border border-[#EEEAE1]">
               {challenge.id}
             </span>
           </div>
-          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">
-            {challenge.title}
-          </h3>
+          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">{challenge.title}</h3>
           <div className="flex items-center gap-4 text-[12px] font-mono text-[#6B5845]">
-            <span>District: <strong className="text-[#1D2522]">{challenge.district}</strong></span>
+            <span>
+              District: <strong className="text-[#1D2522]">{challenge.district}</strong>
+            </span>
             <span>·</span>
-            <span>Focus Area: <strong className="text-[#1D2522]">{challenge.category}</strong></span>
+            <span>
+              Focus Area: <strong className="text-[#1D2522]">{challenge.category}</strong>
+            </span>
           </div>
         </div>
 
@@ -438,9 +420,7 @@ export function SubmitChallengeIdea() {
             <span className="font-bold text-[#123B2A]">
               Step {currentStep} of 5 — {steps[currentStep - 1].title}
             </span>
-            <span className="text-[#6B5845]">
-              {currentStep * 20}% Completed
-            </span>
+            <span className="text-[#6B5845]">{currentStep * 20}% Completed</span>
           </div>
 
           <div className="h-2 w-full bg-[#EEEAE1] rounded-full overflow-hidden">
@@ -463,8 +443,8 @@ export function SubmitChallengeIdea() {
                   currentStep === s.num
                     ? 'bg-[#123B2A] text-white font-bold shadow-xs'
                     : s.num < currentStep
-                    ? 'bg-[#FAF9F5] text-[#123B2A] border border-[#EEEAE1] font-semibold cursor-pointer'
-                    : 'bg-white/60 text-[#6B5845]/60 border border-transparent cursor-not-allowed'
+                      ? 'bg-[#FAF9F5] text-[#123B2A] border border-[#EEEAE1] font-semibold cursor-pointer'
+                      : 'bg-white/60 text-[#6B5845]/60 border border-transparent cursor-not-allowed'
                 }`}
               >
                 <span className="block text-[10px] opacity-75">0{s.num}</span>
@@ -496,9 +476,7 @@ export function SubmitChallengeIdea() {
                   <input
                     type="text"
                     value={formData.title}
-                    onChange={(e) =>
-                      setFormData({ ...formData, title: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="e.g. Solar-Powered Acoustic Vibration Collar for India Mark II Pumps"
                     className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
                       errors.title
@@ -520,9 +498,7 @@ export function SubmitChallengeIdea() {
                   <input
                     type="text"
                     value={formData.summary}
-                    onChange={(e) =>
-                      setFormData({ ...formData, summary: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                     placeholder="e.g. A non-invasive sensor collar detecting pump mechanical wear before water failure."
                     className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
                       errors.summary
@@ -549,9 +525,7 @@ export function SubmitChallengeIdea() {
                   <textarea
                     rows={5}
                     value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Describe how the idea works mechanically, digitally, or through community operations. Explain the components and the step-by-step user interaction..."
                     className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors leading-relaxed ${
                       errors.description
@@ -589,9 +563,7 @@ export function SubmitChallengeIdea() {
                   <input
                     type="text"
                     value={formData.problemPart}
-                    onChange={(e) =>
-                      setFormData({ ...formData, problemPart: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, problemPart: e.target.value })}
                     placeholder="e.g. Subterranean cylinder valve seal wear and delayed reporting"
                     className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
                       errors.problemPart
@@ -683,9 +655,7 @@ export function SubmitChallengeIdea() {
                   <textarea
                     rows={3}
                     value={formData.approach}
-                    onChange={(e) =>
-                      setFormData({ ...formData, approach: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, approach: e.target.value })}
                     placeholder="How will it be built, tested, and distributed? e.g. Assemble 10 units at university lab, run 3-month field test in Murhu..."
                     className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
                       errors.approach
@@ -707,9 +677,7 @@ export function SubmitChallengeIdea() {
                   <input
                     type="text"
                     value={formData.resources}
-                    onChange={(e) =>
-                      setFormData({ ...formData, resources: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, resources: e.target.value })}
                     placeholder="e.g. Microcontroller, vibration sensors, solar cells, local metal enclosure"
                     className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
                       errors.resources
@@ -733,9 +701,7 @@ export function SubmitChallengeIdea() {
                       <button
                         key={lvl}
                         type="button"
-                        onClick={() =>
-                          setFormData({ ...formData, complexity: lvl })
-                        }
+                        onClick={() => setFormData({ ...formData, complexity: lvl })}
                         className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
                           formData.complexity === lvl
                             ? 'border-[#123B2A] bg-[#123B2A] text-white font-bold shadow-xs'
@@ -747,8 +713,8 @@ export function SubmitChallengeIdea() {
                           {lvl === 'Low'
                             ? '0-2 months'
                             : lvl === 'Medium'
-                            ? '3-6 months'
-                            : '6+ months'}
+                              ? '3-6 months'
+                              : '6+ months'}
                         </span>
                       </button>
                     ))}
@@ -778,9 +744,7 @@ export function SubmitChallengeIdea() {
                   <div className="flex items-center gap-3">
                     <button
                       type="button"
-                      onClick={() =>
-                        setFormData({ ...formData, seekingCollaborators: true })
-                      }
+                      onClick={() => setFormData({ ...formData, seekingCollaborators: true })}
                       className={`px-5 py-2 rounded-xl text-[13px] font-bold border transition-all cursor-pointer ${
                         formData.seekingCollaborators
                           ? 'bg-[#123B2A] text-white border-[#123B2A]'
@@ -815,8 +779,7 @@ export function SubmitChallengeIdea() {
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {COLLAB_OPTIONS.map((item) => {
-                        const isSelected =
-                          formData.collaborationNeeds.includes(item);
+                        const isSelected = formData.collaborationNeeds.includes(item);
                         return (
                           <button
                             key={item}
@@ -861,9 +824,7 @@ export function SubmitChallengeIdea() {
                   <div className="text-[1.2rem] font-bold text-[#1D2522]">
                     {formData.title || 'Untitled Proposal'}
                   </div>
-                  <p className="text-[#6B5845] leading-relaxed">
-                    {formData.summary}
-                  </p>
+                  <p className="text-[#6B5845] leading-relaxed">{formData.summary}</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[12.5px]">
@@ -933,7 +894,8 @@ export function SubmitChallengeIdea() {
                         I confirm that this submission is based on my original contribution.
                       </strong>
                       <span className="text-[11.5px] text-[#6B5845]">
-                        I understand this proposal will be reviewed by academic partners under open-collaboration civic terms.
+                        I understand this proposal will be reviewed by academic partners under
+                        open-collaboration civic terms.
                       </span>
                     </div>
                   </label>

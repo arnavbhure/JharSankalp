@@ -32,13 +32,9 @@ export function NotificationPreview({ notifications }: NotificationPreviewProps)
               <p className="text-[13px] font-semibold text-[#1D2522] leading-snug group-hover:text-[#123B2A] transition-colors">
                 {n.title}
               </p>
-              {n.challengeId && (
-                <ExternalLink className="h-3 w-3 text-[#6B5845] shrink-0 mt-0.5" />
-              )}
+              {n.challengeId && <ExternalLink className="h-3 w-3 text-[#6B5845] shrink-0 mt-0.5" />}
             </div>
-            <span className="text-[11px] font-mono text-[#6B5845] block">
-              {n.timeAgo}
-            </span>
+            <span className="text-[11px] font-mono text-[#6B5845] block">{n.timeAgo}</span>
           </div>
         ))}
       </div>

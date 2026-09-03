@@ -84,4 +84,14 @@ export interface ChallengeDetailData {
     followersCount: number;
   };
   relatedChallengeIds: string[];
+  evidenceFiles?: Array<{
+    id: string;
+    type: string;
+    url: string;
+    filename: string;
+    mimeType: string;
+    sizeBytes?: number;
+    metadata?: any;
+    createdAt?: string;
+  }>;
 }

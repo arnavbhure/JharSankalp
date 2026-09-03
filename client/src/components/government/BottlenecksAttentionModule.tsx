@@ -41,7 +41,8 @@ export function BottlenecksAttentionModule({ items }: BottlenecksAttentionModule
             Attention Required
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            System-flagged friction points requiring Directorate intervention, allocation reminders, or administrative memos.
+            System-flagged friction points requiring Directorate intervention, allocation reminders,
+            or administrative memos.
           </p>
         </div>
 
@@ -81,7 +82,7 @@ export function BottlenecksAttentionModule({ items }: BottlenecksAttentionModule
 
                   <span
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${getSeverityBadge(
-                      item.severity
+                      item.severity,
                     )}`}
                   >
                     ● {item.severity}
@@ -92,9 +93,7 @@ export function BottlenecksAttentionModule({ items }: BottlenecksAttentionModule
                   {item.title}
                 </h4>
 
-                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">
-                  {item.description}
-                </p>
+                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">{item.description}</p>
               </div>
 
               {/* Recommendation & Action Button */}

@@ -63,10 +63,11 @@ export function ImpactStories() {
                 </h3>
 
                 <p className="text-body-sm text-neutral-0/85 leading-relaxed">
-                  In 5 tribal hamlets in Murhu block, repeated deep-bore pump breakdowns left 2,000 residents
-                  without clean drinking water for up to two weeks per incident. A university-MSME consortium
-                  (BIT Sindri Mechanical Lab + AgriSens Technologies) engineered low-power vibration telemetry pods
-                  that predict motor stator burnout 48 hours before failure.
+                  In 5 tribal hamlets in Murhu block, repeated deep-bore pump breakdowns left 2,000
+                  residents without clean drinking water for up to two weeks per incident. A
+                  university-MSME consortium (BIT Sindri Mechanical Lab + AgriSens Technologies)
+                  engineered low-power vibration telemetry pods that predict motor stator burnout 48
+                  hours before failure.
                 </p>
 
                 {/* Saturated Baseline vs. Target vs. Verified Metric Tiles */}
@@ -78,7 +79,9 @@ export function ImpactStories() {
                     <div className="text-[2rem] font-extrabold text-white font-mono mt-0.5">
                       12.4d
                     </div>
-                    <span className="text-[11px] text-white/70 block mt-0.5">Historical downtime</span>
+                    <span className="text-[11px] text-white/70 block mt-0.5">
+                      Historical downtime
+                    </span>
                   </div>
 
                   <div className="p-4 bg-white/10 rounded-sm border border-white/20 text-left">
@@ -88,7 +91,9 @@ export function ImpactStories() {
                     <div className="text-[2rem] font-extrabold text-brand-coral font-mono mt-0.5">
                       ≤ 4.0d
                     </div>
-                    <span className="text-[11px] text-white/70 block mt-0.5">State grant target</span>
+                    <span className="text-[11px] text-white/70 block mt-0.5">
+                      State grant target
+                    </span>
                   </div>
 
                   <div className="p-4 bg-brand-apricot text-neutral-900 rounded-sm border-2 border-brand-coral text-left shadow-md">
@@ -98,7 +103,9 @@ export function ImpactStories() {
                     <div className="text-[2rem] font-extrabold text-brand-purple font-mono mt-0.5">
                       3.2d
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-800 block mt-0.5">Panchayat certified</span>
+                    <span className="text-[11px] font-bold text-neutral-800 block mt-0.5">
+                      Panchayat certified
+                    </span>
                   </div>
                 </div>
               </div>
@@ -107,7 +114,10 @@ export function ImpactStories() {
               <div className="pt-4 border-t border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-caption text-neutral-0/80">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4.5 w-4.5 text-brand-coral" />
-                  <span>Consortium: <strong>BIT Sindri</strong> (Research) + <strong>AgriSens MSME</strong> (Production)</span>
+                  <span>
+                    Consortium: <strong>BIT Sindri</strong> (Research) +{' '}
+                    <strong>AgriSens MSME</strong> (Production)
+                  </span>
                 </div>
 
                 <button

@@ -65,13 +65,13 @@ export function Collaborations() {
           p.description.toLowerCase().includes(q) ||
           p.district.toLowerCase().includes(q) ||
           p.focusArea.toLowerCase().includes(q) ||
-          p.skillsNeeded.some((s) => s.toLowerCase().includes(q))
+          p.skillsNeeded.some((s) => s.toLowerCase().includes(q)),
       );
     }
 
     if (skill !== 'All Skills') {
       list = list.filter((p) =>
-        p.skillsNeeded.some((s) => s.toLowerCase().includes(skill.toLowerCase()))
+        p.skillsNeeded.some((s) => s.toLowerCase().includes(skill.toLowerCase())),
       );
     }
 
@@ -94,10 +94,7 @@ export function Collaborations() {
   };
 
   const handleModalSubmit = (
-    newProjectData: Omit<
-      CollaborationProject,
-      'id' | 'teamCount' | 'progress' | 'stage'
-    >
+    newProjectData: Omit<CollaborationProject, 'id' | 'teamCount' | 'progress' | 'stage'>,
   ) => {
     const createdProject: CollaborationProject = {
       ...newProjectData,
@@ -183,9 +180,7 @@ export function Collaborations() {
               <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
                 Unable to load collaborative projects
               </h4>
-              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
-                {error}
-              </p>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">{error}</p>
               <button
                 type="button"
                 onClick={loadProjects}
@@ -207,7 +202,8 @@ export function Collaborations() {
                     No collaborative projects match your filter criteria
                   </h4>
                   <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-                    Try adjusting your focus area or needed skills filters to discover active sprints.
+                    Try adjusting your focus area or needed skills filters to discover active
+                    sprints.
                   </p>
                   <button
                     type="button"

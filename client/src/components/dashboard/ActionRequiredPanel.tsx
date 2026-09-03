@@ -7,16 +7,11 @@ interface ActionRequiredPanelProps {
   onOpenResponseModal: (challenge: UserChallenge) => void;
 }
 
-export function ActionRequiredPanel({
-  challenges,
-  onOpenResponseModal,
-}: ActionRequiredPanelProps) {
+export function ActionRequiredPanel({ challenges, onOpenResponseModal }: ActionRequiredPanelProps) {
   const navigate = useNavigate();
 
   // Find first challenge requiring action
-  const pendingChallenge = challenges.find(
-    (c) => c.actionRequired && !c.actionRequired.responded
-  );
+  const pendingChallenge = challenges.find((c) => c.actionRequired && !c.actionRequired.responded);
 
   if (!pendingChallenge || !pendingChallenge.actionRequired) {
     // Meaningful progress highlight when no action needed
@@ -31,7 +26,8 @@ export function ActionRequiredPanel({
               ALL ITEMS ON TRACK
             </span>
             <p className="text-[13.5px] font-semibold text-[#166534]">
-              No pending actions needed from you right now. All your reported challenges are moving smoothly through validation and matching.
+              No pending actions needed from you right now. All your reported challenges are moving
+              smoothly through validation and matching.
             </p>
           </div>
         </div>
@@ -74,10 +70,7 @@ export function ActionRequiredPanel({
         </h3>
 
         <div className="text-[13.5px] text-[#6B5845]">
-          Challenge:{' '}
-          <strong className="text-[#1D2522] font-bold">
-            {pendingChallenge.title}
-          </strong>{' '}
+          Challenge: <strong className="text-[#1D2522] font-bold">{pendingChallenge.title}</strong>{' '}
           · {pendingChallenge.block} ({pendingChallenge.district})
         </div>
 

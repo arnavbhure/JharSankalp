@@ -1,24 +1,9 @@
-export type IdeaStage =
-  | 'CONCEPT'
-  | 'RESEARCH'
-  | 'PROTOTYPE'
-  | 'TESTING'
-  | 'PILOT'
-  | 'IMPLEMENTED';
+export type IdeaStage = 'CONCEPT' | 'RESEARCH' | 'PROTOTYPE' | 'TESTING' | 'PILOT' | 'IMPLEMENTED';
 
-export type CollaborationStatus =
-  | 'OPEN'
-  | 'TEAM_FORMED'
-  | 'SEEKING_PARTNERS'
-  | 'COMPLETED';
+export type CollaborationStatus = 'OPEN' | 'TEAM_FORMED' | 'SEEKING_PARTNERS' | 'COMPLETED';
 
 export type RoleCategory =
-  | 'Engineering'
-  | 'Design'
-  | 'Research'
-  | 'Field Testing'
-  | 'Funding'
-  | 'Mentorship';
+  'Engineering' | 'Design' | 'Research' | 'Field Testing' | 'Funding' | 'Mentorship';
 
 export interface CollaborationNeed {
   id: string;
@@ -71,11 +56,7 @@ export interface IdeaStatsData {
 }
 
 export type IdeaStatus =
-  | 'New'
-  | 'Community Supported'
-  | 'Under Review'
-  | 'In Development'
-  | 'Implemented';
+  'New' | 'Community Supported' | 'Under Review' | 'In Development' | 'Implemented';
 
 export interface CommunityIdea {
   id: string;

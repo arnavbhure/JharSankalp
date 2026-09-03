@@ -28,9 +28,7 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
               <span className="text-[#F5A623] font-mono">01.</span>
               <span>Geological & Historical Background</span>
             </h3>
-            <p className="text-[#1D2522]/85 leading-relaxed">
-              {challenge.problem.background}
-            </p>
+            <p className="text-[#1D2522]/85 leading-relaxed">{challenge.problem.background}</p>
           </div>
 
           {/* Current Situation */}
@@ -62,7 +60,8 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
               <span>Institutional Field Note</span>
             </div>
             <p>
-              Data logged in JharSankalp case files reflects field-verified observations submitted by municipal ward committees and technical researchers.
+              Data logged in JharSankalp case files reflects field-verified observations submitted
+              by municipal ward committees and technical researchers.
             </p>
           </div>
         </div>
@@ -144,11 +143,24 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
               </span>
               <div className="relative aspect-[16/9] w-full rounded-xl border border-[#EEEAE1] bg-[#FAF9F5] overflow-hidden flex items-center justify-center p-3">
                 {/* SVG Silhouette */}
-                <svg viewBox="0 0 100 100" className="w-full h-full stroke-[#123B2A] fill-[#EEEAE1]">
-                  <polygon points="18,32 30,16 54,12 70,22 84,24 88,40 82,54 84,72 70,86 52,90 32,88 22,76 14,56 12,42" strokeWidth="1.5" />
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full stroke-[#123B2A] fill-[#EEEAE1]"
+                >
+                  <polygon
+                    points="18,32 30,16 54,12 70,22 84,24 88,40 82,54 84,72 70,86 52,90 32,88 22,76 14,56 12,42"
+                    strokeWidth="1.5"
+                  />
                   {/* Dhanbad marker */}
                   <circle cx="74" cy="44" r="4.5" fill="#F5A623" stroke="#123B2A" strokeWidth="1" />
-                  <text x="74" y="38" fill="#123B2A" fontSize="4.5" fontWeight="bold" textAnchor="middle">
+                  <text
+                    x="74"
+                    y="38"
+                    fill="#123B2A"
+                    fontSize="4.5"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                  >
                     Dhanbad
                   </text>
                 </svg>

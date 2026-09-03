@@ -53,7 +53,8 @@ export function CollaborationNetwork() {
             Built by ecosystems, not individuals.
           </h2>
           <p className="text-[15px] sm:text-[17px] text-[#6B5845] leading-relaxed">
-            Societal challenges require deep multi-disciplinary capability. JharSankalp connects community needs with university research, startup agility, and administrative mandate.
+            Societal challenges require deep multi-disciplinary capability. JharSankalp connects
+            community needs with university research, startup agility, and administrative mandate.
           </p>
         </div>
 
@@ -65,12 +66,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#FA7E61] uppercase tracking-wider block">
                 01 ORIGIN
               </span>
-              <div className="text-[13.5px] font-extrabold text-[#1D2522]">
-                COMMUNITY
-              </div>
-              <div className="text-[11px] text-[#6B5845] font-mono">
-                Grassroots Ground Truth
-              </div>
+              <div className="text-[13.5px] font-extrabold text-[#1D2522]">COMMUNITY</div>
+              <div className="text-[11px] text-[#6B5845] font-mono">Grassroots Ground Truth</div>
             </div>
 
             {/* Step 2 */}
@@ -78,12 +75,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#4C1E4F] uppercase tracking-wider block">
                 02 DEFINITION
               </span>
-              <div className="text-[13.5px] font-extrabold text-[#1D2522]">
-                CHALLENGE CONTEXT
-              </div>
-              <div className="text-[11px] text-[#6B5845] font-mono">
-                Root-Cause Isolation
-              </div>
+              <div className="text-[13.5px] font-extrabold text-[#1D2522]">CHALLENGE CONTEXT</div>
+              <div className="text-[11px] text-[#6B5845] font-mono">Root-Cause Isolation</div>
             </div>
 
             {/* Step 3 */}
@@ -91,12 +84,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#FEE1C7] uppercase tracking-wider block">
                 03 DISCIPLINE
               </span>
-              <div className="text-[13.5px] font-extrabold text-white">
-                UNIVERSITY ↔ INDUSTRY
-              </div>
-              <div className="text-[11px] text-[#FEE1C7]/80 font-mono">
-                R&D Meets Engineering
-              </div>
+              <div className="text-[13.5px] font-extrabold text-white">UNIVERSITY ↔ INDUSTRY</div>
+              <div className="text-[11px] text-[#FEE1C7]/80 font-mono">R&D Meets Engineering</div>
             </div>
 
             {/* Step 4 */}
@@ -104,12 +93,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#123B2A] uppercase tracking-wider block">
                 04 SPRINT
               </span>
-              <div className="text-[13.5px] font-extrabold text-[#1D2522]">
-                PROJECT TEAM
-              </div>
-              <div className="text-[11px] text-[#6B5845] font-mono">
-                Milestone Execution
-              </div>
+              <div className="text-[13.5px] font-extrabold text-[#1D2522]">PROJECT TEAM</div>
+              <div className="text-[11px] text-[#6B5845] font-mono">Milestone Execution</div>
             </div>
 
             {/* Step 5 */}
@@ -117,12 +102,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#1D2522] uppercase tracking-wider block">
                 05 DEPLOYMENT
               </span>
-              <div className="text-[13.5px] font-extrabold text-white">
-                FIELD PILOT
-              </div>
-              <div className="text-[11px] text-white/90 font-mono">
-                District Validation
-              </div>
+              <div className="text-[13.5px] font-extrabold text-white">FIELD PILOT</div>
+              <div className="text-[11px] text-white/90 font-mono">District Validation</div>
             </div>
 
             {/* Step 6 */}
@@ -130,12 +111,8 @@ export function CollaborationNetwork() {
               <span className="text-[10px] font-mono font-bold text-[#FEE1C7] uppercase tracking-wider block">
                 06 SUSTAINABILITY
               </span>
-              <div className="text-[13.5px] font-extrabold text-white">
-                VERIFIED IMPACT
-              </div>
-              <div className="text-[11px] text-white/90 font-mono">
-                Policy & Scale
-              </div>
+              <div className="text-[13.5px] font-extrabold text-white">VERIFIED IMPACT</div>
+              <div className="text-[11px] text-white/90 font-mono">Policy & Scale</div>
             </div>
           </div>
 
@@ -153,13 +130,13 @@ export function CollaborationNetwork() {
                     key={r.title}
                     className="p-4 rounded-2xl border border-[#EEEAE1] bg-[#FAF9F5] hover:bg-white hover:border-[#B5A886]/60 transition-all flex items-start gap-3.5"
                   >
-                    <div className={`h-10 w-10 shrink-0 rounded-xl flex items-center justify-center ${r.color}`}>
+                    <div
+                      className={`h-10 w-10 shrink-0 rounded-xl flex items-center justify-center ${r.color}`}
+                    >
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[14px] font-bold text-[#1D2522]">
-                        {r.title}
-                      </div>
+                      <div className="text-[14px] font-bold text-[#1D2522]">{r.title}</div>
                       <div className="text-[12.5px] text-[#6B5845] leading-relaxed">
                         {r.description}
                       </div>

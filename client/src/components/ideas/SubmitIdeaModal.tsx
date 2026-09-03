@@ -5,7 +5,12 @@ import { CommunityIdea } from '../../types/ideas';
 interface SubmitIdeaModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmitIdea: (newIdea: Omit<CommunityIdea, 'id' | 'supportersCount' | 'contributorsCount' | 'status' | 'submittedDate'>) => void;
+  onSubmitIdea: (
+    newIdea: Omit<
+      CommunityIdea,
+      'id' | 'supportersCount' | 'contributorsCount' | 'status' | 'submittedDate'
+    >,
+  ) => void;
 }
 
 const FOCUS_AREAS = [
@@ -32,11 +37,7 @@ const DISTRICTS = [
   'Simdega',
 ];
 
-export function SubmitIdeaModal({
-  isOpen,
-  onClose,
-  onSubmitIdea,
-}: SubmitIdeaModalProps) {
+export function SubmitIdeaModal({ isOpen, onClose, onSubmitIdea }: SubmitIdeaModalProps) {
   const [title, setTitle] = useState('');
   const [focusArea, setFocusArea] = useState(FOCUS_AREAS[0]);
   const [district, setDistrict] = useState(DISTRICTS[0]);
@@ -88,10 +89,10 @@ export function SubmitIdeaModal({
     setFocusArea('Agriculture');
     setDistrict('Latehar');
     setDescription(
-      'A decentralized evaporative-assisted cold storage unit powered by rooftop solar panels to prevent vegetable spoilage for smallholder farmer groups in Latehar.'
+      'A decentralized evaporative-assisted cold storage unit powered by rooftop solar panels to prevent vegetable spoilage for smallholder farmer groups in Latehar.',
     );
     setProblemSolved(
-      'Prevent post-harvest tomato and vegetable losses during high summer heat when grid electricity is unavailable.'
+      'Prevent post-harvest tomato and vegetable losses during high summer heat when grid electricity is unavailable.',
     );
     setErrors({});
   };
@@ -108,9 +109,7 @@ export function SubmitIdeaModal({
             <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#123B2A] block">
               COMMUNITY SUBMISSION
             </span>
-            <h3 className="text-[1.35rem] font-bold text-[#1D2522]">
-              Share Your Innovation Idea
-            </h3>
+            <h3 className="text-[1.35rem] font-bold text-[#1D2522]">Share Your Innovation Idea</h3>
           </div>
 
           <div className="flex items-center gap-2">
@@ -141,7 +140,8 @@ export function SubmitIdeaModal({
               Idea Submitted Successfully!
             </h4>
             <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-              Your idea has been added to the JharSankalp community innovation grid and is now visible to supporters.
+              Your idea has been added to the JharSankalp community innovation grid and is now
+              visible to supporters.
             </p>
           </div>
         ) : (

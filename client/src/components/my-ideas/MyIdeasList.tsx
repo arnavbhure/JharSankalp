@@ -17,11 +17,7 @@ const TABS = [
   'Completed',
 ];
 
-export function MyIdeasList({
-  ideas,
-  currentTab,
-  onTabChange,
-}: MyIdeasListProps) {
+export function MyIdeasList({ ideas, currentTab, onTabChange }: MyIdeasListProps) {
   return (
     <section className="space-y-6 text-left">
       <div className="border-b border-[#EEEAE1] pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -50,9 +46,7 @@ export function MyIdeasList({
               type="button"
               onClick={() => onTabChange(tab)}
               className={`pb-3 px-3 text-[13.5px] font-semibold transition-all relative whitespace-nowrap cursor-pointer ${
-                isActive
-                  ? 'text-[#123B2A] font-bold'
-                  : 'text-[#6B5845] hover:text-[#1D2522]'
+                isActive ? 'text-[#123B2A] font-bold' : 'text-[#6B5845] hover:text-[#1D2522]'
               }`}
             >
               <span>{tab}</span>

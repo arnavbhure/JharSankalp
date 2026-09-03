@@ -27,10 +27,7 @@ const LIFECYCLE_STEPS = [
   'Deployment',
 ];
 
-export function SolutionDetailModal({
-  solution,
-  onClose,
-}: SolutionDetailModalProps) {
+export function SolutionDetailModal({ solution, onClose }: SolutionDetailModalProps) {
   const navigate = useNavigate();
 
   if (!solution) return null;
@@ -93,9 +90,7 @@ export function SolutionDetailModal({
             <h3 className="text-[1.5rem] sm:text-[1.8rem] font-bold text-[#1D2522] leading-tight">
               {solution.name}
             </h3>
-            <p className="text-[13px] text-[#123B2A] font-semibold">
-              {solution.tagline}
-            </p>
+            <p className="text-[13px] text-[#123B2A] font-semibold">{solution.tagline}</p>
           </div>
 
           <button
@@ -123,16 +118,12 @@ export function SolutionDetailModal({
                     isCurrent
                       ? 'bg-[#123B2A] text-white border-[#123B2A] shadow-xs'
                       : isPast
-                      ? 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]'
-                      : 'bg-white text-[#6B5845]/60 border-[#EEEAE1]'
+                        ? 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]'
+                        : 'bg-white text-[#6B5845]/60 border-[#EEEAE1]'
                   }`}
                 >
-                  <span className="text-[9.5px] font-mono font-bold block">
-                    0{idx + 1}
-                  </span>
-                  <span className="text-[10.5px] font-bold block leading-tight">
-                    {step}
-                  </span>
+                  <span className="text-[9.5px] font-mono font-bold block">0{idx + 1}</span>
+                  <span className="text-[10.5px] font-bold block leading-tight">{step}</span>
                 </div>
               );
             })}
@@ -146,9 +137,7 @@ export function SolutionDetailModal({
               <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
               THE PROPOSED SOLUTION
             </span>
-            <p className="text-[#1D2522] leading-relaxed">
-              {solution.description}
-            </p>
+            <p className="text-[#1D2522] leading-relaxed">{solution.description}</p>
           </div>
 
           <div className="p-4 rounded-2xl bg-white border border-[#EEEAE1] space-y-2">
@@ -156,9 +145,7 @@ export function SolutionDetailModal({
               <Target className="h-3.5 w-3.5" />
               ORIGINAL CHALLENGE ADDRESSED
             </span>
-            <p className="text-[#1D2522] font-medium leading-relaxed">
-              {solution.challengeTitle}
-            </p>
+            <p className="text-[#1D2522] font-medium leading-relaxed">{solution.challengeTitle}</p>
             <button
               type="button"
               onClick={handleNavigateChallenge}

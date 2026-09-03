@@ -23,14 +23,10 @@ export function UniversityQuickActions() {
           <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#4C1E4F]">
             CAMPUS INNOVATION ACTIONS
           </span>
-          <h4 className="text-[1.2rem] font-bold text-[#1D2522]">
-            Academic Fast-Track Console
-          </h4>
+          <h4 className="text-[1.2rem] font-bold text-[#1D2522]">Academic Fast-Track Console</h4>
         </div>
 
-        <span className="text-[11px] font-mono text-[#6B5845]">
-          Faculty & Student Operations
-        </span>
+        <span className="text-[11px] font-mono text-[#6B5845]">Faculty & Student Operations</span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -46,9 +42,7 @@ export function UniversityQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#4C1E4F] transition-colors leading-snug">
             Explore Challenges
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            18 matched to BIT Mesra →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">18 matched to BIT Mesra →</div>
         </button>
 
         {/* Action 2 */}
@@ -66,9 +60,7 @@ export function UniversityQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
             Manage Capabilities
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            6 declared research labs →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">6 declared research labs →</div>
         </button>
 
         {/* Action 3 */}
@@ -100,9 +92,7 @@ export function UniversityQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#15803D] transition-colors leading-snug">
             Create Project Team
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            Mobilize student fellows →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">Mobilize student fellows →</div>
         </button>
       </div>
 

@@ -18,12 +18,11 @@ export function SolutionLifecycle() {
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
             CIVIC ENGINEERING PIPELINE
           </span>
-          <h3 className="text-[1.25rem] font-bold text-[#1D2522]">
-            Solution Lifecycle Tracking
-          </h3>
+          <h3 className="text-[1.25rem] font-bold text-[#1D2522]">Solution Lifecycle Tracking</h3>
         </div>
         <p className="text-[12.5px] text-[#6B5845] max-w-md text-left sm:text-right">
-          Every solution on JharSankalp is tracked from early exploration to measurable community deployment.
+          Every solution on JharSankalp is tracked from early exploration to measurable community
+          deployment.
         </p>
       </div>
 
@@ -61,9 +60,7 @@ export function SolutionLifecycle() {
               </div>
 
               <div>
-                <strong className="text-[13.5px] font-bold block leading-snug">
-                  {st.name}
-                </strong>
+                <strong className="text-[13.5px] font-bold block leading-snug">{st.name}</strong>
                 <span
                   className={`text-[11px] block leading-tight pt-0.5 ${
                     isHighlight ? 'text-white/80' : 'text-[#6B5845]'

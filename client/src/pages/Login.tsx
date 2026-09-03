@@ -14,10 +14,10 @@ export function Login() {
           <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-brand-purple text-neutral-0 text-body font-bold mx-auto mb-3 shadow-subtle">
             JS
           </div>
-          <h1 className="text-h2 font-bold text-neutral-900 tracking-tight">Sign in to JharSankalp</h1>
-          <p className="mt-1 text-small text-neutral-600">
-            Societal Challenge-to-Impact Exchange
-          </p>
+          <h1 className="text-h2 font-bold text-neutral-900 tracking-tight">
+            Sign in to JharSankalp
+          </h1>
+          <p className="mt-1 text-small text-neutral-600">Societal Challenge-to-Impact Exchange</p>
         </div>
 
         <Card padding="lg">
@@ -54,11 +54,26 @@ export function Login() {
               Demo Credentials (Password: password123)
             </p>
             <div className="space-y-1 text-caption text-neutral-800 font-mono">
-              <div className="flex justify-between"><span>Citizen:</span> <span className="text-neutral-600">citizen@demo.jharsankalp.in</span></div>
-              <div className="flex justify-between"><span>Government:</span> <span className="text-neutral-600">officer@demo.jharsankalp.in</span></div>
-              <div className="flex justify-between"><span>University:</span> <span className="text-neutral-600">uniadmin@demo.jharsankalp.in</span></div>
-              <div className="flex justify-between"><span>Faculty:</span> <span className="text-neutral-600">faculty@demo.jharsankalp.in</span></div>
-              <div className="flex justify-between"><span>Industry:</span> <span className="text-neutral-600">industry@demo.jharsankalp.in</span></div>
+              <div className="flex justify-between">
+                <span>Citizen:</span>{' '}
+                <span className="text-neutral-600">citizen@demo.jharsankalp.in</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Government:</span>{' '}
+                <span className="text-neutral-600">officer@demo.jharsankalp.in</span>
+              </div>
+              <div className="flex justify-between">
+                <span>University:</span>{' '}
+                <span className="text-neutral-600">uniadmin@demo.jharsankalp.in</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Faculty:</span>{' '}
+                <span className="text-neutral-600">faculty@demo.jharsankalp.in</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Industry:</span>{' '}
+                <span className="text-neutral-600">industry@demo.jharsankalp.in</span>
+              </div>
             </div>
           </div>
         </Card>

@@ -63,9 +63,7 @@ export function ProjectLifecycle({ project }: ProjectLifecycleProps) {
               <span className="text-[2rem] font-extrabold font-mono text-[#123B2A] leading-none">
                 {project.progressPercentage}%
               </span>
-              <span className="text-[11.5px] font-mono font-bold text-[#6B5845]">
-                Progress
-              </span>
+              <span className="text-[11.5px] font-mono font-bold text-[#6B5845]">Progress</span>
             </div>
           </div>
         </div>
@@ -84,24 +82,28 @@ export function ProjectLifecycle({ project }: ProjectLifecycleProps) {
                     isCurrent
                       ? 'border-2 border-[#FA7E61] bg-[#FFFDF9] shadow-md ring-2 ring-[#FA7E61]/20'
                       : isCompleted
-                      ? 'border-[#BBF7D0] bg-[#F0FDF4]'
-                      : 'border-[#EEEAE1] bg-[#FAF9F5]/60 text-[#6B5845]/50'
+                        ? 'border-[#BBF7D0] bg-[#F0FDF4]'
+                        : 'border-[#EEEAE1] bg-[#FAF9F5]/60 text-[#6B5845]/50'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase">
-                      0{idx + 1}
-                    </span>
+                    <span className="text-[10px] font-mono font-bold uppercase">0{idx + 1}</span>
                     <div
                       className={`h-4 w-4 rounded-full flex items-center justify-center text-[9px] ${
                         isCompleted
                           ? 'bg-[#15803D] text-white'
                           : isCurrent
-                          ? 'bg-[#FA7E61] text-white font-bold'
-                          : 'border border-[#EEEAE1]'
+                            ? 'bg-[#FA7E61] text-white font-bold'
+                            : 'border border-[#EEEAE1]'
                       }`}
                     >
-                      {isCompleted ? <Check className="h-2.5 w-2.5 stroke-[3]" /> : isCurrent ? '●' : '○'}
+                      {isCompleted ? (
+                        <Check className="h-2.5 w-2.5 stroke-[3]" />
+                      ) : isCurrent ? (
+                        '●'
+                      ) : (
+                        '○'
+                      )}
                     </div>
                   </div>
 
@@ -111,8 +113,8 @@ export function ProjectLifecycle({ project }: ProjectLifecycleProps) {
                         isCurrent
                           ? 'text-[#4C1E4F]'
                           : isCompleted
-                          ? 'text-[#15803D]'
-                          : 'text-[#6B5845]/70'
+                            ? 'text-[#15803D]'
+                            : 'text-[#6B5845]/70'
                       }`}
                     >
                       {s.label}
@@ -143,7 +145,10 @@ export function ProjectLifecycle({ project }: ProjectLifecycleProps) {
               <span className="font-mono font-bold uppercase text-[#4C1E4F] mr-2">
                 CURRENT FOCUS ({project.stageLabel}):
               </span>
-              <span>Validating field sensors and automated maintenance notifications in {project.location}.</span>
+              <span>
+                Validating field sensors and automated maintenance notifications in{' '}
+                {project.location}.
+              </span>
             </div>
           </div>
 

@@ -15,10 +15,7 @@ const MOMENTUM_STAGES = [
   { label: 'PROJECT FORMATION', status: 'upcoming' },
 ];
 
-export function IdeaMomentumPanel({
-  idea,
-  onViewCollaboration,
-}: IdeaMomentumPanelProps) {
+export function IdeaMomentumPanel({ idea, onViewCollaboration }: IdeaMomentumPanelProps) {
   const navigate = useNavigate();
 
   return (
@@ -44,7 +41,8 @@ export function IdeaMomentumPanel({
           </h2>
 
           <p className="text-[13px] font-mono text-[#6B5845]">
-            {idea.category} · {idea.district} {idea.block ? `(${idea.block})` : ''} · Solving: <strong>{idea.challengeTitle}</strong>
+            {idea.category} · {idea.district} {idea.block ? `(${idea.block})` : ''} · Solving:{' '}
+            <strong>{idea.challengeTitle}</strong>
           </p>
         </div>
 
@@ -117,8 +115,8 @@ export function IdeaMomentumPanel({
                   isActive
                     ? 'border-2 border-[#123B2A] bg-white shadow-xs font-bold text-[#123B2A]'
                     : isCompleted
-                    ? 'border-[#EEEAE1] bg-white text-[#1D2522]'
-                    : 'border-[#EEEAE1]/60 bg-transparent text-[#6B5845]/60'
+                      ? 'border-[#EEEAE1] bg-white text-[#1D2522]'
+                      : 'border-[#EEEAE1]/60 bg-transparent text-[#6B5845]/60'
                 }`}
               >
                 <div
@@ -126,16 +124,14 @@ export function IdeaMomentumPanel({
                     isCompleted
                       ? 'bg-[#15803D] text-white'
                       : isActive
-                      ? 'bg-[#123B2A] text-[#F5A623]'
-                      : 'border border-[#EEEAE1]'
+                        ? 'bg-[#123B2A] text-[#F5A623]'
+                        : 'border border-[#EEEAE1]'
                   }`}
                 >
                   {isCompleted ? <Check className="h-3 w-3 stroke-[3]" /> : '●'}
                 </div>
 
-                <div className="text-[11px] font-mono truncate">
-                  {s.label}
-                </div>
+                <div className="text-[11px] font-mono truncate">{s.label}</div>
               </div>
             );
           })}

@@ -25,9 +25,7 @@ export function IdeaStatusGuide() {
             </span>
             <div className="min-w-0">
               <span className="font-bold text-[#1D2522] block">{g.title}</span>
-              <span className="text-[#6B5845] leading-tight text-[11.5px] block">
-                {g.desc}
-              </span>
+              <span className="text-[#6B5845] leading-tight text-[11.5px] block">{g.desc}</span>
             </div>
           </div>
         ))}

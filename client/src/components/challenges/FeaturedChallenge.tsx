@@ -15,11 +15,12 @@ export function FeaturedChallenge({
   return (
     <div className="relative overflow-hidden rounded-2xl bg-[#123B2A] text-white p-6 sm:p-8 lg:p-10 border border-[#1F5A3D] shadow-md text-left">
       {/* ── Background Subtle Geodetic Map Contour Lines ── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.09]"
-      >
-        <svg viewBox="0 0 800 400" className="w-full h-full stroke-white fill-none" strokeWidth="0.9">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.09]">
+        <svg
+          viewBox="0 0 800 400"
+          className="w-full h-full stroke-white fill-none"
+          strokeWidth="0.9"
+        >
           <circle cx="680" cy="180" r="80" strokeDasharray="4 4" />
           <circle cx="680" cy="180" r="140" strokeWidth="1.2" />
           <circle cx="680" cy="180" r="200" strokeDasharray="6 6" />

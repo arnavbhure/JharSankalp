@@ -25,7 +25,7 @@ export interface ChallengeAnalysisResponse {
 }
 
 export async function requestChallengeAnalysis(
-  payload: ChallengeAnalysisRequest
+  payload: ChallengeAnalysisRequest,
 ): Promise<ChallengeAnalysisResponse> {
   return await api.post<ChallengeAnalysisResponse>('/ai/analyze-challenge', payload);
 }

@@ -1,9 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Users,
-  ArrowRight,
-  ExternalLink,
-} from 'lucide-react';
+import { Users, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface CitizenProjectItem {
   id: string;
@@ -113,12 +109,10 @@ export function DashboardProjects() {
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {project.code}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{project.code}</span>
                   <span
                     className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStageBadge(
-                      project.stage
+                      project.stage,
                     )}`}
                   >
                     {project.stage} Stage
@@ -134,12 +128,11 @@ export function DashboardProjects() {
                   </span>
                 </div>
 
-                <h3 className="text-[1.35rem] font-bold text-[#1D2522]">
-                  {project.name}
-                </h3>
+                <h3 className="text-[1.35rem] font-bold text-[#1D2522]">{project.name}</h3>
 
                 <p className="text-[12.5px] text-[#6B5845]">
-                  Responding to: <strong className="text-[#1D2522]">{project.relatedChallenge}</strong>
+                  Responding to:{' '}
+                  <strong className="text-[#1D2522]">{project.relatedChallenge}</strong>
                 </p>
               </div>
 

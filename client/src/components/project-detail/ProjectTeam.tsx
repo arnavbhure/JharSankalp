@@ -48,7 +48,8 @@ export function ProjectTeam({ project }: ProjectTeamProps) {
       if (key === 'UNIVERSITY') return p.type === 'UNIVERSITY';
       if (key === 'INDUSTRY') return p.type === 'INDUSTRY' || p.type === 'STARTUP';
       if (key === 'GOVERNMENT') return p.type === 'GOVERNMENT';
-      if (key === 'RESEARCH_ORG') return p.type === 'RESEARCH_ORGANIZATION' || p.type === 'RESEARCH_ORG';
+      if (key === 'RESEARCH_ORG')
+        return p.type === 'RESEARCH_ORGANIZATION' || p.type === 'RESEARCH_ORG';
       return false;
     });
   };
@@ -67,7 +68,8 @@ export function ProjectTeam({ project }: ProjectTeamProps) {
               Stakeholders & Organizations Involved
             </h3>
             <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-              Consortium model uniting academic institutions, local communities, government departments, and industrial innovators.
+              Consortium model uniting academic institutions, local communities, government
+              departments, and industrial innovators.
             </p>
           </div>
 
@@ -132,7 +134,8 @@ export function ProjectTeam({ project }: ProjectTeamProps) {
               Interdisciplinary Investigators & Coordinators
             </h3>
             <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-              Researchers, field specialists, and student fellows directly engineering and verifying the solution.
+              Researchers, field specialists, and student fellows directly engineering and verifying
+              the solution.
             </p>
           </div>
 
@@ -160,9 +163,7 @@ export function ProjectTeam({ project }: ProjectTeamProps) {
                   </span>
                 </div>
 
-                <h4 className="text-[14px] font-bold text-[#1D2522] truncate">
-                  {member.name}
-                </h4>
+                <h4 className="text-[14px] font-bold text-[#1D2522] truncate">{member.name}</h4>
 
                 <div className="text-[12px] text-[#123B2A] font-medium leading-tight">
                   {member.institution}

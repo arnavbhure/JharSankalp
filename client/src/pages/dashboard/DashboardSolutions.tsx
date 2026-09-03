@@ -1,10 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  CheckCircle2,
-  Sparkles,
-  ArrowRight,
-  ExternalLink,
-} from 'lucide-react';
+import { CheckCircle2, Sparkles, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface SupportedSolution {
   id: string;
@@ -25,7 +20,8 @@ const SUPPORTED_SOLUTIONS: SupportedSolution[] = [
     projectId: 'PROJECT-2026-0012',
     stage: 'Field Pilot (14 of 20 Sites Live)',
     impactMetric: '45.8% reduction in pump downtime; repair dispatch down to 2 days',
-    userContribution: 'Co-formulated acoustic anomaly detection algorithm for plunger seal leakages',
+    userContribution:
+      'Co-formulated acoustic anomaly detection algorithm for plunger seal leakages',
     district: 'Khunti',
   },
   {
@@ -76,22 +72,17 @@ export function DashboardSolutions() {
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {sol.id}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{sol.id}</span>
                   <span className="text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border border-[#BBF7D0] bg-[#F0FDF4] text-[#15803D]">
                     ✓ {sol.stage}
                   </span>
                 </div>
 
-                <h3 className="text-[1.3rem] font-bold text-[#1D2522]">
-                  {sol.title}
-                </h3>
+                <h3 className="text-[1.3rem] font-bold text-[#1D2522]">{sol.title}</h3>
 
                 <p className="text-[12.5px] text-[#6B5845]">
-                  Solved problem:{' '}
-                  <strong className="text-[#1D2522]">{sol.challengeSolved}</strong> ·{' '}
-                  <span>{sol.district} District</span>
+                  Solved problem: <strong className="text-[#1D2522]">{sol.challengeSolved}</strong>{' '}
+                  · <span>{sol.district} District</span>
                 </p>
               </div>
 
@@ -112,9 +103,7 @@ export function DashboardSolutions() {
                   <Sparkles className="h-3 w-3" />
                   MEASURABLE SOCIETAL IMPACT
                 </span>
-                <p className="text-[#1D2522] font-semibold">
-                  {sol.impactMetric}
-                </p>
+                <p className="text-[#1D2522] font-semibold">{sol.impactMetric}</p>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1">
@@ -122,9 +111,7 @@ export function DashboardSolutions() {
                   <CheckCircle2 className="h-3 w-3" />
                   YOUR DIRECT CONTRIBUTION
                 </span>
-                <p className="text-[#1D2522] font-semibold">
-                  {sol.userContribution}
-                </p>
+                <p className="text-[#1D2522] font-semibold">{sol.userContribution}</p>
               </div>
             </div>
           </div>

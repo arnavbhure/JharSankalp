@@ -28,9 +28,7 @@ export function IndustryQuickActions() {
           </h4>
         </div>
 
-        <span className="text-[11px] font-mono text-[#6B5845]">
-          Commercialization & Sourcing
-        </span>
+        <span className="text-[11px] font-mono text-[#6B5845]">Commercialization & Sourcing</span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -46,9 +44,7 @@ export function IndustryQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
             Explore Opportunities
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            8 projects seeking tooling →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">8 projects seeking tooling →</div>
         </button>
 
         {/* Action 2 */}
@@ -83,9 +79,7 @@ export function IndustryQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#15803D] transition-colors leading-snug">
             View Commitments
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            3 executed partnerships →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">3 executed partnerships →</div>
         </button>
 
         {/* Action 4 */}
@@ -100,9 +94,7 @@ export function IndustryQuickActions() {
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#FA7E61] transition-colors leading-snug">
             Find Seeking Projects
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            Active consortia matching →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">Active consortia matching →</div>
         </button>
       </div>
 
@@ -125,7 +117,8 @@ export function IndustryQuickActions() {
                 Register Industrial Resource or Lab
               </h3>
               <p className="text-[12.5px] text-[#6B5845]">
-                Make your engineering facilities or CSR matching grants discoverable to university project teams.
+                Make your engineering facilities or CSR matching grants discoverable to university
+                project teams.
               </p>
             </div>
 

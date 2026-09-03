@@ -19,7 +19,8 @@ export function IdeasEmptyState({ onShareIdea }: IdeasEmptyStateProps) {
           No ideas found yet.
         </h3>
         <p className="text-[14px] text-[#6B5845] leading-relaxed">
-          This could be an opportunity to start the conversation. Propose the first research approach or technical hypothesis for this category.
+          This could be an opportunity to start the conversation. Propose the first research
+          approach or technical hypothesis for this category.
         </p>
       </div>
 

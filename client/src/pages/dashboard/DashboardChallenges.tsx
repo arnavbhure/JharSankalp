@@ -1,14 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInnovationStore } from '../../stores/innovationStore';
-import {
-  MapPin,
-  Users,
-  Clock,
-  ArrowRight,
-  PlusCircle,
-  BookmarkCheck,
-} from 'lucide-react';
+import { MapPin, Users, Clock, ArrowRight, PlusCircle, BookmarkCheck } from 'lucide-react';
 
 interface CitizenChallengeItem {
   id: string;
@@ -89,7 +82,9 @@ const MY_CHALLENGES: CitizenChallengeItem[] = [
 export function DashboardChallenges() {
   const navigate = useNavigate();
   const { joinedChallengeIds, savedChallengeIds } = useInnovationStore();
-  const [activeTab, setActiveTab] = useState<'joined' | 'saved' | 'submitted' | 'completed'>('joined');
+  const [activeTab, setActiveTab] = useState<'joined' | 'saved' | 'submitted' | 'completed'>(
+    'joined',
+  );
 
   // Dynamically compute list reflecting joined and saved IDs
   const allChallenges = useMemo(() => {
@@ -108,11 +103,31 @@ export function DashboardChallenges() {
     });
   }, [joinedChallengeIds, savedChallengeIds]);
 
-  const tabs: Array<{ id: 'joined' | 'saved' | 'submitted' | 'completed'; label: string; count: number }> = [
-    { id: 'joined', label: 'Joined Challenges', count: allChallenges.filter((c) => c.category === 'joined').length },
-    { id: 'saved', label: 'Saved', count: allChallenges.filter((c) => c.category === 'saved').length },
-    { id: 'submitted', label: 'Submitted by Me', count: allChallenges.filter((c) => c.category === 'submitted').length },
-    { id: 'completed', label: 'Completed', count: allChallenges.filter((c) => c.category === 'completed').length },
+  const tabs: Array<{
+    id: 'joined' | 'saved' | 'submitted' | 'completed';
+    label: string;
+    count: number;
+  }> = [
+    {
+      id: 'joined',
+      label: 'Joined Challenges',
+      count: allChallenges.filter((c) => c.category === 'joined').length,
+    },
+    {
+      id: 'saved',
+      label: 'Saved',
+      count: allChallenges.filter((c) => c.category === 'saved').length,
+    },
+    {
+      id: 'submitted',
+      label: 'Submitted by Me',
+      count: allChallenges.filter((c) => c.category === 'submitted').length,
+    },
+    {
+      id: 'completed',
+      label: 'Completed',
+      count: allChallenges.filter((c) => c.category === 'completed').length,
+    },
   ];
 
   const filteredChallenges = allChallenges.filter((c) => c.category === activeTab);
@@ -153,9 +168,7 @@ export function DashboardChallenges() {
               <span>{tab.label}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  activeTab === tab.id
-                    ? 'bg-white/20 text-white'
-                    : 'bg-[#FAF9F5] text-[#6B5845]'
+                  activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-[#FAF9F5] text-[#6B5845]'
                 }`}
               >
                 {tab.count}
@@ -179,11 +192,10 @@ export function DashboardChallenges() {
       {filteredChallenges.length === 0 ? (
         <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
           <BookmarkCheck className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
-          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">
-            No challenges in this folder
-          </h3>
+          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No challenges in this folder</h3>
           <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-            Explore active public problem calls across Jharkhand to start contributing ideas or tracking initiatives.
+            Explore active public problem calls across Jharkhand to start contributing ideas or
+            tracking initiatives.
           </p>
           <button
             type="button"
@@ -209,7 +221,7 @@ export function DashboardChallenges() {
                   </span>
                   <span
                     className={`text-[10.5px] font-mono font-bold uppercase px-2 py-0.5 rounded border ${getStatusBadge(
-                      item.status
+                      item.status,
                     )}`}
                   >
                     {item.status}

@@ -43,10 +43,13 @@ interface InnovationStoreState {
   saveChallenge: (challengeId: string) => void;
   isChallengeSaved: (challengeId: string) => boolean;
   submitIdea: (
-    data: Omit<SubmittedIdea, 'id' | 'submissionDate' | 'status' | 'collaboratorsCount' | 'timeline'>
+    data: Omit<
+      SubmittedIdea,
+      'id' | 'submissionDate' | 'status' | 'collaboratorsCount' | 'timeline'
+    >,
   ) => string;
   saveDraftIdea: (
-    data: Partial<SubmittedIdea> & { title: string; challengeId: string; challengeTitle: string }
+    data: Partial<SubmittedIdea> & { title: string; challengeId: string; challengeTitle: string },
   ) => string;
   getIdeaById: (id: string) => SubmittedIdea | undefined;
   withdrawIdea: (id: string) => void;
@@ -66,8 +69,10 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     problemPart: 'Early mechanical wear detection in subterranean pump cylinders.',
     expectedImpact: '45% reduction in handpump downtime and proactive technician dispatch.',
     beneficiaries: '2,000+ tribal village residents across 20 Murhu Block habitations.',
-    approach: 'Edge MCU processing vibration RMS values, transmitting over LoRa mesh to block office.',
-    resources: 'Piezoelectric sensor, STM32 low-power MCU, 3.6V Li-SOCl2 battery, weatherproof IP67 collar.',
+    approach:
+      'Edge MCU processing vibration RMS values, transmitting over LoRa mesh to block office.',
+    resources:
+      'Piezoelectric sensor, STM32 low-power MCU, 3.6V Li-SOCl2 battery, weatherproof IP67 collar.',
     complexity: 'Medium',
     seekingCollaborators: true,
     collaborationNeeds: ['Technical Expertise', 'Research Support', 'Government Partnership'],
@@ -76,10 +81,30 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     collaboratorsCount: 14,
     authorName: 'Arnab',
     timeline: [
-      { date: 'May 14, 2026', title: 'Idea Submitted', desc: 'Entered into JharSankalp innovation pipeline.', done: true },
-      { date: 'May 20, 2026', title: 'Initial Review Completed', desc: 'DWSD Technical cell cleared bench testing.', done: true },
-      { date: 'June 02, 2026', title: 'Consortium Formed', desc: 'BIT Mesra and Murhu BDO signed field pilot agreement.', done: true },
-      { date: 'July 2026', title: 'Pilot Deployment', desc: '14 sensor units installed in active testbed.', done: true },
+      {
+        date: 'May 14, 2026',
+        title: 'Idea Submitted',
+        desc: 'Entered into JharSankalp innovation pipeline.',
+        done: true,
+      },
+      {
+        date: 'May 20, 2026',
+        title: 'Initial Review Completed',
+        desc: 'DWSD Technical cell cleared bench testing.',
+        done: true,
+      },
+      {
+        date: 'June 02, 2026',
+        title: 'Consortium Formed',
+        desc: 'BIT Mesra and Murhu BDO signed field pilot agreement.',
+        done: true,
+      },
+      {
+        date: 'July 2026',
+        title: 'Pilot Deployment',
+        desc: '14 sensor units installed in active testbed.',
+        done: true,
+      },
     ],
   },
   {
@@ -95,8 +120,10 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     problemPart: 'High heat causing scraped lac stickiness and market value degradation.',
     expectedImpact: 'Extends fresh brood viability from 4 days to 14 days.',
     beneficiaries: '450 tribal gathering families in Latehar forest range.',
-    approach: 'Passive PCM slabs charged with cool night well water, lined inside local bamboo baskets.',
-    resources: 'Bio-PCM wax packs, expanded polystyrene / coir insulation, local bamboo encasement.',
+    approach:
+      'Passive PCM slabs charged with cool night well water, lined inside local bamboo baskets.',
+    resources:
+      'Bio-PCM wax packs, expanded polystyrene / coir insulation, local bamboo encasement.',
     complexity: 'Low',
     seekingCollaborators: true,
     collaborationNeeds: ['Research Support', 'Community Partners'],
@@ -105,8 +132,18 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     collaboratorsCount: 6,
     authorName: 'Arnab',
     timeline: [
-      { date: 'May 28, 2026', title: 'Idea Submitted', desc: 'Submitted for Latehar Forest Division call.', done: true },
-      { date: 'June 04, 2026', title: 'Technical Feasibility Review', desc: 'Under review by IIT ISM Dhanbad Agri-tech cell.', done: false },
+      {
+        date: 'May 28, 2026',
+        title: 'Idea Submitted',
+        desc: 'Submitted for Latehar Forest Division call.',
+        done: true,
+      },
+      {
+        date: 'June 04, 2026',
+        title: 'Technical Feasibility Review',
+        desc: 'Under review by IIT ISM Dhanbad Agri-tech cell.',
+        done: false,
+      },
     ],
   },
   {
@@ -122,7 +159,8 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     problemPart: 'Late detection of high-risk pregnancies in hill tracts.',
     expectedImpact: '100% antenatal checkup coverage in remote Santhal Pargana villages.',
     beneficiaries: 'ASHA workers and 1,200+ rural expectant mothers.',
-    approach: 'Low-cost optical diagnostic sensors connected to an offline Android app with Santhali voice guidance.',
+    approach:
+      'Low-cost optical diagnostic sensors connected to an offline Android app with Santhali voice guidance.',
     resources: 'Solar-charged battery pack, spectrophotometric test strips, tablet.',
     complexity: 'Medium',
     seekingCollaborators: true,
@@ -132,8 +170,18 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     collaboratorsCount: 2,
     authorName: 'Arnab',
     timeline: [
-      { date: 'June 01, 2026', title: 'Idea Submitted', desc: 'Submitted into district triage queue.', done: true },
-      { date: 'Pending', title: 'District Health Review', desc: 'Awaiting CMO review.', done: false },
+      {
+        date: 'June 01, 2026',
+        title: 'Idea Submitted',
+        desc: 'Submitted into district triage queue.',
+        done: true,
+      },
+      {
+        date: 'Pending',
+        title: 'District Health Review',
+        desc: 'Awaiting CMO review.',
+        done: false,
+      },
     ],
   },
   {
@@ -159,7 +207,12 @@ const INITIAL_IDEAS: SubmittedIdea[] = [
     collaboratorsCount: 1,
     authorName: 'Arnab',
     timeline: [
-      { date: 'June 02, 2026', title: 'Draft Created', desc: 'Saved locally. Ready for final review.', done: true },
+      {
+        date: 'June 02, 2026',
+        title: 'Draft Created',
+        desc: 'Saved locally. Ready for final review.',
+        done: true,
+      },
     ],
   },
 ];
@@ -256,7 +309,7 @@ export const useInnovationStore = create<InnovationStoreState>()(
 
         // Replace if draft already exists with same title or add new
         const existingIdeas = get().userIdeas.filter(
-          (i) => !(i.status === 'Draft' && i.title === data.title)
+          (i) => !(i.status === 'Draft' && i.title === data.title),
         );
 
         set({
@@ -268,8 +321,7 @@ export const useInnovationStore = create<InnovationStoreState>()(
       },
 
       saveDraftIdea: (data) => {
-        const id =
-          data.id || `DRAFT-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+        const id = data.id || `DRAFT-2026-${Math.floor(1000 + Math.random() * 9000)}`;
         const dateOptions: Intl.DateTimeFormatOptions = {
           month: 'long',
           day: 'numeric',
@@ -328,6 +380,6 @@ export const useInnovationStore = create<InnovationStoreState>()(
     }),
     {
       name: 'jharsankalp-innovation-store',
-    }
-  )
+    },
+  ),
 );

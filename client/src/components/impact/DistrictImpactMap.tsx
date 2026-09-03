@@ -7,13 +7,8 @@ interface DistrictImpactMapProps {
   onSelectDistrict?: (district: DistrictImpact) => void;
 }
 
-export function DistrictImpactMap({
-  districts,
-  onSelectDistrict,
-}: DistrictImpactMapProps) {
-  const [activeDistrict, setActiveDistrict] = useState<DistrictImpact>(
-    districts[0]
-  );
+export function DistrictImpactMap({ districts, onSelectDistrict }: DistrictImpactMapProps) {
+  const [activeDistrict, setActiveDistrict] = useState<DistrictImpact>(districts[0]);
 
   const handleSelect = (dist: DistrictImpact) => {
     setActiveDistrict(dist);
@@ -57,13 +52,9 @@ export function DistrictImpactMap({
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[12.5px] font-bold block truncate">
-                      {dist.name}
-                    </span>
+                    <span className="text-[12.5px] font-bold block truncate">{dist.name}</span>
                     <MapPin
-                      className={`h-3 w-3 ${
-                        isSelected ? 'text-[#F5A623]' : 'text-[#BE123C]'
-                      }`}
+                      className={`h-3 w-3 ${isSelected ? 'text-[#F5A623]' : 'text-[#BE123C]'}`}
                     />
                   </div>
                   <div className="text-[11px] font-mono mt-1 opacity-80">
@@ -93,25 +84,19 @@ export function DistrictImpactMap({
 
           <div className="grid grid-cols-3 gap-2 text-left">
             <div className="p-2.5 rounded-xl bg-white border border-[#EEEAE1]">
-              <span className="text-[9.5px] font-mono text-[#6B5845] block">
-                PROJECTS
-              </span>
+              <span className="text-[9.5px] font-mono text-[#6B5845] block">PROJECTS</span>
               <span className="text-[1.3rem] font-mono font-extrabold text-[#123B2A]">
                 {activeDistrict.projectsCount}
               </span>
             </div>
             <div className="p-2.5 rounded-xl bg-white border border-[#EEEAE1]">
-              <span className="text-[9.5px] font-mono text-[#6B5845] block">
-                REACHED
-              </span>
+              <span className="text-[9.5px] font-mono text-[#6B5845] block">REACHED</span>
               <span className="text-[1.3rem] font-mono font-extrabold text-[#123B2A]">
                 {activeDistrict.peopleReached.toLocaleString()}
               </span>
             </div>
             <div className="p-2.5 rounded-xl bg-white border border-[#EEEAE1]">
-              <span className="text-[9.5px] font-mono text-[#6B5845] block">
-                PILOTS
-              </span>
+              <span className="text-[9.5px] font-mono text-[#6B5845] block">PILOTS</span>
               <span className="text-[1.3rem] font-mono font-extrabold text-[#15803D]">
                 {activeDistrict.activeDeployments}
               </span>
@@ -123,9 +108,7 @@ export function DistrictImpactMap({
               <CheckCircle2 className="h-3 w-3" />
               FLAGSHIP GROUND INITIATIVE
             </span>
-            <p className="text-[12px] text-[#1D2522] leading-snug">
-              {activeDistrict.highlight}
-            </p>
+            <p className="text-[12px] text-[#1D2522] leading-snug">{activeDistrict.highlight}</p>
           </div>
         </div>
       </div>

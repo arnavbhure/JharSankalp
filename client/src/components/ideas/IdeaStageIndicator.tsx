@@ -29,9 +29,7 @@ export function IdeaStageIndicator({ currentStage }: IdeaStageIndicatorProps) {
     <div className="w-full space-y-1.5 text-left">
       <div className="flex items-center justify-between text-[10.5px] font-mono">
         <span className="text-[#6B5845] font-semibold">Development Stage:</span>
-        <span className="font-bold text-[#123B2A] uppercase tracking-wider">
-          {currentStage}
-        </span>
+        <span className="font-bold text-[#123B2A] uppercase tracking-wider">{currentStage}</span>
       </div>
 
       {/* Stage Dots Track */}
@@ -50,8 +48,8 @@ export function IdeaStageIndicator({ currentStage }: IdeaStageIndicatorProps) {
                   isCurrent
                     ? 'bg-[#123B2A] ring-4 ring-[#123B2A]/20 scale-125'
                     : isCompleted
-                    ? 'bg-[#15803D] ring-2 ring-white'
-                    : 'bg-white border border-[#EEEAE1]'
+                      ? 'bg-[#15803D] ring-2 ring-white'
+                      : 'bg-white border border-[#EEEAE1]'
                 }`}
               />
               <span
@@ -59,8 +57,8 @@ export function IdeaStageIndicator({ currentStage }: IdeaStageIndicatorProps) {
                   isCurrent
                     ? 'font-bold text-[#123B2A]'
                     : isCompleted
-                    ? 'text-[#1D2522]'
-                    : 'text-[#6B5845]/60'
+                      ? 'text-[#1D2522]'
+                      : 'text-[#6B5845]/60'
                 }`}
               >
                 {st.label}

@@ -64,9 +64,7 @@ function getNavigation(role: {
   if (role.isGovernment) {
     return [
       {
-        items: [
-          { label: 'State Overview', href: '/government', icon: BarChart3 },
-        ],
+        items: [{ label: 'State Overview', href: '/government', icon: BarChart3 }],
       },
       {
         title: 'Triage & Pipeline',
@@ -91,9 +89,7 @@ function getNavigation(role: {
   if (role.isUniversity) {
     return [
       {
-        items: [
-          { label: 'Overview', href: '/university', icon: GraduationCap },
-        ],
+        items: [{ label: 'Overview', href: '/university', icon: GraduationCap }],
       },
       {
         title: 'Opportunities',
@@ -117,9 +113,7 @@ function getNavigation(role: {
   if (role.isIndustry) {
     return [
       {
-        items: [
-          { label: 'Overview', href: '/industry', icon: Briefcase },
-        ],
+        items: [{ label: 'Overview', href: '/industry', icon: Briefcase }],
       },
       {
         title: 'Exchange',
@@ -234,9 +228,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Institutional Footer */}
         <div className="border-t border-neutral-200 bg-neutral-25 px-4 py-3 text-left">
-          <div className="text-[11px] font-medium text-neutral-600">
-            Govt. of Jharkhand
-          </div>
+          <div className="text-[11px] font-medium text-neutral-600">Govt. of Jharkhand</div>
           <div className="text-[10px] text-neutral-400 mt-0.5">
             Dept. of Higher & Technical Education
           </div>

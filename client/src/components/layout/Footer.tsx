@@ -3,7 +3,10 @@ import { BrandMark } from '../common/BrandMark';
 
 export function Footer() {
   return (
-    <footer id="about" className="bg-[#123B2A] text-white pt-16 pb-12 border-t border-[#1F5A3D] text-left">
+    <footer
+      id="about"
+      className="bg-[#123B2A] text-white pt-16 pb-12 border-t border-[#1F5A3D] text-left"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/15">
           {/* ── Brand Narrative (5 cols) ── */}
@@ -21,7 +24,9 @@ export function Footer() {
             </div>
 
             <p className="text-[13.5px] text-white/75 leading-relaxed max-w-sm pt-1">
-              A civic innovation platform connecting citizens, universities, institutions, and startups to identify ground challenges and engineer sustainable solutions across Jharkhand.
+              A civic innovation platform connecting citizens, universities, institutions, and
+              startups to identify ground challenges and engineer sustainable solutions across
+              Jharkhand.
             </p>
 
             <div className="pt-2 text-[12px] text-[#F8F6F1]/60 font-mono">
@@ -46,7 +51,10 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="hover:text-[#FA7E61] transition-colors font-bold text-[#FEE1C7]">
+                <Link
+                  to="/projects"
+                  className="hover:text-[#FA7E61] transition-colors font-bold text-[#FEE1C7]"
+                >
                   Active Projects
                 </Link>
               </li>
@@ -104,22 +112,40 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-[14px] text-white/80 font-medium">
               <li>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
                   Twitter / X
                 </a>
               </li>
               <li>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
                   Instagram
                 </a>
               </li>
               <li>
-                <a href="mailto:support@jharsankalp.gov.in" className="hover:text-white transition-colors">
+                <a
+                  href="mailto:support@jharsankalp.gov.in"
+                  className="hover:text-white transition-colors"
+                >
                   Email
                 </a>
               </li>
@@ -129,9 +155,7 @@ export function Footer() {
 
         {/* ── Bottom Strip ── */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12.5px] text-white/60">
-          <div>
-            © 2026 JharSankalp. Built for collective impact.
-          </div>
+          <div>© 2026 JharSankalp. Built for collective impact.</div>
           <div className="font-mono text-[11px] text-white/50">
             Smart India Hackathon 2026 · Problem Statement ID: 26043
           </div>

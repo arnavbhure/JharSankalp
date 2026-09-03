@@ -188,7 +188,8 @@ export function SubmitIdea() {
             </h1>
 
             <p className="text-[15px] sm:text-[16.5px] text-[#6B5845] leading-relaxed max-w-2xl font-normal">
-              Connect your solution approach to a real societal challenge and find the people, institutions and partners who can help move it forward.
+              Connect your solution approach to a real societal challenge and find the people,
+              institutions and partners who can help move it forward.
             </p>
           </div>
         </header>
@@ -210,10 +211,7 @@ export function SubmitIdea() {
       <main className="flex-1 mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-12 w-full space-y-6">
         {/* Draft Recovery Banner */}
         {savedDraftExists && currentStep === 1 && (
-          <DraftRecoveryBanner
-            onContinue={handleApplyDraft}
-            onDiscard={handleDiscardDraft}
-          />
+          <DraftRecoveryBanner onContinue={handleApplyDraft} onDiscard={handleDiscardDraft} />
         )}
 
         {/* Sticky Contextual Selected Challenge Strip (Steps 2-5) */}
@@ -322,10 +320,7 @@ export function SubmitIdea() {
 
         {/* Step 7: Success Page */}
         {currentStep === 7 && submissionResult && (
-          <IdeaSubmissionSuccess
-            result={submissionResult}
-            challenge={formData.challenge}
-          />
+          <IdeaSubmissionSuccess result={submissionResult} challenge={formData.challenge} />
         )}
 
         {/* ── Guided Step Controls (Steps 1 to 5) ── */}

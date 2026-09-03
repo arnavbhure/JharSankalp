@@ -15,12 +15,13 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="space-y-1 w-full text-left">
         {label && (
-          <label
-            htmlFor={textareaId}
-            className="block text-small font-medium text-neutral-800"
-          >
+          <label htmlFor={textareaId} className="block text-small font-medium text-neutral-800">
             {label}
-            {isRequired && <span className="text-status-danger ml-1" aria-hidden="true">*</span>}
+            {isRequired && (
+              <span className="text-status-danger ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
           </label>
         )}
         <textarea
@@ -41,7 +42,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} className="text-caption font-medium text-status-danger" role="alert">
+          <p
+            id={`${textareaId}-error`}
+            className="text-caption font-medium text-status-danger"
+            role="alert"
+          >
             {error}
           </p>
         )}

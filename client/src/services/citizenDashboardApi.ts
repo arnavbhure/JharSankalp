@@ -114,7 +114,8 @@ const DEMO_NOTIFICATIONS: CitizenNotification[] = [
   },
   {
     id: 'notif-2',
-    title: 'Your additional field observation details have been forwarded to the technical review team.',
+    title:
+      'Your additional field observation details have been forwarded to the technical review team.',
     timeAgo: 'Yesterday',
     read: true,
     challengeId: 'JS-2026-00024',
@@ -157,7 +158,8 @@ export async function getUserChallenges(): Promise<UserChallenge[]> {
           referenceId: ch.publicId || ch.challengeCode || ch.id,
           title: ch.title,
           category: ch.domain || 'Civic Problem',
-          district: ch.district?.name || (typeof ch.district === 'string' ? ch.district : 'Jharkhand'),
+          district:
+            ch.district?.name || (typeof ch.district === 'string' ? ch.district : 'Jharkhand'),
           block: ch.block || 'Local Block',
           submittedDate: new Date(ch.createdAt).toLocaleDateString('en-GB', {
             day: 'numeric',
@@ -191,9 +193,13 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     totalSubmitted: challenges.length,
     underReview: challenges.filter((c) => c.status === 'UNDER_REVIEW').length,
     inCollaboration: challenges.filter(
-      (c) => c.status === 'IN_COLLABORATION' || c.status === 'MATCHED' || c.status === 'SOLUTION_IN_PROGRESS'
+      (c) =>
+        c.status === 'IN_COLLABORATION' ||
+        c.status === 'MATCHED' ||
+        c.status === 'SOLUTION_IN_PROGRESS',
     ).length,
-    actionRequired: challenges.filter((c) => c.actionRequired && !c.actionRequired.responded).length,
+    actionRequired: challenges.filter((c) => c.actionRequired && !c.actionRequired.responded)
+      .length,
   };
 }
 
@@ -209,7 +215,7 @@ export async function getNotifications(): Promise<CitizenNotification[]> {
 
 export async function submitReviewerResponse(
   challengeId: string,
-  responseText: string
+  responseText: string,
 ): Promise<boolean> {
   await new Promise((resolve) => setTimeout(resolve, 350));
   inMemoryChallenges = inMemoryChallenges.map((c) => {

@@ -20,8 +20,10 @@ export async function getDashboard(): Promise<UniversityDashboardData> {
         ...UNIVERSITY_DASHBOARD_DATA,
         metrics: {
           ...UNIVERSITY_DASHBOARD_DATA.metrics,
-          relevantChallenges: res.kpis.totalIdeasSubmitted ?? UNIVERSITY_DASHBOARD_DATA.metrics.relevantChallenges,
-          projectsInProgress: res.kpis.activeCollaborations ?? UNIVERSITY_DASHBOARD_DATA.metrics.projectsInProgress,
+          relevantChallenges:
+            res.kpis.totalIdeasSubmitted ?? UNIVERSITY_DASHBOARD_DATA.metrics.relevantChallenges,
+          projectsInProgress:
+            res.kpis.activeCollaborations ?? UNIVERSITY_DASHBOARD_DATA.metrics.projectsInProgress,
         },
       };
     }

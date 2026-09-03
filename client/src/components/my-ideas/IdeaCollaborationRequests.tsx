@@ -7,10 +7,7 @@ interface IdeaCollaborationRequestsProps {
   onRespond: (requestId: string, action: 'ACCEPTED' | 'DECLINED') => Promise<void>;
 }
 
-export function IdeaCollaborationRequests({
-  requests,
-  onRespond,
-}: IdeaCollaborationRequestsProps) {
+export function IdeaCollaborationRequests({ requests, onRespond }: IdeaCollaborationRequestsProps) {
   const [selectedRequest, setSelectedRequest] = useState<ContributorRequest | null>(null);
   const [actingId, setActingId] = useState<string | null>(null);
 
@@ -56,8 +53,8 @@ export function IdeaCollaborationRequests({
                 isPending
                   ? 'border-[#123B2A]/30 bg-white hover:border-[#123B2A]'
                   : isAccepted
-                  ? 'border-[#BBF7D0] bg-[#F0FDF4]/60'
-                  : 'border-[#EEEAE1] bg-[#FAF9F5] opacity-75'
+                    ? 'border-[#BBF7D0] bg-[#F0FDF4]/60'
+                    : 'border-[#EEEAE1] bg-[#FAF9F5] opacity-75'
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -82,7 +79,9 @@ export function IdeaCollaborationRequests({
                     </p>
 
                     <div className="text-[11.5px] text-[#6B5845] flex items-center gap-2">
-                      <span>For: <strong className="text-[#1D2522]">{req.ideaTitle}</strong></span>
+                      <span>
+                        For: <strong className="text-[#1D2522]">{req.ideaTitle}</strong>
+                      </span>
                       <span>·</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
@@ -168,7 +167,10 @@ export function IdeaCollaborationRequests({
                 {selectedRequest.contributor.name}
               </h3>
               <p className="text-[13px] text-[#6B5845]">
-                {selectedRequest.contributor.role} {selectedRequest.contributor.organization ? `· ${selectedRequest.contributor.organization}` : ''}
+                {selectedRequest.contributor.role}{' '}
+                {selectedRequest.contributor.organization
+                  ? `· ${selectedRequest.contributor.organization}`
+                  : ''}
               </p>
             </div>
 
@@ -177,9 +179,7 @@ export function IdeaCollaborationRequests({
                 <span>TARGET IDEA</span>
                 <span>{selectedRequest.createdAt}</span>
               </div>
-              <p className="font-bold text-[#1D2522]">
-                {selectedRequest.ideaTitle}
-              </p>
+              <p className="font-bold text-[#1D2522]">{selectedRequest.ideaTitle}</p>
               <div className="text-[12px] text-[#123B2A] font-semibold">
                 Applying for: {selectedRequest.contributionType}
               </div>

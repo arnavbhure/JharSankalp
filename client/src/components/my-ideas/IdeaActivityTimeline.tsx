@@ -43,12 +43,8 @@ export function IdeaActivityTimeline({ activities }: IdeaActivityTimelineProps) 
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6B5845]">
                 {act.timestamp}
               </span>
-              <h4 className="text-[13.5px] font-bold text-[#1D2522]">
-                {act.title}
-              </h4>
-              <p className="text-[12.5px] text-[#6B5845] leading-relaxed">
-                {act.description}
-              </p>
+              <h4 className="text-[13.5px] font-bold text-[#1D2522]">{act.title}</h4>
+              <p className="text-[12.5px] text-[#6B5845] leading-relaxed">{act.description}</p>
             </div>
           </div>
         ))}

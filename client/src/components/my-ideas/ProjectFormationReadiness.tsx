@@ -7,10 +7,7 @@ interface ProjectFormationReadinessProps {
   ideaTitle: string;
 }
 
-export function ProjectFormationReadiness({
-  criteria,
-  ideaTitle,
-}: ProjectFormationReadinessProps) {
+export function ProjectFormationReadiness({ criteria, ideaTitle }: ProjectFormationReadinessProps) {
   const [showNeededInfo, setShowNeededInfo] = useState(false);
   const [initiated, setInitiated] = useState(false);
 
@@ -30,7 +27,9 @@ export function ProjectFormationReadiness({
           </h3>
 
           <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-2xl">
-            For Idea: <strong className="text-[#1D2522]">{ideaTitle}</strong>. When a technical hypothesis gathers enough contributors and verified lab feasibility, it can be formalized as an execution project with dedicated grant funding.
+            For Idea: <strong className="text-[#1D2522]">{ideaTitle}</strong>. When a technical
+            hypothesis gathers enough contributors and verified lab feasibility, it can be
+            formalized as an execution project with dedicated grant funding.
           </p>
         </div>
 
@@ -38,9 +37,7 @@ export function ProjectFormationReadiness({
           <div className="text-[1.8rem] font-extrabold font-mono text-[#7E22CE] leading-none">
             {metCount}/{criteria.length}
           </div>
-          <div className="text-[10px] font-mono uppercase text-[#6B5845] mt-0.5">
-            Criteria Met
-          </div>
+          <div className="text-[10px] font-mono uppercase text-[#6B5845] mt-0.5">Criteria Met</div>
         </div>
       </div>
 
@@ -62,16 +59,20 @@ export function ProjectFormationReadiness({
                   : 'border-2 border-[#B45309] bg-white text-[#B45309]'
               }`}
             >
-              {c.met ? <Check className="h-3 w-3 stroke-[3]" /> : <Circle className="h-2 w-2 fill-[#B45309]" />}
+              {c.met ? (
+                <Check className="h-3 w-3 stroke-[3]" />
+              ) : (
+                <Circle className="h-2 w-2 fill-[#B45309]" />
+              )}
             </div>
 
             <div className="space-y-0.5 min-w-0">
-              <span className={`text-[13px] font-bold block ${c.met ? 'text-[#1D2522]' : 'text-[#B45309]'}`}>
+              <span
+                className={`text-[13px] font-bold block ${c.met ? 'text-[#1D2522]' : 'text-[#B45309]'}`}
+              >
                 {c.criterion}
               </span>
-              <p className="text-[11.5px] text-[#6B5845] leading-tight">
-                {c.note}
-              </p>
+              <p className="text-[11.5px] text-[#6B5845] leading-tight">{c.note}</p>
             </div>
           </div>
         ))}
@@ -118,10 +119,13 @@ export function ProjectFormationReadiness({
             Why does JharSankalp distinguish Ideas from Projects?
           </h5>
           <p>
-            An <strong>Idea</strong> is an open-ended technical hypothesis or grassroots proposed solution. A <strong>Project</strong> is a funded, formal execution initiative with a committed consortium, timeline, and district pilot site.
+            An <strong>Idea</strong> is an open-ended technical hypothesis or grassroots proposed
+            solution. A <strong>Project</strong> is a funded, formal execution initiative with a
+            committed consortium, timeline, and district pilot site.
           </p>
           <p>
-            To formalize this idea, you need one institutional faculty endorsement (e.g. from Birsa Agricultural University, BIT Sindri, or NIT Jamshedpur) to act as technical auditor.
+            To formalize this idea, you need one institutional faculty endorsement (e.g. from Birsa
+            Agricultural University, BIT Sindri, or NIT Jamshedpur) to act as technical auditor.
           </p>
         </div>
       )}

@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  FileText,
-  CheckCircle2,
-  Clock,
-  ArrowRight,
-  ShieldCheck,
-  MapPin,
-} from 'lucide-react';
+import { FileText, CheckCircle2, Clock, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface CitizenIntakeReviewSectionProps {
@@ -21,14 +14,10 @@ export function CitizenIntakeReviewSection({
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
 
-  const submittedCount = challenges.filter(
-    (c) => c.status === 'SUBMITTED' || !c.status
-  ).length;
-  const underReviewCount = challenges.filter(
-    (c) => c.status === 'UNDER_REVIEW'
-  ).length;
+  const submittedCount = challenges.filter((c) => c.status === 'SUBMITTED' || !c.status).length;
+  const underReviewCount = challenges.filter((c) => c.status === 'UNDER_REVIEW').length;
   const validatedCount = challenges.filter(
-    (c) => c.status === 'VALIDATED' || c.status === 'MATCHED'
+    (c) => c.status === 'VALIDATED' || c.status === 'MATCHED',
   ).length;
 
   const handleAction = async (challengeId: string, targetStatus: string, label: string) => {
@@ -59,7 +48,8 @@ export function CitizenIntakeReviewSection({
             Grassroots Intake & Validation Protocol
           </h2>
           <p className="text-[14px] text-[#6B5845] max-w-2xl">
-            Real-time verification queue for challenges reported by citizens, local panchayats, and community observers across Jharkhand.
+            Real-time verification queue for challenges reported by citizens, local panchayats, and
+            community observers across Jharkhand.
           </p>
         </div>
 
@@ -155,8 +145,8 @@ export function CitizenIntakeReviewSection({
                           currentStatus === 'VALIDATED'
                             ? 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
                             : currentStatus === 'UNDER_REVIEW'
-                            ? 'bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE]'
-                            : 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
+                              ? 'bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE]'
+                              : 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
                         }`}
                       >
                         {currentStatus.replace('_', ' ')}
@@ -180,9 +170,7 @@ export function CitizenIntakeReviewSection({
                       </Link>
                     </h4>
 
-                    <p className="text-[12.5px] text-[#6B5845] line-clamp-1">
-                      {ch.description}
-                    </p>
+                    <p className="text-[12.5px] text-[#6B5845] line-clamp-1">{ch.description}</p>
                   </div>
 
                   {/* Verification Quick Actions */}

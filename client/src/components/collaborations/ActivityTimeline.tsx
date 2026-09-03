@@ -28,9 +28,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#123B2A]">
             LIVE PROGRESSION FEED
           </span>
-          <h3 className="text-[1.25rem] font-bold text-[#1D2522]">
-            Collaboration Activity
-          </h3>
+          <h3 className="text-[1.25rem] font-bold text-[#1D2522]">Collaboration Activity</h3>
         </div>
         <span className="text-[11px] font-mono text-[#15803D] font-bold flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-[#15803D] animate-pulse" />

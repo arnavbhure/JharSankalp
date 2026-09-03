@@ -18,7 +18,8 @@ export function DevelopmentTimeline({ milestones }: DevelopmentTimelineProps) {
           Progress so far
         </h2>
         <p className="text-[14px] text-[#6B5845] leading-relaxed max-w-2xl">
-          A transparent chronological record of technical experiments, lab reviews, and community stakeholder consultations.
+          A transparent chronological record of technical experiments, lab reviews, and community
+          stakeholder consultations.
         </p>
       </div>
 
@@ -40,13 +41,9 @@ export function DevelopmentTimeline({ milestones }: DevelopmentTimelineProps) {
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-[1.15rem] font-bold text-[#1D2522] font-sans">
-                {m.title}
-              </h3>
+              <h3 className="text-[1.15rem] font-bold text-[#1D2522] font-sans">{m.title}</h3>
 
-              <p className="text-[13.5px] text-[#6B5845] leading-relaxed mt-0.5">
-                {m.description}
-              </p>
+              <p className="text-[13.5px] text-[#6B5845] leading-relaxed mt-0.5">{m.description}</p>
             </div>
           ))}
         </div>

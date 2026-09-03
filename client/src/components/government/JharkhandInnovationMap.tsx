@@ -17,9 +17,7 @@ export function JharkhandInnovationMap({
   const [priorityFilter, setPriorityFilter] = useState<string>('ALL');
 
   const filteredDistricts =
-    priorityFilter === 'ALL'
-      ? districts
-      : districts.filter((d) => d.priority === priorityFilter);
+    priorityFilter === 'ALL' ? districts : districts.filter((d) => d.priority === priorityFilter);
 
   const getPriorityColor = (priority: PriorityLevel) => {
     switch (priority) {
@@ -52,7 +50,10 @@ export function JharkhandInnovationMap({
   const activeDistrict = selectedDistrict || filteredDistricts[0];
 
   return (
-    <section id="map-section" className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-xs text-left space-y-6">
+    <section
+      id="map-section"
+      className="rounded-3xl border border-[#EEEAE1] bg-white p-6 sm:p-8 shadow-xs text-left space-y-6"
+    >
       {/* ── Section Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EEEAE1] pb-4">
         <div className="space-y-1">
@@ -64,7 +65,8 @@ export function JharkhandInnovationMap({
             Jharkhand Innovation Activity Map
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Interactive district intelligence mapping challenge density, active R&D consortia, and priority levels.
+            Interactive district intelligence mapping challenge density, active R&D consortia, and
+            priority levels.
           </p>
         </div>
 
@@ -119,28 +121,92 @@ export function JharkhandInnovationMap({
               className="drop-shadow-xs"
             />
             {/* Regional Labels */}
-            <text x="50" y="53" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="50"
+              y="53"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Ranchi
             </text>
-            <text x="74" y="47" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="74"
+              y="47"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Dhanbad
             </text>
-            <text x="51" y="64" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="51"
+              y="64"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Khunti
             </text>
-            <text x="34" y="64" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="34"
+              y="64"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Gumla
             </text>
-            <text x="61" y="85" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="61"
+              y="85"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               West Singhbhum
             </text>
-            <text x="78" y="80" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="78"
+              y="80"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               East Singhbhum
             </text>
-            <text x="86" y="37" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="86"
+              y="37"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Dumka
             </text>
-            <text x="92" y="22" fill="#6B5845" fontSize="2.8" fontWeight="bold" textAnchor="middle" opacity="0.4">
+            <text
+              x="92"
+              y="22"
+              fill="#6B5845"
+              fontSize="2.8"
+              fontWeight="bold"
+              textAnchor="middle"
+              opacity="0.4"
+            >
               Sahibganj
             </text>
           </svg>
@@ -178,7 +244,8 @@ export function JharkhandInnovationMap({
 
                 {/* District Label Tooltip */}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-[#1D2522] text-white px-2 py-0.5 rounded text-[10px] font-mono whitespace-nowrap shadow-md pointer-events-none z-30">
-                  {dist.district}: {dist.challengesCount} Challenges · {dist.activeProjectsCount} Projects
+                  {dist.district}: {dist.challengesCount} Challenges · {dist.activeProjectsCount}{' '}
+                  Projects
                 </div>
               </div>
             );
@@ -196,7 +263,7 @@ export function JharkhandInnovationMap({
 
                 <span
                   className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border ${getPriorityBadgeClass(
-                    activeDistrict.priority
+                    activeDistrict.priority,
                   )}`}
                 >
                   ● {activeDistrict.priority} PRIORITY
@@ -208,7 +275,8 @@ export function JharkhandInnovationMap({
                   {activeDistrict.district.toUpperCase()}
                 </h4>
                 <div className="text-[12.5px] text-[#6B5845] font-mono mt-1">
-                  Lead Consortium: <strong className="text-[#123B2A]">{activeDistrict.leadInstitution}</strong>
+                  Lead Consortium:{' '}
+                  <strong className="text-[#123B2A]">{activeDistrict.leadInstitution}</strong>
                 </div>
               </div>
 

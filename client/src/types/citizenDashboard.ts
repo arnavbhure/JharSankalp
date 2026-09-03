@@ -1,16 +1,7 @@
-export type CitizenLifecycleStage =
-  | 'Submitted'
-  | 'Review'
-  | 'Match'
-  | 'Collaboration'
-  | 'Solution';
+export type CitizenLifecycleStage = 'Submitted' | 'Review' | 'Match' | 'Collaboration' | 'Solution';
 
 export type CitizenChallengeStatus =
-  | 'UNDER_REVIEW'
-  | 'MATCHED'
-  | 'IN_COLLABORATION'
-  | 'SOLUTION_IN_PROGRESS'
-  | 'COMPLETED';
+  'UNDER_REVIEW' | 'MATCHED' | 'IN_COLLABORATION' | 'SOLUTION_IN_PROGRESS' | 'COMPLETED';
 
 export interface ReviewerRequest {
   id: string;

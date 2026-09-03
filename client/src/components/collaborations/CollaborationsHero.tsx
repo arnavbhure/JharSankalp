@@ -29,13 +29,13 @@ export function CollaborationsHero({
 
             {/* Main Heading with Amber Highlight */}
             <h1 className="text-[2.5rem] sm:text-[3.2rem] lg:text-[3.5rem] font-extrabold text-[#1D2522] tracking-tight leading-[1.1] font-sans">
-              Better solutions are{' '}
-              <span className="text-[#F5A623]">built together.</span>
+              Better solutions are <span className="text-[#F5A623]">built together.</span>
             </h1>
 
             {/* Supporting Copy */}
             <p className="text-[15.5px] sm:text-[16.5px] text-[#6B5845] max-w-2xl leading-relaxed font-normal">
-              Connect with citizens, domain experts, institutions and organizations working together to turn promising ideas into real-world solutions.
+              Connect with citizens, domain experts, institutions and organizations working together
+              to turn promising ideas into real-world solutions.
             </p>
 
             {/* CTAs */}
@@ -84,9 +84,7 @@ export function CollaborationsHero({
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         120+
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Active Collaborators
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Active Collaborators</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#15803D] font-bold bg-[#F0FDF4] px-2 py-0.5 rounded border border-[#BBF7D0]">
@@ -103,9 +101,7 @@ export function CollaborationsHero({
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         42
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Projects in Progress
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Projects in Progress</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#B45309] font-bold bg-[#FFFBEB] px-2 py-0.5 rounded border border-[#FDE68A]">
@@ -122,9 +118,7 @@ export function CollaborationsHero({
                       <div className="text-[1.25rem] font-mono font-extrabold text-[#123B2A] leading-tight">
                         18
                       </div>
-                      <div className="text-[11.5px] text-[#6B5845]">
-                        Partner Institutions
-                      </div>
+                      <div className="text-[11.5px] text-[#6B5845]">Partner Institutions</div>
                     </div>
                   </div>
                   <span className="text-[10.5px] font-mono text-[#0284C7] font-bold bg-[#F0F9FF] px-2 py-0.5 rounded border border-[#BAE6FD]">

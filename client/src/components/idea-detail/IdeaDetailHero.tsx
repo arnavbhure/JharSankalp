@@ -1,15 +1,6 @@
 import { useState, useEffect } from 'react';
 import { IdeaDetail } from '../../types/ideaDetail';
-import {
-  Sparkles,
-  Droplets,
-  Bookmark,
-  Share2,
-  Check,
-  Radio,
-  Activity,
-  Layers,
-} from 'lucide-react';
+import { Sparkles, Droplets, Bookmark, Share2, Check, Radio, Activity, Layers } from 'lucide-react';
 
 interface IdeaDetailHeroProps {
   idea: IdeaDetail;
@@ -98,18 +89,14 @@ export function IdeaDetailHero({ idea, onContributeClick }: IdeaDetailHeroProps)
                 <span className="text-[10.5px] font-mono uppercase text-[#6B5845] block">
                   IDEA ID
                 </span>
-                <span className="font-mono font-bold text-[#123B2A]">
-                  {idea.referenceId}
-                </span>
+                <span className="font-mono font-bold text-[#123B2A]">{idea.referenceId}</span>
               </div>
 
               <div>
                 <span className="text-[10.5px] font-mono uppercase text-[#6B5845] block">
                   STAGE
                 </span>
-                <span className="font-bold text-[#1D2522]">
-                  {idea.stage}
-                </span>
+                <span className="font-bold text-[#1D2522]">{idea.stage}</span>
               </div>
 
               <div>
@@ -216,9 +203,7 @@ export function IdeaDetailHero({ idea, onContributeClick }: IdeaDetailHeroProps)
                   <Layers className="h-3 w-3 text-[#123B2A]" />
                   Sampling: 100 Hz
                 </span>
-                <span className="text-[#15803D] font-bold">
-                  Battery Life: 24 Months
-                </span>
+                <span className="text-[#15803D] font-bold">Battery Life: 24 Months</span>
               </div>
             </div>
           </div>

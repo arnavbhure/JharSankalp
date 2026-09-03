@@ -34,9 +34,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#4C1E4F]">
             DIRECTORATE FAST-TRACK ACTIONS
           </span>
-          <h4 className="text-[1.2rem] font-bold text-[#1D2522]">
-            Ecosystem Command Shortcuts
-          </h4>
+          <h4 className="text-[1.2rem] font-bold text-[#1D2522]">Ecosystem Command Shortcuts</h4>
         </div>
 
         <span className="text-[11px] font-mono text-[#6B5845]">
@@ -58,9 +56,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#4C1E4F] transition-colors leading-snug">
             Review New Challenges
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            386 in evaluation queue →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">386 in evaluation queue →</div>
         </button>
 
         {/* Action 2 */}
@@ -75,9 +71,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
             Manage Allocation
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            University matching cell →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">University matching cell →</div>
         </button>
 
         {/* Action 3 */}
@@ -92,9 +86,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#DC2626] transition-colors leading-snug">
             View Delayed Projects
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            Latehar cold hub & mining →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">Latehar cold hub & mining →</div>
         </button>
 
         {/* Action 4 */}
@@ -109,9 +101,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#FA7E61] transition-colors leading-snug">
             District Insights
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            24-district telemetry map →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">24-district telemetry map →</div>
         </button>
 
         {/* Action 5 */}
@@ -127,9 +117,7 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
           <div className="text-[13px] font-bold text-[#1D2522] group-hover:text-[#15803D] transition-colors leading-snug">
             {exporting ? 'Report Ready' : 'Export Report'}
           </div>
-          <div className="text-[10.5px] font-mono text-[#6B5845]">
-            State Innovation Briefing →
-          </div>
+          <div className="text-[10.5px] font-mono text-[#6B5845]">State Innovation Briefing →</div>
         </button>
       </div>
 
@@ -152,7 +140,8 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
                 Assign Unmatched Civic Challenges
               </h3>
               <p className="text-[12.5px] text-[#6B5845]">
-                12 verified challenges currently await assignment to academic research innovation cells.
+                12 verified challenges currently await assignment to academic research innovation
+                cells.
               </p>
             </div>
 
@@ -169,9 +158,18 @@ export function QuickActionsToolbar({ onExportReport, exporting }: QuickActionsT
 
                 {[
                   { name: 'BIT Mesra Innovation Cell', domain: 'Water, IoT & Sensor Telemetry' },
-                  { name: 'Birsa Agricultural University (BAU)', domain: 'Soil Acidity & Agro-Forestry' },
-                  { name: 'BIT Sindri Mining Research Cell', domain: 'Strata Mechanics & Geo-safety' },
-                  { name: 'IIT (ISM) Dhanbad Centre of Excellence', domain: 'Deep Earth Sensing & Remote Sensing' },
+                  {
+                    name: 'Birsa Agricultural University (BAU)',
+                    domain: 'Soil Acidity & Agro-Forestry',
+                  },
+                  {
+                    name: 'BIT Sindri Mining Research Cell',
+                    domain: 'Strata Mechanics & Geo-safety',
+                  },
+                  {
+                    name: 'IIT (ISM) Dhanbad Centre of Excellence',
+                    domain: 'Deep Earth Sensing & Remote Sensing',
+                  },
                 ].map((uni) => (
                   <button
                     key={uni.name}

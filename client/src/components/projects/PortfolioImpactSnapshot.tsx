@@ -26,7 +26,8 @@ export function PortfolioImpactSnapshot({ stats }: PortfolioImpactSnapshotProps)
           </h3>
 
           <p className="text-[15px] sm:text-[16px] text-[#DDD6FE] max-w-2xl leading-relaxed">
-            Transitioning academic IP and grassroots prototypes into scalable district deployments across public water, education, mining, and healthcare.
+            Transitioning academic IP and grassroots prototypes into scalable district deployments
+            across public water, education, mining, and healthcare.
           </p>
         </div>
 
@@ -87,7 +88,8 @@ export function PortfolioImpactSnapshot({ stats }: PortfolioImpactSnapshotProps)
         <div className="pt-4 border-t border-[#382657] flex flex-col md:flex-row md:items-center justify-between gap-4">
           <blockquote className="space-y-1 max-w-3xl">
             <p className="text-[15.5px] sm:text-[17.5px] font-serif italic text-[#FFD8A8] leading-relaxed">
-              &ldquo;The value of innovation is not measured by how many ideas are generated. It is measured by how many solutions reach people.&rdquo;
+              &ldquo;The value of innovation is not measured by how many ideas are generated. It is
+              measured by how many solutions reach people.&rdquo;
             </p>
             <footer className="text-[11.5px] font-mono uppercase tracking-widest text-[#DDD6FE]/70">
               JharSankalp Core Innovation Axiom

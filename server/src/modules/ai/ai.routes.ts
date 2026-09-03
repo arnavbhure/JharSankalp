@@ -13,12 +13,26 @@ router.post('/analyze-challenge', async (req, res, next) => {
     const { title, description, district, affectedPopulation } = req.body;
 
     if (!title || typeof title !== 'string' || title.trim().length < 3) {
-      sendError(res, 400, 'INVALID_INPUT', 'Challenge title must be at least 3 characters long', undefined, req);
+      sendError(
+        res,
+        400,
+        'INVALID_INPUT',
+        'Challenge title must be at least 3 characters long',
+        undefined,
+        req,
+      );
       return;
     }
 
     if (!description || typeof description !== 'string' || description.trim().length < 10) {
-      sendError(res, 400, 'INVALID_INPUT', 'Challenge description must be at least 10 characters long', undefined, req);
+      sendError(
+        res,
+        400,
+        'INVALID_INPUT',
+        'Challenge description must be at least 10 characters long',
+        undefined,
+        req,
+      );
       return;
     }
 

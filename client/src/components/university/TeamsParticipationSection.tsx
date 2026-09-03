@@ -19,17 +19,24 @@ export function TeamsParticipationSection({ teams }: TeamsParticipationSectionPr
             Research Teams & Student Fellowships
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Departmental squads deployed across societal problem statements with direct community immersion.
+            Departmental squads deployed across societal problem statements with direct community
+            immersion.
           </p>
         </div>
 
         {/* Summary Pill */}
         <div className="flex items-center gap-2 text-[11px] font-mono text-[#6B5845] bg-[#FAF9F5] px-3 py-1 rounded-full border border-[#EEEAE1] flex-wrap">
-          <span><strong>6</strong> Active Teams</span>
+          <span>
+            <strong>6</strong> Active Teams
+          </span>
           <span>·</span>
-          <span><strong>42</strong> Students</span>
+          <span>
+            <strong>42</strong> Students
+          </span>
           <span>·</span>
-          <span><strong>11</strong> Faculty</span>
+          <span>
+            <strong>11</strong> Faculty
+          </span>
         </div>
       </div>
 
@@ -42,12 +49,8 @@ export function TeamsParticipationSection({ teams }: TeamsParticipationSectionPr
           >
             <div className="flex items-start justify-between gap-2">
               <div className="space-y-0.5">
-                <h4 className="text-[14.5px] font-bold text-[#1D2522]">
-                  {team.name}
-                </h4>
-                <div className="text-[11.5px] font-mono text-[#4C1E4F]">
-                  {team.department}
-                </div>
+                <h4 className="text-[14.5px] font-bold text-[#1D2522]">{team.name}</h4>
+                <div className="text-[11.5px] font-mono text-[#4C1E4F]">{team.department}</div>
               </div>
 
               <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0] shrink-0">

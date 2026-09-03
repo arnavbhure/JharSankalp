@@ -43,7 +43,7 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
   const [dragOver, setDragOver] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [submissionId] = useState<string>(
-    () => `sub_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`
+    () => `sub_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
   );
 
   const handleFiles = async (files: FileList | null) => {
@@ -90,7 +90,12 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
         // Update with permanent URL and storage path
         onChange({
           evidenceFiles: (formData.evidenceFiles || currentList).map((f) =>
-            f.id === tempId ? { ...uploadedResult, previewUrl: pendingFile.previewUrl || uploadedResult.previewUrl } : f
+            f.id === tempId
+              ? {
+                  ...uploadedResult,
+                  previewUrl: pendingFile.previewUrl || uploadedResult.previewUrl,
+                }
+              : f,
           ),
         });
       } catch (err: any) {
@@ -101,7 +106,7 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
         // Mark this file entry as failed
         onChange({
           evidenceFiles: (formData.evidenceFiles || currentList).map((f) =>
-            f.id === tempId ? { ...f, uploadStatus: 'error', errorMessage: errMsg } : f
+            f.id === tempId ? { ...f, uploadStatus: 'error', errorMessage: errMsg } : f,
           ),
         });
       }
@@ -137,7 +142,8 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
           Evidence & Background Context
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          Photos, ground observation notes, or technical documents help engineers and reviewers quickly assess conditions. Files are uploaded directly to our secure state cloud storage.
+          Photos, ground observation notes, or technical documents help engineers and reviewers
+          quickly assess conditions. Files are uploaded directly to our secure state cloud storage.
         </p>
       </div>
 
@@ -186,10 +192,15 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
 
             <div className="space-y-0.5">
               <div className="text-[14.5px] font-bold text-[#1D2522]">
-                Drag and drop files here, or <span className="text-[#123B2A] underline">browse files</span>
+                Drag and drop files here, or{' '}
+                <span className="text-[#123B2A] underline">browse files</span>
               </div>
               <p className="text-[12px] text-[#6B5845]">
-                Files upload to the <code className="bg-[#FAF9F5] px-1.5 py-0.5 rounded border border-[#EEEAE1] font-mono text-[11px]">challenge-evidence</code> cloud storage bucket.
+                Files upload to the{' '}
+                <code className="bg-[#FAF9F5] px-1.5 py-0.5 rounded border border-[#EEEAE1] font-mono text-[11px]">
+                  challenge-evidence
+                </code>{' '}
+                cloud storage bucket.
               </p>
             </div>
           </div>
@@ -221,8 +232,8 @@ export function EvidenceStep({ formData, onChange }: EvidenceStepProps) {
                       isError
                         ? 'border-[#FECDD3] bg-[#FFF8F8]'
                         : isUploading
-                        ? 'border-[#123B2A]/30 bg-[#FAF9F5]'
-                        : 'border-[#EEEAE1]'
+                          ? 'border-[#123B2A]/30 bg-[#FAF9F5]'
+                          : 'border-[#EEEAE1]'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">

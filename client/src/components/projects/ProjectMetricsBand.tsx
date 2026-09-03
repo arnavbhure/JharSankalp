@@ -49,9 +49,7 @@ export function ProjectMetricsBand({ metrics }: ProjectMetricsBandProps) {
             <span className="h-1.5 w-1.5 rounded-full bg-[#FA7E61]" />
             JHARSANKALP PORTFOLIO METRICS AT A GLANCE
           </span>
-          <span className="bg-white/10 px-2.5 py-0.5 rounded text-[10px]">
-            DEMO PORTFOLIO DATA
-          </span>
+          <span className="bg-white/10 px-2.5 py-0.5 rounded text-[10px]">DEMO PORTFOLIO DATA</span>
         </div>
 
         {/* Large Editorial Metrics in Horizontal Structure */}

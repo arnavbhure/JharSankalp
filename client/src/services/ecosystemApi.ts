@@ -20,21 +20,24 @@ export interface EcosystemSearchResult {
 export function getChallengeById(id?: string): UnifiedChallenge | undefined {
   if (!id) return undefined;
   return CANONICAL_CHALLENGES.find(
-    (c) => c.id.toLowerCase() === id.toLowerCase() || c.challengeCode.toLowerCase() === id.toLowerCase()
+    (c) =>
+      c.id.toLowerCase() === id.toLowerCase() || c.challengeCode.toLowerCase() === id.toLowerCase(),
   );
 }
 
 export function getIdeaById(id?: string): UnifiedIdea | undefined {
   if (!id) return undefined;
   return CANONICAL_IDEAS.find(
-    (i) => i.id.toLowerCase() === id.toLowerCase() || i.referenceId?.toLowerCase() === id.toLowerCase()
+    (i) =>
+      i.id.toLowerCase() === id.toLowerCase() || i.referenceId?.toLowerCase() === id.toLowerCase(),
   );
 }
 
 export function getProjectById(id?: string): UnifiedProject | undefined {
   if (!id) return undefined;
   return CANONICAL_PROJECTS.find(
-    (p) => p.id.toLowerCase() === id.toLowerCase() || p.projectCode.toLowerCase() === id.toLowerCase()
+    (p) =>
+      p.id.toLowerCase() === id.toLowerCase() || p.projectCode.toLowerCase() === id.toLowerCase(),
   );
 }
 
@@ -43,7 +46,9 @@ export function getIdeasForChallenge(challengeId: string): UnifiedIdea[] {
 }
 
 export function getProjectsForChallenge(challengeId: string): UnifiedProject[] {
-  return CANONICAL_PROJECTS.filter((p) => p.challengeId.toLowerCase() === challengeId.toLowerCase());
+  return CANONICAL_PROJECTS.filter(
+    (p) => p.challengeId.toLowerCase() === challengeId.toLowerCase(),
+  );
 }
 
 export function getProjectsForIdea(ideaId: string): UnifiedProject[] {

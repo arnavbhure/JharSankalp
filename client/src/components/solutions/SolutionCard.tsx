@@ -18,7 +18,6 @@ interface SolutionCardProps {
 }
 
 export function SolutionCard({ solution, onOpenDetails }: SolutionCardProps) {
-
   const getDomainIcon = (area: string) => {
     switch (area.toLowerCase()) {
       case 'water management':
@@ -72,7 +71,7 @@ export function SolutionCard({ solution, onOpenDetails }: SolutionCardProps) {
 
           <span
             className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStageBadge(
-              solution.stage
+              solution.stage,
             )}`}
           >
             {solution.stage}
@@ -99,9 +98,7 @@ export function SolutionCard({ solution, onOpenDetails }: SolutionCardProps) {
             {solution.district}
           </span>
           <span>·</span>
-          <span className="text-[#123B2A] font-semibold">
-            {solution.technologyType}
-          </span>
+          <span className="text-[#123B2A] font-semibold">{solution.technologyType}</span>
         </div>
 
         {/* Progress Bar */}

@@ -1,10 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  MapPin,
-  ArrowRight,
-  TrendingDown,
-  Droplets,
-} from 'lucide-react';
+import { MapPin, ArrowRight, TrendingDown, Droplets } from 'lucide-react';
 
 export function FeaturedImpactStory() {
   const navigate = useNavigate();
@@ -19,7 +14,8 @@ export function FeaturedImpactStory() {
           Reliable Water Access in Murhu Block
         </h2>
         <p className="text-[14px] text-[#6B5845] max-w-2xl leading-relaxed">
-          How a community challenge logged in Khunti brought together researchers, engineers, and local women collectives to transform handpump maintenance.
+          How a community challenge logged in Khunti brought together researchers, engineers, and
+          local women collectives to transform handpump maintenance.
         </p>
       </div>
 
@@ -47,7 +43,9 @@ export function FeaturedImpactStory() {
                   THE ORIGINAL CHALLENGE
                 </span>
                 <p className="text-[#1D2522] leading-relaxed">
-                  Frequent pump failures left rural communities without reliable drinking water access for several days, forcing women to walk miles to contaminated surface nalas.
+                  Frequent pump failures left rural communities without reliable drinking water
+                  access for several days, forcing women to walk miles to contaminated surface
+                  nalas.
                 </p>
               </div>
 
@@ -56,7 +54,9 @@ export function FeaturedImpactStory() {
                   THE COLLABORATIVE SOLUTION
                 </span>
                 <p className="text-[#1D2522] leading-relaxed">
-                  A low-cost IoT acoustic sensor collar mounted on Mark II pumps and an automated dispatch SMS gateway developed through university researchers, local engineers, and the Murhu Jal Sahiya Collective.
+                  A low-cost IoT acoustic sensor collar mounted on Mark II pumps and an automated
+                  dispatch SMS gateway developed through university researchers, local engineers,
+                  and the Murhu Jal Sahiya Collective.
                 </p>
               </div>
             </div>
@@ -152,7 +152,8 @@ export function FeaturedImpactStory() {
                 Murhu Block Water Station #04
               </h4>
               <p className="text-[12px] text-white/80 pt-1">
-                Local Jal Sahiya representative and student telemetry researcher inspecting solar-assisted sensor retrofits.
+                Local Jal Sahiya representative and student telemetry researcher inspecting
+                solar-assisted sensor retrofits.
               </p>
               <button
                 type="button"

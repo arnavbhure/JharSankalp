@@ -1,12 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Sparkles,
-  Droplets,
-  MapPin,
-  ArrowRight,
-  TrendingUp,
-  CheckCircle2,
-} from 'lucide-react';
+import { Sparkles, Droplets, MapPin, ArrowRight, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { SolutionItem } from '../../types/solutions';
 
 interface FeaturedSolutionProps {
@@ -14,10 +7,7 @@ interface FeaturedSolutionProps {
   onOpenDetails: (solution: SolutionItem) => void;
 }
 
-export function FeaturedSolution({
-  solution,
-  onOpenDetails,
-}: FeaturedSolutionProps) {
+export function FeaturedSolution({ solution, onOpenDetails }: FeaturedSolutionProps) {
   const navigate = useNavigate();
 
   return (

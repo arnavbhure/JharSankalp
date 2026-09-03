@@ -21,7 +21,8 @@ export function ImpactWorkspaceTab({ data }: ImpactWorkspaceTabProps) {
           Impact Measurement & Ground Evidence
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-          Tracking validated real-world transformation. Unlike standard task trackers, JharSankalp audits whether deployed technologies produce lasting societal benefits.
+          Tracking validated real-world transformation. Unlike standard task trackers, JharSankalp
+          audits whether deployed technologies produce lasting societal benefits.
         </p>
       </div>
 
@@ -162,12 +163,8 @@ export function ImpactWorkspaceTab({ data }: ImpactWorkspaceTabProps) {
                     className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left text-[12.5px]"
                   >
                     <div className="space-y-0.5">
-                      <div className="font-bold text-[#1D2522]">
-                        {ev.source}
-                      </div>
-                      <p className="text-[#6B5845] text-[12px]">
-                        {ev.notes}
-                      </p>
+                      <div className="font-bold text-[#1D2522]">{ev.source}</div>
+                      <p className="text-[#6B5845] text-[12px]">{ev.notes}</p>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0 font-mono text-[11px] text-[#6B5845]">

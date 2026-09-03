@@ -47,7 +47,8 @@ export function ImpactStep({ formData, onChange }: ImpactStepProps) {
           Who is affected and how serious is the problem?
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed">
-          You don&apos;t need exact census data. Approximate ranges help district officers and universities prioritize response resources.
+          You don&apos;t need exact census data. Approximate ranges help district officers and
+          universities prioritize response resources.
         </p>
       </div>
 
@@ -100,14 +101,8 @@ export function ImpactStep({ formData, onChange }: ImpactStepProps) {
                     : 'bg-white text-[#1D2522] border border-[#EEEAE1] hover:bg-[#FAF9F5]'
                 }`}
               >
-                <div className="text-[14px] font-bold leading-tight">
-                  {freq.value}
-                </div>
-                <div
-                  className={`text-[12px] ${
-                    isSelected ? 'text-white/80' : 'text-[#6B5845]'
-                  }`}
-                >
+                <div className="text-[14px] font-bold leading-tight">{freq.value}</div>
+                <div className={`text-[12px] ${isSelected ? 'text-white/80' : 'text-[#6B5845]'}`}>
                   {freq.desc}
                 </div>
               </button>
@@ -140,9 +135,7 @@ export function ImpactStep({ formData, onChange }: ImpactStepProps) {
                 <div>
                   <span className="text-[14px] font-bold block">{sev.value}</span>
                   <span
-                    className={`text-[12px] ${
-                      isSelected ? 'text-white/80' : 'text-[#6B5845]'
-                    }`}
+                    className={`text-[12px] ${isSelected ? 'text-white/80' : 'text-[#6B5845]'}`}
                   >
                     {sev.desc}
                   </span>

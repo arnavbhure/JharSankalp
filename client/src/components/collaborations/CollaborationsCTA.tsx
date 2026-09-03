@@ -5,10 +5,7 @@ interface CollaborationsCTAProps {
   onStartClick: () => void;
 }
 
-export function CollaborationsCTA({
-  onFindClick,
-  onStartClick,
-}: CollaborationsCTAProps) {
+export function CollaborationsCTA({ onFindClick, onStartClick }: CollaborationsCTAProps) {
   return (
     <section className="relative overflow-hidden rounded-[32px] bg-[#123B2A] text-white p-8 sm:p-12 lg:p-14 text-left border border-[#1E5A3A] shadow-md my-6">
       {/* Background Contour Pattern */}
@@ -31,7 +28,8 @@ export function CollaborationsCTA({
 
         {/* Supporting text */}
         <p className="text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed font-normal max-w-2xl">
-          Whether you are a student, researcher, professional, institution or community member, there is a place for your contribution.
+          Whether you are a student, researcher, professional, institution or community member,
+          there is a place for your contribution.
         </p>
 
         {/* Actions */}

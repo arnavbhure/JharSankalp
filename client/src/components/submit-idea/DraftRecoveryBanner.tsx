@@ -5,10 +5,7 @@ interface DraftRecoveryBannerProps {
   onDiscard: () => void;
 }
 
-export function DraftRecoveryBanner({
-  onContinue,
-  onDiscard,
-}: DraftRecoveryBannerProps) {
+export function DraftRecoveryBanner({ onContinue, onDiscard }: DraftRecoveryBannerProps) {
   return (
     <div className="rounded-2xl border border-[#F5A623]/40 bg-[#FFFDF9] p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left animate-in slide-in-from-top-2 duration-200">
       <div className="space-y-0.5">

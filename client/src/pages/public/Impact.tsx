@@ -16,7 +16,11 @@ import {
   COMMUNITY_QUOTES,
   RECENT_IMPACT_FEED,
 } from '../../data/impactData';
-import { fetchImpactAnalytics, mapDbRecordToFeedItem, ImpactAnalyticsResponse } from '../../services/api/impact';
+import {
+  fetchImpactAnalytics,
+  mapDbRecordToFeedItem,
+  ImpactAnalyticsResponse,
+} from '../../services/api/impact';
 import { ImpactFeedItem } from '../../types/impact';
 import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
@@ -104,10 +108,7 @@ export function Impact() {
     <div className="w-full text-left bg-[#F8F6F1] text-[#1D2522] font-sans min-h-screen flex flex-col justify-between relative">
       <div>
         {/* ── 1. Impact Hero ── */}
-        <ImpactHero
-          onExploreDataClick={scrollToOverview}
-          onReadStoryClick={scrollToStory}
-        />
+        <ImpactHero onExploreDataClick={scrollToOverview} onReadStoryClick={scrollToStory} />
 
         {/* ── Main Content Area ── */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
@@ -143,9 +144,7 @@ export function Impact() {
               <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
                 Unable to load impact records
               </h4>
-              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
-                {error}
-              </p>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">{error}</p>
               <button
                 type="button"
                 onClick={loadImpactData}

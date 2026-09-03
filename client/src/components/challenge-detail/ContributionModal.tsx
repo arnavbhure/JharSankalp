@@ -9,12 +9,7 @@ interface ContributionModalProps {
   challenge: ChallengeDetailData;
 }
 
-export function ContributionModal({
-  isOpen,
-  onClose,
-  mode,
-  challenge,
-}: ContributionModalProps) {
+export function ContributionModal({ isOpen, onClose, mode, challenge }: ContributionModalProps) {
   const [role, setRole] = useState('Faculty / Researcher');
   const [name, setName] = useState('');
   const [organization, setOrganization] = useState('');
@@ -59,11 +54,14 @@ export function ContributionModal({
 
             <div className="space-y-1.5">
               <h3 className="text-[1.4rem] font-bold text-[#1D2522] font-sans">
-                {mode === 'idea' ? 'Idea Registered Successfully!' : 'Collaboration Request Logged!'}
+                {mode === 'idea'
+                  ? 'Idea Registered Successfully!'
+                  : 'Collaboration Request Logged!'}
               </h3>
               <p className="text-[14px] text-[#6B5845] max-w-sm mx-auto leading-relaxed">
                 Thank you, <strong>{name || 'Contributor'}</strong>. Your submission for{' '}
-                <strong>{challenge.id}</strong> has been routed to the technical working group at IIT (ISM) Dhanbad and the State Innovation Cell.
+                <strong>{challenge.id}</strong> has been routed to the technical working group at
+                IIT (ISM) Dhanbad and the State Innovation Cell.
               </p>
             </div>
 
@@ -87,7 +85,9 @@ export function ContributionModal({
                   <Users className="h-3.5 w-3.5 text-[#123B2A]" />
                 )}
                 <span>
-                  {mode === 'idea' ? 'Submit Solution Hypothesis' : 'Join Multi-Disciplinary Consortium'}
+                  {mode === 'idea'
+                    ? 'Submit Solution Hypothesis'
+                    : 'Join Multi-Disciplinary Consortium'}
                 </span>
               </div>
               <h3 className="text-[1.35rem] font-extrabold text-[#1D2522] tracking-tight font-sans">
@@ -114,7 +114,9 @@ export function ContributionModal({
                 <option value="Student Innovator">Student Innovator / Engineer</option>
                 <option value="Industry Specialist">Industry / MSME Hardware Specialist</option>
                 <option value="Geospatial Specialist">Geospatial / GIS Analyst</option>
-                <option value="Community Representative">Local Resident / Community Representative</option>
+                <option value="Community Representative">
+                  Local Resident / Community Representative
+                </option>
                 <option value="NGO / Civil Society">Civil Society / NGO Member</option>
               </select>
             </div>

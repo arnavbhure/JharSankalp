@@ -5,7 +5,8 @@ export function ImpactStats() {
     {
       number: '24',
       label: 'DISTRICTS CONNECTED',
-      description: 'From Khunti to Sahebganj, integrating remote Gram Panchayats with district administrations.',
+      description:
+        'From Khunti to Sahebganj, integrating remote Gram Panchayats with district administrations.',
       bgClass: 'bg-brand-purple-hover text-neutral-0 border-brand-purple-border/60',
       numColor: 'text-brand-apricot',
       icon: Compass,
@@ -15,7 +16,8 @@ export function ImpactStats() {
     {
       number: '15+',
       label: 'INNOVATION DOMAINS',
-      description: 'Water resources, agriculture, mining safety, solar microgrids, and rural healthcare.',
+      description:
+        'Water resources, agriculture, mining safety, solar microgrids, and rural healthcare.',
       bgClass: 'bg-brand-apricot text-neutral-900 border-brand-apricot-border',
       numColor: 'text-brand-purple',
       icon: Layers,
@@ -25,7 +27,8 @@ export function ImpactStats() {
     {
       number: '4',
       label: 'ECOSYSTEM FORCES',
-      description: 'Citizens, State Government, Universities/HEIs, and Industry/MSMEs working in locked consortia.',
+      description:
+        'Citizens, State Government, Universities/HEIs, and Industry/MSMEs working in locked consortia.',
       bgClass: 'bg-brand-khaki text-neutral-900 border-brand-khaki-border',
       numColor: 'text-neutral-900',
       icon: Users,
@@ -35,7 +38,8 @@ export function ImpactStats() {
     {
       number: '100%',
       label: 'VERIFIED IMPACT',
-      description: 'Zero unverified impact claims. Every solution mathematically benchmarked against baseline field data.',
+      description:
+        'Zero unverified impact claims. Every solution mathematically benchmarked against baseline field data.',
       bgClass: 'bg-brand-coral text-neutral-0 border-brand-coral-hover',
       numColor: 'text-white',
       icon: ShieldCheck,
@@ -65,8 +69,8 @@ export function ImpactStats() {
             </h2>
           </div>
           <p className="max-w-md text-small text-brand-apricot/85 leading-relaxed">
-            By shifting from isolated departmental grievances to an integrated exchange,
-            local societal problems become capability-matched statewide innovation missions.
+            By shifting from isolated departmental grievances to an integrated exchange, local
+            societal problems become capability-matched statewide innovation missions.
           </p>
         </div>
 
@@ -84,14 +88,18 @@ export function ImpactStats() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-neutral-0/20 backdrop-blur-none">
                     <Icon className="h-5 w-5 stroke-[2.2]" />
                   </div>
-                  <span className={`text-[11px] font-mono uppercase px-2 py-0.5 rounded-pill border ${card.tagClass}`}>
+                  <span
+                    className={`text-[11px] font-mono uppercase px-2 py-0.5 rounded-pill border ${card.tagClass}`}
+                  >
                     {card.tag}
                   </span>
                 </div>
 
                 {/* Center: Large Bold Typography */}
                 <div>
-                  <div className={`text-[3.25rem] sm:text-[3.75rem] font-extrabold font-mono tracking-tight leading-none ${card.numColor}`}>
+                  <div
+                    className={`text-[3.25rem] sm:text-[3.75rem] font-extrabold font-mono tracking-tight leading-none ${card.numColor}`}
+                  >
                     {card.number}
                   </div>
                   <div className="text-body-sm font-bold tracking-wider uppercase mt-2 opacity-95">

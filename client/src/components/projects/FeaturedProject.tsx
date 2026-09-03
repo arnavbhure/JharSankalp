@@ -91,7 +91,9 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
                   The Challenge
                 </span>
                 <p className="text-[15px] text-[#FEE1C7]/90 leading-relaxed">
-                  Frequent breakdown of drinking water pumps leaves communities without reliable access to water, forcing women and children to trek kilometers to untreated sources.
+                  Frequent breakdown of drinking water pumps leaves communities without reliable
+                  access to water, forcing women and children to trek kilometers to untreated
+                  sources.
                 </p>
               </div>
 
@@ -100,7 +102,9 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
                   The Project
                 </span>
                 <p className="text-[15px] text-white/95 leading-relaxed">
-                  A collaborative team is developing a low-cost sensor network to detect pump failure patterns and trigger faster maintenance response before prolonged outages occur.
+                  A collaborative team is developing a low-cost sensor network to detect pump
+                  failure patterns and trigger faster maintenance response before prolonged outages
+                  occur.
                 </p>
               </div>
             </div>
@@ -164,15 +168,13 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
                     key={partner.category}
                     className="p-3 rounded-xl bg-black/25 border border-white/10 space-y-0.5"
                   >
-                    <span className={`text-[10px] font-mono uppercase font-bold tracking-wider block ${partner.color}`}>
+                    <span
+                      className={`text-[10px] font-mono uppercase font-bold tracking-wider block ${partner.color}`}
+                    >
                       {partner.category}
                     </span>
-                    <div className="text-[14px] font-bold text-white">
-                      {partner.name}
-                    </div>
-                    <div className="text-[11.5px] text-[#FEE1C7]/70 font-mono">
-                      {partner.role}
-                    </div>
+                    <div className="text-[14px] font-bold text-white">{partner.name}</div>
+                    <div className="text-[11.5px] text-[#FEE1C7]/70 font-mono">{partner.role}</div>
                   </div>
                 ))}
               </div>
@@ -195,8 +197,8 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
                       step.status === 'active'
                         ? 'bg-[#FA7E61]/20 border border-[#FA7E61]/40 text-white font-bold'
                         : step.status === 'completed'
-                        ? 'text-white/80'
-                        : 'text-white/40'
+                          ? 'text-white/80'
+                          : 'text-white/40'
                     }`}
                   >
                     <span className="flex items-center gap-2">

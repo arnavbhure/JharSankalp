@@ -20,7 +20,8 @@ export function FieldImplementation({ project }: FieldImplementationProps) {
             From lab to ground
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Direct physical integration with panchayat water infrastructure, monitored by local community caretakers.
+            Direct physical integration with panchayat water infrastructure, monitored by local
+            community caretakers.
           </p>
         </div>
 
@@ -42,7 +43,8 @@ export function FieldImplementation({ project }: FieldImplementationProps) {
                 {fieldImplementation.block}, {fieldImplementation.district}
               </span>
               <p className="text-[12.5px] text-white/90 font-medium">
-                Field station retrofitted on India Mark II rural water pump with solar telemetry node.
+                Field station retrofitted on India Mark II rural water pump with solar telemetry
+                node.
               </p>
             </div>
           </div>
@@ -107,9 +109,7 @@ export function FieldImplementation({ project }: FieldImplementationProps) {
           <Wrench className="h-4 w-4 text-[#123B2A] shrink-0 mt-0.5" />
           <div className="space-y-0.5 text-[12.5px] text-[#1D2522]">
             <span className="font-bold">Hardware & Telemetry Architecture:</span>
-            <p className="text-[#6B5845] leading-relaxed">
-              {fieldImplementation.telemetryNotes}
-            </p>
+            <p className="text-[#6B5845] leading-relaxed">{fieldImplementation.telemetryNotes}</p>
           </div>
         </div>
       </div>

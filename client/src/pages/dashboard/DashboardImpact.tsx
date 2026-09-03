@@ -45,9 +45,7 @@ export function DashboardImpact() {
           <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
             CITIZENS BENEFITED
           </span>
-          <div className="text-[2.2rem] font-extrabold font-mono text-[#123B2A]">
-            2,000+
-          </div>
+          <div className="text-[2.2rem] font-extrabold font-mono text-[#123B2A]">2,000+</div>
           <span className="text-[11.5px] text-[#15803D] font-semibold">
             Murhu Block Pilot Telemetry
           </span>
@@ -57,9 +55,7 @@ export function DashboardImpact() {
           <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
             VERIFIED CONTRIBUTIONS
           </span>
-          <div className="text-[2.2rem] font-extrabold font-mono text-[#123B2A]">
-            12 Ideas
-          </div>
+          <div className="text-[2.2rem] font-extrabold font-mono text-[#123B2A]">12 Ideas</div>
           <span className="text-[11.5px] text-[#15803D] font-semibold">
             1 in Field Pilot, 1 in Feasibility
           </span>
@@ -69,12 +65,8 @@ export function DashboardImpact() {
           <span className="text-[10.5px] font-mono font-bold uppercase text-[#6B5845] block">
             COMMUNITY BADGES
           </span>
-          <div className="text-[2.2rem] font-extrabold font-mono text-[#15803D]">
-            3 Earned
-          </div>
-          <span className="text-[11.5px] text-[#6B5845]">
-            State Recognized Civic Contributor
-          </span>
+          <div className="text-[2.2rem] font-extrabold font-mono text-[#15803D]">3 Earned</div>
+          <span className="text-[11.5px] text-[#6B5845]">State Recognized Civic Contributor</span>
         </div>
       </div>
 
@@ -101,9 +93,7 @@ export function DashboardImpact() {
           </div>
 
           <div className="p-3.5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-1">
-            <span className="text-[10px] font-mono font-bold text-[#0284C7] block">
-              02 OUTPUTS
-            </span>
+            <span className="text-[10px] font-mono font-bold text-[#0284C7] block">02 OUTPUTS</span>
             <strong className="text-[#1D2522] block">14 Sensors Active</strong>
             <p className="text-[11.5px] text-[#6B5845]">
               Vibration monitoring collars mounted on India Mark II pumps.
@@ -121,9 +111,7 @@ export function DashboardImpact() {
           </div>
 
           <div className="p-3.5 rounded-2xl bg-[#FFFDF9] border-2 border-[#123B2A] space-y-1 shadow-2xs">
-            <span className="text-[10px] font-mono font-bold text-[#123B2A] block">
-              04 IMPACT
-            </span>
+            <span className="text-[10px] font-mono font-bold text-[#123B2A] block">04 IMPACT</span>
             <strong className="text-[#123B2A] block">Clean Water Security</strong>
             <p className="text-[11.5px] text-[#123B2A]">
               Continuous reliable drinking water for 2,000+ tribal villagers.
@@ -152,18 +140,12 @@ export function DashboardImpact() {
                   >
                     {badge.level}
                   </span>
-                  <span className="text-[10.5px] font-mono text-[#6B5845]">
-                    {badge.date}
-                  </span>
+                  <span className="text-[10.5px] font-mono text-[#6B5845]">{badge.date}</span>
                 </div>
 
-                <h4 className="text-[14px] font-bold text-[#1D2522]">
-                  {badge.name}
-                </h4>
+                <h4 className="text-[14px] font-bold text-[#1D2522]">{badge.name}</h4>
 
-                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">
-                  {badge.desc}
-                </p>
+                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">{badge.desc}</p>
               </div>
 
               <div className="pt-2 border-t border-[#EEEAE1] text-[11px] font-mono text-[#15803D] font-bold">

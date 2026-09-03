@@ -8,10 +8,7 @@ export type ChallengeCategory =
   | 'Livelihoods';
 
 export type ChallengeStatusType =
-  | 'Open for Collaboration'
-  | 'In Discussion'
-  | 'Solution in Development'
-  | 'Implemented';
+  'Open for Collaboration' | 'In Discussion' | 'Solution in Development' | 'Implemented';
 
 export type ImpactLevel = 'Critical' | 'High Impact' | 'Medium Impact';
 

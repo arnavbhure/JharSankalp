@@ -6,10 +6,7 @@ interface StartProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreateProject: (
-    newProj: Omit<
-      CollaborationProject,
-      'id' | 'teamCount' | 'progress' | 'stage'
-    >
+    newProj: Omit<CollaborationProject, 'id' | 'teamCount' | 'progress' | 'stage'>,
   ) => void;
 }
 
@@ -34,11 +31,7 @@ const DISTRICTS = [
   'Latehar',
 ];
 
-export function StartProjectModal({
-  isOpen,
-  onClose,
-  onCreateProject,
-}: StartProjectModalProps) {
+export function StartProjectModal({ isOpen, onClose, onCreateProject }: StartProjectModalProps) {
   const [title, setTitle] = useState('');
   const [relatedIdea, setRelatedIdea] = useState('');
   const [focusArea, setFocusArea] = useState(FOCUS_AREAS[0]);
@@ -100,7 +93,7 @@ export function StartProjectModal({
     setFocusArea('Agriculture');
     setDistrict('Latehar');
     setDescription(
-      'Forming a prototyping team to assemble and field-test modular evaporative cooling lockers powered by 500W rooftop solar panels.'
+      'Forming a prototyping team to assemble and field-test modular evaporative cooling lockers powered by 500W rooftop solar panels.',
     );
     setSkillsString('Thermal Engineering, IoT Telemetry, Solar Hardware');
     setErrors({});
@@ -147,11 +140,10 @@ export function StartProjectModal({
             <div className="h-14 w-14 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] flex items-center justify-center mx-auto">
               <CheckCircle2 className="h-8 w-8" />
             </div>
-            <h4 className="text-[1.25rem] font-bold text-[#1D2522]">
-              Project Workspace Created!
-            </h4>
+            <h4 className="text-[1.25rem] font-bold text-[#1D2522]">Project Workspace Created!</h4>
             <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-              Your initiative is now open for collaborators, student researchers, and institutions across Jharkhand.
+              Your initiative is now open for collaborators, student researchers, and institutions
+              across Jharkhand.
             </p>
           </div>
         ) : (

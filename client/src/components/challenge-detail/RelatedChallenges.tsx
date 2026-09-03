@@ -10,7 +10,11 @@ interface RelatedChallengesProps {
   currentId?: string;
 }
 
-export function RelatedChallenges({ currentChallengeId, currentId, currentCategory }: RelatedChallengesProps) {
+export function RelatedChallenges({
+  currentChallengeId,
+  currentId,
+  currentCategory,
+}: RelatedChallengesProps) {
   const navigate = useNavigate();
   const targetId = currentChallengeId || currentId || '';
   const [related, setRelated] = useState<ChallengeItem[]>([]);
@@ -18,9 +22,7 @@ export function RelatedChallenges({ currentChallengeId, currentId, currentCatego
   useEffect(() => {
     fetchChallenges()
       .then((list) => {
-        const filtered = (list || [])
-          .filter((c) => c.id !== targetId)
-          .slice(0, 3);
+        const filtered = (list || []).filter((c) => c.id !== targetId).slice(0, 3);
         setRelated(filtered);
       })
       .catch((err) => console.warn('Failed to load related challenges:', err));
@@ -37,7 +39,8 @@ export function RelatedChallenges({ currentChallengeId, currentId, currentCatego
           Related challenges
         </h2>
         <p className="text-[14px] text-[#6B5845] max-w-xl">
-          Discover adjacent challenges spanning mining ecology, environmental containment, and regional water security.
+          Discover adjacent challenges spanning mining ecology, environmental containment, and
+          regional water security.
         </p>
       </div>
 

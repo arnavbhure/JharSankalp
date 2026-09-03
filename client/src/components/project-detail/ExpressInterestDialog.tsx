@@ -30,9 +30,7 @@ export function ExpressInterestDialog({
   const [applicantName, setApplicantName] = useState('');
   const [organization, setOrganization] = useState('');
   const [role, setRole] = useState('Industry Partner');
-  const [contributionArea, setContributionArea] = useState(
-    initialNeed || 'Technical Expertise'
-  );
+  const [contributionArea, setContributionArea] = useState(initialNeed || 'Technical Expertise');
   const [message, setMessage] = useState('');
   const [contact, setContact] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,7 +74,8 @@ export function ExpressInterestDialog({
                 Interest Submitted
               </h3>
               <p className="text-[13.5px] text-[#6B5845] max-w-sm mx-auto leading-relaxed">
-                The project lead at <strong>{project.leadInstitution}</strong> has been notified of your interest. You will be contacted regarding consortium integration.
+                The project lead at <strong>{project.leadInstitution}</strong> has been notified of
+                your interest. You will be contacted regarding consortium integration.
               </p>
             </div>
             <div className="pt-2">
@@ -99,9 +98,7 @@ export function ExpressInterestDialog({
               <h3 className="text-[1.4rem] font-extrabold text-[#1D2522] font-sans">
                 Join Project Collaboration
               </h3>
-              <p className="text-[12.5px] text-[#6B5845]">
-                Target: {project.title}
-              </p>
+              <p className="text-[12.5px] text-[#6B5845]">Target: {project.title}</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

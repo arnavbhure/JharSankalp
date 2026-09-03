@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Sparkles,
-  Droplets,
-  MapPin,
-  Clock,
-  ArrowRight,
-  Check,
-  UserPlus,
-} from 'lucide-react';
+import { Sparkles, Droplets, MapPin, Clock, ArrowRight, Check, UserPlus } from 'lucide-react';
 import { CollaborationProject } from '../../types/collaborations';
 
 interface FeaturedCollaborationProps {
@@ -16,10 +8,7 @@ interface FeaturedCollaborationProps {
   onJoinToggle?: (id: string, isJoined: boolean) => void;
 }
 
-export function FeaturedCollaboration({
-  project,
-  onJoinToggle,
-}: FeaturedCollaborationProps) {
+export function FeaturedCollaboration({ project, onJoinToggle }: FeaturedCollaborationProps) {
   const navigate = useNavigate();
   const [joined, setJoined] = useState(project.isJoined ?? false);
   const [teamCount, setTeamCount] = useState(project.teamCount);
@@ -104,9 +93,7 @@ export function FeaturedCollaboration({
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
-              <span className="text-[11px] font-mono text-white/60 block">
-                {project.leadOrg}
-              </span>
+              <span className="text-[11px] font-mono text-white/60 block">{project.leadOrg}</span>
             </div>
 
             {/* Right: Team Avatars & Skills */}

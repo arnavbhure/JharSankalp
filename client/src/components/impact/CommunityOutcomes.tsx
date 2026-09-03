@@ -16,7 +16,8 @@ export function CommunityOutcomes({ quotes }: CommunityOutcomesProps) {
           Communities at the Centre
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-xl leading-relaxed">
-          The lived reality of civic innovation from panchayat representatives, university researchers, and district teams.
+          The lived reality of civic innovation from panchayat representatives, university
+          researchers, and district teams.
         </p>
       </div>
 
@@ -37,12 +38,8 @@ export function CommunityOutcomes({ quotes }: CommunityOutcomesProps) {
               <strong className="text-[13.5px] font-bold text-[#123B2A] block">
                 {item.author}
               </strong>
-              <div className="text-[11.5px] text-[#6B5845]">
-                {item.role}
-              </div>
-              <div className="text-[11px] font-mono text-[#15803D]">
-                {item.location}
-              </div>
+              <div className="text-[11.5px] text-[#6B5845]">{item.role}</div>
+              <div className="text-[11px] font-mono text-[#15803D]">{item.location}</div>
             </div>
           </div>
         ))}

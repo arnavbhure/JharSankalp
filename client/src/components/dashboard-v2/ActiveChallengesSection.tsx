@@ -17,10 +17,7 @@ interface ActiveChallengesSectionProps {
   challenges: ActiveChallengeItem[];
 }
 
-export function ActiveChallengesSection({
-  title,
-  challenges,
-}: ActiveChallengesSectionProps) {
+export function ActiveChallengesSection({ title, challenges }: ActiveChallengesSectionProps) {
   const navigate = useNavigate();
 
   const getCategoryIcon = (iconType: string) => {
@@ -83,9 +80,7 @@ export function ActiveChallengesSection({
                   >
                     {item.domain}
                   </span>
-                  <span className="text-[11px] font-mono text-[#6B5845]">
-                    {item.id}
-                  </span>
+                  <span className="text-[11px] font-mono text-[#6B5845]">{item.id}</span>
                 </div>
 
                 <h3 className="text-[14px] sm:text-[15px] font-bold text-[#1D2522] group-hover:text-[#123B2A] transition-colors leading-snug">
@@ -113,9 +108,7 @@ export function ActiveChallengesSection({
                   <Clock className="h-3 w-3 text-[#F5A623]" />
                   {item.daysLeft} Days Left
                 </span>
-                <span className="text-[11px] font-mono text-[#6B5845] block">
-                  {item.status}
-                </span>
+                <span className="text-[11px] font-mono text-[#6B5845] block">{item.status}</span>
               </div>
 
               <ArrowRight className="h-4 w-4 text-[#6B5845] group-hover:text-[#123B2A] group-hover:translate-x-1 transition-all hidden sm:block" />

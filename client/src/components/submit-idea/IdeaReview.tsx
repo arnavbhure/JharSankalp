@@ -1,5 +1,14 @@
 import { IdeaSubmissionFormData } from '../../types/ideaSubmission';
-import { Target, Lightbulb, Cpu, GitBranch, Sparkles, Edit2, Send, ShieldCheck } from 'lucide-react';
+import {
+  Target,
+  Lightbulb,
+  Cpu,
+  GitBranch,
+  Sparkles,
+  Edit2,
+  Send,
+  ShieldCheck,
+} from 'lucide-react';
 
 interface IdeaReviewProps {
   formData: IdeaSubmissionFormData;
@@ -8,12 +17,7 @@ interface IdeaReviewProps {
   isSubmitting: boolean;
 }
 
-export function IdeaReview({
-  formData,
-  onEditStep,
-  onSubmit,
-  isSubmitting,
-}: IdeaReviewProps) {
+export function IdeaReview({ formData, onEditStep, onSubmit, isSubmitting }: IdeaReviewProps) {
   return (
     <div className="space-y-6 text-left">
       {/* ── Intro ── */}
@@ -26,7 +30,8 @@ export function IdeaReview({
           Review your idea.
         </h2>
         <p className="text-[14.5px] text-[#6B5845] leading-relaxed max-w-2xl">
-          Check your solution dossier before transmitting it to the JharSankalp peer-review and matchmaking network.
+          Check your solution dossier before transmitting it to the JharSankalp peer-review and
+          matchmaking network.
         </p>
       </div>
 
@@ -53,7 +58,8 @@ export function IdeaReview({
               {formData.challenge?.title || 'No Challenge Selected'}
             </h4>
             <p className="text-[12.5px] font-mono text-[#6B5845]">
-              {formData.challenge?.category} · {formData.challenge?.district} · {formData.challenge?.priority} Priority
+              {formData.challenge?.category} · {formData.challenge?.district} ·{' '}
+              {formData.challenge?.priority} Priority
             </p>
           </div>
         </div>
@@ -76,12 +82,8 @@ export function IdeaReview({
           </div>
 
           <div className="space-y-1.5">
-            <h4 className="text-[15px] font-bold text-[#1D2522]">
-              {formData.title}
-            </h4>
-            <p className="text-[13px] text-[#6B5845] leading-relaxed">
-              {formData.summary}
-            </p>
+            <h4 className="text-[15px] font-bold text-[#1D2522]">{formData.title}</h4>
+            <p className="text-[13px] text-[#6B5845] leading-relaxed">{formData.summary}</p>
             {formData.coreIdea && (
               <p className="text-[12.5px] text-[#1D2522]/80 bg-[#FAF9F5] p-3 rounded-xl border border-[#EEEAE1]">
                 <strong>Core Concept:</strong> {formData.coreIdea}
@@ -186,9 +188,7 @@ export function IdeaReview({
                     </span>
                   ))
                 ) : (
-                  <span className="text-[12px] text-[#6B5845]">
-                    Open to general contributions
-                  </span>
+                  <span className="text-[12px] text-[#6B5845]">Open to general contributions</span>
                 )}
               </div>
             </div>
@@ -204,7 +204,9 @@ export function IdeaReview({
       {/* ── Submission Footer ── */}
       <div className="p-6 rounded-3xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-4">
         <p className="text-[13px] text-[#6B5845] leading-relaxed">
-          Your idea will be reviewed and connected to the relevant challenge ecosystem before being published for collaboration. This ensures problem alignment and prevents redundant duplicate projects.
+          Your idea will be reviewed and connected to the relevant challenge ecosystem before being
+          published for collaboration. This ensures problem alignment and prevents redundant
+          duplicate projects.
         </p>
 
         <button

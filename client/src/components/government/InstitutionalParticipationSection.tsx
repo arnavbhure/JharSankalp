@@ -38,7 +38,8 @@ export function InstitutionalParticipationSection({
             Institutional & Industrial Participation
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl">
-            Audit of academic commitment, research fellows deployed, and industry co-sponsorship across higher education institutions.
+            Audit of academic commitment, research fellows deployed, and industry co-sponsorship
+            across higher education institutions.
           </p>
         </div>
 
@@ -71,7 +72,7 @@ export function InstitutionalParticipationSection({
 
                   <span
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${getStatusBadge(
-                      inst.status
+                      inst.status,
                     )}`}
                   >
                     ● {inst.statusLabel}
@@ -143,9 +144,7 @@ export function InstitutionalParticipationSection({
                 </span>
               </div>
 
-              <p className="text-[12px] text-[#6B5845] leading-snug">
-                {ind.description}
-              </p>
+              <p className="text-[12px] text-[#6B5845] leading-snug">{ind.description}</p>
 
               <div className="pt-2 border-t border-[#EEEAE1] space-y-1">
                 <span className="text-[10px] font-mono uppercase text-[#6B5845] font-bold block">

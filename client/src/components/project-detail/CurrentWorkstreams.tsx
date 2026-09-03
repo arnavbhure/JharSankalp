@@ -24,7 +24,8 @@ export function CurrentWorkstreams({ project }: CurrentWorkstreamsProps) {
             What the team is working on now
           </h3>
           <p className="text-[13.5px] text-[#6B5845] max-w-2xl leading-relaxed">
-            Concurrent operational tracks advancing technical telemetry, village installation, and alert integration.
+            Concurrent operational tracks advancing technical telemetry, village installation, and
+            alert integration.
           </p>
         </div>
 
@@ -50,9 +51,7 @@ export function CurrentWorkstreams({ project }: CurrentWorkstreamsProps) {
                     </span>
                   </div>
 
-                  <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
-                    {ws.description}
-                  </p>
+                  <p className="text-[13.5px] text-[#1D2522] leading-relaxed">{ws.description}</p>
                 </div>
               </div>
 
@@ -64,9 +63,7 @@ export function CurrentWorkstreams({ project }: CurrentWorkstreamsProps) {
                 <span className="text-[13.5px] font-extrabold font-mono text-[#123B2A] block mt-0.5">
                   {ws.progress}
                 </span>
-                <span className="text-[10.5px] font-mono text-[#15803D] block">
-                  {ws.metric}
-                </span>
+                <span className="text-[10.5px] font-mono text-[#15803D] block">{ws.metric}</span>
               </div>
             </div>
           ))}

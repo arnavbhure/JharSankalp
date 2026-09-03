@@ -1,14 +1,7 @@
 import { ProjectHealth, ProjectStage } from './projects';
 
 export type WorkspaceTabId =
-  | 'overview'
-  | 'roadmap'
-  | 'work'
-  | 'team'
-  | 'deliverables'
-  | 'documents'
-  | 'updates'
-  | 'impact';
+  'overview' | 'roadmap' | 'work' | 'team' | 'deliverables' | 'documents' | 'updates' | 'impact';
 
 export type UserRole =
   | 'project_lead'
@@ -35,12 +28,7 @@ export interface WorkspaceContext {
   currentUserName: string;
 }
 
-export type WorkStatus =
-  | 'NOT_STARTED'
-  | 'IN_PROGRESS'
-  | 'IN_REVIEW'
-  | 'COMPLETED'
-  | 'BLOCKED';
+export type WorkStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'IN_REVIEW' | 'COMPLETED' | 'BLOCKED';
 
 export interface WorkItemComment {
   id: string;
@@ -77,13 +65,7 @@ export interface WorkspaceWorkstream {
 }
 
 export type MilestoneStatus =
-  | 'NOT_STARTED'
-  | 'IN_PROGRESS'
-  | 'UNDER_REVIEW'
-  | 'COMPLETED'
-  | 'BLOCKED'
-  | 'UPCOMING'
-  | 'PLANNED';
+  'NOT_STARTED' | 'IN_PROGRESS' | 'UNDER_REVIEW' | 'COMPLETED' | 'BLOCKED' | 'UPCOMING' | 'PLANNED';
 
 export interface WorkspaceMilestone {
   id: string;
@@ -100,12 +82,7 @@ export interface WorkspaceMilestone {
 }
 
 export type DeliverableStatus =
-  | 'DRAFT'
-  | 'IN_PROGRESS'
-  | 'UNDER_REVIEW'
-  | 'REVISION_REQUIRED'
-  | 'APPROVED'
-  | 'COMPLETED';
+  'DRAFT' | 'IN_PROGRESS' | 'UNDER_REVIEW' | 'REVISION_REQUIRED' | 'APPROVED' | 'COMPLETED';
 
 export interface DeliverableComment {
   id: string;
@@ -129,10 +106,7 @@ export interface WorkspaceDeliverable {
 }
 
 export type TeamRoleCategory =
-  | 'LEADERSHIP'
-  | 'RESEARCH_DEV'
-  | 'FIELD_IMPLEMENTATION'
-  | 'PARTNER_CONTRIBUTORS';
+  'LEADERSHIP' | 'RESEARCH_DEV' | 'FIELD_IMPLEMENTATION' | 'PARTNER_CONTRIBUTORS';
 
 export interface WorkspaceTeamMember {
   id: string;
@@ -146,12 +120,7 @@ export interface WorkspaceTeamMember {
 }
 
 export type DocumentCategory =
-  | 'Research'
-  | 'Technical'
-  | 'Field Operations'
-  | 'Reports'
-  | 'Data'
-  | 'Administration';
+  'Research' | 'Technical' | 'Field Operations' | 'Reports' | 'Data' | 'Administration';
 
 export interface WorkspaceDocument {
   id: string;
@@ -163,12 +132,7 @@ export interface WorkspaceDocument {
   size: string;
 }
 
-export type UpdateType =
-  | 'progress'
-  | 'field_observation'
-  | 'decision'
-  | 'issue'
-  | 'announcement';
+export type UpdateType = 'progress' | 'field_observation' | 'decision' | 'issue' | 'announcement';
 
 export interface WorkspaceUpdate {
   id: string;

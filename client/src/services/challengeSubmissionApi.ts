@@ -10,7 +10,7 @@ export async function analyzeDescription(
   text: string,
   title?: string,
   district?: string,
-  affectedPopulation?: number
+  affectedPopulation?: number,
 ): Promise<AIAssistSuggestion | null> {
   if (!text || text.trim().length < 15) {
     return null;
@@ -80,9 +80,7 @@ export async function analyzeDescription(
 /**
  * Submit structured challenge to the backend PostgreSQL platform.
  */
-export async function submitChallenge(
-  formData: ChallengeFormState
-): Promise<SubmissionResponse> {
+export async function submitChallenge(formData: ChallengeFormState): Promise<SubmissionResponse> {
   try {
     const backendRes = await api.post<any>('/challenges', {
       title: formData.title,

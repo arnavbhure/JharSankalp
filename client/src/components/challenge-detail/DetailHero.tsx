@@ -1,4 +1,12 @@
-import { MapPin, Users, Lightbulb, AlertTriangle, ShieldAlert, Activity, Check } from 'lucide-react';
+import {
+  MapPin,
+  Users,
+  Lightbulb,
+  AlertTriangle,
+  ShieldAlert,
+  Activity,
+  Check,
+} from 'lucide-react';
 import { ChallengeDetailData } from '../../types/challengeDetail';
 
 interface DetailHeroProps {
@@ -35,14 +43,14 @@ export function DetailHero({
 
               <div className="flex items-center gap-1.5 text-[12px] font-mono font-bold text-[#6B5845] uppercase">
                 <MapPin className="h-3.5 w-3.5 text-[#123B2A]" />
-                <span>{challenge.district.toUpperCase()} · {challenge.subLocation.toUpperCase()}</span>
+                <span>
+                  {challenge.district.toUpperCase()} · {challenge.subLocation.toUpperCase()}
+                </span>
               </div>
 
               <span className="text-[#6B5845]/40 font-mono">·</span>
 
-              <span className="text-[12px] font-mono font-bold text-[#6B5845]">
-                {challenge.id}
-              </span>
+              <span className="text-[12px] font-mono font-bold text-[#6B5845]">{challenge.id}</span>
 
               {/* Status Indicator */}
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] text-[11px] font-mono font-bold uppercase tracking-wider">
@@ -76,27 +84,21 @@ export function DetailHero({
                 <div className="text-[1.35rem] font-extrabold font-mono text-[#B45309] leading-none">
                   {challenge.impactPriority.split(' ')[0]}
                 </div>
-                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">
-                  Impact Priority
-                </div>
+                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">Impact Priority</div>
               </div>
 
               <div className="p-3 rounded-lg bg-white border border-[#EEEAE1] shadow-2xs">
                 <div className="text-[1.35rem] font-extrabold font-mono text-[#123B2A] leading-none">
                   {challenge.stats.collaboratorsCount}
                 </div>
-                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">
-                  Active Solvers
-                </div>
+                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">Active Solvers</div>
               </div>
 
               <div className="p-3 rounded-lg bg-white border border-[#EEEAE1] shadow-2xs">
                 <div className="text-[1.35rem] font-extrabold font-mono text-[#F5A623] leading-none">
                   {challenge.stats.ideasCount}
                 </div>
-                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">
-                  Ideas Submitted
-                </div>
+                <div className="text-[11.5px] text-[#6B5845] mt-1 font-medium">Ideas Submitted</div>
               </div>
             </div>
           </div>
@@ -105,11 +107,12 @@ export function DetailHero({
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl bg-[#123B2A] border-2 border-[#1F5A3D] text-white p-6 sm:p-7 shadow-lg overflow-hidden space-y-4">
               {/* Radar & Terrain SVG Overlays */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-15"
-              >
-                <svg viewBox="0 0 400 300" className="w-full h-full stroke-white fill-none" strokeWidth="0.8">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-15">
+                <svg
+                  viewBox="0 0 400 300"
+                  className="w-full h-full stroke-white fill-none"
+                  strokeWidth="0.8"
+                >
                   {/* Topographic Contour Rings */}
                   <circle cx="200" cy="150" r="40" strokeDasharray="3 3" />
                   <circle cx="200" cy="150" r="80" strokeWidth="1" />
@@ -157,7 +160,9 @@ export function DetailHero({
                   </div>
                   <div className="flex items-center justify-between text-white/80">
                     <span>Telemetry Status:</span>
-                    <span className="font-mono text-[#F5A623] font-bold">Acoustic Extensometer Pilot</span>
+                    <span className="font-mono text-[#F5A623] font-bold">
+                      Acoustic Extensometer Pilot
+                    </span>
                   </div>
                 </div>
 

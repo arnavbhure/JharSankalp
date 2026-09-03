@@ -37,7 +37,8 @@ export function ChallengeHero() {
 
             {/* Supporting Copy */}
             <p className="text-[15px] sm:text-[16px] text-[#1D2522]/80 max-w-2xl leading-relaxed">
-              Explore challenges submitted by communities, institutions and citizens across Jharkhand. Find problems that matter and contribute your ideas, skills and solutions.
+              Explore challenges submitted by communities, institutions and citizens across
+              Jharkhand. Find problems that matter and contribute your ideas, skills and solutions.
             </p>
           </div>
 
@@ -57,18 +58,14 @@ export function ChallengeHero() {
                   <div className="text-[1.5rem] sm:text-[1.65rem] font-extrabold font-mono text-[#123B2A] leading-tight">
                     250+
                   </div>
-                  <div className="text-[11px] font-medium text-[#6B5845] mt-0.5">
-                    Challenges
-                  </div>
+                  <div className="text-[11px] font-medium text-[#6B5845] mt-0.5">Challenges</div>
                 </div>
 
                 <div className="px-2">
                   <div className="text-[1.5rem] sm:text-[1.65rem] font-extrabold font-mono text-[#123B2A] leading-tight">
                     24
                   </div>
-                  <div className="text-[11px] font-medium text-[#6B5845] mt-0.5">
-                    Districts
-                  </div>
+                  <div className="text-[11px] font-medium text-[#6B5845] mt-0.5">Districts</div>
                 </div>
 
                 <div className="px-2">

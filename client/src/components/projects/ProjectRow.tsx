@@ -41,7 +41,7 @@ export function ProjectRow({ project }: ProjectRowProps) {
   };
 
   const progressPercentage = Math.round(
-    (project.milestoneProgress.completed / project.milestoneProgress.total) * 100
+    (project.milestoneProgress.completed / project.milestoneProgress.total) * 100,
   );
 
   return (
@@ -64,7 +64,7 @@ export function ProjectRow({ project }: ProjectRowProps) {
         {/* Stage Badge */}
         <span
           className={`text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${getStageColor(
-            project.stage
+            project.stage,
           )}`}
         >
           ● {project.stageLabel}
@@ -92,7 +92,10 @@ export function ProjectRow({ project }: ProjectRowProps) {
             <Building2 className="h-3 w-3 text-[#123B2A]" />
             Participants
           </span>
-          <div className="text-[12.5px] font-medium text-[#1D2522] truncate" title={project.partners.map((p: ProjectPartner) => p.name).join(', ')}>
+          <div
+            className="text-[12.5px] font-medium text-[#1D2522] truncate"
+            title={project.partners.map((p: ProjectPartner) => p.name).join(', ')}
+          >
             {participantSummary()}
           </div>
         </div>
@@ -104,7 +107,9 @@ export function ProjectRow({ project }: ProjectRowProps) {
             Impact Scope
           </span>
           <div className="text-[12.5px] font-bold text-[#123B2A]">
-            {project.beneficiaries ? `${project.beneficiaries.toLocaleString()} Beneficiaries` : project.impactMetric}
+            {project.beneficiaries
+              ? `${project.beneficiaries.toLocaleString()} Beneficiaries`
+              : project.impactMetric}
           </div>
         </div>
 

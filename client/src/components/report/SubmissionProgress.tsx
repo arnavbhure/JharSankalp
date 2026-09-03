@@ -31,9 +31,7 @@ export function SubmissionProgress({
           <span className="font-bold text-[#123B2A] tracking-wider uppercase">
             STEP {currentStep} OF {totalSteps} · {currentStepData.title}
           </span>
-          <span className="text-[#6B5845]">
-            {Math.round(progressPercentage)}% Complete
-          </span>
+          <span className="text-[#6B5845]">{Math.round(progressPercentage)}% Complete</span>
         </div>
 
         {/* Progress Fill Bar */}
@@ -80,8 +78,8 @@ export function SubmissionProgress({
                     isCompleted
                       ? 'bg-[#123B2A] text-white ring-4 ring-[#F8F6F1]'
                       : isCurrent
-                      ? 'bg-[#123B2A] text-white ring-4 ring-[#123B2A]/20 scale-105 shadow-xs'
-                      : 'bg-white text-[#6B5845] border-2 border-[#EEEAE1] group-hover:border-[#6B5845]/40'
+                        ? 'bg-[#123B2A] text-white ring-4 ring-[#123B2A]/20 scale-105 shadow-xs'
+                        : 'bg-white text-[#6B5845] border-2 border-[#EEEAE1] group-hover:border-[#6B5845]/40'
                   }`}
                 >
                   {isCompleted ? (
@@ -98,8 +96,8 @@ export function SubmissionProgress({
                       isCurrent
                         ? 'text-[#123B2A]'
                         : isCompleted
-                        ? 'text-[#1D2522]'
-                        : 'text-[#6B5845]/70'
+                          ? 'text-[#1D2522]'
+                          : 'text-[#6B5845]/70'
                     }`}
                   >
                     {step.title}

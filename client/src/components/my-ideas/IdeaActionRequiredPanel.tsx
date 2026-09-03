@@ -47,7 +47,8 @@ export function IdeaActionRequiredPanel({
         <div className="flex items-center gap-2.5">
           <CheckCircle2 className="h-5 w-5 text-[#15803D] shrink-0" />
           <span className="text-[13.5px] font-medium text-[#15803D]">
-            All collaborator requests and reviewer inquiries have been answered. Your ideas are on track.
+            All collaborator requests and reviewer inquiries have been answered. Your ideas are on
+            track.
           </span>
         </div>
       </div>
@@ -127,9 +128,7 @@ export function IdeaActionRequiredPanel({
                   <h3 className="text-[1.35rem] font-extrabold text-[#1D2522] font-sans">
                     Clarification on Proposed Approach
                   </h3>
-                  <p className="text-[12.5px] text-[#6B5845]">
-                    Regarding: {relatedIdeaTitle}
-                  </p>
+                  <p className="text-[12.5px] text-[#6B5845]">Regarding: {relatedIdeaTitle}</p>
                 </div>
 
                 <div className="space-y-1.5">

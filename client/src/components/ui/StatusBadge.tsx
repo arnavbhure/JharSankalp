@@ -1,5 +1,10 @@
 import { Badge, type BadgeVariant } from './Badge';
-import { ChallengeStatus, VerificationStatus, ActionTrack, ProjectStatus } from '@jharsankalp/shared';
+import {
+  ChallengeStatus,
+  VerificationStatus,
+  ActionTrack,
+  ProjectStatus,
+} from '@jharsankalp/shared';
 import type { ReactNode } from 'react';
 
 interface StatusConfig {
@@ -14,10 +19,18 @@ const challengeStatusConfig: Record<string, StatusConfig> = {
   [ChallengeStatus.AI_ANALYZED]: { label: 'AI Analyzed', variant: 'purple', dot: true },
   [ChallengeStatus.UNDER_VALIDATION]: { label: 'Under Validation', variant: 'warning', dot: true },
   [ChallengeStatus.VALIDATED]: { label: 'Validated', variant: 'success', dot: true },
-  [ChallengeStatus.ROUTINE_RESOLUTION]: { label: 'Routine Resolution', variant: 'neutral', dot: true },
+  [ChallengeStatus.ROUTINE_RESOLUTION]: {
+    label: 'Routine Resolution',
+    variant: 'neutral',
+    dot: true,
+  },
   [ChallengeStatus.MATCHING]: { label: 'Capability Matching', variant: 'purple', dot: true },
   [ChallengeStatus.CONSORTIUM_FORMED]: { label: 'Consortium Formed', variant: 'khaki', dot: true },
-  [ChallengeStatus.IMPACT_CONTRACTED]: { label: 'Impact Contracted', variant: 'apricot', dot: true },
+  [ChallengeStatus.IMPACT_CONTRACTED]: {
+    label: 'Impact Contracted',
+    variant: 'apricot',
+    dot: true,
+  },
   [ChallengeStatus.PROJECT]: { label: 'Project Active', variant: 'success', dot: true },
   [ChallengeStatus.CLOSED]: { label: 'Closed', variant: 'neutral' },
   [ChallengeStatus.REJECTED]: { label: 'Rejected', variant: 'danger' },
@@ -45,7 +58,11 @@ const projectStatusConfig: Record<string, StatusConfig> = {
   [ProjectStatus.PROTOTYPE]: { label: 'Prototype', variant: 'purple', dot: true },
   [ProjectStatus.LAB_TESTING]: { label: 'Lab Testing', variant: 'purple', dot: true },
   [ProjectStatus.FIELD_PILOT]: { label: 'Field Pilot', variant: 'apricot', dot: true },
-  [ProjectStatus.IMPACT_VERIFICATION]: { label: 'Impact Verification', variant: 'apricot', dot: true },
+  [ProjectStatus.IMPACT_VERIFICATION]: {
+    label: 'Impact Verification',
+    variant: 'apricot',
+    dot: true,
+  },
   [ProjectStatus.DEPLOYED]: { label: 'Deployed', variant: 'success', dot: true },
   [ProjectStatus.SCALED]: { label: 'Scaled', variant: 'success', dot: true },
   [ProjectStatus.PAUSED]: { label: 'Paused', variant: 'warning' },

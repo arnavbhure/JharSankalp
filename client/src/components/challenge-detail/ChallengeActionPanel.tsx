@@ -68,9 +68,7 @@ export function ChallengeActionPanel({
               <span className="text-[9.5px] font-mono font-bold uppercase text-[#6B5845] block">
                 TIME LEFT
               </span>
-              <span className="text-[12px] font-mono font-bold text-[#F5A623] block">
-                18 Days
-              </span>
+              <span className="text-[12px] font-mono font-bold text-[#F5A623] block">18 Days</span>
             </div>
           </div>
 
@@ -113,7 +111,9 @@ export function ChallengeActionPanel({
               className="w-full flex items-center justify-between p-2 rounded-lg text-[#1D2522] hover:bg-[#FAF9F5] transition-colors cursor-pointer font-medium"
             >
               <span className="flex items-center gap-2">
-                <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-[#123B2A] text-[#123B2A]' : 'text-[#6B5845]'}`} />
+                <Bookmark
+                  className={`h-4 w-4 ${isSaved ? 'fill-[#123B2A] text-[#123B2A]' : 'text-[#6B5845]'}`}
+                />
                 <span>{isSaved ? 'Challenge Saved' : 'Save Challenge'}</span>
               </span>
               <span className="text-[11px] font-mono text-[#6B5845]">
@@ -138,11 +138,10 @@ export function ChallengeActionPanel({
 
         {/* Verification Guarantee */}
         <div className="p-4 rounded-xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12px] text-[#6B5845] space-y-1">
-          <div className="font-bold text-[#123B2A]">
-            Direct Institution Escalation
-          </div>
+          <div className="font-bold text-[#123B2A]">Direct Institution Escalation</div>
           <p>
-            Submissions are reviewed directly by the Department of Mines and the IIT (ISM) technical consortium coordinator.
+            Submissions are reviewed directly by the Department of Mines and the IIT (ISM) technical
+            consortium coordinator.
           </p>
         </div>
       </div>

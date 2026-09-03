@@ -22,10 +22,7 @@ export function ImpactOverviewCard({ data }: ImpactOverviewCardProps) {
 
   const getCoord = (idx: number, val: number) => {
     const x = paddingX + (idx / (points.length - 1)) * (width - paddingX * 2);
-    const y =
-      height -
-      paddingY -
-      ((val - minVal) / (maxVal - minVal)) * (height - paddingY * 2);
+    const y = height - paddingY - ((val - minVal) / (maxVal - minVal)) * (height - paddingY * 2);
     return { x, y };
   };
 
@@ -115,13 +112,7 @@ export function ImpactOverviewCard({ data }: ImpactOverviewCardProps) {
           <path d={areaD} fill="url(#areaGradient)" />
 
           {/* Smooth Line */}
-          <path
-            d={pathD}
-            fill="none"
-            stroke="#123B2A"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
+          <path d={pathD} fill="none" stroke="#123B2A" strokeWidth="3" strokeLinecap="round" />
 
           {/* Interactive Data Points */}
           {coords.map((c, i) => {

@@ -10,7 +10,16 @@ import { Footer } from '../components/layout/Footer';
 import { ChallengeItem } from '../types/challenges';
 import { fetchChallenges } from '../services/api/challenges';
 import { CANONICAL_CHALLENGES } from '../data/ecosystem';
-import { SearchX, ArrowDown, X, Users, MapPin, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import {
+  SearchX,
+  ArrowDown,
+  X,
+  Users,
+  MapPin,
+  Loader2,
+  AlertCircle,
+  RefreshCw,
+} from 'lucide-react';
 
 const INITIAL_PAGE_SIZE = 6;
 
@@ -23,7 +32,11 @@ const FALLBACK_CHALLENGES: ChallengeItem[] = CANONICAL_CHALLENGES.map((c, idx) =
   block: c.block,
   locationDisplay: `${c.district} · ${c.block}`,
   description: c.summary,
-  impactLevel: (c.priority === 'CRITICAL' ? 'Critical' : c.priority === 'HIGH' ? 'High Impact' : 'Medium Impact') as any,
+  impactLevel: (c.priority === 'CRITICAL'
+    ? 'Critical'
+    : c.priority === 'HIGH'
+      ? 'High Impact'
+      : 'Medium Impact') as any,
   status: 'Open for Collaboration',
   dateReported: c.dateReported,
   collaboratorsCount: 12 + idx * 3,
@@ -85,7 +98,7 @@ export function Challenges() {
   // Featured challenge
   const featuredItem = useMemo(
     () => challenges.find((c) => c.featured) || challenges[0] || null,
-    [challenges]
+    [challenges],
   );
 
   // Filtered challenges list (client-side search keyword and impact filter)
@@ -99,7 +112,13 @@ export function Challenges() {
         const matchesDistrict = item.district.toLowerCase().includes(query);
         const matchesCategory = item.category.toLowerCase().includes(query);
         const matchesBlock = item.block.toLowerCase().includes(query);
-        if (!matchesTitle && !matchesDesc && !matchesDistrict && !matchesCategory && !matchesBlock) {
+        if (
+          !matchesTitle &&
+          !matchesDesc &&
+          !matchesDistrict &&
+          !matchesCategory &&
+          !matchesBlock
+        ) {
           return false;
         }
       }
@@ -189,12 +208,8 @@ export function Challenges() {
           {!loading && error && (
             <div className="py-16 text-center rounded-3xl bg-[#FFF5F5] border border-[#FECDD3] p-8 space-y-3">
               <AlertCircle className="h-8 w-8 text-[#BE123C] mx-auto" />
-              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
-                Unable to load challenges
-              </h4>
-              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
-                {error}
-              </p>
+              <h4 className="text-[1.1rem] font-bold text-[#BE123C]">Unable to load challenges</h4>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">{error}</p>
               <button
                 type="button"
                 onClick={loadChallenges}
@@ -216,7 +231,8 @@ export function Challenges() {
                     No challenges found matching your criteria
                   </h4>
                   <p className="text-[13.5px] text-[#6B5845] max-w-sm mx-auto">
-                    Try clearing one or more filters or search terms to see open challenges across Jharkhand.
+                    Try clearing one or more filters or search terms to see open challenges across
+                    Jharkhand.
                   </p>
                   <button
                     type="button"
@@ -291,9 +307,7 @@ export function Challenges() {
             </div>
 
             <div className="space-y-1.5">
-              <h3 className="text-[1.35rem] font-bold text-[#1D2522]">
-                {previewChallenge.title}
-              </h3>
+              <h3 className="text-[1.35rem] font-bold text-[#1D2522]">{previewChallenge.title}</h3>
               <p className="text-[13px] text-[#6B5845] line-clamp-3">
                 {previewChallenge.description}
               </p>

@@ -182,7 +182,8 @@ export function CollaborationFilters({
 
         {/* Dynamic Count */}
         <div className="text-[12.5px] font-mono text-[#6B5845] shrink-0">
-          Showing <strong className="text-[#1D2522] font-bold">{totalCount}</strong> active collaborations
+          Showing <strong className="text-[#1D2522] font-bold">{totalCount}</strong> active
+          collaborations
         </div>
       </div>
     </div>

@@ -45,9 +45,7 @@ export function RelatedIdeas({ ideas }: RelatedIdeasProps) {
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#123B2A] font-bold uppercase">
-                  {item.category}
-                </span>
+                <span className="text-[#123B2A] font-bold uppercase">{item.category}</span>
                 <span className="text-[#15803D] bg-[#F0FDF4] px-2 py-0.5 rounded border border-[#BBF7D0]">
                   {item.stage}
                 </span>

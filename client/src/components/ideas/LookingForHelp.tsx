@@ -16,7 +16,8 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
     {
       category: 'ENGINEERING',
       title: 'IoT Hardware & Mesh Firmware Lead',
-      description: 'Need embedded engineers to build ultra-low-power LoRa acoustic vibration collars for rural deep borewells.',
+      description:
+        'Need embedded engineers to build ultra-low-power LoRa acoustic vibration collars for rural deep borewells.',
       icon: Wrench,
       accentColor: 'text-[#123B2A] bg-[#F0FDF4] border-[#BBF7D0]',
       idea: waterIdea,
@@ -24,7 +25,8 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
     {
       category: 'RESEARCH',
       title: 'Satellite InSAR & Geospatial Analyst',
-      description: 'Seeking researchers to run differential interferometric radar analysis on abandoned Jharia coalfield zones.',
+      description:
+        'Seeking researchers to run differential interferometric radar analysis on abandoned Jharia coalfield zones.',
       icon: BookOpen,
       accentColor: 'text-[#0284C7] bg-[#F0F9FF] border-[#BAE6FD]',
       idea: mineIdea,
@@ -32,7 +34,8 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
     {
       category: 'MENTORSHIP',
       title: 'Mining Safety & Disaster Protocol Fellow',
-      description: 'Senior geotechnical advisors needed to benchmark acoustic failure alert thresholds with DGMS standards.',
+      description:
+        'Senior geotechnical advisors needed to benchmark acoustic failure alert thresholds with DGMS standards.',
       icon: Award,
       accentColor: 'text-[#B45309] bg-[#FFFBEB] border-[#FDE68A]',
       idea: mineIdea,
@@ -40,7 +43,8 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
     {
       category: 'IMPLEMENTATION',
       title: 'Municipal Decentralized Compost Specialist',
-      description: 'Local ground coordinators needed to pilot morning household segregation schemes across Namkum urban wards.',
+      description:
+        'Local ground coordinators needed to pilot morning household segregation schemes across Namkum urban wards.',
       icon: MapPin,
       accentColor: 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]',
       idea: wasteIdea,
@@ -62,7 +66,8 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
             </h2>
           </div>
           <p className="max-w-md text-[14px] text-[#6B5845] leading-relaxed">
-            Some promising ideas are waiting for researchers, engineers, mentors, institutions and partners to help move them forward into live prototypes.
+            Some promising ideas are waiting for researchers, engineers, mentors, institutions and
+            partners to help move them forward into live prototypes.
           </p>
         </div>
 
@@ -89,17 +94,13 @@ export function LookingForHelp({ onJoinTeam, ideas }: LookingForHelpProps) {
                     {item.title}
                   </h3>
 
-                  <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.description}</p>
                 </div>
 
                 <div className="pt-4 border-t border-[#EEEAE1] space-y-2">
                   <div className="text-[11.5px] text-[#6B5845] truncate">
                     For:{' '}
-                    <strong className="text-[#1D2522] font-semibold">
-                      {item.idea?.title}
-                    </strong>
+                    <strong className="text-[#1D2522] font-semibold">{item.idea?.title}</strong>
                   </div>
 
                   <button

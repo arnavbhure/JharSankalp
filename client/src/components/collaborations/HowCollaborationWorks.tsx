@@ -50,7 +50,8 @@ export function HowCollaborationWorks() {
           How Collaboration Works
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-xl leading-relaxed">
-          From problem discovery to verified statewide impact, here is how citizens and institutions create lasting change together.
+          From problem discovery to verified statewide impact, here is how citizens and institutions
+          create lasting change together.
         </p>
       </div>
 
@@ -63,7 +64,9 @@ export function HowCollaborationWorks() {
               className="p-5 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] space-y-3 relative group hover:border-[#123B2A]/30 transition-all"
             >
               <div className="flex items-center justify-between">
-                <div className={`h-10 w-10 rounded-xl ${s.bg} flex items-center justify-center ${s.color}`}>
+                <div
+                  className={`h-10 w-10 rounded-xl ${s.bg} flex items-center justify-center ${s.color}`}
+                >
                   <Icon className="h-5 w-5" />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-[#6B5845]">
@@ -72,12 +75,8 @@ export function HowCollaborationWorks() {
               </div>
 
               <div className="space-y-1">
-                <h4 className="text-[15px] font-bold text-[#1D2522]">
-                  {s.title}
-                </h4>
-                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">
-                  {s.description}
-                </p>
+                <h4 className="text-[15px] font-bold text-[#1D2522]">{s.title}</h4>
+                <p className="text-[12.5px] text-[#6B5845] leading-relaxed">{s.description}</p>
               </div>
 
               {idx < 3 && (

@@ -16,7 +16,8 @@ export function DeploymentStories({ stories }: DeploymentStoriesProps) {
           Recently Reaching Communities
         </h2>
         <p className="text-[13.5px] text-[#6B5845] max-w-xl leading-relaxed">
-          Real deployments actively serving villages, schools, and farmer collectives across Jharkhand.
+          Real deployments actively serving villages, schools, and farmer collectives across
+          Jharkhand.
         </p>
       </div>
 
@@ -41,12 +42,8 @@ export function DeploymentStories({ stories }: DeploymentStoriesProps) {
 
               {/* Title & Description */}
               <div className="space-y-1">
-                <h3 className="text-[1.2rem] font-bold text-[#1D2522]">
-                  {story.title}
-                </h3>
-                <p className="text-[13px] text-[#6B5845] leading-relaxed">
-                  {story.description}
-                </p>
+                <h3 className="text-[1.2rem] font-bold text-[#1D2522]">{story.title}</h3>
+                <p className="text-[13px] text-[#6B5845] leading-relaxed">{story.description}</p>
               </div>
 
               {/* Location & Coverage */}

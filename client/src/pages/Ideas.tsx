@@ -92,7 +92,7 @@ export function Ideas() {
           i.description.toLowerCase().includes(q) ||
           i.district.toLowerCase().includes(q) ||
           i.focusArea.toLowerCase().includes(q) ||
-          (i.linkedChallenge && i.linkedChallenge.toLowerCase().includes(q))
+          (i.linkedChallenge && i.linkedChallenge.toLowerCase().includes(q)),
       );
     }
 
@@ -103,9 +103,7 @@ export function Ideas() {
       list.sort((a, b) => b.contributorsCount - a.contributorsCount);
     } else if (sortBy === 'recent') {
       list.sort(
-        (a, b) =>
-          new Date(b.submittedDate).getTime() -
-          new Date(a.submittedDate).getTime()
+        (a, b) => new Date(b.submittedDate).getTime() - new Date(a.submittedDate).getTime(),
       );
     }
 
@@ -130,7 +128,7 @@ export function Ideas() {
     newIdeaData: Omit<
       CommunityIdea,
       'id' | 'supportersCount' | 'contributorsCount' | 'status' | 'submittedDate'
-    >
+    >,
   ) => {
     submitIdea({
       challengeId: 'JS-2026-00024',
@@ -236,9 +234,7 @@ export function Ideas() {
               <h4 className="text-[1.1rem] font-bold text-[#BE123C]">
                 Unable to load community ideas
               </h4>
-              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">
-                {error}
-              </p>
+              <p className="text-[13px] text-[#6B5845] max-w-md mx-auto">{error}</p>
               <button
                 type="button"
                 onClick={loadIdeas}
@@ -260,7 +256,8 @@ export function Ideas() {
                     No ideas match your current filter criteria
                   </h4>
                   <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-                    Try clearing or widening your category, district, or search filters to see more community proposals.
+                    Try clearing or widening your category, district, or search filters to see more
+                    community proposals.
                   </p>
                   <button
                     type="button"

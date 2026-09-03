@@ -7,10 +7,7 @@ interface IdeaSubmissionSuccessProps {
   challenge: SelectedChallenge | null;
 }
 
-export function IdeaSubmissionSuccess({
-  result,
-  challenge,
-}: IdeaSubmissionSuccessProps) {
+export function IdeaSubmissionSuccess({ result, challenge }: IdeaSubmissionSuccessProps) {
   const navigate = useNavigate();
 
   return (
@@ -32,7 +29,8 @@ export function IdeaSubmissionSuccess({
           </h1>
 
           <p className="text-[15.5px] text-[#6B5845] max-w-xl mx-auto leading-relaxed">
-            It is now connected to a real societal challenge and will move through peer verification before opening for cross-disciplinary collaboration.
+            It is now connected to a real societal challenge and will move through peer verification
+            before opening for cross-disciplinary collaboration.
           </p>
         </div>
       </div>
@@ -76,9 +74,7 @@ export function IdeaSubmissionSuccess({
               <span className="text-[10px] font-mono uppercase font-bold text-[#123B2A] block">
                 ANCHORED TO CHALLENGE
               </span>
-              <span className="font-bold text-[#1D2522] truncate block">
-                {challenge.title}
-              </span>
+              <span className="font-bold text-[#1D2522] truncate block">{challenge.title}</span>
             </div>
           </div>
         )}
@@ -97,12 +93,11 @@ export function IdeaSubmissionSuccess({
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#123B2A] text-white text-[10px] font-mono font-bold">
                 01
               </span>
-              <h4 className="text-[13.5px] font-bold text-[#1D2522]">
-                Review
-              </h4>
+              <h4 className="text-[13.5px] font-bold text-[#1D2522]">Review</h4>
             </div>
             <p className="text-[12px] text-[#6B5845] leading-relaxed">
-              Your proposal is evaluated for feasibility, duplication, and community relevance by domain reviewers.
+              Your proposal is evaluated for feasibility, duplication, and community relevance by
+              domain reviewers.
             </p>
           </div>
 
@@ -111,12 +106,11 @@ export function IdeaSubmissionSuccess({
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#EEEAE1] text-[#1D2522] text-[10px] font-mono font-bold">
                 02
               </span>
-              <h4 className="text-[13.5px] font-bold text-[#1D2522]">
-                Structure
-              </h4>
+              <h4 className="text-[13.5px] font-bold text-[#1D2522]">Structure</h4>
             </div>
             <p className="text-[12px] text-[#6B5845] leading-relaxed">
-              The idea is officially indexed into the 24-district problem ontology and matched with institutional labs.
+              The idea is officially indexed into the 24-district problem ontology and matched with
+              institutional labs.
             </p>
           </div>
 
@@ -125,12 +119,11 @@ export function IdeaSubmissionSuccess({
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#EEEAE1] text-[#1D2522] text-[10px] font-mono font-bold">
                 03
               </span>
-              <h4 className="text-[13.5px] font-bold text-[#1D2522]">
-                Collaboration
-              </h4>
+              <h4 className="text-[13.5px] font-bold text-[#1D2522]">Collaboration</h4>
             </div>
             <p className="text-[12px] text-[#6B5845] leading-relaxed">
-              Engineers, mentors, and field testing partners can discover the docket and offer direct capability support.
+              Engineers, mentors, and field testing partners can discover the docket and offer
+              direct capability support.
             </p>
           </div>
         </div>

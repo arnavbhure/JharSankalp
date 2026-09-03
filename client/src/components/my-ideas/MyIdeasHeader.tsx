@@ -19,7 +19,8 @@ export function MyIdeasHeader() {
             </h1>
 
             <p className="text-[15px] sm:text-[16.5px] text-[#6B5845] max-w-2xl leading-relaxed font-normal">
-              Track your submissions, collaboration activity and the progress of ideas as they move toward real-world implementation across Jharkhand.
+              Track your submissions, collaboration activity and the progress of ideas as they move
+              toward real-world implementation across Jharkhand.
             </p>
           </div>
 
