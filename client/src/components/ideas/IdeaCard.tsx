@@ -49,7 +49,10 @@ export function IdeaCard({ idea, onViewIdea, onJoinTeam }: IdeaCardProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-[#EEEAE1] bg-white hover:border-[#123B2A]/40 shadow-2xs hover:shadow-md transition-all duration-200 p-5 sm:p-6 text-left flex flex-col justify-between space-y-4 group">
+    <div
+      onClick={() => onViewIdea(idea)}
+      className="rounded-2xl border border-[#EEEAE1] bg-white hover:border-[#123B2A]/40 shadow-2xs hover:shadow-md transition-all duration-200 p-5 sm:p-6 text-left flex flex-col justify-between space-y-4 group cursor-pointer"
+    >
       {/* ── Card Header: Category, District & Status ── */}
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -121,7 +124,10 @@ export function IdeaCard({ idea, onViewIdea, onJoinTeam }: IdeaCardProps) {
           {idea.collaborationStatus === 'OPEN' && (
             <button
               type="button"
-              onClick={() => onJoinTeam(idea)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onJoinTeam(idea);
+              }}
               className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-[#EEEAE1] bg-[#FAF9F5] hover:bg-white text-[12px] font-bold text-[#123B2A] transition-colors cursor-pointer"
             >
               <Sparkles className="h-3 w-3 text-[#F5A623]" />

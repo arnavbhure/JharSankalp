@@ -16,8 +16,15 @@ export function AppShell() {
   const isReport = location.pathname === '/report-challenge' || location.pathname === '/report';
   const isMyChallenges = location.pathname === '/my-challenges';
   const isIdeas = location.pathname === '/ideas';
+  const isIdeaDetail = location.pathname.startsWith('/ideas/');
   const isPublicExploration =
-    isLanding || isChallenges || isChallengeDetail || isReport || isMyChallenges || isIdeas;
+    isLanding ||
+    isChallenges ||
+    isChallengeDetail ||
+    isReport ||
+    isMyChallenges ||
+    isIdeas ||
+    isIdeaDetail;
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col text-neutral-900">

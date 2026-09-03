@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IdeaItem, IdeaFilterState, IdeaStatsData } from '../types/ideas';
 import {
   getIdeas,
@@ -27,6 +28,7 @@ const INITIAL_FILTERS: IdeaFilterState = {
 };
 
 export function Ideas() {
+  const navigate = useNavigate();
   const [ideas, setIdeas] = useState<IdeaItem[]>([]);
   const [featuredIdea, setFeaturedIdea] = useState<IdeaItem | null>(null);
   const [stats, setStats] = useState<IdeaStatsData>({
@@ -89,9 +91,7 @@ export function Ideas() {
   };
 
   const handleOpenView = (idea: IdeaItem) => {
-    setSelectedIdea(idea);
-    setModalMode('VIEW');
-    setModalOpen(true);
+    navigate(`/ideas/${idea.id}`);
   };
 
   const handleShareSubmit = async (newIdea: Partial<IdeaItem>) => {
