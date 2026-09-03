@@ -14,6 +14,9 @@ import solutionsRoutes from './modules/solutions/solutions.routes.js';
 import impactRoutes from './modules/impact/impact.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import aiRoutes from './modules/ai/ai.routes.js';
+import projectsRoutes from './modules/projects/projects.routes.js';
+import organizationsRoutes from './modules/organizations/organizations.routes.js';
+import activitiesRoutes from './modules/activities/activities.routes.js';
 
 const app = express();
 
@@ -74,6 +77,15 @@ app.use('/api/challenges', challengesRoutes);
 
 app.use('/api/v1/ideas', ideasRoutes);
 app.use('/api/ideas', ideasRoutes);
+
+app.use('/api/v1/projects', projectsRoutes);
+app.use('/api/projects', projectsRoutes);
+
+app.use('/api/v1/organizations', organizationsRoutes);
+app.use('/api/organizations', organizationsRoutes);
+
+app.use('/api/v1/activities', activitiesRoutes);
+app.use('/api/activities', activitiesRoutes);
 
 app.use('/api/v1/collaborations', collaborationsRoutes);
 app.use('/api/collaborations', collaborationsRoutes);

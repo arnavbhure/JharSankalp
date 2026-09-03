@@ -60,9 +60,11 @@ model Organization {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  district   District?   @relation(fields: [districtId], references: [id])
-  users      User[]
-  challenges Challenge[] @relation("ChallengeOrganization")
+  district             District?            @relation(fields: [districtId], references: [id])
+  users                User[]
+  challenges           Challenge[]          @relation("ChallengeOrganization")
+  ledProjects          Project[]            @relation("ProjectLeadOrganization")
+  projectParticipations ProjectParticipant[]
 
   @@index([type])
   @@index([districtId])
@@ -129,6 +131,7 @@ model Challenge {
   ideas          Idea[]
   collaborations Collaboration[]
   solutions      Solution[]
+  projects       Project[]
 
   @@index([status])
   @@index([sourceType])
@@ -182,6 +185,7 @@ model Idea {
   submittedBy    User            @relation("IdeaSubmitter", fields: [submittedById], references: [id])
   challenge      Challenge?      @relation(fields: [relatedChallengeId], references: [id])
   collaborations Collaboration[]
+  projects       Project[]
 
   @@index([status])
   @@index([domain])
@@ -340,3 +344,123 @@ model Notification {
   @@index([createdAt])
   @@map("notifications")
 }
+
+// ── Project ──────────────────────────────────────────────────
+
+model Project {
+  id                 String    @id @default(uuid())
+  referenceCode      String    @unique // e.g. PRJ-2026-0012
+  title              String
+  description        String
+  challengeId        String?
+  ideaId             String?
+  leadOrganizationId String?
+  domain             String?
+  district           String?
+  block              String?
+  stage              String    @default("FORMATION") // FORMATION, RESEARCH_DESIGN, PROTOTYPE, LAB_TESTING, FIELD_PILOT, IMPLEMENTATION, IMPACT_VERIFICATION, SCALE
+  status             String    @default("ACTIVE")    // ACTIVE, ON_HOLD, COMPLETED, DELAYED, CANCELLED
+  startDate          DateTime?
+  expectedEndDate    DateTime?
+  affectedPopulation Int?
+  locationDisplay    String?
+  impactSummary      String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  challenge        Challenge?          @relation(fields: [challengeId], references: [id])
+  idea             Idea?               @relation(fields: [ideaId], references: [id])
+  leadOrganization Organization?       @relation("ProjectLeadOrganization", fields: [leadOrganizationId], references: [id])
+  participants     ProjectParticipant[]
+  milestones       Milestone[]
+  impactMetrics    ImpactMetric[]
+
+  @@index([stage])
+  @@index([status])
+  @@index([domain])
+  @@index([district])
+  @@index([challengeId])
+  @@index([leadOrganizationId])
+  @@index([createdAt])
+  @@map("projects")
+}
+
+// ── Project Participant ──────────────────────────────────────
+
+model ProjectParticipant {
+  id             String   @id @default(uuid())
+  projectId      String
+  organizationId String?
+  userId         String?
+  role           String   // LEAD, RESEARCH_PARTNER, TECHNICAL_PARTNER, FUNDING_PARTNER, MENTOR, IMPLEMENTATION_PARTNER, COMMUNITY_PARTNER
+  contribution   String?
+  createdAt      DateTime @default(now())
+
+  project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization? @relation(fields: [organizationId], references: [id])
+
+  @@index([projectId])
+  @@index([organizationId])
+  @@map("project_participants")
+}
+
+// ── Milestone ────────────────────────────────────────────────
+
+model Milestone {
+  id          String    @id @default(uuid())
+  projectId   String
+  title       String
+  description String?
+  status      String    @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED, DELAYED
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@map("milestones")
+}
+
+// ── Impact Metric ────────────────────────────────────────────
+
+model ImpactMetric {
+  id            String   @id @default(uuid())
+  projectId     String
+  metricName    String
+  baselineValue String?
+  currentValue  String
+  targetValue   String?
+  unit          String
+  verified      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("impact_metrics")
+}
+
+// ── Activity ─────────────────────────────────────────────────
+
+model Activity {
+  id             String   @id @default(uuid())
+  type           String   // CHALLENGE_CREATED, IDEA_SUBMITTED, PROJECT_STARTED, MILESTONE_COMPLETED, IMPACT_RECORDED, STATUS_CHANGED
+  message        String
+  userId         String?
+  organizationId String?
+  challengeId    String?
+  ideaId         String?
+  projectId      String?
+  createdAt      DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+  @@index([projectId])
+  @@index([challengeId])
+  @@map("activities")
+}
+

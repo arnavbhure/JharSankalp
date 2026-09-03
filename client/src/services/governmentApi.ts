@@ -22,9 +22,22 @@ import {
   ECOSYSTEM_ACTIVITIES,
   STATE_IMPACT_SNAPSHOT,
 } from '../data/governmentData';
+import { api } from './api';
 
 export async function getOverview(): Promise<ExecutiveMetrics> {
-  await new Promise((resolve) => setTimeout(resolve, 40));
+  try {
+    const res = await api.get<any>('/dashboard/government');
+    if (res && res.kpis) {
+      return {
+        ...EXECUTIVE_METRICS,
+        challengesSubmitted: res.kpis.totalChallenges ?? EXECUTIVE_METRICS.challengesSubmitted,
+        underEvaluation: res.kpis.verifiedChallenges ?? EXECUTIVE_METRICS.underEvaluation,
+        activeProjects: res.kpis.activePilots ?? EXECUTIVE_METRICS.activeProjects,
+      };
+    }
+  } catch (err) {
+    console.warn('Backend government dashboard unreachable, using fallback:', err);
+  }
   return EXECUTIVE_METRICS;
 }
 

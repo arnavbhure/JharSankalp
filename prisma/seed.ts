@@ -122,6 +122,47 @@ async function main() {
       isVerified: true,
     },
   });
+
+  const tataSteelOrg = await prisma.organization.upsert({
+    where: { id: '20000000-0000-0000-0000-000000000006' },
+    update: {},
+    create: {
+      id: '20000000-0000-0000-0000-000000000006',
+      name: 'Tata Steel Rural Development Society (TSRDS)',
+      type: 'INDUSTRY',
+      description: 'Industrial partner supporting pilot deployments, telemetry hardware fabrication, and CSR co-funding.',
+      website: 'https://www.tatasteel.com',
+      districtId: districtMap['East Singhbhum'],
+      isVerified: true,
+    },
+  });
+
+  const cclOrg = await prisma.organization.upsert({
+    where: { id: '20000000-0000-0000-0000-000000000007' },
+    update: {},
+    create: {
+      id: '20000000-0000-0000-0000-000000000007',
+      name: 'Central Coalfields Limited (CSR Wing)',
+      type: 'INDUSTRY',
+      description: 'Public sector coal enterprise collaborating on mining safety and early subsidence telemetry.',
+      districtId: districtMap['Dhanbad'],
+      isVerified: true,
+    },
+  });
+
+  const jharGovOrg = await prisma.organization.upsert({
+    where: { id: '20000000-0000-0000-0000-000000000008' },
+    update: {},
+    create: {
+      id: '20000000-0000-0000-0000-000000000008',
+      name: 'Dept. of Higher & Technical Education, Govt. of Jharkhand',
+      type: 'GOVERNMENT',
+      description: 'State nodal department orchestrating university R&D translation and societal challenge resolution.',
+      website: 'https://jharkhand.gov.in',
+      districtId: districtMap['Ranchi'],
+      isVerified: true,
+    },
+  });
   console.log(`   ✅ Organizations seeded`);
 
   // 3. Users
@@ -167,6 +208,7 @@ async function main() {
       role: 'GOVERNMENT',
       district: 'Khunti',
       bio: 'Block Development Officer (BDO), Murhu Block, Drinking Water & Sanitation Dept.',
+      organizationId: jharGovOrg.id,
     },
   });
 
@@ -181,6 +223,7 @@ async function main() {
       role: 'INDUSTRY',
       district: 'Ranchi',
       bio: 'Lead CSR rural technology implementation partner.',
+      organizationId: tataSteelOrg.id,
     },
   });
   console.log(`   ✅ Users seeded`);
@@ -792,6 +835,243 @@ async function main() {
     skipDuplicates: true,
   });
   console.log(`   ✅ Impact records seeded`);
+
+  // 9. Structured Implementation Projects (Connecting Challenges & Ideas)
+  console.log('🚀 Seeding 6 structured implementation projects...');
+  const waterProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2026-0012' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000001',
+      referenceCode: 'PRJ-2026-0012',
+      title: 'Smart Rural Water Reliability Network',
+      description: 'Frequent breakdown of drinking water handpumps leaves tribal hamlets in Murhu without safe water for days. This project deploys non-invasive sensor collars to monitor stroke-frequency and acoustic vibration, dispatching automatic maintenance tickets to local Jal Sahiyas before complete mechanical failure.',
+      challengeId: waterChallenge.id,
+      ideaId: waterIdea.id,
+      leadOrganizationId: bitOrg.id,
+      domain: 'Water Management',
+      district: 'Khunti',
+      block: 'Murhu Block',
+      stage: 'FIELD_PILOT',
+      status: 'ACTIVE',
+      affectedPopulation: 2000,
+      locationDisplay: 'Khunti · Murhu Block',
+      impactSummary: '2,000 Residents Covered · 18 Water Points Monitored',
+      startDate: new Date('2026-01-14'),
+      expectedEndDate: new Date('2026-08-30'),
+    },
+  });
+
+  const agriProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2026-0007' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000002',
+      referenceCode: 'PRJ-2026-0007',
+      title: 'Tribal Pulse & Millets Cold Storage',
+      description: 'Micro-climate controlled solar-powered storage mitigating post-harvest degradation for smallholder tribal farmers.',
+      challengeId: agriChallenge.id,
+      ideaId: agriIdea.id,
+      leadOrganizationId: bauOrg.id,
+      domain: 'Agriculture',
+      district: 'Gumla',
+      block: 'Bishunpur Block',
+      stage: 'FIELD_PILOT',
+      status: 'ACTIVE',
+      affectedPopulation: 3200,
+      locationDisplay: 'Gumla · Bishunpur Block',
+      impactSummary: '3,200 Farmers Supported · 42 Pilot Cooperatives',
+      startDate: new Date('2026-02-01'),
+      expectedEndDate: new Date('2026-09-15'),
+    },
+  });
+
+  const miningProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2026-0009' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000003',
+      referenceCode: 'PRJ-2026-0009',
+      title: 'Subsurface Fissure Inundation Warning',
+      description: 'Distributed geotechnical sensor mesh and satellite InSAR telemetry detecting early ground fissures above abandoned coal seams.',
+      challengeId: miningChallenge.id,
+      ideaId: miningIdea.id,
+      leadOrganizationId: iitDhanbadOrg.id,
+      domain: 'Mining Safety',
+      district: 'Dhanbad',
+      block: 'Jharia Coalfield',
+      stage: 'PROTOTYPE',
+      status: 'ACTIVE',
+      affectedPopulation: 1200,
+      locationDisplay: 'Dhanbad · Jharia Coalfield',
+      impactSummary: '1,200 Settlement Dwellers · 48h Advance Evacuation Notice',
+      startDate: new Date('2026-01-20'),
+      expectedEndDate: new Date('2026-10-30'),
+    },
+  });
+
+  const eduProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2025-0031' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000004',
+      referenceCode: 'PRJ-2025-0031',
+      title: 'Solar Ol Chiki Digital Classroom Kits',
+      description: 'Off-grid interactive classroom hubs delivering bilingual Ol Chiki and Hindi foundational numeracy curriculum in non-electrified schools.',
+      challengeId: eduChallenge.id,
+      ideaId: eduIdea.id,
+      leadOrganizationId: dumkaEduOrg.id,
+      domain: 'Education',
+      district: 'Dumka',
+      block: 'Shikaripara Block',
+      stage: 'IMPLEMENTATION',
+      status: 'ACTIVE',
+      affectedPopulation: 1700,
+      locationDisplay: 'Dumka · Shikaripara Block',
+      impactSummary: '12 Schools Equipped · 650 Primary Students',
+      startDate: new Date('2025-11-10'),
+      expectedEndDate: new Date('2026-06-30'),
+    },
+  });
+
+  const envProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2026-0014' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000005',
+      referenceCode: 'PRJ-2026-0014',
+      title: 'Solar Cold-Chain & Soil Clinic Network',
+      description: 'Decentralized mobile solar testing clinics providing rapid soil health cards and bio-fertilizer guidance in tribal forest fringe villages.',
+      challengeId: envChallenge.id,
+      ideaId: envIdea.id,
+      leadOrganizationId: bauOrg.id,
+      domain: 'Environment',
+      district: 'Latehar',
+      block: 'Garu Block',
+      stage: 'FIELD_PILOT',
+      status: 'ACTIVE',
+      affectedPopulation: 1100,
+      locationDisplay: 'Latehar · Garu Block',
+      impactSummary: '450 Hectares Monitored · 3 Van Suraksha Samitis',
+      startDate: new Date('2026-02-15'),
+      expectedEndDate: new Date('2026-11-30'),
+    },
+  });
+
+  const healthProject = await prisma.project.upsert({
+    where: { referenceCode: 'PRJ-2025-0026' },
+    update: {},
+    create: {
+      id: '70000000-0000-0000-0000-000000000006',
+      referenceCode: 'PRJ-2025-0026',
+      title: 'Saranda Forest Maternal Tele-Diagnostics',
+      description: 'Backpack-portable diagnostic kits enabling frontline tribal ASHA workers to detect maternal anemia and vital abnormalities in isolated forest hamlets.',
+      challengeId: healthChallenge.id,
+      ideaId: healthIdea.id,
+      leadOrganizationId: bitOrg.id,
+      domain: 'Healthcare',
+      district: 'West Singhbhum',
+      block: 'Manoharpur Block',
+      stage: 'IMPACT_VERIFICATION',
+      status: 'ACTIVE',
+      affectedPopulation: 1800,
+      locationDisplay: 'West Singhbhum · Saranda Range',
+      impactSummary: '1,800+ Screenings · 24 Forest Hamlets Covered',
+      startDate: new Date('2025-09-01'),
+      expectedEndDate: new Date('2026-04-30'),
+    },
+  });
+  console.log('   ✅ 6 implementation projects seeded');
+
+  // 10. Project Participants
+  console.log('🤝 Seeding project participants...');
+  await prisma.projectParticipant.createMany({
+    data: [
+      { id: randomUUID(), projectId: waterProject.id, organizationId: bitOrg.id, role: 'LEAD', contribution: 'Hardware Design & LoRaWAN Firmware' },
+      { id: randomUUID(), projectId: waterProject.id, organizationId: jalSahiyaOrg.id, role: 'COMMUNITY_PARTNER', contribution: 'Community Co-Design & Pump Caretakers' },
+      { id: randomUUID(), projectId: waterProject.id, organizationId: tataSteelOrg.id, role: 'TECHNICAL_PARTNER', contribution: 'Telemetry Cloud & Gateway Architecture' },
+      { id: randomUUID(), projectId: waterProject.id, organizationId: jharGovOrg.id, role: 'FUNDING_PARTNER', contribution: 'State Directorate Pilot Grants' },
+
+      { id: randomUUID(), projectId: agriProject.id, organizationId: bauOrg.id, role: 'LEAD', contribution: 'Agronomic Validation & Storage Chambers' },
+      { id: randomUUID(), projectId: agriProject.id, organizationId: tataSteelOrg.id, role: 'TECHNICAL_PARTNER', contribution: 'Solar Cooling Hardware & Grants' },
+
+      { id: randomUUID(), projectId: miningProject.id, organizationId: iitDhanbadOrg.id, role: 'LEAD', contribution: 'Subsurface Geophysics & Sensor Calibration' },
+      { id: randomUUID(), projectId: miningProject.id, organizationId: cclOrg.id, role: 'TECHNICAL_PARTNER', contribution: 'Borehole Drilling & Intrinsically Safe Hardware' },
+
+      { id: randomUUID(), projectId: eduProject.id, organizationId: dumkaEduOrg.id, role: 'LEAD', contribution: 'Ol Chiki Interactive Software & Tablet Provision' },
+      { id: randomUUID(), projectId: eduProject.id, organizationId: jharGovOrg.id, role: 'FUNDING_PARTNER', contribution: 'District Primary Education Pilot Sanction' },
+    ],
+    skipDuplicates: true,
+  });
+  console.log('   ✅ Project participants seeded');
+
+  // 11. Milestones
+  console.log('🎯 Seeding project milestones...');
+  await prisma.milestone.createMany({
+    data: [
+      // PRJ-2026-0012: 4 completed, 2 pending/in-progress
+      { id: randomUUID(), projectId: waterProject.id, title: 'Field Topology & Handpump Acoustic Survey', description: 'Baseline acoustic and vibrational profile mapping across 18 community water points in Murhu.', status: 'COMPLETED', dueDate: new Date('2026-02-15'), completedAt: new Date('2026-02-12') },
+      { id: randomUUID(), projectId: waterProject.id, title: 'Hardware Prototype Fabrication & LoRaWAN Bench Testing', description: 'Development of weatherproof vibration sensor collars and gateway transceiver nodes.', status: 'COMPLETED', dueDate: new Date('2026-03-01'), completedAt: new Date('2026-02-28') },
+      { id: randomUUID(), projectId: waterProject.id, title: 'Gram Panchayat Approval & Jal Sahiya Training', description: 'Co-design workshop with 14 village Jal Sahiyas and Panchayat Pradhans.', status: 'COMPLETED', dueDate: new Date('2026-03-15'), completedAt: new Date('2026-03-14') },
+      { id: randomUUID(), projectId: waterProject.id, title: 'Pilot Cluster Installation across 18 Water Points', description: 'Deployment of sensor nodes across Murhu block community borewells.', status: 'COMPLETED', dueDate: new Date('2026-04-01'), completedAt: new Date('2026-03-30') },
+      { id: randomUUID(), projectId: waterProject.id, title: 'Automated SMS Maintenance Dispatch Engine Live', description: 'Integration with BDO repair squad ticketing and Jal Sahiya mobile alerts.', status: 'IN_PROGRESS', dueDate: new Date('2026-05-15') },
+      { id: randomUUID(), projectId: waterProject.id, title: 'Endline Reliability Evaluation & District Scale Plan', description: 'Comprehensive audit of pump downtime reduction and scaling proposal for Khunti district.', status: 'PENDING', dueDate: new Date('2026-08-30') },
+
+      // PRJ-2026-0009: 2 completed, 2 in-progress/pending
+      { id: randomUUID(), projectId: miningProject.id, title: 'Geological Hazard Assessment & InSAR Baseline', description: 'Satellite interferometric baseline mapping of ground subsidence rates.', status: 'COMPLETED', dueDate: new Date('2026-02-20'), completedAt: new Date('2026-02-18') },
+      { id: randomUUID(), projectId: miningProject.id, title: 'Subsurface Extensometer Mesh Prototype', description: 'Borehole sensor string assembly and intrinsically safe battery certification.', status: 'COMPLETED', dueDate: new Date('2026-03-25'), completedAt: new Date('2026-03-22') },
+      { id: randomUUID(), projectId: miningProject.id, title: 'Surface Inundation Early Warning Sirens', description: 'Community siren activation and mock evacuation drills.', status: 'IN_PROGRESS', dueDate: new Date('2026-06-10') },
+      { id: randomUUID(), projectId: miningProject.id, title: 'Telemetry Gateway Mesh Deployment', description: 'Long-range mesh transceivers connecting sensor nodes to district emergency center.', status: 'PENDING', dueDate: new Date('2026-08-15') },
+
+      // PRJ-2026-0007: 3 completed, 1 in-progress
+      { id: randomUUID(), projectId: agriProject.id, title: 'Cooperative Baseline Harvest Loss Audit', description: 'Documentation of seasonal storage losses across 42 farmer groups.', status: 'COMPLETED', dueDate: new Date('2026-02-25'), completedAt: new Date('2026-02-24') },
+      { id: randomUUID(), projectId: agriProject.id, title: 'Solar Thermal Storage Unit Fabrication', description: 'Zero-emission cold chamber engineering using phase-change cooling materials.', status: 'COMPLETED', dueDate: new Date('2026-03-30'), completedAt: new Date('2026-03-28') },
+      { id: randomUUID(), projectId: agriProject.id, title: 'Field Installation in Bishunpur Cluster', description: 'Installation and testing of first 4 decentralized storage micro-hubs.', status: 'COMPLETED', dueDate: new Date('2026-04-20'), completedAt: new Date('2026-04-18') },
+      { id: randomUUID(), projectId: agriProject.id, title: 'Farmer Cooperative Management Handover', description: 'Training Krishi Mitras on inventory tracking and solar maintenance.', status: 'IN_PROGRESS', dueDate: new Date('2026-06-30') },
+    ],
+    skipDuplicates: true,
+  });
+  console.log('   ✅ Milestones seeded');
+
+  // 12. Impact Metrics
+  console.log('📈 Seeding project impact metrics...');
+  await prisma.impactMetric.createMany({
+    data: [
+      { id: randomUUID(), projectId: waterProject.id, metricName: 'Pump Downtime', baselineValue: '12', currentValue: '3.2', targetValue: '2.0', unit: 'Days', verified: true },
+      { id: randomUUID(), projectId: waterProject.id, metricName: 'Clean Water Availability', baselineValue: '68', currentValue: '94', targetValue: '98', unit: 'Percentage', verified: true },
+      { id: randomUUID(), projectId: waterProject.id, metricName: 'Residents Protected', baselineValue: '0', currentValue: '2000', targetValue: '2000', unit: 'People', verified: true },
+      { id: randomUUID(), projectId: waterProject.id, metricName: 'Borewells Monitored', baselineValue: '0', currentValue: '18', targetValue: '50', unit: 'Units', verified: true },
+
+      { id: randomUUID(), projectId: agriProject.id, metricName: 'Post-Harvest Loss', baselineValue: '35', currentValue: '12', targetValue: '8', unit: 'Percentage', verified: true },
+      { id: randomUUID(), projectId: agriProject.id, metricName: 'Farmers Reached', baselineValue: '0', currentValue: '3200', targetValue: '5000', unit: 'Farmers', verified: true },
+
+      { id: randomUUID(), projectId: miningProject.id, metricName: 'Early Warning Lead Time', baselineValue: '0', currentValue: '48', targetValue: '72', unit: 'Hours', verified: true },
+      { id: randomUUID(), projectId: miningProject.id, metricName: 'Settlement Dwellers Covered', baselineValue: '0', currentValue: '1200', targetValue: '4500', unit: 'Residents', verified: true },
+
+      { id: randomUUID(), projectId: eduProject.id, metricName: 'Foundational Numeracy Gain', baselineValue: '32', currentValue: '68', targetValue: '80', unit: 'Percentage', verified: true },
+      { id: randomUUID(), projectId: eduProject.id, metricName: 'Primary Students Active', baselineValue: '0', currentValue: '650', targetValue: '1200', unit: 'Students', verified: true },
+    ],
+    skipDuplicates: true,
+  });
+  console.log('   ✅ Impact metrics seeded');
+
+  // 13. Ecosystem Activities
+  console.log('📡 Seeding ecosystem activities feed...');
+  await prisma.activity.createMany({
+    data: [
+      { id: randomUUID(), type: 'MILESTONE_COMPLETED', message: 'BIT Mesra completed Pilot Cluster Installation for Smart Water Network in Murhu Block', projectId: waterProject.id, challengeId: waterChallenge.id, organizationId: bitOrg.id },
+      { id: randomUUID(), type: 'PROJECT_STARTED', message: 'Project PRJ-2026-0007 (Tribal Pulse & Millets Cold Storage) entered Field Pilot stage in Gumla', projectId: agriProject.id, challengeId: agriChallenge.id, organizationId: bauOrg.id },
+      { id: randomUUID(), type: 'IMPACT_RECORDED', message: 'Pump breakdown downtime in Murhu reduced from 12 days to 3.2 days (verified by DW&S)', projectId: waterProject.id, organizationId: jalSahiyaOrg.id },
+      { id: randomUUID(), type: 'IDEA_SUBMITTED', message: 'Prof. Anand Verma submitted solution approach for Rural Water Pump Reliability', ideaId: waterIdea.id, challengeId: waterChallenge.id, organizationId: bitOrg.id },
+      { id: randomUUID(), type: 'CHALLENGE_CREATED', message: 'Murhu Gram Panchayat logged challenge JS-2026-00024: Frequent Handpump Breakdowns', challengeId: waterChallenge.id, organizationId: jalSahiyaOrg.id },
+      { id: randomUUID(), type: 'MILESTONE_COMPLETED', message: 'IIT (ISM) Dhanbad completed Subsurface Extensometer Mesh Prototype for Jharia', projectId: miningProject.id, challengeId: miningChallenge.id, organizationId: iitDhanbadOrg.id },
+      { id: randomUUID(), type: 'STATUS_CHANGED', message: 'Challenge JS-2024-00003 (Mine Subsidence Early Warning) promoted to ACTIVE PILOT', challengeId: miningChallenge.id, organizationId: cclOrg.id },
+      { id: randomUUID(), type: 'IMPACT_RECORDED', message: '650 tribal primary students enrolled in offline bilingual Ol Chiki modules in Dumka', projectId: eduProject.id, challengeId: eduChallenge.id, organizationId: dumkaEduOrg.id },
+      { id: randomUUID(), type: 'PROJECT_STARTED', message: 'Tata Steel CSR committed technical mentorship & co-funding for Project PRJ-2026-0012', projectId: waterProject.id, organizationId: tataSteelOrg.id },
+    ],
+    skipDuplicates: true,
+  });
+  console.log('   ✅ Ecosystem activities seeded');
 
   console.log('\n✨ Database seeding completed successfully!\n');
 }

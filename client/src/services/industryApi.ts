@@ -10,9 +10,24 @@ import {
   ACTIVE_COMMITMENTS,
   INDUSTRY_CAPABILITIES,
 } from '../data/industryData';
+import { api } from './api';
 
 export async function getDashboard(): Promise<IndustryDashboardData> {
-  await new Promise((resolve) => setTimeout(resolve, 40));
+  try {
+    const res = await api.get<any>('/dashboard/industry');
+    if (res && res.kpis) {
+      return {
+        ...INDUSTRY_DASHBOARD_DATA,
+        metrics: {
+          ...INDUSTRY_DASHBOARD_DATA.metrics,
+          fieldPilotsSeekingPartners: res.kpis.fieldPilotsSupported ?? INDUSTRY_DASHBOARD_DATA.metrics.fieldPilotsSeekingPartners,
+          seekingTechnicalSupport: res.kpis.activeEngagements ?? INDUSTRY_DASHBOARD_DATA.metrics.seekingTechnicalSupport,
+        },
+      };
+    }
+  } catch (err) {
+    console.warn('Backend industry dashboard unreachable, using fallback:', err);
+  }
   return INDUSTRY_DASHBOARD_DATA;
 }
 

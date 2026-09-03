@@ -5,6 +5,7 @@ import {
   PortfolioStats,
   ProjectFiltersState,
   ProjectStage,
+  ProjectStatus,
 } from '../types/projects';
 import { ProjectDetail, ExpressInterestFormData } from '../types/projectDetail';
 import {
@@ -13,6 +14,7 @@ import {
   PROJECT_ACTIVITIES,
 } from '../data/projectsData';
 import { buildProjectDetail } from '../data/projectDetailsData';
+import { api } from './api';
 
 export { SEEDED_PROJECTS };
 export const SEED_PROJECTS: Project[] = SEEDED_PROJECTS;
@@ -27,7 +29,62 @@ export const PORTFOLIO_STATS: PortfolioStats = {
 };
 
 export async function getProjects(filters?: Partial<ProjectFiltersState>): Promise<Project[]> {
-  await new Promise((resolve) => setTimeout(resolve, 80));
+  try {
+    const params = new URLSearchParams();
+    if (filters?.domain && filters.domain !== 'All Domains' && filters.domain !== 'All Focus Areas') {
+      params.set('domain', filters.domain);
+    }
+    if (filters?.district && filters.district !== 'All Districts') {
+      params.set('district', filters.district);
+    }
+    if (filters?.stage && filters.stage !== 'ALL' && filters.stage !== 'ALL PROJECTS') {
+      params.set('stage', filters.stage);
+    }
+    if (filters?.search && filters.search.trim()) {
+      params.set('search', filters.search.trim());
+    }
+
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    const dbProjects = await api.get<any[]>(`/projects${queryString}`);
+
+    if (Array.isArray(dbProjects) && dbProjects.length > 0) {
+      return dbProjects.map((p) => {
+        const canonical =
+          SEEDED_PROJECTS.find(
+            (cp) => cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() || cp.id === p.id
+          ) || SEEDED_PROJECTS[0];
+
+        const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
+        const completedMilestones =
+          p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ?? canonical.milestoneProgress.completed;
+        const firstMetric = p.impactMetrics?.[0];
+
+        return {
+          ...canonical,
+          id: p.id,
+          projectCode: p.referenceCode || canonical.projectCode,
+          title: p.title || canonical.title,
+          description: p.description || canonical.description,
+          summary: p.impactSummary || canonical.summary,
+          stage: (p.stage || canonical.stage) as ProjectStage,
+          status: (p.status || canonical.status) as ProjectStatus,
+          domain: p.domain || canonical.domain,
+          district: p.district || canonical.district,
+          block: p.block || canonical.block,
+          beneficiaries: p.affectedPopulation || canonical.beneficiaries,
+          potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
+          impactMetric: firstMetric ? `${firstMetric.currentValue} ${firstMetric.unit}` : canonical.impactMetric,
+          milestoneProgress: {
+            completed: completedMilestones,
+            total: totalMilestones,
+          },
+          progressPercentage: Math.round((completedMilestones / Math.max(totalMilestones, 1)) * 100),
+        };
+      });
+    }
+  } catch (error) {
+    console.warn('Backend /projects API unreachable, using seeded data fallback:', error);
+  }
 
   let results = [...SEEDED_PROJECTS];
 
@@ -86,8 +143,47 @@ export async function getFeaturedProject(): Promise<Project> {
 }
 
 export async function getProjectById(id: string): Promise<Project | null> {
-  await new Promise((resolve) => setTimeout(resolve, 50));
   const targetId = id.toLowerCase().trim();
+
+  try {
+    const p = await api.get<any>(`/projects/${encodeURIComponent(targetId)}`);
+    if (p) {
+      const canonical =
+        SEEDED_PROJECTS.find(
+          (cp) => cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() || cp.id === p.id
+        ) || SEEDED_PROJECTS[0];
+
+      const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
+      const completedMilestones =
+        p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ?? canonical.milestoneProgress.completed;
+      const firstMetric = p.impactMetrics?.[0];
+
+      return {
+        ...canonical,
+        id: p.id,
+        projectCode: p.referenceCode || canonical.projectCode,
+        title: p.title || canonical.title,
+        description: p.description || canonical.description,
+        summary: p.impactSummary || canonical.summary,
+        stage: (p.stage || canonical.stage) as ProjectStage,
+        status: (p.status || canonical.status) as ProjectStatus,
+        domain: p.domain || canonical.domain,
+        district: p.district || canonical.district,
+        block: p.block || canonical.block,
+        beneficiaries: p.affectedPopulation || canonical.beneficiaries,
+        potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
+        impactMetric: firstMetric ? `${firstMetric.currentValue} ${firstMetric.unit}` : canonical.impactMetric,
+        milestoneProgress: {
+          completed: completedMilestones,
+          total: totalMilestones,
+        },
+        progressPercentage: Math.round((completedMilestones / Math.max(totalMilestones, 1)) * 100),
+      };
+    }
+  } catch (error) {
+    console.warn(`Backend /projects/${id} unreachable, using fallback:`, error);
+  }
+
   const found = SEEDED_PROJECTS.find(
     (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId
   );
@@ -95,12 +191,44 @@ export async function getProjectById(id: string): Promise<Project | null> {
 }
 
 export async function getPortfolioStats(): Promise<PortfolioStats> {
-  await new Promise((resolve) => setTimeout(resolve, 40));
+  try {
+    const overview = await api.get<any>('/dashboard/overview');
+    if (overview) {
+      return {
+        activeProjects: overview.projectCount || PORTFOLIO_METRICS.activeProjects,
+        universitiesInvolved: 8,
+        partnerOrganizations: 14,
+        projectsInFieldPilot: 4,
+        peopleImpacted: overview.peopleReached || 32000,
+        districtsWithPilots: overview.activeDistricts || PORTFOLIO_METRICS.districtsReached,
+      };
+    }
+  } catch (error) {
+    console.warn('Backend overview stats unreachable, using fallback:', error);
+  }
   return PORTFOLIO_STATS;
 }
 
 export async function getProjectActivity(): Promise<ProjectActivityItem[]> {
-  await new Promise((resolve) => setTimeout(resolve, 40));
+  try {
+    const activities = await api.get<any[]>('/activities');
+    if (Array.isArray(activities) && activities.length > 0) {
+      return activities.map((act) => ({
+        id: act.id,
+        projectId: act.projectId || 'PRJ-2026-0012',
+        projectTitle: act.message.split(' — ')[0] || 'Ecosystem Project',
+        activity: act.message,
+        stage: 'FIELD_PILOT' as ProjectStage,
+        stageLabel: 'FIELD PILOT',
+        timestamp: new Date(act.createdAt).toLocaleDateString('en-IN', {
+          month: 'short',
+          day: 'numeric',
+        }),
+      }));
+    }
+  } catch (error) {
+    console.warn('Backend activities unreachable, using fallback:', error);
+  }
   return PROJECT_ACTIVITIES;
 }
 
@@ -170,11 +298,7 @@ export async function getProjectMapData(): Promise<
  * Returns rich ProjectDetail for /projects/:projectId
  */
 export async function getProjectDetail(id: string): Promise<ProjectDetail | null> {
-  await new Promise((resolve) => setTimeout(resolve, 80));
-  const targetId = id.toLowerCase().trim();
-  const base = SEEDED_PROJECTS.find(
-    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId
-  );
+  const base = await getProjectById(id);
   if (!base) return null;
   return buildProjectDetail(base);
 }
