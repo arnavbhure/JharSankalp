@@ -49,6 +49,7 @@ const envSchema = z.object({
   OPENROUTER_MODEL: z.string().default('google/gemini-2.0-flash-001'),
   OPENROUTER_BASE_URL: z.string().default('https://openrouter.ai/api/v1'),
   CORS_ORIGIN: z.string().default('http://localhost:5173'),
+  FRONTEND_URL: z.string().optional(),
   LOG_LEVEL: z
     .preprocess((val) => {
       if (typeof val === 'string') {

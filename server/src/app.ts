@@ -25,10 +25,67 @@ const app = express();
 // ── Security ─────────────────────────────────────────────────
 
 app.use(helmet());
+// ── CORS Configuration ───────────────────────────────────────
+const defaultAllowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+  'http://localhost:4173',
+];
+
+const configuredOrigins: string[] = [];
+
+if (env.FRONTEND_URL) {
+  env.FRONTEND_URL.split(',').forEach((url) => {
+    const trimmed = url.trim().replace(/\/+$/, '');
+    if (trimmed) configuredOrigins.push(trimmed);
+  });
+}
+
+if (env.CORS_ORIGIN) {
+  env.CORS_ORIGIN.split(',').forEach((url) => {
+    const trimmed = url.trim().replace(/\/+$/, '');
+    if (trimmed) configuredOrigins.push(trimmed);
+  });
+}
+
+const allAllowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...configuredOrigins]));
+
 app.use(
   cors({
-    origin: env.CORS_ORIGIN.split(',').map((o) => o.trim()),
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, server-to-server, curl)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+
+      // Explicitly allow configured production and dev domains
+      if (allAllowedOrigins.includes(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // Automatically allow Vercel deployment domains (*.vercel.app)
+      if (/^https:\/\/[a-zA-Z0-9-_.]+\.vercel\.app$/.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // In non-production, allow any localhost/127.0.0.1 port
+      if (
+        env.NODE_ENV !== 'production' &&
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin)
+      ) {
+        return callback(null, true);
+      }
+
+      console.warn(`[CORS Blocked]: Origin ${origin} is not allowed.`);
+      return callback(new Error(`CORS policy does not allow access from origin: ${origin}`));
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Request-Id'],
+    exposedHeaders: ['Set-Cookie'],
   }),
 );
 

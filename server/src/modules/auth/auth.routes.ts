@@ -13,11 +13,13 @@ const router = Router();
 const COOKIE_NAME = 'token';
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
+const isProduction = env.NODE_ENV === 'production';
+
 function setAuthCookie(res: any, token: string) {
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: COOKIE_MAX_AGE,
     path: '/',
   });
@@ -26,8 +28,8 @@ function setAuthCookie(res: any, token: string) {
 function clearAuthCookie(res: any) {
   res.clearCookie(COOKIE_NAME, {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     path: '/',
   });
 }
