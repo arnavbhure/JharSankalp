@@ -25,7 +25,17 @@ for (const envPath of candidateEnvFiles) {
 }
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  NODE_ENV: z
+    .preprocess((val) => {
+      if (typeof val === 'string') {
+        const lower = val.toLowerCase().trim();
+        if (lower === 'prod') return 'production';
+        if (lower === 'dev') return 'development';
+        return lower;
+      }
+      return val;
+    }, z.enum(['development', 'production', 'test']))
+    .default('development'),
   PORT: z.coerce.number().default(4000),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
   REDIS_URL: z.string().default('redis://localhost:6379'),
@@ -39,7 +49,18 @@ const envSchema = z.object({
   OPENROUTER_MODEL: z.string().default('google/gemini-2.0-flash-001'),
   OPENROUTER_BASE_URL: z.string().default('https://openrouter.ai/api/v1'),
   CORS_ORIGIN: z.string().default('http://localhost:5173'),
-  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('debug'),
+  LOG_LEVEL: z
+    .preprocess((val) => {
+      if (typeof val === 'string') {
+        const lower = val.toLowerCase().trim();
+        if (lower === 'production' || lower === 'prod') return 'info';
+        if (lower === 'verbose' || lower === 'trace') return 'debug';
+        if (['debug', 'info', 'warn', 'error'].includes(lower)) return lower;
+        return 'info';
+      }
+      return val;
+    }, z.enum(['debug', 'info', 'warn', 'error']))
+    .default('debug'),
   MAX_FILE_SIZE_MB: z.coerce.number().default(50),
   UPLOAD_DIR: z.string().default('./uploads'),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(900000),
