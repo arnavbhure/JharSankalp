@@ -566,12 +566,45 @@ export function mapDbChallengeToDetailData(raw: any): ChallengeDetailData {
     whyExistingApproachesNotEnough = `Conventional reporting and fragmented response mechanisms experience operational delays. A structured, data-driven collaboration between technical institutions and district administration is needed to implement lasting solutions.`;
   }
 
-  // Dynamic Impact Metrics
+  // Dynamic Impact Metrics - formatted as concise KPI values
   const affectedResidents = raw.affectedPopulation
     ? `${Number(raw.affectedPopulation).toLocaleString()}+`
-    : 'Community-wide';
-  const highRiskLocations = raw.block ? `${raw.block} Block` : `${district} Sector`;
-  const communitiesInvolved = raw.panchayatOrUlb || `${district} Wards`;
+    : 'Community';
+
+  // High-Risk Locations Identified (Concise KPI indicator)
+  let highRiskLocations = '1 Sector';
+  if (raw.highRiskLocations) {
+    highRiskLocations = String(raw.highRiskLocations);
+  } else if (raw.block) {
+    highRiskLocations = '1 Block';
+  } else {
+    highRiskLocations = `${district} Sector`;
+  }
+
+  // Local Communities Involved (Concise KPI indicator, full name preserved in subtext/subLocation)
+  let communitiesInvolved = '1 Local Body';
+  const pulb = (raw.panchayatOrUlb || '').trim();
+  if (raw.communitiesInvolved) {
+    communitiesInvolved = String(raw.communitiesInvolved);
+  } else if (pulb) {
+    const wardMatch = pulb.match(/ward\s*(\d+)/i);
+    const panchayatMatch = pulb.match(/panchayat/i);
+    const villageMatch = pulb.match(/village|hamlet/i);
+    if (wardMatch) {
+      communitiesInvolved = `Ward ${wardMatch[1]}`;
+    } else if (panchayatMatch) {
+      communitiesInvolved = '1 Panchayat';
+    } else if (villageMatch) {
+      communitiesInvolved = '1 Village';
+    } else if (pulb.length <= 10) {
+      communitiesInvolved = pulb;
+    } else {
+      communitiesInvolved = '1 Ward';
+    }
+  } else {
+    communitiesInvolved = 'Local Wards';
+  }
+
   const statement =
     ai?.impactAssessment ||
     description ||

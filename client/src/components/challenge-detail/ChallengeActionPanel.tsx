@@ -53,7 +53,7 @@ export function ChallengeActionPanel({
                 STATUS
               </span>
               <span className="text-[12px] font-mono font-bold text-[#15803D] block truncate">
-                Open for Ideas
+                Active
               </span>
             </div>
             <div>

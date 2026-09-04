@@ -4,6 +4,15 @@ interface ImpactAtAGlanceProps {
   challenge: ChallengeDetailData;
 }
 
+function getKpiClass(val?: string) {
+  if (!val) return 'text-[2.5rem] sm:text-[3.25rem] leading-none';
+  const len = val.trim().length;
+  if (len > 18) return 'text-[1.25rem] sm:text-[1.45rem] font-bold leading-snug break-words';
+  if (len > 10) return 'text-[1.65rem] sm:text-[2rem] font-bold leading-tight break-words';
+  if (len > 6) return 'text-[2.15rem] sm:text-[2.65rem] font-extrabold leading-tight';
+  return 'text-[2.75rem] sm:text-[3.25rem] font-extrabold leading-none';
+}
+
 export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
   return (
     <section
@@ -32,7 +41,7 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-white/15">
           {/* Metric 1 */}
           <div className="space-y-2 border-l-2 border-[#F5A623] pl-5">
-            <div className="text-[2.75rem] sm:text-[3.25rem] font-extrabold font-mono text-white leading-none">
+            <div className={`${getKpiClass(challenge.impactMetrics.affectedResidents)} font-mono text-white`}>
               {challenge.impactMetrics.affectedResidents}
             </div>
             <div className="text-[15px] font-bold text-white/95">
@@ -45,25 +54,27 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
 
           {/* Metric 2 */}
           <div className="space-y-2 border-l-2 border-white/40 pl-5">
-            <div className="text-[2.75rem] sm:text-[3.25rem] font-extrabold font-mono text-[#F5A623] leading-none">
+            <div className={`${getKpiClass(challenge.impactMetrics.highRiskLocations)} font-mono text-[#F5A623]`}>
               {challenge.impactMetrics.highRiskLocations}
             </div>
             <div className="text-[15px] font-bold text-white/95">
               High-Risk Locations Identified
             </div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Identified priority sectors and community clusters in {challenge.district} requiring intervention.
+              Identified priority sectors in {challenge.subLocation ? `${challenge.subLocation}, ` : ''}{challenge.district}.
             </p>
           </div>
 
           {/* Metric 3 */}
           <div className="space-y-2 border-l-2 border-white/40 pl-5">
-            <div className="text-[2.75rem] sm:text-[3.25rem] font-extrabold font-mono text-white leading-none">
+            <div className={`${getKpiClass(challenge.impactMetrics.communitiesInvolved)} font-mono text-white`}>
               {challenge.impactMetrics.communitiesInvolved}
             </div>
             <div className="text-[15px] font-bold text-white/95">Local Communities Involved</div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Local gram panchayats, citizen committees, and community observers participating in validation.
+              {challenge.subLocation
+                ? `${challenge.subLocation} civic observers and committees participating.`
+                : `Local gram panchayats, citizen committees, and observers participating.`}
             </p>
           </div>
         </div>
