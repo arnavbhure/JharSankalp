@@ -439,13 +439,12 @@ export function SubmitChallengeIdea() {
                 onClick={() => {
                   if (s.num < currentStep) setCurrentStep(s.num as any);
                 }}
-                className={`py-2 px-1 rounded-xl text-center transition-all ${
-                  currentStep === s.num
+                className={`py-2 px-1 rounded-xl text-center transition-all ${currentStep === s.num
                     ? 'bg-[#123B2A] text-white font-bold shadow-xs'
                     : s.num < currentStep
                       ? 'bg-[#FAF9F5] text-[#123B2A] border border-[#EEEAE1] font-semibold cursor-pointer'
                       : 'bg-white/60 text-[#6B5845]/60 border border-transparent cursor-not-allowed'
-                }`}
+                  }`}
               >
                 <span className="block text-[10px] opacity-75">0{s.num}</span>
                 <span className="hidden sm:block truncate">{s.title}</span>
@@ -478,11 +477,10 @@ export function SubmitChallengeIdea() {
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="e.g. Solar-Powered Acoustic Vibration Collar for India Mark II Pumps"
-                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.title
+                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.title
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.title && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -500,11 +498,10 @@ export function SubmitChallengeIdea() {
                     value={formData.summary}
                     onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                     placeholder="e.g. A non-invasive sensor collar detecting pump mechanical wear before water failure."
-                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.summary
+                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.summary
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.summary && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -527,11 +524,10 @@ export function SubmitChallengeIdea() {
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Describe how the idea works mechanically, digitally, or through community operations. Explain the components and the step-by-step user interaction..."
-                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors leading-relaxed ${
-                      errors.description
+                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors leading-relaxed ${errors.description
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.description && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -565,11 +561,10 @@ export function SubmitChallengeIdea() {
                     value={formData.problemPart}
                     onChange={(e) => setFormData({ ...formData, problemPart: e.target.value })}
                     placeholder="e.g. Subterranean cylinder valve seal wear and delayed reporting"
-                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.problemPart
+                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.problemPart
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.problemPart && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -592,11 +587,10 @@ export function SubmitChallengeIdea() {
                       })
                     }
                     placeholder="Quantify or describe the difference: e.g. 40% reduction in breakdown duration, reliable drinking water for 15 villages..."
-                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.expectedImpact
+                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.expectedImpact
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.expectedImpact && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -619,11 +613,10 @@ export function SubmitChallengeIdea() {
                       })
                     }
                     placeholder="e.g. 2,000+ tribal households, ASHA workers, local Jal Samiti mechanics"
-                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.beneficiaries
+                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.beneficiaries
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.beneficiaries && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -657,11 +650,10 @@ export function SubmitChallengeIdea() {
                     value={formData.approach}
                     onChange={(e) => setFormData({ ...formData, approach: e.target.value })}
                     placeholder="How will it be built, tested, and distributed? e.g. Assemble 10 units at university lab, run 3-month field test in Murhu..."
-                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.approach
+                    className={`w-full p-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.approach
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.approach && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -679,11 +671,10 @@ export function SubmitChallengeIdea() {
                     value={formData.resources}
                     onChange={(e) => setFormData({ ...formData, resources: e.target.value })}
                     placeholder="e.g. Microcontroller, vibration sensors, solar cells, local metal enclosure"
-                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${
-                      errors.resources
+                    className={`w-full h-11 px-3.5 rounded-xl border text-[13.5px] focus:outline-none transition-colors ${errors.resources
                         ? 'border-[#BE123C] bg-[#FFF5F5]'
                         : 'border-[#EEEAE1] focus:border-[#123B2A]'
-                    }`}
+                      }`}
                   />
                   {errors.resources && (
                     <span className="text-[11px] text-[#BE123C] flex items-center gap-1 font-mono">
@@ -702,11 +693,10 @@ export function SubmitChallengeIdea() {
                         key={lvl}
                         type="button"
                         onClick={() => setFormData({ ...formData, complexity: lvl })}
-                        className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
-                          formData.complexity === lvl
+                        className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${formData.complexity === lvl
                             ? 'border-[#123B2A] bg-[#123B2A] text-white font-bold shadow-xs'
                             : 'border-[#EEEAE1] bg-[#FAF9F5] text-[#1D2522] hover:bg-white'
-                        }`}
+                          }`}
                       >
                         <span className="text-[13px] block">{lvl}</span>
                         <span className="text-[10px] font-mono opacity-70 block">
@@ -745,11 +735,10 @@ export function SubmitChallengeIdea() {
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, seekingCollaborators: true })}
-                      className={`px-5 py-2 rounded-xl text-[13px] font-bold border transition-all cursor-pointer ${
-                        formData.seekingCollaborators
+                      className={`px-5 py-2 rounded-xl text-[13px] font-bold border transition-all cursor-pointer ${formData.seekingCollaborators
                           ? 'bg-[#123B2A] text-white border-[#123B2A]'
                           : 'bg-[#FAF9F5] text-[#6B5845] border-[#EEEAE1]'
-                      }`}
+                        }`}
                     >
                       Yes, open for collaboration
                     </button>
@@ -761,11 +750,10 @@ export function SubmitChallengeIdea() {
                           seekingCollaborators: false,
                         })
                       }
-                      className={`px-5 py-2 rounded-xl text-[13px] font-bold border transition-all cursor-pointer ${
-                        !formData.seekingCollaborators
+                      className={`px-5 py-2 rounded-xl text-[13px] font-bold border transition-all cursor-pointer ${!formData.seekingCollaborators
                           ? 'bg-[#123B2A] text-white border-[#123B2A]'
                           : 'bg-[#FAF9F5] text-[#6B5845] border-[#EEEAE1]'
-                      }`}
+                        }`}
                     >
                       No, submit individually
                     </button>
@@ -785,11 +773,10 @@ export function SubmitChallengeIdea() {
                             key={item}
                             type="button"
                             onClick={() => toggleCollabNeed(item)}
-                            className={`px-3.5 py-2 rounded-xl text-[12.5px] font-mono font-bold transition-all cursor-pointer border ${
-                              isSelected
+                            className={`px-3.5 py-2 rounded-xl text-[12.5px] font-mono font-bold transition-all cursor-pointer border ${isSelected
                                 ? 'bg-[#F0FDF4] border-[#BBF7D0] text-[#15803D]'
                                 : 'bg-white border-[#EEEAE1] text-[#6B5845] hover:bg-[#FAF9F5]'
-                            }`}
+                              }`}
                           >
                             <span>{isSelected ? '✓ ' : '+ '}</span>
                             <span>{item}</span>

@@ -20,37 +20,65 @@ router.get('/', async (req, res, next) => {
       whereClause.domain = { equals: domain, mode: 'insensitive' };
     }
 
-    const [impactRecords, totalChallenges, totalIdeas, totalCollabs, totalSolutions] =
-      await Promise.all([
-        prisma.impactRecord.findMany({
-          where: whereClause,
-          include: {
-            solution: {
-              select: { id: true, title: true, domain: true, stage: true },
-            },
+    const [
+      impactRecords,
+      totalChallenges,
+      totalIdeas,
+      totalCollabs,
+      totalSolutions,
+      fieldDeploymentsCount,
+      projectsAgg,
+      challengesAgg,
+      distinctDistricts,
+    ] = await Promise.all([
+      prisma.impactRecord.findMany({
+        where: whereClause,
+        include: {
+          solution: {
+            select: { id: true, title: true, domain: true, stage: true },
           },
-          orderBy: { recordedAt: 'desc' },
-        }),
-        prisma.challenge.count(),
-        prisma.idea.count(),
-        prisma.collaboration.count(),
-        prisma.solution.count(),
-      ]);
+        },
+        orderBy: { recordedAt: 'desc' },
+      }),
+      prisma.challenge.count({ where: whereClause }),
+      prisma.idea.count(),
+      prisma.collaboration.count(),
+      prisma.solution.count(),
+      prisma.project.count({
+        where: { stage: { in: ['FIELD_PILOT', 'IMPLEMENTATION', 'SCALE'] } },
+      }),
+      prisma.project.aggregate({
+        _sum: { affectedPopulation: true },
+      }),
+      prisma.challenge.aggregate({
+        _sum: { affectedPopulation: true },
+      }),
+      prisma.challenge.findMany({
+        where: { districtId: { not: null } },
+        select: { districtId: true },
+        distinct: ['districtId'],
+      }),
+    ]);
+
+    const totalPeople =
+      (projectsAgg._sum.affectedPopulation || 0) + (challengesAgg._sum.affectedPopulation || 0);
+    const peopleReachedFormatted =
+      totalPeople > 0 ? `${totalPeople.toLocaleString()}+` : '0';
 
     const macroMetrics = {
-      peopleReached: '12,400+',
-      activeDistricts: 18,
-      solutionsInProgress: totalSolutions || 32,
-      fieldDeployments: 7,
+      peopleReached: peopleReachedFormatted,
+      activeDistricts: distinctDistricts.length || 1,
+      solutionsInProgress: totalSolutions,
+      fieldDeployments: fieldDeploymentsCount,
     };
 
     const journeyPipeline = [
-      { stage: 'Challenges Identified', count: totalChallenges || 148 },
-      { stage: 'Ideas Submitted', count: totalIdeas || 320 },
-      { stage: 'Active Projects', count: totalCollabs || 46 },
-      { stage: 'Solutions Developed', count: totalSolutions || 28 },
-      { stage: 'Field Deployments', count: 7 },
-      { stage: 'People Reached', count: '12,400+' },
+      { stage: 'Challenges Identified', count: totalChallenges },
+      { stage: 'Ideas Submitted', count: totalIdeas },
+      { stage: 'Active Projects', count: totalCollabs },
+      { stage: 'Solutions Developed', count: totalSolutions },
+      { stage: 'Field Deployments', count: fieldDeploymentsCount },
+      { stage: 'People Reached', count: peopleReachedFormatted },
     ];
 
     sendSuccess(

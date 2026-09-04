@@ -1,7 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInnovationStore } from '../../stores/innovationStore';
-import { MapPin, Users, Clock, ArrowRight, PlusCircle, BookmarkCheck } from 'lucide-react';
+import { getUserChallenges } from '../../services/citizenDashboardApi';
+import { fetchChallenges } from '../../services/api/challenges';
+import { MapPin, Users, ArrowRight, PlusCircle, BookmarkCheck, Loader2 } from 'lucide-react';
 
 interface CitizenChallengeItem {
   id: string;
@@ -16,91 +18,96 @@ interface CitizenChallengeItem {
   tagColor: string;
 }
 
-const MY_CHALLENGES: CitizenChallengeItem[] = [
-  {
-    id: 'JS-2026-00024',
-    title: 'Frequent Breakdown of Drinking Water Handpumps in Murhu Block',
-    district: 'Khunti',
-    focusArea: 'Water Infrastructure',
-    category: 'joined',
-    status: 'Contributing',
-    contributionStatus: 'Idea shortlisted for field pilot deployment',
-    collaboratorsCount: 14,
-    deadlineText: 'Sprint ends in 8 days',
-    tagColor: 'text-[#0284C7] bg-[#F0F9FF] border-[#BAE6FD]',
-  },
-  {
-    id: 'JS-2026-00019',
-    title: 'Improving Post-Harvest Storage & Market Access for Lac Collectors',
-    district: 'Latehar',
-    focusArea: 'Forest Economy',
-    category: 'joined',
-    status: 'In Progress',
-    contributionStatus: 'Participating in weekly technical design call',
-    collaboratorsCount: 21,
-    deadlineText: '12 days active',
-    tagColor: 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]',
-  },
-  {
-    id: 'JS-2024-00003',
-    title: 'Early Detection of Ground Subsidence & Mine Inundation in Jharia',
-    district: 'Dhanbad',
-    focusArea: 'Mining Safety',
-    category: 'saved',
-    status: 'Exploring',
-    contributionStatus: 'Saved to review research papers and open vacancies',
-    collaboratorsCount: 19,
-    deadlineText: 'Open for proposals',
-    tagColor: 'text-[#B45309] bg-[#FFFBEB] border-[#FDE68A]',
-  },
-  {
-    id: 'JS-2026-00031',
-    title: 'Intermittent Solar Microgrid Failures in Remote Tribal Hamlets',
-    district: 'Gumla',
-    focusArea: 'Clean Energy',
-    category: 'submitted',
-    status: 'In Review',
-    contributionStatus: 'Under preliminary district verification by BDO',
-    collaboratorsCount: 6,
-    deadlineText: 'Submitted 4 days ago',
-    tagColor: 'text-[#7E22CE] bg-[#FAF5FF] border-[#E9D5FF]',
-  },
-  {
-    id: 'JS-2025-00012',
-    title: 'Fluoride Contamination Mitigation in Simdega Borewells',
-    district: 'Simdega',
-    focusArea: 'Public Health',
-    category: 'completed',
-    status: 'Completed',
-    contributionStatus: 'Activated decentralized filtration units with Jal Samiti',
-    collaboratorsCount: 32,
-    deadlineText: 'Completed Oct 2025',
-    tagColor: 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]',
-  },
-];
-
 export function DashboardChallenges() {
   const navigate = useNavigate();
   const { joinedChallengeIds, savedChallengeIds } = useInnovationStore();
-  const [activeTab, setActiveTab] = useState<'joined' | 'saved' | 'submitted' | 'completed'>(
-    'joined',
-  );
+  const [activeTab, setActiveTab] = useState<'joined' | 'saved' | 'submitted' | 'completed'>('joined');
 
-  // Dynamically compute list reflecting joined and saved IDs
-  const allChallenges = useMemo(() => {
-    return MY_CHALLENGES.map((ch) => {
-      let isJoined = joinedChallengeIds.includes(ch.id);
-      let isSaved = savedChallengeIds.includes(ch.id);
+  const [dbChallenges, setDbChallenges] = useState<CitizenChallengeItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-      // If category was joined originally or dynamically added to store
-      if (isJoined && ch.category !== 'submitted' && ch.category !== 'completed') {
-        return { ...ch, category: 'joined' as const, status: 'Contributing' as const };
-      }
-      if (isSaved && ch.category !== 'submitted' && ch.category !== 'completed') {
-        return { ...ch, category: 'saved' as const };
-      }
-      return ch;
-    });
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    Promise.all([
+      getUserChallenges(),
+      fetchChallenges(),
+    ])
+      .then(([userChs, publicChs]) => {
+        if (!isMounted) return;
+
+        const items: CitizenChallengeItem[] = [];
+
+        // 1. User submitted challenges
+        userChs.forEach((ch) => {
+          let status: CitizenChallengeItem['status'] = 'In Review';
+          if (ch.status === 'IN_COLLABORATION' || ch.status === 'SOLUTION_IN_PROGRESS' || ch.status === 'MATCHED') {
+            status = 'In Progress';
+          } else if (ch.status === 'COMPLETED') {
+            status = 'Completed';
+          }
+
+          items.push({
+            id: ch.id,
+            title: ch.title,
+            district: ch.district,
+            focusArea: ch.category,
+            category: ch.status === 'COMPLETED' ? 'completed' : 'submitted',
+            status,
+            contributionStatus: `Submitted by you on ${ch.submittedDate}`,
+            collaboratorsCount: ch.collaboratorsCount,
+            deadlineText: ch.statusLabel || 'In Progress',
+            tagColor: 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]',
+          });
+        });
+
+        // 2. Joined & Saved from public challenges
+        publicChs.forEach((ch) => {
+          const isJoined = joinedChallengeIds.includes(ch.id);
+          const isSaved = savedChallengeIds.includes(ch.id);
+
+          if (isJoined) {
+            items.push({
+              id: ch.id,
+              title: ch.title,
+              district: ch.district,
+              focusArea: ch.category,
+              category: 'joined',
+              status: 'Contributing',
+              contributionStatus: 'Active contributor squad member',
+              collaboratorsCount: ch.collaboratorsCount,
+              deadlineText: 'Active sprint',
+              tagColor: 'text-[#0284C7] bg-[#F0F9FF] border-[#BAE6FD]',
+            });
+          } else if (isSaved) {
+            items.push({
+              id: ch.id,
+              title: ch.title,
+              district: ch.district,
+              focusArea: ch.category,
+              category: 'saved',
+              status: 'Exploring',
+              contributionStatus: 'Bookmarked for collaboration',
+              collaboratorsCount: ch.collaboratorsCount,
+              deadlineText: 'Open for proposals',
+              tagColor: 'text-[#B45309] bg-[#FFFBEB] border-[#FDE68A]',
+            });
+          }
+        });
+
+        setDbChallenges(items);
+      })
+      .catch((err) => {
+        console.warn('Failed to load dashboard challenges:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [joinedChallengeIds, savedChallengeIds]);
 
   const tabs: Array<{
@@ -111,26 +118,28 @@ export function DashboardChallenges() {
     {
       id: 'joined',
       label: 'Joined Challenges',
-      count: allChallenges.filter((c) => c.category === 'joined').length,
+      count: dbChallenges.filter((c) => c.category === 'joined').length,
     },
     {
       id: 'saved',
       label: 'Saved',
-      count: allChallenges.filter((c) => c.category === 'saved').length,
+      count: dbChallenges.filter((c) => c.category === 'saved').length,
     },
     {
       id: 'submitted',
       label: 'Submitted by Me',
-      count: allChallenges.filter((c) => c.category === 'submitted').length,
+      count: dbChallenges.filter((c) => c.category === 'submitted').length,
     },
     {
       id: 'completed',
       label: 'Completed',
-      count: allChallenges.filter((c) => c.category === 'completed').length,
+      count: dbChallenges.filter((c) => c.category === 'completed').length,
     },
   ];
 
-  const filteredChallenges = allChallenges.filter((c) => c.category === activeTab);
+  const filteredChallenges = useMemo(() => {
+    return dbChallenges.filter((c) => c.category === activeTab);
+  }, [dbChallenges, activeTab]);
 
   const getStatusBadge = (status: CitizenChallengeItem['status']) => {
     switch (status) {
@@ -188,86 +197,64 @@ export function DashboardChallenges() {
         </button>
       </div>
 
-      {/* ── Challenge Cards Grid ── */}
-      {filteredChallenges.length === 0 ? (
+      {loading ? (
+        <div className="py-20 text-center flex flex-col items-center justify-center space-y-2">
+          <Loader2 className="h-6 w-6 animate-spin text-[#123B2A]" />
+          <span className="text-[13px] font-mono text-[#6B5845]">Loading challenge portfolio...</span>
+        </div>
+      ) : filteredChallenges.length === 0 ? (
         <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
           <BookmarkCheck className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
           <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No challenges in this folder</h3>
           <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-            Explore active public problem calls across Jharkhand to start contributing ideas or
-            tracking initiatives.
+            Explore active public problem calls across Jharkhand to start contributing ideas or tracking initiatives.
           </p>
           <button
             type="button"
             onClick={() => navigate('/challenges')}
-            className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold"
+            className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold cursor-pointer hover:bg-[#0D2B1E]"
           >
-            Explore Public Challenges →
+            Explore Public Challenges
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredChallenges.map((item) => (
+          {filteredChallenges.map((ch) => (
             <div
-              key={item.id}
-              className="rounded-3xl border border-[#EEEAE1] bg-white p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              key={ch.id}
+              onClick={() => navigate(`/challenges/${ch.id}`)}
+              className="p-5 rounded-3xl border border-[#EEEAE1] bg-white hover:border-[#123B2A]/40 transition-all cursor-pointer shadow-2xs hover:shadow-xs space-y-3 group text-left"
             >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded border ${item.tagColor}`}
-                  >
-                    {item.focusArea}
-                  </span>
-                  <span
-                    className={`text-[10.5px] font-mono font-bold uppercase px-2 py-0.5 rounded border ${getStatusBadge(
-                      item.status,
-                    )}`}
-                  >
-                    {item.status}
-                  </span>
+              <div className="flex items-start justify-between gap-2">
+                <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full border ${ch.tagColor}`}>
+                  {ch.focusArea}
+                </span>
+                <span className={`text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full border ${getStatusBadge(ch.status)}`}>
+                  {ch.status}
+                </span>
+              </div>
+
+              <h4 className="text-[1.05rem] font-bold text-[#1D2522] leading-snug group-hover:text-[#123B2A] transition-colors">
+                {ch.title}
+              </h4>
+
+              <div className="flex items-center gap-3 text-[12px] text-[#6B5845]">
+                <div className="flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5 text-[#123B2A]" />
+                  <span>{ch.district}</span>
                 </div>
-
-                <h3 className="text-[1.15rem] font-bold text-[#1D2522] leading-snug">
-                  {item.title}
-                </h3>
-
-                <div className="flex items-center gap-3 text-[11.5px] font-mono text-[#6B5845]">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3 text-[#BE123C]" />
-                    {item.district}, Jharkhand
-                  </span>
-                  <span>·</span>
-                  <span className="flex items-center gap-1">
-                    <Users className="h-3 w-3 text-[#123B2A]" />
-                    {item.collaboratorsCount} Team
-                  </span>
-                </div>
-
-                {/* Progress / Contribution Status Note */}
-                <div className="p-3 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12px] text-[#1D2522] space-y-0.5">
-                  <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
-                    YOUR INVOLVEMENT
-                  </span>
-                  <p className="font-semibold">{item.contributionStatus}</p>
+                <span>•</span>
+                <div className="flex items-center gap-1">
+                  <Users className="h-3.5 w-3.5 text-[#123B2A]" />
+                  <span>{ch.collaboratorsCount} Collaborators</span>
                 </div>
               </div>
 
-              {/* Bottom Actions */}
-              <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-between">
-                <span className="text-[11px] font-mono text-[#6B5845] flex items-center gap-1">
-                  <Clock className="h-3 w-3 text-[#F5A623]" />
-                  {item.deadlineText}
+              <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between text-[11.5px]">
+                <span className="text-[#6B5845] line-clamp-1">{ch.contributionStatus}</span>
+                <span className="font-bold text-[#123B2A] flex items-center gap-1 shrink-0 group-hover:translate-x-0.5 transition-transform">
+                  View Detail <ArrowRight className="h-3 w-3" />
                 </span>
-
-                <button
-                  type="button"
-                  onClick={() => navigate(`/challenges/${item.id}`)}
-                  className="inline-flex items-center gap-1 text-[12px] font-bold text-[#123B2A] hover:underline cursor-pointer"
-                >
-                  <span>Open Case File</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
               </div>
             </div>
           ))}

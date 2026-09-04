@@ -1,77 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Check, X, UserPlus, ArrowRight } from 'lucide-react';
+import { Check, X, ArrowRight, Loader2, Handshake } from 'lucide-react';
+import { api } from '../../services/api';
 
-interface CollaborationRequest {
+interface PartnerItem {
+  id: string;
+  name: string;
+  role: string;
+  org: string;
+  type: string;
+  project: string;
+}
+
+interface CollabRequest {
   id: string;
   senderName: string;
   senderRole: string;
   organization: string;
-  category: 'University' | 'Industry' | 'Government' | 'Community';
+  category: string;
   projectContext: string;
   date: string;
   status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
 }
 
-const INITIAL_REQUESTS: CollaborationRequest[] = [
-  {
-    id: 'req-1',
-    senderName: 'Prof. Alok Mukherjee',
-    senderRole: 'Head of Embedded Systems Lab',
-    organization: 'BIT Mesra',
-    category: 'University',
-    projectContext:
-      'Wants to collaborate on acoustic sensor algorithm validation for Murhu water pilot',
-    date: 'Yesterday',
-    status: 'PENDING',
-  },
-  {
-    id: 'req-2',
-    senderName: 'Manoj Tirkey',
-    senderRole: 'Assistant District Program Officer',
-    organization: 'Khunti District Collectorate',
-    category: 'Government',
-    projectContext:
-      'Requesting permission to add 5 new Gram Panchayat water points to sensor telemetry',
-    date: '3 days ago',
-    status: 'PENDING',
-  },
-];
-
-const ACTIVE_PARTNERS = [
-  {
-    name: 'Dr. Ananya Singh',
-    role: 'Project Lead',
-    org: 'BIT Mesra',
-    type: 'University Lab',
-    project: 'Smart Rural Water Infrastructure Monitoring',
-  },
-  {
-    name: 'Amit Kumar',
-    role: 'Hardware Mentor',
-    org: 'Jharkhand IoT Solutions',
-    type: 'Industry Partner',
-    project: 'Smart Rural Water Infrastructure Monitoring',
-  },
-  {
-    name: 'Priya Verma',
-    role: 'Field Coordinator',
-    org: 'Rural Innovation Lab',
-    type: 'Community NGO',
-    project: 'Murhu Block Water Testbed',
-  },
-  {
-    name: 'Sukhram Munda',
-    role: 'Panchayat Representative',
-    org: 'Murhu Jal Samiti',
-    type: 'Gram Sabha',
-    project: 'Water Infrastructure Governance',
-  },
-];
-
 export function DashboardCollaborations() {
   const navigate = useNavigate();
-  const [requests, setRequests] = useState<CollaborationRequest[]>(INITIAL_REQUESTS);
+  const [partners, setPartners] = useState<PartnerItem[]>([]);
+  const [requests, setRequests] = useState<CollabRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    api.get<any[]>('/collaborations')
+      .then((res) => {
+        if (!isMounted) return;
+        const list = Array.isArray(res) ? res : (res as any)?.data || [];
+
+        const partnerList: PartnerItem[] = [];
+        const reqList: CollabRequest[] = [];
+
+        list.forEach((c: any) => {
+          const members = c.members || [];
+          members.forEach((m: any) => {
+            partnerList.push({
+              id: m.id,
+              name: m.memberName,
+              role: m.role || 'Consortium Member',
+              org: m.institution || 'Jharkhand Institutional Partner',
+              type: m.role?.includes('Lead') ? 'University Lead' : 'Technical Partner',
+              project: c.title || 'Civic Innovation Consortium',
+            });
+          });
+
+          if (c.stage === 'TEAM_FORMING' || c.stage === 'PROPOSAL') {
+            reqList.push({
+              id: c.id,
+              senderName: members[0]?.memberName || 'Institutional Coordinator',
+              senderRole: members[0]?.role || 'R&D Lead',
+              organization: members[0]?.institution || 'Academic Institute',
+              category: 'University',
+              projectContext: c.title,
+              date: new Date(c.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+              status: 'PENDING',
+            });
+          }
+        });
+
+        setPartners(partnerList);
+        setRequests(reqList);
+      })
+      .catch((err) => {
+        console.warn('Failed to load collaborations from API:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleAction = (id: string, newStatus: 'ACCEPTED' | 'DECLINED') => {
     setRequests((prev) => prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r)));
@@ -86,7 +96,7 @@ export function DashboardCollaborations() {
             ECOSYSTEM NETWORKS
           </span>
           <h2 className="text-[1.3rem] font-bold text-[#1D2522]">
-            Collaboration Network & Partner Requests
+            Active Consortium Partners & Requests
           </h2>
         </div>
 
@@ -100,112 +110,137 @@ export function DashboardCollaborations() {
         </button>
       </div>
 
-      {/* ── Pending Requests Section ── */}
-      <div className="rounded-3xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-[1.1rem] font-bold text-[#1D2522] flex items-center gap-2">
-            <UserPlus className="h-4 w-4 text-[#F5A623]" />
-            <span>Pending Collaboration Invitations</span>
-          </h3>
-          <span className="text-[11px] font-mono text-[#6B5845]">
-            {requests.filter((r) => r.status === 'PENDING').length} Action Required
-          </span>
+      {loading ? (
+        <div className="py-20 text-center flex flex-col items-center justify-center space-y-2">
+          <Loader2 className="h-6 w-6 animate-spin text-[#123B2A]" />
+          <span className="text-[13px] font-mono text-[#6B5845]">Loading collaboration telemetry...</span>
         </div>
+      ) : (
+        <div className="space-y-8">
+          {/* Section 1: Inbound Partnership Requests */}
+          {requests.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-[1.05rem] font-bold text-[#1D2522] flex items-center gap-2">
+                <span>Inbound Collaboration Invitations</span>
+                <span className="text-[10.5px] font-mono px-2 py-0.5 rounded-full bg-[#123B2A] text-white">
+                  {requests.filter((r) => r.status === 'PENDING').length} Pending
+                </span>
+              </h3>
 
-        <div className="space-y-3">
-          {requests.map((req) => (
-            <div
-              key={req.id}
-              className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[13px]"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-[11px] font-mono text-[#6B5845]">
-                  <span className="font-bold text-[#123B2A] bg-white px-2 py-0.5 rounded border border-[#EEEAE1]">
-                    {req.category}
-                  </span>
-                  <span>·</span>
-                  <span>{req.date}</span>
-                </div>
-                <div className="font-bold text-[#1D2522]">
-                  {req.senderName} ({req.senderRole} · {req.organization})
-                </div>
-                <p className="text-[12.5px] text-[#6B5845]">{req.projectContext}</p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="shrink-0 flex items-center gap-2">
-                {req.status === 'PENDING' ? (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => handleAction(req.id, 'ACCEPTED')}
-                      className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-[#15803D] hover:bg-[#166534] text-white text-[12px] font-bold transition-all cursor-pointer shadow-xs"
-                    >
-                      <Check className="h-3.5 w-3.5" />
-                      <span>Accept</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAction(req.id, 'DECLINED')}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#EEEAE1] text-[#6B5845] hover:bg-white text-[12px] font-semibold transition-all cursor-pointer"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                      <span>Decline</span>
-                    </button>
-                  </>
-                ) : (
-                  <span
-                    className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg ${
-                      req.status === 'ACCEPTED'
-                        ? 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
-                        : 'bg-[#FAF9F5] text-[#6B5845]'
-                    }`}
+              <div className="space-y-3">
+                {requests.map((req) => (
+                  <div
+                    key={req.id}
+                    className="p-5 rounded-3xl border border-[#EEEAE1] bg-white shadow-2xs space-y-3"
                   >
-                    {req.status === 'ACCEPTED' ? '✓ Accepted' : 'Declined'}
-                  </span>
-                )}
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                      <div>
+                        <div className="flex items-center gap-2 text-[11px] font-mono text-[#6B5845]">
+                          <span>{req.category}</span>
+                          <span>•</span>
+                          <span>{req.date}</span>
+                        </div>
+                        <h4 className="text-[1.05rem] font-bold text-[#1D2522] mt-0.5">
+                          {req.senderName} — {req.senderRole}
+                        </h4>
+                        <span className="text-[12px] text-[#123B2A] font-semibold">
+                          {req.organization}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {req.status === 'PENDING' ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => handleAction(req.id, 'ACCEPTED')}
+                              className="px-3.5 py-1.5 rounded-xl bg-[#123B2A] hover:bg-[#0D2B1E] text-white text-[12px] font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                            >
+                              <Check className="h-3.5 w-3.5" />
+                              <span>Accept</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleAction(req.id, 'DECLINED')}
+                              className="px-3.5 py-1.5 rounded-xl bg-white border border-[#EEEAE1] hover:bg-[#FAF9F5] text-[#6B5845] text-[12px] font-bold flex items-center gap-1.5 cursor-pointer transition-all"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                              <span>Decline</span>
+                            </button>
+                          </>
+                        ) : (
+                          <span
+                            className={`text-[11px] font-mono font-bold px-3 py-1 rounded-full border ${
+                              req.status === 'ACCEPTED'
+                                ? 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0]'
+                                : 'bg-[#FFF5F5] text-[#BE123C] border-[#FECDD3]'
+                            }`}
+                          >
+                            {req.status}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <p className="text-[13px] text-[#3D4C44] leading-relaxed pt-1 border-t border-[#EEEAE1]">
+                      Project context: <strong className="text-[#1D2522]">{req.projectContext}</strong>
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          )}
+
+          {/* Section 2: Active Multi-Stakeholder Working Group */}
+          <div className="space-y-3">
+            <h3 className="text-[1.05rem] font-bold text-[#1D2522]">
+              Active Consortium Members ({partners.length})
+            </h3>
+
+            {partners.length === 0 ? (
+              <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+                <Handshake className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
+                <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No active consortiums yet</h3>
+                <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
+                  Browse open public challenges and join multidisciplinary squads with academic researchers and CSR partners.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate('/collaborations')}
+                  className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold cursor-pointer hover:bg-[#0D2B1E]"
+                >
+                  Explore Public Collaborations
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {partners.map((partner) => (
+                  <div
+                    key={partner.id}
+                    className="p-5 rounded-3xl border border-[#EEEAE1] bg-white shadow-2xs space-y-2.5"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <h4 className="text-[1.05rem] font-bold text-[#1D2522]">{partner.name}</h4>
+                        <span className="text-[12px] text-[#6B5845]">{partner.role}</span>
+                      </div>
+                      <span className="text-[10.5px] font-mono px-2 py-0.5 rounded-md bg-[#FAF9F5] border border-[#EEEAE1] text-[#123B2A]">
+                        {partner.type}
+                      </span>
+                    </div>
+
+                    <div className="text-[12px] text-[#123B2A] font-semibold">{partner.org}</div>
+
+                    <div className="pt-2 border-t border-[#EEEAE1] text-[11.5px] text-[#6B5845]">
+                      Project: <strong className="text-[#1D2522]">{partner.project}</strong>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-
-      {/* ── Active Consortium Roster ── */}
-      <div className="rounded-3xl border border-[#EEEAE1] bg-white p-6 shadow-2xs space-y-4">
-        <h3 className="text-[1.1rem] font-bold text-[#1D2522] flex items-center gap-2">
-          <Users className="h-4 w-4 text-[#123B2A]" />
-          <span>Active Institutional & Field Collaborators ({ACTIVE_PARTNERS.length})</span>
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-          {ACTIVE_PARTNERS.map((partner, i) => (
-            <div
-              key={i}
-              className="p-4 rounded-2xl border border-[#EEEAE1] bg-[#FAF9F5] space-y-2 text-[12.5px]"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[10.5px] font-mono uppercase font-bold text-[#123B2A] bg-white px-2 py-0.5 rounded border border-[#EEEAE1]">
-                  {partner.type}
-                </span>
-                <span className="text-[11px] font-mono text-[#15803D] font-bold">● Active</span>
-              </div>
-
-              <div>
-                <strong className="text-[14px] text-[#1D2522] block font-sans">
-                  {partner.name}
-                </strong>
-                <span className="text-[12px] text-[#6B5845]">
-                  {partner.role} · {partner.org}
-                </span>
-              </div>
-
-              <div className="text-[11.5px] text-[#6B5845] pt-1 border-t border-[#EEEAE1]">
-                Focus Project: <strong className="text-[#1D2522]">{partner.project}</strong>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -45,104 +45,65 @@ export async function getProjects(filters?: Partial<ProjectFiltersState>): Promi
     }
 
     const queryString = params.toString() ? `?${params.toString()}` : '';
-    const dbProjects = await api.get<any[]>(`/projects${queryString}`);
+    const rawProjects = await api.get<any>(`/projects${queryString}`);
+    const dbProjects = Array.isArray(rawProjects) ? rawProjects : rawProjects?.data || [];
 
-    if (Array.isArray(dbProjects) && dbProjects.length > 0) {
-      return dbProjects.map((p) => {
-        const canonical =
-          SEEDED_PROJECTS.find(
-            (cp) =>
-              cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() ||
-              cp.id === p.id,
-          ) || SEEDED_PROJECTS[0];
+    return dbProjects.map((p: any) => {
+      const canonical =
+        SEEDED_PROJECTS.find(
+          (cp) =>
+            cp.projectCode.toLowerCase() === (p.referenceCode || '').toLowerCase() ||
+            cp.id === p.id,
+        ) || SEEDED_PROJECTS[0];
 
-        const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
-        const completedMilestones =
-          p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ??
-          canonical.milestoneProgress.completed;
-        const firstMetric = p.impactMetrics?.[0];
+      const totalMilestones = p.milestones?.length || canonical.milestoneProgress.total;
+      const completedMilestones =
+        p.milestones?.filter((m: any) => m.status === 'COMPLETED').length ??
+        canonical.milestoneProgress.completed;
+      const firstMetric = p.impactMetrics?.[0];
 
-        return {
-          ...canonical,
-          id: p.id,
-          projectCode: p.referenceCode || canonical.projectCode,
-          title: p.title || canonical.title,
-          description: p.description || canonical.description,
-          summary: p.impactSummary || canonical.summary,
-          stage: (p.stage || canonical.stage) as ProjectStage,
-          status: (p.status || canonical.status) as ProjectStatus,
-          domain: p.domain || canonical.domain,
-          district: p.district || canonical.district,
-          block: p.block || canonical.block,
-          beneficiaries: p.affectedPopulation || canonical.beneficiaries,
-          potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
-          impactMetric: firstMetric
-            ? `${firstMetric.currentValue} ${firstMetric.unit}`
-            : canonical.impactMetric,
-          milestoneProgress: {
-            completed: completedMilestones,
-            total: totalMilestones,
-          },
-          progressPercentage: Math.round(
-            (completedMilestones / Math.max(totalMilestones, 1)) * 100,
-          ),
-        };
-      });
-    }
-  } catch (error) {
-    console.warn('Backend /projects API unreachable, using seeded data fallback:', error);
-  }
-
-  let results = [...SEEDED_PROJECTS];
-
-  if (!filters) return results;
-
-  // Search filter
-  if (filters.search && filters.search.trim()) {
-    const q = filters.search.toLowerCase().trim();
-    results = results.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.oneLineDescription.toLowerCase().includes(q) ||
-        p.domain.toLowerCase().includes(q) ||
-        p.district.toLowerCase().includes(q) ||
-        (p.block && p.block.toLowerCase().includes(q)) ||
-        p.leadInstitution.toLowerCase().includes(q),
-    );
-  }
-
-  // Domain filter
-  if (filters.domain && filters.domain !== 'All Domains' && filters.domain !== 'All Focus Areas') {
-    results = results.filter((p) => p.domain.toLowerCase() === filters.domain!.toLowerCase());
-  }
-
-  // District filter
-  if (filters.district && filters.district !== 'All Districts') {
-    results = results.filter((p) => p.district.toLowerCase() === filters.district!.toLowerCase());
-  }
-
-  // Stage filter
-  if (filters.stage && filters.stage !== 'ALL' && filters.stage !== 'ALL PROJECTS') {
-    results = results.filter((p) => p.stage === (filters.stage as ProjectStage));
-  }
-
-  // Institution filter
-  if (filters.institution && filters.institution !== 'All Institutions') {
-    results = results.filter(
-      (p) =>
-        p.leadInstitution.toLowerCase().includes(filters.institution!.toLowerCase()) ||
-        p.partners.some((partner) =>
-          partner.name.toLowerCase().includes(filters.institution!.toLowerCase()),
+      return {
+        ...canonical,
+        id: p.id,
+        projectCode: p.referenceCode || canonical.projectCode,
+        title: p.title || canonical.title,
+        description: p.description || canonical.description,
+        summary: p.impactSummary || canonical.summary,
+        stage: (p.stage || canonical.stage) as ProjectStage,
+        status: (p.status || canonical.status) as ProjectStatus,
+        domain: p.domain || canonical.domain,
+        district: p.district || canonical.district,
+        block: p.block || canonical.block,
+        beneficiaries: p.affectedPopulation || canonical.beneficiaries,
+        potentialBeneficiaries: p.affectedPopulation || canonical.potentialBeneficiaries,
+        impactMetric: firstMetric
+          ? `${firstMetric.currentValue} ${firstMetric.unit}`
+          : canonical.impactMetric,
+        milestoneProgress: {
+          completed: completedMilestones,
+          total: totalMilestones,
+        },
+        progressPercentage: Math.round(
+          (completedMilestones / Math.max(totalMilestones, 1)) * 100,
         ),
-    );
+      };
+    });
+  } catch (error) {
+    console.warn('Backend /projects API error:', error);
+    throw error;
   }
-
-  return results;
 }
 
-export async function getFeaturedProject(): Promise<Project> {
-  return SEEDED_PROJECTS.find((p) => p.featured) || SEEDED_PROJECTS[0];
+export async function getFeaturedProject(): Promise<Project | null> {
+  try {
+    const list = await getProjects();
+    if (list && list.length > 0) {
+      return list.find((p) => p.featured) || list[0];
+    }
+  } catch {
+    // fallback
+  }
+  return null;
 }
 
 export async function getProjectById(id: string): Promise<Project | null> {
@@ -189,13 +150,11 @@ export async function getProjectById(id: string): Promise<Project | null> {
       };
     }
   } catch (error) {
-    console.warn(`Backend /projects/${id} unreachable, using fallback:`, error);
+    console.warn(`Backend /projects/${id} fetch failed:`, error);
+    return null;
   }
 
-  const found = SEEDED_PROJECTS.find(
-    (p) => p.id.toLowerCase() === targetId || p.projectCode.toLowerCase() === targetId,
-  );
-  return found || null;
+  return null;
 }
 
 export async function getPortfolioStats(): Promise<PortfolioStats> {
@@ -273,7 +232,19 @@ export async function getCollaborationOpportunities(): Promise<
 }
 
 export async function getProjectMetrics(): Promise<PortfolioMetrics> {
-  await new Promise((resolve) => setTimeout(resolve, 40));
+  try {
+    const ov = await api.get<any>('/dashboard/overview');
+    if (ov) {
+      return {
+        ...PORTFOLIO_METRICS,
+        activeProjects: ov.projectCount || PORTFOLIO_METRICS.activeProjects,
+        districtsReached: ov.activeDistricts || PORTFOLIO_METRICS.districtsReached,
+        peopleImpacted: ov.peopleReached ? `${ov.peopleReached.toLocaleString()}+` : PORTFOLIO_METRICS.peopleImpacted,
+      };
+    }
+  } catch (err) {
+    console.warn('Failed to load portfolio metrics from overview:', err);
+  }
   return PORTFOLIO_METRICS;
 }
 

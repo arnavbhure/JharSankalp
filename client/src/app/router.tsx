@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AppShell } from '../components/layout/AppShell';
-import { Landing } from '../pages/Landing';
 import { Login } from '../pages/Login';
+import { ProtectedRoute } from '../components/auth/ProtectedRoute';
+import { Landing } from '../pages/Landing';
 import { Challenges } from '../pages/Challenges';
 import { ChallengeDetail } from '../pages/ChallengeDetail';
 import { ReportChallenge } from '../pages/ReportChallenge';
@@ -37,11 +38,16 @@ import { IndustryLayout } from '../layouts/IndustryLayout';
 import { IndustryDashboard } from '../pages/industry/IndustryDashboard';
 import { NotFound } from '../pages/NotFound';
 
+const GOV_ROLES = ['GOVERNMENT', 'GOVERNMENT_OFFICER', 'DISTRICT_OFFICER', 'STATE_ADMIN', 'SUPER_ADMIN', 'ADMIN'];
+const UNI_ROLES = ['UNIVERSITY', 'UNIVERSITY_ADMIN', 'FACULTY', 'STUDENT'];
+const IND_ROLES = ['INDUSTRY', 'STARTUP', 'MSME', 'CSR'];
+
 /**
  * Application router.
  * Separated into:
  * 1. Public Platform (AppShell with top navbar, outlet, footer)
- * 2. Authenticated Citizen Innovator Workspace (DashboardLayout with persistent sidebar, topbar, outlet)
+ * 2. Authenticated Citizen Innovator Workspace (Protected)
+ * 3. Role-Protected Government, University, and Industry Portals
  */
 export const router = createBrowserRouter([
   {
@@ -50,7 +56,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute portalName="Innovator Workspace">
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <DashboardOverview /> },
       { path: 'challenges', element: <DashboardChallenges /> },
@@ -66,7 +76,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/government',
-    element: <GovernmentLayout />,
+    element: (
+      <ProtectedRoute allowedRoles={GOV_ROLES} portalName="Government Portal">
+        <GovernmentLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <GovernmentDashboard /> },
       { path: 'dashboard', element: <GovernmentDashboard /> },
@@ -74,7 +88,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/university',
-    element: <UniversityLayout />,
+    element: (
+      <ProtectedRoute allowedRoles={UNI_ROLES} portalName="University Portal">
+        <UniversityLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <UniversityDashboard /> },
       { path: 'dashboard', element: <UniversityDashboard /> },
@@ -82,7 +100,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/industry',
-    element: <IndustryLayout />,
+    element: (
+      <ProtectedRoute allowedRoles={IND_ROLES} portalName="Industry Portal">
+        <IndustryLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <IndustryDashboard /> },
       { path: 'dashboard', element: <IndustryDashboard /> },
@@ -96,7 +118,14 @@ export const router = createBrowserRouter([
       { index: true, element: <Landing /> },
       { path: 'challenges', element: <Challenges /> },
       { path: 'challenges/:challengeId', element: <ChallengeDetail /> },
-      { path: 'challenges/:challengeId/submit-idea', element: <SubmitChallengeIdea /> },
+      {
+        path: 'challenges/:challengeId/submit-idea',
+        element: (
+          <ProtectedRoute portalName="Idea Submission">
+            <SubmitChallengeIdea />
+          </ProtectedRoute>
+        ),
+      },
       { path: 'ideas', element: <Ideas /> },
       { path: 'ideas/:ideaId', element: <IdeaDetail /> },
       { path: 'solutions', element: <Solutions /> },
@@ -106,39 +135,62 @@ export const router = createBrowserRouter([
       { path: 'about', element: <About /> },
       { path: 'projects', element: <Projects /> },
       { path: 'projects/:projectId', element: <ProjectDetail /> },
-      { path: 'workspace/projects/:projectId', element: <ProjectWorkspace /> },
-      { path: 'workspace/projects/:projectId/:tab', element: <ProjectWorkspace /> },
-      { path: 'report-challenge', element: <ReportChallenge /> },
-      { path: 'report', element: <ReportChallenge /> },
-      { path: 'submit-idea', element: <SubmitIdea /> },
-      { path: 'my-challenges', element: <MyChallenges /> },
-      { path: 'my-ideas', element: <MyIdeas /> },
-      // Phase 3: { path: 'my-challenges/:id', element: <ChallengeDetail /> },
-
-      // ── Ecosystem ─────────────────────────────────────
-      // Phase 6: { path: 'discover', element: <Discover /> },
-      // Phase 7: { path: 'consortiums/:id', element: <ConsortiumDetail /> },
-      // Phase 8: { path: 'projects/:id', element: <ProjectDetail /> },
-      // Phase 10: { path: 'missions', element: <MissionList /> },
-      // Phase 10: { path: 'missions/:id', element: <MissionDetail /> },
-
-      // ── Government ────────────────────────────────────
-      { path: 'government', element: <GovernmentDashboard /> },
-      { path: 'government/dashboard', element: <GovernmentDashboard /> },
-      // Phase 10: { path: 'government/districts', element: <GovDistricts /> },
-      // Phase 10: { path: 'government/missions', element: <GovMissions /> },
-      // Phase 10: { path: 'government/projects', element: <GovProjects /> },
-      // Phase 10: { path: 'government/impact', element: <GovImpact /> },
-      // Phase 10: { path: 'government/insights', element: <GovInsights /> },
-
-      // ── University ────────────────────────────────────
-      { path: 'university', element: <UniversityDashboard /> },
-      { path: 'university/dashboard', element: <UniversityDashboard /> },
-
-      // ── Industry ──────────────────────────────────────
-      { path: 'industry', element: <IndustryDashboard /> },
-      { path: 'industry/dashboard', element: <IndustryDashboard /> },
-      // Phase 7: { path: 'industry/partnerships', element: <IndustryPartnerships /> },
+      {
+        path: 'workspace/projects/:projectId',
+        element: (
+          <ProtectedRoute portalName="Project Workspace">
+            <ProjectWorkspace />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'workspace/projects/:projectId/:tab',
+        element: (
+          <ProtectedRoute portalName="Project Workspace">
+            <ProjectWorkspace />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'report-challenge',
+        element: (
+          <ProtectedRoute portalName="Challenge Reporting">
+            <ReportChallenge />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'report',
+        element: (
+          <ProtectedRoute portalName="Challenge Reporting">
+            <ReportChallenge />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'submit-idea',
+        element: (
+          <ProtectedRoute portalName="Idea Submission">
+            <SubmitIdea />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'my-challenges',
+        element: (
+          <ProtectedRoute portalName="My Challenges">
+            <MyChallenges />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'my-ideas',
+        element: (
+          <ProtectedRoute portalName="My Ideas">
+            <MyIdeas />
+          </ProtectedRoute>
+        ),
+      },
 
       // ── Catch-all ─────────────────────────────────────
       { path: '*', element: <NotFound /> },

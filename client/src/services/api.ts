@@ -1,5 +1,4 @@
 import type { ApiResponse } from '@jharsankalp/shared';
-import { useAuthStore } from '../stores/authStore';
 
 const API_BASE = '/api/v1';
 
@@ -11,19 +10,15 @@ interface FetchOptions extends RequestInit {
  * Typed API client with auth headers and error handling.
  */
 async function request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-  const { skipAuth, ...fetchOptions } = options;
-  const token = useAuthStore.getState().token;
+  const { skipAuth: _skipAuth, ...fetchOptions } = options;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(fetchOptions.headers as Record<string, string>),
   };
 
-  if (!skipAuth && token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   const response = await fetch(`${API_BASE}${endpoint}`, {
+    credentials: 'include',
     ...fetchOptions,
     headers,
   });

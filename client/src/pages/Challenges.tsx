@@ -9,7 +9,6 @@ import { ChallengeCTA } from '../components/challenges/ChallengeCTA';
 import { Footer } from '../components/layout/Footer';
 import { ChallengeItem } from '../types/challenges';
 import { fetchChallenges } from '../services/api/challenges';
-import { CANONICAL_CHALLENGES } from '../data/ecosystem';
 import {
   SearchX,
   ArrowDown,
@@ -23,28 +22,6 @@ import {
 
 const INITIAL_PAGE_SIZE = 6;
 
-const FALLBACK_CHALLENGES: ChallengeItem[] = CANONICAL_CHALLENGES.map((c, idx) => ({
-  id: c.id,
-  publicId: c.id,
-  title: c.title,
-  category: (c.domain as any) || 'Water Management',
-  district: c.district,
-  block: c.block,
-  locationDisplay: `${c.district} · ${c.block}`,
-  description: c.summary,
-  impactLevel: (c.priority === 'CRITICAL'
-    ? 'Critical'
-    : c.priority === 'HIGH'
-      ? 'High Impact'
-      : 'Medium Impact') as any,
-  status: 'Open for Collaboration',
-  dateReported: c.dateReported,
-  collaboratorsCount: 12 + idx * 3,
-  ideasCount: c.relatedIdeaIds.length || 2,
-  coordinates: { x: 45 + idx * 5, y: 50 + idx * 4 },
-  featured: idx === 0,
-}));
-
 export function Challenges() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -54,7 +31,7 @@ export function Challenges() {
   const urlStatus = searchParams.get('status');
 
   // Data State
-  const [challenges, setChallenges] = useState<ChallengeItem[]>(FALLBACK_CHALLENGES);
+  const [challenges, setChallenges] = useState<ChallengeItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -79,13 +56,10 @@ export function Challenges() {
         district: selectedDistrict,
         status: selectedStatus,
       });
-      if (data && data.length > 0) {
-        setChallenges(data);
-      } else {
-        setChallenges(FALLBACK_CHALLENGES);
-      }
-    } catch {
-      setChallenges(FALLBACK_CHALLENGES);
+      setChallenges(data || []);
+    } catch (err: any) {
+      setError(err?.message || 'Unable to connect to JharSankalp challenges database.');
+      setChallenges([]);
     } finally {
       setLoading(false);
     }

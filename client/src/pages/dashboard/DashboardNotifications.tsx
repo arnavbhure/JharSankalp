@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Bell, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Bell, Check, Loader2, BellOff } from 'lucide-react';
+import { api } from '../../services/api';
 
 interface NotificationItem {
   id: string;
@@ -10,44 +11,52 @@ interface NotificationItem {
   read: boolean;
 }
 
-const INITIAL_NOTIFS: NotificationItem[] = [
-  {
-    id: 'n-1',
-    title: 'Your idea was shortlisted for Murhu Field Pilot',
-    desc: 'BIT Mesra and DWSD District evaluation committee approved the acoustic vibration collar proposal for 20 village sites.',
-    time: '2 hours ago',
-    category: 'reviewer',
-    read: false,
-  },
-  {
-    id: 'n-2',
-    title: 'Khunti District Admin accepted consortium MOU',
-    desc: 'BDO Murhu office authorized field technicians to coordinate with your hardware deployment schedule.',
-    time: 'Yesterday',
-    category: 'milestone',
-    read: false,
-  },
-  {
-    id: 'n-3',
-    title: 'New comment on your challenge submission',
-    desc: 'Dr. Ramesh Soren posted a review question regarding sensor casing waterproofing against monsoon water inundation.',
-    time: '3 days ago',
-    category: 'reviewer',
-    read: true,
-  },
-  {
-    id: 'n-4',
-    title: 'System Security Verification Confirmed',
-    desc: 'Your Citizen Innovator identity credentials have been cryptographically verified by Jharkhand e-Governance.',
-    time: '1 week ago',
-    category: 'system',
-    read: true,
-  },
-];
-
 export function DashboardNotifications() {
-  const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFS);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    api.get<any[]>('/activities')
+      .then((res) => {
+        if (!isMounted) return;
+        const list = Array.isArray(res) ? res : (res as any)?.data || [];
+
+        const mapped: NotificationItem[] = list.map((act: any, i: number) => {
+          let category: NotificationItem['category'] = 'system';
+          if (act.type?.includes('VERIF') || act.type?.includes('REVIEW')) category = 'reviewer';
+          else if (act.type?.includes('PILOT') || act.type?.includes('MILESTONE')) category = 'milestone';
+          else if (act.type?.includes('TEAM') || act.type?.includes('PARTNER')) category = 'team';
+
+          return {
+            id: act.id,
+            title: act.type?.replace(/_/g, ' ') || 'Ecosystem Notification',
+            desc: act.message || 'Civic innovation milestone logged in Jharkhand ledger',
+            time: new Date(act.createdAt).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+            }),
+            category,
+            read: i > 2, // First 3 are unread
+          };
+        });
+
+        setNotifications(mapped);
+      })
+      .catch((err) => {
+        console.warn('Failed to load notifications from activities:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const markAllRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
@@ -98,34 +107,48 @@ export function DashboardNotifications() {
         </button>
       </div>
 
-      {/* ── Notifications List ── */}
-      <div className="space-y-3">
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => toggleRead(item.id)}
-            className={`p-5 rounded-3xl border transition-all cursor-pointer flex items-start gap-4 ${
-              item.read
-                ? 'bg-white border-[#EEEAE1]'
-                : 'bg-[#FFFDF9] border-2 border-[#123B2A]/40 shadow-xs'
-            }`}
-          >
-            <div className="h-9 w-9 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex items-center justify-center shrink-0 mt-0.5">
-              <Bell className={`h-4 w-4 ${item.read ? 'text-[#6B5845]' : 'text-[#F5A623]'}`} />
-            </div>
-
-            <div className="space-y-1 min-w-0 flex-1">
-              <div className="flex items-center justify-between gap-2">
-                <h4 className="text-[14px] font-bold text-[#1D2522]">{item.title}</h4>
-                <span className="text-[11px] font-mono text-[#6B5845] shrink-0">{item.time}</span>
+      {loading ? (
+        <div className="py-20 text-center flex flex-col items-center justify-center space-y-2">
+          <Loader2 className="h-6 w-6 animate-spin text-[#123B2A]" />
+          <span className="text-[13px] font-mono text-[#6B5845]">Loading notifications...</span>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
+          <BellOff className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
+          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No notifications right now</h3>
+          <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
+            You are completely caught up with ecosystem alerts and project reviews.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {filtered.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => toggleRead(item.id)}
+              className={`p-5 rounded-3xl border transition-all cursor-pointer flex items-start gap-4 ${
+                item.read
+                  ? 'bg-white border-[#EEEAE1]'
+                  : 'bg-[#FFFDF9] border-2 border-[#123B2A]/40 shadow-xs'
+              }`}
+            >
+              <div className="h-9 w-9 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] flex items-center justify-center shrink-0 mt-0.5">
+                <Bell className={`h-4 w-4 ${item.read ? 'text-[#6B5845]' : 'text-[#F5A623]'}`} />
               </div>
-              <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.desc}</p>
-            </div>
 
-            {!item.read && <span className="h-2.5 w-2.5 rounded-full bg-[#15803D] shrink-0 mt-2" />}
-          </div>
-        ))}
-      </div>
+              <div className="space-y-1 min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="text-[14px] font-bold text-[#1D2522]">{item.title}</h4>
+                  <span className="text-[11px] font-mono text-[#6B5845] shrink-0">{item.time}</span>
+                </div>
+                <p className="text-[13px] text-[#6B5845] leading-relaxed">{item.desc}</p>
+              </div>
+
+              {!item.read && <span className="h-2.5 w-2.5 rounded-full bg-[#15803D] shrink-0 mt-2" />}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

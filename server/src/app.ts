@@ -6,7 +6,9 @@ import rateLimit from 'express-rate-limit';
 import { env } from './config/env.js';
 import { requestIdMiddleware } from './middleware/requestId.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import cookieParser from 'cookie-parser';
 import healthRoutes from './modules/health/health.routes.js';
+import authRoutes from './modules/auth/auth.routes.js';
 import challengesRoutes from './modules/challenges/challenges.routes.js';
 import ideasRoutes from './modules/ideas/ideas.routes.js';
 import collaborationsRoutes from './modules/collaborations/collaborations.routes.js';
@@ -30,26 +32,9 @@ app.use(
   }),
 );
 
-// ── Rate Limiting ────────────────────────────────────────────
+// ── Cookie & Body Parsing ────────────────────────────────────
 
-const limiter = rateLimit({
-  windowMs: env.RATE_LIMIT_WINDOW_MS,
-  max: env.RATE_LIMIT_MAX,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    error: {
-      code: 'RATE_LIMITED',
-      message: 'Too many requests, please try again later',
-    },
-  },
-});
-
-app.use('/api', limiter);
-
-// ── Body Parsing ─────────────────────────────────────────────
-
+app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -67,10 +52,61 @@ if (env.NODE_ENV !== 'test') {
   );
 }
 
+// ── Security Rate Limiting ───────────────────────────────────
+
+const generalLimiter = rateLimit({
+  windowMs: env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000,
+  max: env.RATE_LIMIT_MAX || 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMITED',
+      message: 'Too many requests. Please try again shortly.',
+    },
+  },
+  skip: (req) => req.url.includes('/health'),
+});
+
+const authStrictLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20, // 20 sensitive auth attempts per 15 minutes per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMITED',
+      message: 'Too many authentication attempts. Please try again in 15 minutes.',
+    },
+  },
+});
+
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 25, // 25 AI analysis queries per 15 minutes per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMITED',
+      message: 'Too many AI analysis requests. Please try again later.',
+    },
+  },
+});
+
+// Apply general limiter across all /api routes
+app.use('/api', generalLimiter);
+
 // ── API Routes (mounted for both /api/v1 and /api) ───────────
 
 app.use('/api/v1/health', healthRoutes);
 app.use('/api/health', healthRoutes);
+
+app.use('/api/v1/auth', authStrictLimiter, authRoutes);
+app.use('/api/auth', authStrictLimiter, authRoutes);
 
 app.use('/api/v1/challenges', challengesRoutes);
 app.use('/api/challenges', challengesRoutes);
@@ -99,8 +135,8 @@ app.use('/api/impact', impactRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-app.use('/api/v1/ai', aiRoutes);
-app.use('/api/ai', aiRoutes);
+app.use('/api/v1/ai', aiLimiter, aiRoutes);
+app.use('/api/ai', aiLimiter, aiRoutes);
 
 // ── Error Handling ───────────────────────────────────────────
 

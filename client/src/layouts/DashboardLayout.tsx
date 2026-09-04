@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { DashboardRole } from '../types/dashboard';
 import { DashboardSidebar } from '../components/dashboard-v2/DashboardSidebar';
 import { DashboardTopHeader } from '../components/dashboard-v2/DashboardTopHeader';
+import { useAuth } from '../hooks/useAuth';
 
 export interface DashboardOutletContext {
   currentRole: DashboardRole;
@@ -11,15 +12,15 @@ export interface DashboardOutletContext {
 }
 
 const ROLE_USER_NAMES: Record<DashboardRole, string> = {
-  citizen: 'Arnav',
+  citizen: 'Innovator',
   institution: 'BIT Mesra Innovation Cell',
-  expert: 'Dr. Ramesh Soren',
+  expert: 'Technical Reviewer',
   admin: 'Mission Directorate',
 };
 
 const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string }> = {
   citizen: {
-    greeting: 'Good evening, Arnav 👋',
+    greeting: 'Welcome back 👋',
     subtitle: 'See how your ideas are creating change across Jharkhand.',
   },
   institution: {
@@ -27,7 +28,7 @@ const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string
     subtitle: 'Institutional innovation portfolio & university-district consortia.',
   },
   expert: {
-    greeting: 'Good evening, Dr. Soren 🔬',
+    greeting: 'Welcome, Technical Reviewer 🔬',
     subtitle: 'Technical review queue & scientific impact assessments.',
   },
   admin: {
@@ -37,12 +38,16 @@ const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string
 };
 
 export function DashboardLayout() {
+  const { user } = useAuth();
   const [currentRole, setCurrentRole] = useState<DashboardRole>('citizen');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const userName = ROLE_USER_NAMES[currentRole];
-  const { greeting, subtitle } = ROLE_GREETINGS[currentRole];
+  const userName = user?.name ? user.name.split(' ')[0] : (ROLE_USER_NAMES[currentRole] || 'Innovator');
+  const greeting = user?.name
+    ? `Welcome back, ${user.name.split(' ')[0]} 👋`
+    : ROLE_GREETINGS[currentRole].greeting;
+  const subtitle = ROLE_GREETINGS[currentRole].subtitle;
 
   // Dynamic header override depending on sub-page
   const getHeaderInfo = () => {

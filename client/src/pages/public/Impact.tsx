@@ -14,7 +14,6 @@ import {
   DISTRICTS_IMPACT_DATA,
   DOMAINS_IMPACT_DATA,
   COMMUNITY_QUOTES,
-  RECENT_IMPACT_FEED,
 } from '../../data/impactData';
 import {
   fetchImpactAnalytics,
@@ -80,7 +79,7 @@ export function Impact() {
     if (apiData?.records && apiData.records.length > 0) {
       return apiData.records.map((r, i) => mapDbRecordToFeedItem(r, i));
     }
-    return RECENT_IMPACT_FEED;
+    return [];
   }, [apiData]);
 
   const hasActiveFilters =

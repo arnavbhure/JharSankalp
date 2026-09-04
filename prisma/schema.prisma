@@ -22,12 +22,17 @@ model User {
   phone          String?
   role           String   @default("CITIZEN") // CITIZEN, GOVERNMENT, UNIVERSITY, INDUSTRY, ADMIN
   organizationId String?
-  isActive       Boolean  @default(true)
-  avatarUrl      String?
-  district       String?
-  bio            String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  isActive        Boolean   @default(true)
+  isEmailVerified Boolean   @default(false)
+  otpHash         String?
+  otpExpiresAt    DateTime?
+  otpAttempts     Int       @default(0)
+  otpLastSentAt   DateTime?
+  avatarUrl       String?
+  district        String?
+  bio             String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   organization         Organization?         @relation(fields: [organizationId], references: [id])
   submittedChallenges  Challenge[]           @relation("ChallengeSubmitter")

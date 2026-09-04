@@ -3,6 +3,9 @@ import { prisma } from '../../config/database.js';
 import { sendSuccess, sendError } from '../../utils/response.js';
 import { validate } from '../../middleware/validate.js';
 import { createProjectSchema, updateProjectSchema } from './projects.schemas.js';
+import { requireAuth } from '../../middleware/auth.js';
+import { RoleGroups } from '../../middleware/authorize.js';
+import type { AppRequest } from '../../types/request.js';
 
 const router = Router();
 
@@ -146,95 +149,187 @@ router.get('/:id', async (req, res, next) => {
 
 /**
  * POST /api/projects
- * Create a new project.
+ * Create a new project. Requires authentication and stakeholder authorization.
  */
-router.post('/', validate({ body: createProjectSchema }), async (req, res, next) => {
-  try {
-    const data = req.body;
+router.post(
+  '/',
+  requireAuth,
+  validate({ body: createProjectSchema }),
+  async (req: AppRequest, res, next) => {
+    try {
+      const data = req.body;
+      const userRole = (req.userRole || '').toUpperCase();
+      const isGovOrAdmin =
+        RoleGroups.GOVERNMENT.includes(userRole) || userRole === 'SUPER_ADMIN';
+      const isInstitutional =
+        RoleGroups.UNIVERSITY.includes(userRole) || RoleGroups.INDUSTRY.includes(userRole);
 
-    // Generate reference code if not supplied
-    let referenceCode = data.referenceCode;
-    if (!referenceCode) {
-      const year = new Date().getFullYear();
-      const count = await prisma.project.count();
-      referenceCode = `PRJ-${year}-${String(count + 1).padStart(4, '0')}`;
+      if (!isGovOrAdmin && !isInstitutional) {
+        sendError(
+          res,
+          403,
+          'FORBIDDEN',
+          'Only institutional researchers, industry partners, or government officers can initiate field projects.',
+          undefined,
+          req,
+        );
+        return;
+      }
+
+      // Generate reference code if not supplied
+      let referenceCode = data.referenceCode;
+      if (!referenceCode) {
+        const year = new Date().getFullYear();
+        const count = await prisma.project.count();
+        referenceCode = `PRJ-${year}-${String(count + 1).padStart(4, '0')}`;
+      }
+
+      const project = await prisma.project.create({
+        data: {
+          ...data,
+          referenceCode,
+        },
+        include: {
+          challenge: true,
+          idea: true,
+          leadOrganization: true,
+        },
+      });
+
+      // Log activity
+      await prisma.activity.create({
+        data: {
+          type: 'PROJECT_STARTED',
+          message: `Project ${project.referenceCode} (${project.title}) initiated`,
+          projectId: project.id,
+          challengeId: project.challengeId,
+          organizationId: project.leadOrganizationId,
+          userId: req.userId,
+        },
+      });
+
+      sendSuccess(res, project, 201, req);
+    } catch (error) {
+      next(error);
     }
-
-    const project = await prisma.project.create({
-      data: {
-        ...data,
-        referenceCode,
-      },
-      include: {
-        challenge: true,
-        idea: true,
-        leadOrganization: true,
-      },
-    });
-
-    // Log activity
-    await prisma.activity.create({
-      data: {
-        type: 'PROJECT_STARTED',
-        message: `Project ${project.referenceCode} (${project.title}) initiated`,
-        projectId: project.id,
-        challengeId: project.challengeId,
-        organizationId: project.leadOrganizationId,
-      },
-    });
-
-    sendSuccess(res, project, 201, req);
-  } catch (error) {
-    next(error);
-  }
-});
+  },
+);
 
 /**
  * PATCH /api/projects/:id
- * Update project details (stage, status, impact summary, etc.).
+ * Update project details. Requires authentication, ownership, or government oversight.
  */
-router.patch('/:id', validate({ body: updateProjectSchema }), async (req, res, next) => {
-  try {
-    const id = req.params.id as string;
-    const data = req.body;
+router.patch(
+  '/:id',
+  requireAuth,
+  validate({ body: updateProjectSchema }),
+  async (req: AppRequest, res, next) => {
+    try {
+      const id = req.params.id as string;
+      const data = req.body;
 
-    const existing = await prisma.project.findFirst({
-      where: { OR: [{ id }, { referenceCode: id }] },
-    });
+      const existing = await prisma.project.findFirst({
+        where: { OR: [{ id }, { referenceCode: id }] },
+      });
 
-    if (!existing) {
-      sendError(res, 404, 'NOT_FOUND', `Project '${id}' not found`, undefined, req);
-      return;
-    }
+      if (!existing) {
+        sendError(res, 404, 'NOT_FOUND', `Project '${id}' not found`, undefined, req);
+        return;
+      }
 
-    const updated = await prisma.project.update({
-      where: { id: existing.id },
-      data,
-      include: {
-        challenge: true,
-        idea: true,
-        leadOrganization: true,
-        milestones: true,
-        impactMetrics: true,
-      },
-    });
+      const userRole = (req.userRole || '').toUpperCase();
+      const isGovOrAdmin =
+        RoleGroups.GOVERNMENT.includes(userRole) || userRole === 'SUPER_ADMIN';
 
-    if (data.stage && data.stage !== existing.stage) {
-      await prisma.activity.create({
-        data: {
-          type: 'STATUS_CHANGED',
-          message: `Project ${updated.referenceCode} advanced to stage ${data.stage}`,
-          projectId: updated.id,
-          challengeId: updated.challengeId,
-          organizationId: updated.leadOrganizationId,
+      let isAuthorizedModifier = isGovOrAdmin;
+      if (!isAuthorizedModifier && req.userId) {
+        const user = await prisma.user.findUnique({
+          where: { id: req.userId },
+          select: { organizationId: true },
+        });
+        if (user?.organizationId && existing.leadOrganizationId === user.organizationId) {
+          isAuthorizedModifier = true;
+        }
+        if (!isAuthorizedModifier) {
+          const participant = await prisma.projectParticipant.findFirst({
+            where: {
+              projectId: existing.id,
+              OR: [
+                { userId: req.userId },
+                ...(user?.organizationId ? [{ organizationId: user.organizationId }] : []),
+              ],
+            },
+          });
+          if (participant) {
+            isAuthorizedModifier = true;
+          }
+        }
+      }
+
+      if (!isAuthorizedModifier) {
+        sendError(
+          res,
+          403,
+          'FORBIDDEN',
+          'You do not have permission to modify this project.',
+          undefined,
+          req,
+        );
+        return;
+      }
+
+      // Whitelist safe update fields to prevent mass assignment
+      const allowedFields = [
+        'title',
+        'description',
+        'domain',
+        'district',
+        'block',
+        'stage',
+        'status',
+        'startDate',
+        'expectedEndDate',
+        'affectedPopulation',
+        'locationDisplay',
+        'impactSummary',
+      ];
+      const safeData: Record<string, unknown> = {};
+      for (const key of allowedFields) {
+        if (data[key] !== undefined) {
+          safeData[key] = data[key];
+        }
+      }
+
+      const updated = await prisma.project.update({
+        where: { id: existing.id },
+        data: safeData,
+        include: {
+          challenge: true,
+          idea: true,
+          leadOrganization: true,
+          milestones: true,
+          impactMetrics: true,
         },
       });
-    }
 
-    sendSuccess(res, updated, 200, req);
-  } catch (error) {
-    next(error);
-  }
-});
+      if (data.stage && data.stage !== existing.stage) {
+        await prisma.activity.create({
+          data: {
+            type: 'STATUS_CHANGED',
+            message: `Project ${updated.referenceCode} advanced to stage ${data.stage}`,
+            projectId: updated.id,
+            challengeId: updated.challengeId,
+            organizationId: updated.leadOrganizationId,
+            userId: req.userId,
+          },
+        });
+      }
+
+      sendSuccess(res, updated, 200, req);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default router;

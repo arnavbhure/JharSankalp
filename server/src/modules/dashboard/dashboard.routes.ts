@@ -1,6 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { prisma } from '../../config/database.js';
-import { sendSuccess } from '../../utils/response.js';
+import { sendSuccess, sendError } from '../../utils/response.js';
+import { requireAuth } from '../../middleware/auth.js';
+import { requireRole, RoleGroups } from '../../middleware/authorize.js';
+import type { AppRequest } from '../../types/request.js';
 
 const router = Router();
 
@@ -112,6 +115,8 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
       urgentChallenges,
       districtsWithPilots,
       projectsByDomain,
+      recentActivities,
+      allActiveProjects,
     ] = await Promise.all([
       prisma.challenge.count(),
       prisma.challenge.count({ where: { verificationStatus: 'VERIFIED' } }),
@@ -131,6 +136,19 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
         by: ['domain'],
         _count: { id: true },
       }),
+      prisma.activity.findMany({
+        take: 8,
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.project.findMany({
+        take: 6,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          leadOrganization: true,
+          milestones: true,
+          impactMetrics: true,
+        },
+      }),
     ]);
 
     sendSuccess(
@@ -138,9 +156,9 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
       {
         kpis: {
           totalChallenges,
-          verifiedChallenges: verifiedChallenges || 12,
-          activePilots: activePilots || 5,
-          districtsActive: districtsWithPilots.length || 6,
+          verifiedChallenges,
+          activePilots,
+          districtsActive: districtsWithPilots.length || 1,
           totalBudgetSanctioned: '₹4.25 Cr',
           avgResolutionTime: '18 Days',
         },
@@ -149,6 +167,8 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
           domain: d.domain || 'General',
           count: d._count.id,
         })),
+        recentActivities,
+        projectsSnapshot: allActiveProjects,
       },
       200,
       req,
@@ -164,7 +184,7 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
  */
 async function getUniversityDashboard(req: Request, res: Response, next: NextFunction) {
   try {
-    const [totalIdeas, activeProjects, universityProjects, recentIdeas] = await Promise.all([
+    const [totalIdeas, activeProjects, universityProjects, recentIdeas, recommendedChallenges, activities] = await Promise.all([
       prisma.idea.count(),
       prisma.project.count({ where: { status: 'ACTIVE' } }),
       prisma.project.findMany({
@@ -187,6 +207,15 @@ async function getUniversityDashboard(req: Request, res: Response, next: NextFun
           challenge: { select: { id: true, publicId: true, title: true } },
         },
       }),
+      prisma.challenge.findMany({
+        take: 4,
+        orderBy: { createdAt: 'desc' },
+        include: { district: true },
+      }),
+      prisma.activity.findMany({
+        take: 6,
+        orderBy: { createdAt: 'desc' },
+      }),
     ]);
 
     sendSuccess(
@@ -201,6 +230,8 @@ async function getUniversityDashboard(req: Request, res: Response, next: NextFun
         },
         universityProjects,
         recentIdeas,
+        recommendedChallenges,
+        activities,
       },
       200,
       req,
@@ -216,7 +247,7 @@ async function getUniversityDashboard(req: Request, res: Response, next: NextFun
  */
 async function getIndustryDashboard(req: Request, res: Response, next: NextFunction) {
   try {
-    const [totalProjects, fieldPilots, partnerCommitments, participatingProjects] =
+    const [totalProjects, fieldPilots, partnerCommitments, participatingProjects, opportunities, activities] =
       await Promise.all([
         prisma.project.count(),
         prisma.project.count({ where: { stage: 'FIELD_PILOT' } }),
@@ -240,6 +271,16 @@ async function getIndustryDashboard(req: Request, res: Response, next: NextFunct
             impactMetrics: true,
           },
         }),
+        prisma.challenge.findMany({
+          where: { priority: { in: ['HIGH', 'CRITICAL'] } },
+          take: 4,
+          orderBy: { createdAt: 'desc' },
+          include: { district: true },
+        }),
+        prisma.activity.findMany({
+          take: 6,
+          orderBy: { createdAt: 'desc' },
+        }),
       ]);
 
     sendSuccess(
@@ -248,11 +289,13 @@ async function getIndustryDashboard(req: Request, res: Response, next: NextFunct
         kpis: {
           totalProjects,
           csrCommitted: '₹2.45 Cr',
-          activeEngagements: partnerCommitments || 3,
-          fieldPilotsSupported: fieldPilots || 4,
+          activeEngagements: partnerCommitments || participatingProjects.length,
+          fieldPilotsSupported: fieldPilots,
           mentorshipHours: '320 hrs',
         },
         supportedProjects: participatingProjects,
+        opportunities,
+        activities,
       },
       200,
       req,
@@ -262,10 +305,103 @@ async function getIndustryDashboard(req: Request, res: Response, next: NextFunct
   }
 }
 
+/**
+ * GET /api/dashboard/citizen
+ * Citizen's personal activity, submissions, and status overview.
+ */
+async function getCitizenDashboard(req: AppRequest, res: Response, next: NextFunction) {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      sendError(res, 401, 'UNAUTHORIZED', 'Authentication required', undefined, req);
+      return;
+    }
+
+    const [userChallenges, userIdeas, activities, userProjects] = await Promise.all([
+      prisma.challenge.findMany({
+        where: { submittedById: userId },
+        include: {
+          district: true,
+          evidence: true,
+          _count: { select: { ideas: true, collaborations: true, projects: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.idea.findMany({
+        where: { submittedById: userId },
+        include: {
+          challenge: { select: { id: true, publicId: true, title: true } },
+          _count: { select: { collaborations: true, projects: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.activity.findMany({
+        where: { userId },
+        take: 10,
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.project.findMany({
+        where: {
+          OR: [
+            { participants: { some: { userId } } },
+            { idea: { submittedById: userId } },
+            { challenge: { submittedById: userId } },
+          ],
+        },
+        include: { leadOrganization: true, milestones: true },
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+      }),
+    ]);
+
+    const totalSubmitted = userChallenges.length;
+    const underReview = userChallenges.filter(
+      (c) => c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW' || c.status === 'UNDER_VALIDATION',
+    ).length;
+    const inCollaboration = userChallenges.filter(
+      (c) =>
+        c.status === 'ACTIVE' ||
+        c.status === 'VALIDATED' ||
+        c.status === 'MATCHING' ||
+        c.status === 'CONSORTIUM_FORMED',
+    ).length;
+    const actionRequired = userChallenges.filter(
+      (c) => c.status === 'DRAFT' || c.verificationStatus === 'NEEDS_INFO',
+    ).length;
+
+    sendSuccess(
+      res,
+      {
+        stats: {
+          totalSubmitted,
+          underReview,
+          inCollaboration,
+          actionRequired,
+          ideasCount: userIdeas.length,
+          projectsCount: userProjects.length,
+        },
+        challenges: userChallenges,
+        ideas: userIdeas,
+        projects: userProjects,
+        activities,
+      },
+      200,
+      req,
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+// ── Route Bindings ───────────────────────────────────────────
+
 router.get('/overview', getDashboardOverview);
-router.get('/government', getGovernmentDashboard);
-router.get('/university', getUniversityDashboard);
-router.get('/industry', getIndustryDashboard);
 router.get('/', getDashboardOverview);
+
+// Protected Role-Specific Dashboards
+router.get('/citizen', requireAuth, getCitizenDashboard);
+router.get('/government', requireAuth, requireRole(RoleGroups.GOVERNMENT), getGovernmentDashboard);
+router.get('/university', requireAuth, requireRole(RoleGroups.UNIVERSITY), getUniversityDashboard);
+router.get('/industry', requireAuth, requireRole(RoleGroups.INDUSTRY), getIndustryDashboard);
 
 export default router;

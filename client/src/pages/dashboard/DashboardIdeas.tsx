@@ -1,15 +1,76 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlusCircle, Users, ArrowRight, Sparkles, Edit3, Trash2, Bookmark } from 'lucide-react';
-import { useInnovationStore, SubmittedIdea } from '../../stores/innovationStore';
+import { PlusCircle, ArrowRight, Bookmark, Loader2, Lightbulb } from 'lucide-react';
+import { api } from '../../services/api';
+
+interface IdeaItem {
+  id: string;
+  challengeId: string;
+  challengeTitle: string;
+  district: string;
+  focusArea: string;
+  title: string;
+  summary: string;
+  status: 'Draft' | 'Submitted' | 'Under Review' | 'Selected';
+  submissionDate: string;
+  collaboratorsCount: number;
+}
 
 export function DashboardIdeas() {
   const navigate = useNavigate();
-  const { userIdeas, withdrawIdea } = useInnovationStore();
+  const [ideas, setIdeas] = useState<IdeaItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState<
     'All' | 'Draft' | 'Submitted' | 'Under Review' | 'Selected'
   >('All');
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    api.get<any[]>('/ideas/my')
+      .then((res) => {
+        if (!isMounted) return;
+        const list = Array.isArray(res) ? res : (res as any)?.data || [];
+
+        const mapped: IdeaItem[] = list.map((item: any) => {
+          let status: IdeaItem['status'] = 'Submitted';
+          if (item.status === 'UNDER_REVIEW' || item.status === 'UNDER_VALIDATION') status = 'Under Review';
+          else if (item.status === 'VALIDATED' || item.status === 'SELECTED' || item.status === 'ACTIVE') status = 'Selected';
+          else if (item.status === 'DRAFT') status = 'Draft';
+
+          return {
+            id: item.id,
+            challengeId: item.challenge?.publicId || item.challengeId || 'JS-2026-00024',
+            challengeTitle: item.challenge?.title || 'Civic Problem Statement',
+            district: item.district || item.challenge?.district?.name || 'Jharkhand',
+            focusArea: item.domain || item.challenge?.domain || 'Water Management',
+            title: item.title,
+            summary: item.description || item.summary || 'Community innovation proposal',
+            status,
+            submissionDate: new Date(item.createdAt).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            }),
+            collaboratorsCount: item._count?.collaborations || 0,
+          };
+        });
+
+        setIdeas(mapped);
+      })
+      .catch((err) => {
+        console.warn('Failed to load user ideas from database:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const tabs: Array<{
     id: 'All' | 'Draft' | 'Submitted' | 'Under Review' | 'Selected';
@@ -22,10 +83,11 @@ export function DashboardIdeas() {
     { id: 'Selected', label: 'Selected' },
   ];
 
-  const filteredIdeas =
-    activeTab === 'All' ? userIdeas : userIdeas.filter((i) => i.status === activeTab);
+  const filteredIdeas = useMemo(() => {
+    return activeTab === 'All' ? ideas : ideas.filter((i) => i.status === activeTab);
+  }, [ideas, activeTab]);
 
-  const getStatusBadge = (status: SubmittedIdea['status']) => {
+  const getStatusBadge = (status: IdeaItem['status']) => {
     switch (status) {
       case 'Selected':
         return 'text-[#15803D] bg-[#F0FDF4] border-[#BBF7D0]';
@@ -48,8 +110,8 @@ export function DashboardIdeas() {
           {tabs.map((tab) => {
             const count =
               tab.id === 'All'
-                ? userIdeas.length
-                : userIdeas.filter((i) => i.status === tab.id).length;
+                ? ideas.length
+                : ideas.filter((i) => i.status === tab.id).length;
 
             return (
               <button
@@ -86,120 +148,71 @@ export function DashboardIdeas() {
         </button>
       </div>
 
-      {/* ── Ideas List ── */}
-      {filteredIdeas.length === 0 ? (
+      {loading ? (
+        <div className="py-20 text-center flex flex-col items-center justify-center space-y-2">
+          <Loader2 className="h-6 w-6 animate-spin text-[#123B2A]" />
+          <span className="text-[13px] font-mono text-[#6B5845]">Loading your submitted ideas...</span>
+        </div>
+      ) : filteredIdeas.length === 0 ? (
         <div className="py-16 text-center rounded-3xl bg-white border border-[#EEEAE1] p-8 space-y-3">
           <Bookmark className="h-8 w-8 text-[#6B5845] mx-auto opacity-50" />
-          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No ideas in this category</h3>
+          <h3 className="text-[1.1rem] font-bold text-[#1D2522]">No ideas found in this folder</h3>
           <p className="text-[13px] text-[#6B5845] max-w-sm mx-auto">
-            Discover active civic challenges in Jharkhand and propose practical solutions.
+            Explore active civic challenges in Jharkhand and propose practical technological or community solutions.
           </p>
           <button
             type="button"
             onClick={() => navigate('/challenges')}
-            className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-[#123B2A] text-white text-[12px] font-bold cursor-pointer hover:bg-[#0D2B1E]"
           >
-            Explore Challenges →
+            Explore Public Challenges
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredIdeas.map((idea) => {
-            const isDraft = idea.status === 'Draft';
-
-            return (
-              <div
-                key={idea.id}
-                className="rounded-3xl border border-[#EEEAE1] bg-white p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-[#6B5845]">{idea.id}</span>
-                    <span
-                      className={`text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded border ${getStatusBadge(
-                        idea.status,
-                      )}`}
-                    >
+        <div className="space-y-3.5">
+          {filteredIdeas.map((idea) => (
+            <div
+              key={idea.id}
+              onClick={() => navigate(`/ideas/${idea.id}`)}
+              className="p-5 sm:p-6 rounded-3xl border border-[#EEEAE1] bg-white hover:border-[#123B2A]/40 transition-all cursor-pointer shadow-2xs hover:shadow-xs space-y-3 group"
+            >
+              <div className="flex items-start justify-between gap-2 flex-wrap">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-[#FAF9F5] border border-[#EEEAE1] text-[#6B5845]">
+                      {idea.focusArea}
+                    </span>
+                    <span className={`text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full border ${getStatusBadge(idea.status)}`}>
                       {idea.status}
                     </span>
                   </div>
-
-                  <h3 className="text-[1.2rem] font-bold text-[#1D2522] leading-snug">
+                  <h4 className="text-[1.15rem] font-bold text-[#1D2522] leading-snug group-hover:text-[#123B2A] transition-colors">
                     {idea.title}
-                  </h3>
-
-                  <div className="space-y-1 text-[12px]">
-                    <span className="text-[10px] font-mono font-bold uppercase text-[#6B5845] block">
-                      RESPONDING TO CHALLENGE
-                    </span>
-                    <p
-                      onClick={() => navigate(`/challenges/${idea.challengeId}`)}
-                      className="text-[#123B2A] font-semibold hover:underline cursor-pointer"
-                    >
-                      {idea.challengeTitle}
-                    </p>
-                  </div>
-
-                  {idea.summary && (
-                    <div className="p-3 rounded-2xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12px] text-[#6B5845] line-clamp-2">
-                      {idea.summary}
-                    </div>
-                  )}
-
-                  {idea.timeline && idea.timeline.length > 0 && (
-                    <div className="text-[11.5px] font-mono text-[#15803D] flex items-center gap-1.5">
-                      <Sparkles className="h-3 w-3 text-[#F5A623]" />
-                      <span>{idea.timeline[idea.timeline.length - 1].title}</span>
-                    </div>
-                  )}
+                  </h4>
                 </div>
 
-                <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[11px] font-mono text-[#6B5845]">
-                    <span className="flex items-center gap-1">
-                      <Users className="h-3 w-3 text-[#123B2A]" />
-                      {idea.collaboratorsCount}{' '}
-                      {idea.collaboratorsCount === 1 ? 'Author' : 'Collaborators'}
-                    </span>
-                    <span>·</span>
-                    <span>{idea.submissionDate}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    {isDraft ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => withdrawIdea(idea.id)}
-                          className="p-1.5 text-[#6B5845] hover:text-[#BE123C] rounded-lg hover:bg-[#FFF5F5] transition-colors cursor-pointer"
-                          title="Discard Draft"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => navigate(`/challenges/${idea.challengeId}/submit-idea`)}
-                          className="inline-flex items-center gap-1 text-[12px] font-bold text-[#123B2A] hover:underline cursor-pointer"
-                        >
-                          <Edit3 className="h-3.5 w-3.5" />
-                          <span>Edit Draft</span>
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => navigate(`/dashboard/ideas/${idea.id}`)}
-                        className="inline-flex items-center gap-1 text-[12px] font-bold text-[#123B2A] hover:underline cursor-pointer"
-                      >
-                        <span>View Details</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </button>
-                    )}
-                  </div>
+                <div className="text-right text-[11px] font-mono text-[#6B5845]">
+                  Submitted {idea.submissionDate}
                 </div>
               </div>
-            );
-          })}
+
+              <p className="text-[13px] text-[#3D4C44] leading-relaxed line-clamp-2">
+                {idea.summary}
+              </p>
+
+              <div className="pt-3 border-t border-[#EEEAE1] flex items-center justify-between text-[12px] text-[#6B5845]">
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-3.5 w-3.5 text-[#F5A623]" />
+                  <span className="font-medium text-[#123B2A]">Linked Challenge:</span>
+                  <span className="truncate max-w-xs">{idea.challengeTitle}</span>
+                </div>
+
+                <span className="font-bold text-[#123B2A] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                  View Idea Dossier <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

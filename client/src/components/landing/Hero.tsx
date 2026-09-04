@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin, Users } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import heroIllustration from '../../assets/landing-page-frame.png';
 
@@ -106,40 +106,6 @@ export function Hero() {
                   className="w-full h-auto max-h-[520px] sm:max-h-[580px] lg:max-h-[620px] object-contain drop-shadow-sm select-none transition-transform duration-500 hover:scale-[1.01]"
                   loading="eager"
                 />
-              </div>
-
-              {/* Floating Impact Micro-Card (Deep Forest Green) */}
-              <div className="absolute -bottom-3 left-2 sm:left-4 z-20 rounded-lg bg-[#123B2A] px-4 sm:px-5 py-3 text-white shadow-lg border border-white/15 text-left backdrop-blur-xs">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white/15 text-[#F5A623]">
-                    <Users className="h-4.5 w-4.5 stroke-[2.2]" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-semibold text-white/75 block uppercase tracking-wider">
-                      Join a growing movement
-                    </span>
-                    <div className="text-[1.35rem] font-extrabold font-mono tracking-tight leading-none mt-0.5 text-white">
-                      12K+
-                    </div>
-                    <span className="text-[11px] text-[#F8F6F1]/90 font-medium">Change Makers</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Quote Micro-Card (Warm White with Gold Quotation) */}
-              <div className="hidden sm:block absolute top-8 -right-2 sm:-right-4 z-20 max-w-[190px] rounded-lg bg-white/95 p-3.5 text-left shadow-md border border-[#EEEAE1]">
-                <span className="text-[#F5A623] text-xl font-serif leading-none font-bold block mb-1">
-                  “
-                </span>
-                <p className="text-[11.5px] font-bold text-[#1D2522] leading-snug">
-                  Small ideas can create big change.
-                </p>
-                <p className="text-[10.5px] text-[#6B5845] mt-0.5 leading-tight">
-                  Be the spark of transformation.
-                </p>
-                <div className="text-right text-[#F5A623] text-lg font-serif leading-none font-bold">
-                  ”
-                </div>
               </div>
             </div>
           </div>

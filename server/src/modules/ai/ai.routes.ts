@@ -24,12 +24,36 @@ router.post('/analyze-challenge', async (req, res, next) => {
       return;
     }
 
+    if (title.trim().length > 300) {
+      sendError(
+        res,
+        400,
+        'INVALID_INPUT',
+        'Challenge title must not exceed 300 characters',
+        undefined,
+        req,
+      );
+      return;
+    }
+
     if (!description || typeof description !== 'string' || description.trim().length < 10) {
       sendError(
         res,
         400,
         'INVALID_INPUT',
         'Challenge description must be at least 10 characters long',
+        undefined,
+        req,
+      );
+      return;
+    }
+
+    if (description.trim().length > 5000) {
+      sendError(
+        res,
+        400,
+        'INVALID_INPUT',
+        'Challenge description must not exceed 5000 characters',
         undefined,
         req,
       );

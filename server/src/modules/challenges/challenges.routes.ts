@@ -1,14 +1,47 @@
 import { Router } from 'express';
 import { prisma } from '../../config/database.js';
 import { sendSuccess, sendError } from '../../utils/response.js';
+import { requireAuth, optionalAuth } from '../../middleware/auth.js';
+import { RoleGroups } from '../../middleware/authorize.js';
+import type { AppRequest } from '../../types/request.js';
 
 const router = Router();
+
+/**
+ * GET /api/challenges/my
+ * Retrieve all challenges submitted by the currently authenticated user.
+ */
+router.get('/my', requireAuth, async (req: AppRequest, res, next) => {
+  try {
+    const challenges = await prisma.challenge.findMany({
+      where: { submittedById: req.userId },
+      include: {
+        district: true,
+        evidence: true,
+        submittedBy: {
+          select: { id: true, name: true, role: true, avatarUrl: true },
+        },
+        organization: {
+          select: { id: true, name: true, type: true },
+        },
+        _count: {
+          select: { ideas: true, collaborations: true, solutions: true, projects: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    sendSuccess(res, challenges, 200, req);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * GET /api/challenges
  * Retrieve challenges with optional domain and district filtering.
  */
-router.get('/', async (req, res, next) => {
+router.get('/', optionalAuth, async (req: AppRequest, res, next) => {
   try {
     const { domain, district, status, submittedById } = req.query;
 
@@ -23,6 +56,18 @@ router.get('/', async (req, res, next) => {
     }
 
     if (submittedById && typeof submittedById === 'string') {
+      const isGov = req.userRole && RoleGroups.GOVERNMENT.includes(req.userRole.toUpperCase());
+      if (req.userId !== submittedById && !isGov) {
+        sendError(
+          res,
+          403,
+          'FORBIDDEN',
+          'Cannot access private challenge submissions belonging to another user.',
+          undefined,
+          req,
+        );
+        return;
+      }
       whereClause.submittedById = submittedById;
     }
 
@@ -108,7 +153,7 @@ router.get('/:id', async (req, res, next) => {
  * POST /api/challenges
  * Create a new challenge from citizen or institution submission.
  */
-router.post('/', async (req, res, next) => {
+router.post('/', requireAuth, async (req: AppRequest, res, next) => {
   try {
     const {
       title,
@@ -124,7 +169,6 @@ router.post('/', async (req, res, next) => {
       severity,
       urgency,
       priority,
-      submittedById,
       organizationId,
       sourceType,
       evidenceFiles,
@@ -136,19 +180,14 @@ router.post('/', async (req, res, next) => {
       return;
     }
 
-    // Default to citizen user if none provided
-    let submitterId = submittedById;
-    if (!submitterId) {
-      const defaultUser = await prisma.user.findFirst();
-      submitterId = defaultUser?.id;
-    }
-
+    // Authenticated user ID is strictly enforced to prevent identity spoofing
+    const submitterId = req.userId;
     if (!submitterId) {
       sendError(
         res,
-        400,
-        'USER_REQUIRED',
-        'Valid user is required to submit a challenge',
+        401,
+        'UNAUTHORIZED',
+        'Authentication required to report a challenge',
         undefined,
         req,
       );
@@ -195,7 +234,12 @@ router.post('/', async (req, res, next) => {
 
     const year = new Date().getFullYear();
     const count = await prisma.challenge.count();
-    const publicId = `JS-${year}-${String(count + 1).padStart(5, '0')}`;
+    let publicId = `JS-${year}-${String(count + 1).padStart(5, '0')}`;
+    let attempts = 0;
+    while (await prisma.challenge.findFirst({ where: { OR: [{ publicId }, { challengeCode: publicId }] } }) && attempts < 10) {
+      publicId = `JS-${year}-${String(Math.floor(10000 + Math.random() * 90000))}`;
+      attempts++;
+    }
 
     const finalDomain =
       domain && domain !== 'Not sure — Help me identify it'
@@ -237,30 +281,68 @@ router.post('/', async (req, res, next) => {
       },
     });
 
-    // Handle evidence files metadata from Supabase Storage
+    // Allowed MIME types whitelist
+    const ALLOWED_EVIDENCE_MIMES = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/webp',
+      'application/pdf',
+      'video/mp4',
+      'video/webm',
+    ];
+    const MAX_EVIDENCE_FILES = 10;
+    const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024; // 25MB
+
+    // Handle evidence files metadata from Supabase Storage with server-side validation
     if (Array.isArray(evidenceFiles) && evidenceFiles.length > 0) {
-      for (const f of evidenceFiles) {
+      const sanitizedFiles = evidenceFiles.slice(0, MAX_EVIDENCE_FILES);
+      for (const f of sanitizedFiles) {
+        if (!f || typeof f !== 'object') continue;
+
+        // Size check
+        const sizeBytes =
+          typeof f.size === 'number' && f.size > 0
+            ? Math.min(f.size, MAX_FILE_SIZE_BYTES)
+            : 1024;
+
+        // URL safety check: must be a valid http(s) or standard upload path
+        const rawUrl = String(f.publicUrl || f.url || f.previewUrl || '');
+        if (
+          !rawUrl ||
+          rawUrl.startsWith('javascript:') ||
+          rawUrl.startsWith('data:') ||
+          rawUrl.startsWith('vbscript:')
+        ) {
+          continue;
+        }
+
+        // MIME check: default to valid allowed type or application/pdf
+        const rawMime = String(f.type || 'application/octet-stream').toLowerCase();
+        const mimeType = ALLOWED_EVIDENCE_MIMES.includes(rawMime) ? rawMime : 'application/pdf';
+
+        // Filename sanitization: prevent path traversal characters
+        const filename = String(f.name || 'evidence-file')
+          .replace(/[/\\]/g, '_')
+          .slice(0, 150);
+
         await prisma.challengeEvidence.create({
           data: {
             challengeId: challenge.id,
-            type: f.type?.includes('image')
+            type: mimeType.includes('image')
               ? 'IMAGE'
-              : f.type?.includes('video')
+              : mimeType.includes('video')
                 ? 'VIDEO'
                 : 'DOCUMENT',
-            url:
-              f.publicUrl ||
-              f.url ||
-              f.previewUrl ||
-              `/uploads/evidence/${encodeURIComponent(f.name || 'file')}`,
-            filename: f.name || 'evidence-file',
-            mimeType: f.type || 'application/octet-stream',
-            sizeBytes: f.size || 1024,
+            url: rawUrl,
+            filename,
+            mimeType,
+            sizeBytes,
             metadata: {
-              storagePath: f.storagePath || null,
+              storagePath: typeof f.storagePath === 'string' ? f.storagePath.slice(0, 255) : null,
               bucket: 'challenge-evidence',
-              uploadedAt: f.uploadedAt || new Date().toISOString(),
-              size: f.size || null,
+              uploadedAt: new Date().toISOString(),
+              size: sizeBytes,
             },
             isPublic: true,
           },
@@ -289,7 +371,7 @@ router.post('/', async (req, res, next) => {
  * PATCH /api/challenges/:id
  * Update challenge status, priority, or details (e.g. Government review).
  */
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', requireAuth, async (req: AppRequest, res, next) => {
   try {
     const id = req.params.id as string;
     const body = req.body;
@@ -303,9 +385,59 @@ router.patch('/:id', async (req, res, next) => {
       return;
     }
 
+    const isGovOrAdmin = req.userRole && RoleGroups.GOVERNMENT.includes(req.userRole.toUpperCase());
+    const isOwner = existing.submittedById === req.userId;
+
+    // Status or verification transitions require Government/Admin role
+    if ((body.status || body.verificationStatus || body.priority) && !isGovOrAdmin) {
+      sendError(
+        res,
+        403,
+        'FORBIDDEN',
+        'Only authorized government reviewers can update challenge status or priority.',
+        undefined,
+        req,
+      );
+      return;
+    }
+
+    // Content edits require ownership or Government/Admin role
+    if (!isGovOrAdmin && !isOwner) {
+      sendError(
+        res,
+        403,
+        'FORBIDDEN',
+        'You do not have permission to modify this challenge.',
+        undefined,
+        req,
+      );
+      return;
+    }
+
+    // Whitelist allowed update fields to prevent mass assignment
+    const safeData: Record<string, unknown> = {};
+
+    if (isGovOrAdmin) {
+      if (body.status !== undefined) safeData.status = body.status;
+      if (body.verificationStatus !== undefined) safeData.verificationStatus = body.verificationStatus;
+      if (body.priority !== undefined) safeData.priority = body.priority;
+    }
+
+    if (isGovOrAdmin || isOwner) {
+      if (body.title !== undefined) safeData.title = String(body.title).trim();
+      if (body.description !== undefined) safeData.description = String(body.description).trim();
+      if (body.domain !== undefined) safeData.domain = body.domain;
+      if (body.subdomain !== undefined) safeData.subdomain = body.subdomain;
+      if (body.block !== undefined) safeData.block = body.block;
+      if (body.panchayatOrUlb !== undefined) safeData.panchayatOrUlb = body.panchayatOrUlb;
+      if (body.affectedPopulation !== undefined) safeData.affectedPopulation = Number(body.affectedPopulation) || null;
+      if (body.severity !== undefined) safeData.severity = body.severity;
+      if (body.urgency !== undefined) safeData.urgency = body.urgency;
+    }
+
     const updated = await prisma.challenge.update({
       where: { id: existing.id },
-      data: body,
+      data: safeData,
       include: {
         district: true,
         evidence: true,
@@ -321,6 +453,7 @@ router.patch('/:id', async (req, res, next) => {
           type: 'STATUS_CHANGED',
           message: `Challenge ${updated.publicId} status changed to ${body.status}`,
           challengeId: updated.id,
+          userId: req.userId,
         },
       });
     }

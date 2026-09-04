@@ -30,7 +30,7 @@ const DISTRICTS = [
   { name: 'West Singhbhum', code: 'WSB' },
 ];
 
-const DEMO_PASSWORD_HASH = '$2a$10$rQZK4Q7XfaGxYzKhXV1wgeKLnZ4j3E1TnCaYdN7F5LbLkVhQ1Y7Ye'; // password123
+const DEMO_PASSWORD_HASH = '$2a$10$nT./KCDTnYcBQnDil57EBubD4LzgEInm71XHaAjCCwni84A2AI6zG'; // password123
 
 async function main() {
   console.log('🌱 Seeding complete JharSankalp PostgreSQL database...\n');
@@ -169,7 +169,7 @@ async function main() {
   console.log('👥 Seeding users...');
   const citizenUser = await prisma.user.upsert({
     where: { email: 'kavita.munda@jharsankalp.in' },
-    update: {},
+    update: { isEmailVerified: true, passwordHash: DEMO_PASSWORD_HASH },
     create: {
       id: '10000000-0000-0000-0000-000000000001',
       name: 'Kavita Munda',
@@ -179,12 +179,13 @@ async function main() {
       district: 'Khunti',
       bio: 'Jal Sahiya coordinator and tribal community water rights advocate.',
       organizationId: jalSahiyaOrg.id,
+      isEmailVerified: true,
     },
   });
 
   const facultyUser = await prisma.user.upsert({
     where: { email: 'anand.verma@bitmesra.ac.in' },
-    update: {},
+    update: { isEmailVerified: true, passwordHash: DEMO_PASSWORD_HASH },
     create: {
       id: '10000000-0000-0000-0000-000000000002',
       name: 'Prof. Anand Verma',
@@ -194,12 +195,13 @@ async function main() {
       district: 'Ranchi',
       bio: 'Professor of Sensor Networks & Telemetry Lab Director at BIT Mesra.',
       organizationId: bitOrg.id,
+      isEmailVerified: true,
     },
   });
 
   const govtUser = await prisma.user.upsert({
     where: { email: 'rajesh.ias@jharkhand.gov.in' },
-    update: {},
+    update: { isEmailVerified: true, passwordHash: DEMO_PASSWORD_HASH },
     create: {
       id: '10000000-0000-0000-0000-000000000003',
       name: 'Dr. Rajesh Kumar',
@@ -209,12 +211,13 @@ async function main() {
       district: 'Khunti',
       bio: 'Block Development Officer (BDO), Murhu Block, Drinking Water & Sanitation Dept.',
       organizationId: jharGovOrg.id,
+      isEmailVerified: true,
     },
   });
 
   const partnerUser = await prisma.user.upsert({
     where: { email: 'sanjay.oraon@tatasteel.com' },
-    update: {},
+    update: { isEmailVerified: true, passwordHash: DEMO_PASSWORD_HASH },
     create: {
       id: '10000000-0000-0000-0000-000000000004',
       name: 'Sanjay Oraon',
@@ -224,6 +227,7 @@ async function main() {
       district: 'Ranchi',
       bio: 'Lead CSR rural technology implementation partner.',
       organizationId: tataSteelOrg.id,
+      isEmailVerified: true,
     },
   });
   console.log(`   ✅ Users seeded`);

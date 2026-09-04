@@ -8,8 +8,10 @@ import { MetricCardsGroup } from '../components/dashboard-v2/MetricCardsGroup';
 import { ActiveChallengesSection } from '../components/dashboard-v2/ActiveChallengesSection';
 import { FeaturedChallengePanel } from '../components/dashboard-v2/FeaturedChallengePanel';
 import { RecentActivitySection } from '../components/dashboard-v2/RecentActivitySection';
+import { useAuth } from '../hooks/useAuth';
 
 export function Dashboard() {
+  const { user } = useAuth();
   const [currentRole, setCurrentRole] = useState<DashboardRole>('citizen');
   const [data, setData] = useState<DashboardRoleData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,12 +28,15 @@ export function Dashboard() {
       });
   }, [currentRole]);
 
+  const userName = user?.name ? user.name.split(' ')[0] : (data ? data.userName : 'Innovator');
+  const greeting = user?.name ? `Welcome back, ${user.name.split(' ')[0]} 👋` : (data?.greeting || 'Welcome to JharSankalp 👋');
+
   return (
     <div className="min-h-screen bg-[#EDE8DF] text-[#1D2522] font-sans flex antialiased">
       {/* ── Left Sidebar (Deep Green ~252px) ── */}
       <DashboardSidebar
         currentRole={currentRole}
-        userName={data ? data.userName : 'Arnav'}
+        userName={userName}
         isOpenMobile={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
       />
@@ -41,7 +46,7 @@ export function Dashboard() {
         <div className="w-full bg-[#F7F5F0] rounded-[28px] sm:rounded-[36px] shadow-xl border border-[#EEEAE1] p-5 sm:p-8 lg:p-10 space-y-7 min-h-[calc(100vh-3rem)]">
           {/* Top Header */}
           <DashboardTopHeader
-            greeting={data?.greeting || 'Good evening, Arnav 👋'}
+            greeting={greeting}
             subtitle={data?.subtitle || 'See how your ideas are creating change across Jharkhand.'}
             currentRole={currentRole}
             onRoleChange={(r) => setCurrentRole(r)}

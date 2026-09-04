@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import { DashboardRole } from '../../types/dashboard';
 import {
   Search,
@@ -26,8 +28,11 @@ export function DashboardTopHeader({
   onRoleChange,
   onOpenMobileMenu,
 }: DashboardTopHeaderProps) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const ROLES_LIST: Array<{
     id: DashboardRole;
@@ -187,9 +192,45 @@ export function DashboardTopHeader({
           )}
         </div>
 
-        {/* User Avatar Circle */}
-        <div className="h-10 w-10 rounded-2xl bg-[#123B2A] text-[#F5A623] font-mono font-extrabold text-[13px] flex items-center justify-center shadow-xs">
-          AR
+        {/* User Profile Avatar Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="h-10 w-10 rounded-2xl bg-[#123B2A] text-[#F5A623] font-mono font-extrabold text-[13px] flex items-center justify-center shadow-xs hover:ring-2 hover:ring-[#123B2A]/30 transition-all cursor-pointer"
+            aria-label="User profile menu"
+          >
+            {user?.name ? user.name.slice(0, 2).toUpperCase() : 'US'}
+          </button>
+
+          {profileOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} />
+              <div className="absolute right-0 top-12 z-50 w-64 rounded-2xl bg-white p-3 shadow-2xl border border-[#EEEAE1] text-left">
+                <div className="border-b border-[#EEEAE1] pb-2.5 mb-2">
+                  <div className="font-bold text-[13px] text-[#1D2522]">{user?.name}</div>
+                  <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user?.email}</div>
+                  <div className="mt-1.5 inline-block text-[10px] font-bold uppercase tracking-wider bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
+                    {user?.role || 'CITIZEN'}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setProfileOpen(false);
+                      await logout();
+                      navigate('/login');
+                    }}
+                    className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </header>

@@ -1,9 +1,7 @@
 import { useAuth } from '../../hooks/useAuth';
 import { UserRole } from '@jharsankalp/shared';
-import { useAuthStore } from '../../stores/authStore';
-import { BrandMark } from '../common/BrandMark';
 import { GlobalSearchModal } from '../common/GlobalSearchModal';
-import { Menu, X, ChevronDown, Check, Search, PlusCircle, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, Search, PlusCircle, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
@@ -13,7 +11,7 @@ interface HeaderProps {
   showMenuButton?: boolean;
 }
 
-const ROLE_LABELS: Record<UserRole, string> = {
+const ROLE_LABELS: Record<string, string> = {
   [UserRole.CITIZEN]: 'Citizen',
   [UserRole.COMMUNITY]: 'Community',
   [UserRole.GOVERNMENT_OFFICER]: 'Government Officer',
@@ -31,6 +29,11 @@ const ROLE_LABELS: Record<UserRole, string> = {
   [UserRole.SUPER_ADMIN]: 'Super Admin',
 };
 
+const getRoleLabel = (role?: string) => {
+  if (!role) return 'Innovator';
+  return ROLE_LABELS[role] || role;
+};
+
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Challenges', href: '/challenges' },
@@ -43,8 +46,7 @@ const NAV_LINKS = [
 ];
 
 export function Header({}: HeaderProps) {
-  const { user } = useAuth();
-  const setDemoRole = useAuthStore((s) => s.setDemoRole);
+  const { user, isAuthenticated, logout } = useAuth();
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -68,15 +70,6 @@ export function Header({}: HeaderProps) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const demoRoles: UserRole[] = [
-    UserRole.CITIZEN,
-    UserRole.GOVERNMENT_OFFICER,
-    UserRole.UNIVERSITY_ADMIN,
-    UserRole.FACULTY,
-    UserRole.INDUSTRY,
-    UserRole.SUPER_ADMIN,
-  ];
 
   const getDashboardPath = () => {
     if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
@@ -118,16 +111,12 @@ export function Header({}: HeaderProps) {
             )}
           </button>
 
-          <Link to="/" className="flex items-center gap-3 group">
-            <BrandMark size="sm" variant="forest" />
-            <div className="flex flex-col text-left">
-              <span className="text-[1.15rem] font-extrabold text-[#123B2A] tracking-tight leading-none group-hover:text-[#1F5A3D] transition-colors font-sans">
-                JharSankalp
-              </span>
-              <span className="text-[10px] font-semibold text-[#6B5845] tracking-wider uppercase mt-1">
-                Ideas · Collaboration · Impact
-              </span>
-            </div>
+          <Link to="/" className="flex items-center gap-2.5 group py-1">
+            <img
+              src="/web_logo.png"
+              alt="JharSankalp — Societal Challenge-to-Impact Exchange"
+              className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
+            />
           </Link>
         </div>
 
@@ -178,79 +167,99 @@ export function Header({}: HeaderProps) {
             <span>Report Challenge</span>
           </Link>
 
-          {/* Dedicated Workspace Shortcut */}
-          <button
-            onClick={() => navigate(getDashboardPath())}
-            className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-1.5 text-[12.5px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#FAF9F5] active:scale-[0.98] transition-all cursor-pointer"
-          >
-            {getDashboardLabel()}
-          </button>
+          {/* Authenticated User or Sign In Button */}
+          {isAuthenticated && user ? (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate(getDashboardPath())}
+                className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#123B2A] bg-white px-3.5 py-1.5 text-[12.5px] font-bold text-[#123B2A] shadow-2xs hover:bg-[#FAF9F5] active:scale-[0.98] transition-all cursor-pointer"
+              >
+                {getDashboardLabel()}
+              </button>
 
-          {/* Login / Sign Up Button */}
-          <button
-            onClick={() => navigate('/login')}
-            className="hidden sm:inline-flex items-center justify-center rounded-lg bg-[#123B2A] px-4 py-1.5 text-[13px] font-bold text-white shadow-2xs hover:bg-[#0D2B1E] active:scale-[0.98] transition-all cursor-pointer"
-          >
-            Login
-          </button>
-
-          {/* Demo Role Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
-              className="flex items-center gap-1.5 rounded-lg border border-[#EEEAE1] bg-white px-3 py-1.5 text-caption font-semibold text-[#1D2522] hover:bg-[#F8F6F1] transition-colors shadow-2xs cursor-pointer"
-              aria-expanded={showRoleSwitcher}
-              aria-haspopup="true"
-            >
-              <span className="text-[#6B5845] hidden md:inline">Role:</span>
-              <span className="font-bold text-[#123B2A]">
-                {user ? ROLE_LABELS[user.role] : 'Guest'}
-              </span>
-              <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
-            </button>
-
-            {showRoleSwitcher && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowRoleSwitcher(false)} />
-                <div className="absolute right-0 top-full mt-1.5 z-50 w-60 rounded-xl border border-[#EEEAE1] bg-white py-1.5 shadow-lg">
-                  <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#6B5845] border-b border-[#EEEAE1] mb-1 text-left">
-                    Switch User Perspective
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+                  className="flex items-center gap-2 rounded-lg border border-[#EEEAE1] bg-white px-3 py-1.5 text-[12.5px] font-semibold text-[#1D2522] hover:bg-[#F8F6F1] transition-colors shadow-2xs cursor-pointer"
+                  aria-expanded={showRoleSwitcher}
+                >
+                  <div className="h-6 w-6 rounded-full bg-[#123B2A] text-white flex items-center justify-center text-[11px] font-bold">
+                    {user.name ? user.name[0] : 'U'}
                   </div>
-                  {demoRoles.map((role) => {
-                    const isSelected = user?.role === role;
-                    return (
-                      <button
-                        key={role}
-                        onClick={() => {
-                          setDemoRole(role);
-                          setShowRoleSwitcher(false);
-                          if (role === UserRole.GOVERNMENT_OFFICER) {
-                            navigate('/government/dashboard');
-                          } else if (
-                            role === UserRole.UNIVERSITY_ADMIN ||
-                            role === UserRole.FACULTY
-                          ) {
-                            navigate('/university/dashboard');
-                          } else if (role === UserRole.INDUSTRY) {
-                            navigate('/industry/dashboard');
-                          } else if (role === UserRole.CITIZEN) {
-                            navigate('/dashboard');
-                          }
-                        }}
-                        className={cn(
-                          'flex items-center justify-between w-full px-3 py-2 text-left text-[13px] hover:bg-[#FAF9F5] transition-colors cursor-pointer',
-                          isSelected ? 'text-[#123B2A] font-bold bg-[#FAF9F5]' : 'text-[#1D2522]',
-                        )}
-                      >
-                        <span>{ROLE_LABELS[role]}</span>
-                        {isSelected && <Check className="h-3.5 w-3.5 text-[#123B2A]" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
+                  <span className="font-bold text-[#123B2A] hidden sm:inline">
+                    {user.name || 'Account'}
+                  </span>
+                  <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
+                </button>
+
+                {showRoleSwitcher && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setShowRoleSwitcher(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-1.5 z-50 w-64 rounded-xl border border-[#EEEAE1] bg-white p-3 shadow-lg text-left">
+                      <div className="border-b border-[#EEEAE1] pb-2.5 mb-2">
+                        <div className="font-bold text-[13.5px] text-[#1D2522]">{user.name}</div>
+                        <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user.email}</div>
+                        <div className="mt-1.5 inline-block text-[10.5px] font-bold uppercase tracking-wider bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
+                          {getRoleLabel(user.role)}
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <Link
+                          to={getDashboardPath()}
+                          onClick={() => setShowRoleSwitcher(false)}
+                          className="block px-2.5 py-1.5 text-[13px] font-semibold text-neutral-800 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          My Portal Workspace ↗
+                        </Link>
+                        <Link
+                          to="/my-challenges"
+                          onClick={() => setShowRoleSwitcher(false)}
+                          className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          My Challenges
+                        </Link>
+                        <Link
+                          to="/my-ideas"
+                          onClick={() => setShowRoleSwitcher(false)}
+                          className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          My Solution Ideas
+                        </Link>
+
+                        <div className="border-t border-[#EEEAE1] pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={async () => {
+                              setShowRoleSwitcher(false);
+                              await logout();
+                              navigate('/login');
+                            }}
+                            className="w-full text-left px-2.5 py-1.5 text-[13px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate('/login')}
+                className="inline-flex items-center justify-center rounded-lg bg-[#123B2A] px-4 py-2 text-[13px] font-bold text-white shadow-2xs hover:bg-[#0D2B1E] active:scale-[0.98] transition-all cursor-pointer"
+              >
+                Sign In
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

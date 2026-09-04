@@ -1,3 +1,4 @@
+import { api } from './api';
 import {
   IdeaSubmissionFormData,
   IdeaSubmissionResult,
@@ -122,9 +123,24 @@ export function clearDraft(): void {
 }
 
 export async function submitIdea(data: IdeaSubmissionFormData): Promise<IdeaSubmissionResult> {
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  let createdId = '';
+  try {
+    const res = await api.post<any>('/ideas', {
+      title: data.title,
+      description: data.coreIdea || data.proposedApproach || data.summary || '',
+      domain: data.challenge?.category || 'General',
+      district: data.challenge?.district || 'Jharkhand',
+      relatedChallengeId: data.challenge?.id,
+    });
+    const dbRecord = (res as any)?.data || res;
+    if (dbRecord?.id) {
+      createdId = dbRecord.id;
+    }
+  } catch (err) {
+    console.warn('Real idea submission failed, keeping local draft:', err);
+  }
 
-  const referenceId = `JS-IDEA-${new Date().getFullYear()}-${String(
+  const referenceId = createdId || `JS-IDEA-${new Date().getFullYear()}-${String(
     Math.floor(1000 + Math.random() * 9000),
   )}`;
 

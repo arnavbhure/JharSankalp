@@ -81,7 +81,47 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
     return;
   }
 
-  // Log unexpected errors
+  // Intercept Prisma database errors to prevent internal schema disclosure
+  const errCode = (err as any).code;
+  if (typeof errCode === 'string' && errCode.startsWith('P2')) {
+    if (errCode === 'P2002') {
+      res.status(409).json({
+        success: false,
+        error: {
+          code: 'CONFLICT',
+          message: 'A record with matching unique details already exists.',
+        },
+        requestId,
+      });
+      return;
+    }
+
+    if (errCode === 'P2025') {
+      res.status(404).json({
+        success: false,
+        error: {
+          code: 'NOT_FOUND',
+          message: 'The requested record was not found or has been removed.',
+        },
+        requestId,
+      });
+      return;
+    }
+
+    if (errCode === 'P2003') {
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'FOREIGN_KEY_VIOLATION',
+          message: 'Referenced related record does not exist.',
+        },
+        requestId,
+      });
+      return;
+    }
+  }
+
+  // Log unexpected errors securely
   console.error('Unhandled error:', {
     name: err.name,
     message: err.message,
@@ -95,7 +135,10 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
     success: false,
     error: {
       code: 'INTERNAL_ERROR',
-      message: env.NODE_ENV === 'production' ? 'An unexpected error occurred' : err.message,
+      message:
+        env.NODE_ENV === 'production'
+          ? 'An unexpected server error occurred. Please try again later.'
+          : err.message,
     },
     requestId,
   };

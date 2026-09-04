@@ -8,35 +8,17 @@ import { IdeasCTA } from '../components/ideas/IdeasCTA';
 import { SubmitIdeaModal } from '../components/ideas/SubmitIdeaModal';
 import { Footer } from '../components/layout/Footer';
 import { CommunityIdea } from '../types/ideas';
-import { fetchIdeas } from '../services/api/ideas';
-import { CANONICAL_IDEAS } from '../data/ecosystem';
-import { useInnovationStore } from '../stores/innovationStore';
+import { fetchIdeas, createIdea, mapDbIdeaToUi } from '../services/api/ideas';
 import { CheckCircle2, Bookmark, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
-
-const FALLBACK_COMMUNITY_IDEAS: CommunityIdea[] = CANONICAL_IDEAS.map((i) => ({
-  id: i.id,
-  title: i.title,
-  description: i.summary,
-  focusArea: i.domain,
-  district: i.district,
-  author: i.authorOrTeam,
-  supportersCount: i.likesCount,
-  contributorsCount: 4,
-  status: 'In Development',
-  submittedDate: '10 March 2026',
-  linkedChallenge: i.challengeTitle,
-  linkedChallengeId: i.challengeId,
-}));
 
 export function Ideas() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { submitIdea } = useInnovationStore();
 
   const urlDomain = searchParams.get('domain') || searchParams.get('category');
   const urlDistrict = searchParams.get('district');
 
-  const [ideas, setIdeas] = useState<CommunityIdea[]>(FALLBACK_COMMUNITY_IDEAS);
+  const [ideas, setIdeas] = useState<CommunityIdea[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,13 +42,11 @@ export function Ideas() {
         district,
         status,
       });
-      if (data && data.length > 0) {
-        setIdeas(data);
-      } else {
-        setIdeas(FALLBACK_COMMUNITY_IDEAS);
-      }
-    } catch {
-      setIdeas(FALLBACK_COMMUNITY_IDEAS);
+      setIdeas(data || []);
+    } catch (err: any) {
+      console.error('Failed to load community ideas:', err);
+      setError(err?.response?.data?.message || err?.message || 'Unable to retrieve community ideas from server.');
+      setIdeas([]);
     } finally {
       setLoading(false);
     }
@@ -124,52 +104,36 @@ export function Ideas() {
     setSortBy('most_supported');
   };
 
-  const handleModalSubmit = (
+  const handleModalSubmit = async (
     newIdeaData: Omit<
       CommunityIdea,
       'id' | 'supportersCount' | 'contributorsCount' | 'status' | 'submittedDate'
     >,
   ) => {
-    submitIdea({
-      challengeId: 'JS-2026-00024',
-      challengeTitle: newIdeaData.linkedChallenge || 'Autonomous Community Submission',
-      district: newIdeaData.district,
-      focusArea: newIdeaData.focusArea,
-      title: newIdeaData.title,
-      summary: newIdeaData.description,
-      description: newIdeaData.description,
-      problemPart: 'Community reporting and response latency',
-      expectedImpact: 'Immediate turnaround and service continuity',
-      beneficiaries: 'Rural residents and farmers',
-      approach: newIdeaData.description,
-      resources: 'Local materials and hardware',
-      complexity: 'Medium',
-      seekingCollaborators: true,
-      collaborationNeeds: ['Hardware', 'Field Testing'],
-      authorName: newIdeaData.author,
-    });
+    try {
+      const created = await createIdea({
+        title: newIdeaData.title,
+        description: newIdeaData.description,
+        domain: newIdeaData.focusArea,
+        district: newIdeaData.district,
+      });
 
-    const createdIdea: CommunityIdea = {
-      id: `IDEA-${Date.now()}`,
-      title: newIdeaData.title,
-      description: newIdeaData.description,
-      focusArea: newIdeaData.focusArea,
-      district: newIdeaData.district,
-      author: newIdeaData.author,
-      supportersCount: 1,
-      contributorsCount: 1,
-      status: 'New',
-      submittedDate: 'Just now',
-      isSupported: true,
-      linkedChallenge: newIdeaData.linkedChallenge,
-    };
+      const mapped = mapDbIdeaToUi(created);
+      setIdeas((prev) => [mapped, ...prev]);
 
-    setIdeas((prev) => [createdIdea, ...prev]);
-
-    setToastMessage(`Idea "${newIdeaData.title}" submitted to JharSankalp review pipeline!`);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4500);
+      setToastMessage(`Idea "${newIdeaData.title}" submitted to JharSankalp review pipeline!`);
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 4500);
+    } catch (err: any) {
+      console.error('Failed to submit idea:', err);
+      // If unauthorized, give clear toast
+      const msg = err?.response?.data?.message || 'Please log in to submit an idea.';
+      setToastMessage(msg);
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 5000);
+    }
   };
 
   return (
