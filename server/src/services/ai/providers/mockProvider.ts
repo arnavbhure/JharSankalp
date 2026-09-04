@@ -6,20 +6,30 @@ export interface AnalyzeChallengeInput {
 }
 
 export interface AnalyzeChallengeResult {
+  // User-requested 10 structured fields
   summary: string;
   suggestedDomain: string;
-  suggestedSubcategory: string;
-  suggestedPriority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  suggestedSubdomain: string;
+  priority: 'Low' | 'Medium' | 'High' | 'Critical';
+  priorityReason: string;
+  impactAssessment: string;
+  reviewRecommendation: string;
+  innovationDirections: string[];
+  technologies: string[];
   keywords: string[];
-  potentialImpactAreas: string[];
-  suggestedStakeholders: string[];
-  confidence: number;
+
   // Compatibility fields
+  suggestedCategory?: string;
+  suggestedSubcategory?: string;
   domain?: string;
   subDomain?: string;
-  priorityReason?: string;
+  suggestedPriority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  analysisSummary?: string;
+  potentialImpactAreas?: string[];
+  suggestedStakeholders?: string[];
   suggestedApproach?: string[];
   requiredExpertise?: string[];
+  confidence?: number;
   needsHumanReview?: boolean;
 }
 
@@ -44,31 +54,58 @@ export async function analyzeChallengeMock(
   const district = input.district || 'Jharkhand';
   const population = input.affectedPopulation || 500;
 
-  let domain = 'Water Management';
-  let subcategory = 'Rural Drinking Water Infrastructure';
-  let priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'HIGH';
+  let domain = 'General';
+  let subcategory = 'Civic Infrastructure & Public Welfare';
+  let priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'MEDIUM';
   let priorityReason =
-    'Disruption to daily drinking water access creates immediate sanitation and public health risks.';
-  let keywords = ['Water Supply', 'Hand Pump Maintenance', 'Groundwater', 'Rural Infrastructure'];
+    'Civic concern requiring administrative review and district field verification.';
+  let keywords = ['Civic Issue', 'Public Welfare', 'Community Assessment'];
   let potentialImpactAreas = [
-    'Daily household drinking water security',
-    'Public health and waterborne disease prevention',
-    'Time and labor burden on rural women and families',
+    'Local neighborhood and community well-being',
+    'Access to municipal and rural public services',
   ];
   let suggestedStakeholders = [
-    'Drinking Water & Sanitation Department (DWSD)',
-    'District Panchayati Raj Officer (DPRO)',
-    'Birsa Agricultural University / BIT Mesra Engineering Labs',
-    'Local Jal Sahiya Collective & Gram Panchayat',
+    'District Administration & Block Development Office',
+    'Local Gram Panchayat / Municipal Corporation',
   ];
   let approaches = [
-    'Solar-Powered IoT Telemetry for Hand Pump Sensors',
-    'Automated SMS Dispatch for Block Maintenance Mechanics',
-    'Panchayat Spare Parts Buffer & Jal Sahiya Mobile Reporting',
+    'Field Inspection & Multi-Department Needs Assessment',
+    'Citizen Consultation & Priority Action Plan',
   ];
 
   // Domain Rule-Based Matching (Order of specificity)
   if (
+    hasAny(text, [
+      'ai',
+      'artificial intelligence',
+      'robot',
+      'algorithm',
+      'cyber',
+      'tech',
+      'software',
+      'machine learning',
+      'taking over',
+    ])
+  ) {
+    domain = 'Technology & Digital Governance';
+    subcategory = 'AI Governance & Ethics';
+    priority = 'MEDIUM';
+    priorityReason =
+      'Technology ethics or broad digital query requiring contextual scoping to local public challenges.';
+    keywords = ['Artificial Intelligence', 'Digital Governance', 'Technology Policy', 'AI Ethics'];
+    potentialImpactAreas = [
+      'Digital literacy and public awareness',
+      'Ethical AI adoption in governance',
+    ];
+    suggestedStakeholders = [
+      'Department of Information Technology & e-Governance (DoIT)',
+      'Academic Research Centers & Technical Institutes',
+    ];
+    approaches = [
+      'Civic Tech Scoping & Responsible AI Framework',
+      'Public Awareness & Digital Capacity Building',
+    ];
+  } else if (
     hasAny(text, [
       'water',
       'pump',
@@ -466,21 +503,34 @@ export async function analyzeChallengeMock(
 
   const summary = `${input.title.trim()}: Identified as a key ${domain} challenge in ${district}. ${priorityReason}`;
 
+  const pStr = String(priority).toUpperCase();
+  const priorityNormalized: 'Low' | 'Medium' | 'High' | 'Critical' =
+    pStr === 'CRITICAL' ? 'Critical' : pStr === 'HIGH' ? 'High' : pStr === 'LOW' ? 'Low' : 'Medium';
+
   return {
     summary,
     suggestedDomain: domain,
-    suggestedSubcategory: subcategory,
-    suggestedPriority: priority,
+    suggestedSubdomain: subcategory,
+    priority: priorityNormalized,
+    priorityReason,
+    impactAssessment: potentialImpactAreas.join('. '),
+    reviewRecommendation: `Submit to ${domain} innovation committee for priority review and field pilot assessment.`,
+    innovationDirections: approaches,
+    technologies: keywords,
     keywords,
-    potentialImpactAreas,
-    suggestedStakeholders,
-    confidence,
+
     // Compatibility fields
+    suggestedCategory: domain,
+    suggestedSubcategory: subcategory,
     domain,
     subDomain: subcategory,
-    priorityReason,
+    suggestedPriority: priority,
+    analysisSummary: summary,
+    potentialImpactAreas,
+    suggestedStakeholders,
     suggestedApproach: approaches,
     requiredExpertise: keywords,
+    confidence,
     needsHumanReview: priority === 'CRITICAL' || text.length < 50,
   };
 }

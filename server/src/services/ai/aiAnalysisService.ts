@@ -15,14 +15,10 @@ export async function analyzeChallenge(
   input: AnalyzeChallengeInput,
 ): Promise<AnalyzeChallengeResult> {
   const hasApiKey = Boolean(process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY);
+  const isExplicitMock = process.env.AI_MODE === 'mock';
 
-  if (hasApiKey) {
-    try {
-      return await analyzeChallengeOpenAI(input);
-    } catch (err) {
-      console.warn('AI provider failed, executing deterministic mock analysis:', err);
-      return analyzeChallengeMock(input);
-    }
+  if (hasApiKey && !isExplicitMock) {
+    return await analyzeChallengeOpenAI(input);
   }
 
   return analyzeChallengeMock(input);

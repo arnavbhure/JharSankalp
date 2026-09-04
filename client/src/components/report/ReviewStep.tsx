@@ -11,7 +11,6 @@ import {
   Compass,
   Activity,
   ShieldCheck,
-  Building2,
   ArrowRight,
   Info,
 } from 'lucide-react';
@@ -50,8 +49,15 @@ export function ReviewStep({
 
     setIsAnalyzing(true);
     setAnalyzeError(null);
+    setAiSuggestion(null); // Clear previous suggestion immediately to prevent stale UX
     try {
-      const res = await analyzeDescription(formData.description, formData.title, formData.district);
+      const res = await analyzeDescription(
+        formData.description,
+        formData.title,
+        formData.district,
+        undefined,
+        formData.category !== 'Not sure — Help me identify it' ? formData.category : undefined,
+      );
       if (res) {
         setAiSuggestion(res);
         setIsApplied(false);
@@ -60,7 +66,7 @@ export function ReviewStep({
         }
       }
     } catch (err: any) {
-      setAnalyzeError(err?.message || 'Unable to connect to AI analysis service.');
+      setAnalyzeError(err?.message || 'Unable to connect to AI analysis service. Please try again.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -76,10 +82,10 @@ export function ReviewStep({
   const displayDomain =
     formData.category && formData.category !== 'Not sure — Help me identify it'
       ? formData.category
-      : aiSuggestion?.suggestedCategory || 'To be classified by review board';
+      : aiSuggestion?.suggestedDomain || aiSuggestion?.suggestedCategory || 'To be classified by review board';
 
   const displayPriority =
-    formData.urgency || formData.severity || aiSuggestion?.suggestedPriority || 'Standard';
+    formData.urgency || formData.severity || aiSuggestion?.priority || aiSuggestion?.suggestedPriority || 'Standard';
 
   return (
     <div className="space-y-8 text-left max-w-2xl mx-auto">
@@ -145,23 +151,45 @@ export function ReviewStep({
         </div>
 
         {analyzeError && (
-          <p className="text-[12.5px] font-medium text-[#BE123C] flex items-center gap-1">
-            <AlertCircle className="h-4 w-4" />
-            <span>{analyzeError}</span>
-          </p>
+          <div className="p-3 rounded-xl bg-[#FFF1F2] border border-[#FECDD3] text-[12.5px] text-[#BE123C] flex items-center justify-between gap-3 animate-in fade-in">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>{analyzeError}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleStructureChallenge}
+              className="px-2.5 py-1 rounded-md bg-[#BE123C] text-white text-[11.5px] font-bold hover:bg-[#9F1239] transition-all cursor-pointer shrink-0"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {/* Loading Skeleton while AI structuring is processing */}
+        {isAnalyzing && (
+          <div className="space-y-4 pt-1 animate-pulse">
+            <div className="h-16 bg-white rounded-xl border border-[#123B2A]/15 p-3.5" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="h-24 bg-white rounded-xl border border-[#123B2A]/15 p-3.5" />
+              <div className="h-24 bg-white rounded-xl border border-[#123B2A]/15 p-3.5" />
+              <div className="h-24 bg-white rounded-xl border border-[#123B2A]/15 p-3.5" />
+            </div>
+            <div className="h-16 bg-white rounded-xl border border-[#123B2A]/15 p-3.5" />
+          </div>
         )}
 
         {/* AI Analysis Output Display */}
-        {aiSuggestion && (
+        {!isAnalyzing && aiSuggestion && (
           <div className="space-y-4 pt-1 animate-in fade-in duration-300">
             {/* Summary Rationale */}
-            {aiSuggestion.analysisSummary && (
+            {(aiSuggestion.summary || aiSuggestion.analysisSummary) && (
               <div className="bg-white p-3.5 rounded-xl border border-[#123B2A]/15 space-y-1">
                 <span className="text-[11px] font-mono font-bold uppercase text-[#6B5845] block">
                   Detected Problem Summary
                 </span>
                 <p className="text-[13.5px] text-[#1D2522] leading-relaxed">
-                  {aiSuggestion.analysisSummary}
+                  {aiSuggestion.summary || aiSuggestion.analysisSummary}
                 </p>
               </div>
             )}
@@ -175,11 +203,11 @@ export function ReviewStep({
                   Suggested Domain
                 </span>
                 <div className="text-[14px] font-bold text-[#123B2A] leading-tight">
-                  {aiSuggestion.suggestedCategory}
+                  {aiSuggestion.suggestedDomain || aiSuggestion.suggestedCategory}
                 </div>
-                {aiSuggestion.subDomain && (
+                {(aiSuggestion.suggestedSubdomain || aiSuggestion.subDomain) && (
                   <div className="text-[11.5px] font-mono text-[#6B5845]">
-                    ↳ {aiSuggestion.subDomain}
+                    ↳ {aiSuggestion.suggestedSubdomain || aiSuggestion.subDomain}
                   </div>
                 )}
                 {aiSuggestion.confidence && (
@@ -198,14 +226,19 @@ export function ReviewStep({
                 <div className="pt-0.5">
                   <span
                     className={`text-[12px] font-mono font-bold px-2 py-0.5 rounded ${
-                      aiSuggestion.suggestedPriority === 'CRITICAL'
+                      (aiSuggestion.priority || aiSuggestion.suggestedPriority)?.toUpperCase() ===
+                      'CRITICAL'
                         ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
-                        : aiSuggestion.suggestedPriority === 'HIGH'
+                        : (aiSuggestion.priority || aiSuggestion.suggestedPriority)?.toUpperCase() ===
+                            'HIGH'
                           ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
-                          : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                          : (aiSuggestion.priority || aiSuggestion.suggestedPriority)?.toUpperCase() ===
+                              'LOW'
+                            ? 'bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE]'
+                            : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
                     }`}
                   >
-                    {aiSuggestion.suggestedPriority}
+                    {aiSuggestion.priority || aiSuggestion.suggestedPriority}
                   </span>
                 </div>
                 {aiSuggestion.priorityReason && (
@@ -215,50 +248,52 @@ export function ReviewStep({
                 )}
               </div>
 
-              {/* Review Protocol */}
+              {/* Review Recommendation */}
               <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
                 <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
                   <ShieldCheck className="h-3 w-3 text-[#123B2A]" />
                   Review Protocol
                 </span>
-                <div className="text-[13px] font-bold text-[#1D2522]">Human Validation</div>
-                <div className="text-[11px] text-[#6B5845]">
-                  Awaiting review by district engineering desk.
+                <div className="text-[12px] text-[#1D2522] leading-snug">
+                  {aiSuggestion.reviewRecommendation || 'Human Validation: Awaiting district review.'}
                 </div>
               </div>
             </div>
 
-            {/* Possible Impact Areas */}
-            {aiSuggestion.suggestedApproach && aiSuggestion.suggestedApproach.length > 0 && (
-              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+            {/* Impact Assessment */}
+            {aiSuggestion.impactAssessment && (
+              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
                 <span className="text-[11px] font-mono uppercase font-bold text-[#123B2A] block">
-                  Possible Impact & Intervention Areas
+                  Impact Assessment
                 </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {aiSuggestion.suggestedApproach.map((appr) => (
-                    <span
-                      key={appr}
-                      className="text-[11.5px] font-mono bg-[#FAF9F5] text-[#1D2522] border border-[#EEEAE1] px-2.5 py-0.5 rounded-md"
-                    >
-                      ✓ {appr}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-[12.5px] text-[#3D4C44] leading-relaxed">
+                  {aiSuggestion.impactAssessment}
+                </p>
               </div>
             )}
 
-            {/* Potential Stakeholders */}
-            {aiSuggestion.affectedStakeholders && aiSuggestion.affectedStakeholders.length > 0 && (
-              <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
-                <span className="text-[11px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
-                  <Building2 className="h-3 w-3 text-[#6B5845]" />
-                  Potential Stakeholders & Academic Labs
-                </span>
-                <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
-                  {aiSuggestion.affectedStakeholders.join(' · ')}
+            {/* Innovation Directions */}
+            {(aiSuggestion.innovationDirections || aiSuggestion.suggestedApproach) &&
+              (aiSuggestion.innovationDirections?.length || aiSuggestion.suggestedApproach?.length || 0) >
+                0 && (
+                <div className="p-3.5 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+                  <span className="text-[11px] font-mono uppercase font-bold text-[#123B2A] block">
+                    Suggested Innovation Directions & Technologies
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {(aiSuggestion.innovationDirections || aiSuggestion.suggestedApproach || []).map(
+                      (appr: string, idx: number) => (
+                        <span
+                          key={idx}
+                          className="text-[11.5px] font-mono bg-[#FAF9F5] text-[#1D2522] border border-[#EEEAE1] px-2.5 py-0.5 rounded-md"
+                        >
+                          ✓ {appr}
+                        </span>
+                      ),
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Accept / Applied Bar */}
             <div className="flex items-center justify-between pt-1 flex-wrap gap-2">

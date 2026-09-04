@@ -38,12 +38,24 @@ export interface EvidenceFile {
 }
 
 export interface AIAssistSuggestion {
+  // 10 Core Structured AI Analysis Fields
+  summary: string;
+  suggestedDomain: string;
+  suggestedSubdomain: string;
+  priority: 'Low' | 'Medium' | 'High' | 'Critical' | string;
+  priorityReason: string;
+  impactAssessment: string;
+  reviewRecommendation: string;
+  innovationDirections: string[];
+  technologies: string[];
+  keywords: string[];
+
+  // Compatibility fields for existing form and UI components
   suggestedCategory: string;
   subDomain?: string | null;
-  relatedThemes: string[];
-  potentialDuplicatesCount: number;
+  relatedThemes?: string[];
+  potentialDuplicatesCount?: number;
   suggestedPriority: string;
-  priorityReason?: string;
   analysisSummary: string;
   detectedKeywords: string[];
   affectedStakeholders?: string[];

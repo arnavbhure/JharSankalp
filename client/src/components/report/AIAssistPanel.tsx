@@ -4,9 +4,11 @@ import {
   CheckCircle2,
   ShieldAlert,
   Cpu,
-  Users2,
   Compass,
   Activity,
+  Tag,
+  FileCheck,
+  Globe2,
 } from 'lucide-react';
 import { AIAssistSuggestion } from '../../types/submission';
 
@@ -23,6 +25,31 @@ export function AIAssistPanel({
   onDismiss,
   isApplied = false,
 }: AIAssistPanelProps) {
+  const domain = suggestion.suggestedDomain || suggestion.suggestedCategory;
+  const subdomain = suggestion.suggestedSubdomain || suggestion.subDomain;
+  const priority = suggestion.priority || suggestion.suggestedPriority || 'Medium';
+  const summary = suggestion.summary || suggestion.analysisSummary;
+  const priorityReason = suggestion.priorityReason;
+  const impact = suggestion.impactAssessment;
+  const recommendation = suggestion.reviewRecommendation;
+  const innovations =
+    suggestion.innovationDirections && suggestion.innovationDirections.length > 0
+      ? suggestion.innovationDirections
+      : suggestion.suggestedApproach || [];
+  const technologies =
+    suggestion.technologies && suggestion.technologies.length > 0
+      ? suggestion.technologies
+      : suggestion.requiredExpertise || [];
+  const keywords =
+    suggestion.keywords && suggestion.keywords.length > 0
+      ? suggestion.keywords
+      : suggestion.detectedKeywords || [];
+
+  const normPriority = String(priority).toUpperCase();
+  const isCritical = normPriority === 'CRITICAL';
+  const isHigh = normPriority === 'HIGH';
+  const isLow = normPriority === 'LOW';
+
   return (
     <div className="rounded-2xl border-2 border-[#123B2A]/25 bg-[#F2FBF5] p-5 sm:p-6 text-left space-y-4 shadow-sm transition-all animate-in fade-in duration-300">
       {/* Header */}
@@ -33,10 +60,10 @@ export function AIAssistPanel({
           </div>
           <div>
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-[#123B2A] block">
-              JHARSANKALP AI INTELLIGENCE ENGINE
+              JHARSANKALP CIVIC AI ENGINE
             </span>
             <span className="text-[13px] font-bold text-[#1D2522]">
-              Structured Challenge Classification & Recommendations
+              Dynamic Challenge Intelligence Analysis
             </span>
           </div>
         </div>
@@ -48,11 +75,16 @@ export function AIAssistPanel({
         )}
       </div>
 
-      {/* Summary Rationale */}
-      {suggestion.analysisSummary && (
-        <p className="text-[13px] text-[#3D4C44] leading-relaxed bg-white/70 p-3 rounded-xl border border-[#123B2A]/10">
-          {suggestion.analysisSummary}
-        </p>
+      {/* Summary */}
+      {summary && (
+        <div className="bg-white/80 p-3.5 rounded-xl border border-[#123B2A]/10 space-y-1">
+          <span className="text-[10px] font-mono uppercase font-bold text-[#6B5845] block tracking-wide">
+            Problem Summary
+          </span>
+          <p className="text-[13.5px] text-[#1D2522] leading-relaxed font-medium">
+            {summary}
+          </p>
+        </div>
       )}
 
       {/* Grid of Key Classification Findings */}
@@ -61,13 +93,13 @@ export function AIAssistPanel({
         <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
           <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
             <Compass className="h-3 w-3 text-[#123B2A]" />
-            Suggested Domain
+            Inferred Domain
           </span>
           <div className="text-[14px] font-bold text-[#123B2A] leading-tight">
-            {suggestion.suggestedCategory}
+            {domain}
           </div>
-          {suggestion.subDomain && (
-            <div className="text-[11.5px] font-mono text-[#6B5845]">↳ {suggestion.subDomain}</div>
+          {subdomain && (
+            <div className="text-[11.5px] font-mono text-[#6B5845]">↳ {subdomain}</div>
           )}
         </div>
 
@@ -75,59 +107,66 @@ export function AIAssistPanel({
         <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
           <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
             <Activity className="h-3 w-3 text-[#BE123C]" />
-            Priority Assessment
+            Severity & Priority
           </span>
           <div className="flex items-center gap-1.5">
             <span
               className={`text-[12px] font-mono font-bold px-2 py-0.5 rounded ${
-                suggestion.suggestedPriority === 'CRITICAL'
+                isCritical
                   ? 'bg-[#FFEBEB] text-[#BE123C] border border-[#FECDD3]'
-                  : suggestion.suggestedPriority === 'HIGH'
+                  : isHigh
                     ? 'bg-[#FEF6E9] text-[#B45309] border border-[#FDE68A]'
-                    : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                    : isLow
+                      ? 'bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE]'
+                      : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
               }`}
             >
-              {suggestion.suggestedPriority}
+              {priority}
             </span>
-            {suggestion.estimatedImpactLevel && (
-              <span className="text-[11px] font-mono text-[#6B5845]">
-                ({suggestion.estimatedImpactLevel} SCALE)
-              </span>
-            )}
           </div>
-          {suggestion.priorityReason && (
+          {priorityReason && (
             <div className="text-[11.5px] text-[#6B5845] line-clamp-2">
-              {suggestion.priorityReason}
+              {priorityReason}
             </div>
           )}
         </div>
 
-        {/* Human Review Status */}
+        {/* Human Review Recommendation */}
         <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
           <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
             <ShieldAlert className="h-3 w-3 text-[#B45309]" />
-            Review Protocol
+            Review Recommendation
           </span>
-          <div className="text-[13px] font-bold text-[#1D2522]">
-            {suggestion.needsHumanReview ? 'Flagged for Human Review' : 'Standard Validation Track'}
-          </div>
-          <div className="text-[11px] text-[#6B5845]">
-            Preserves human verification before state deployment.
+          <div className="text-[12px] text-[#1D2522] leading-snug line-clamp-3">
+            {recommendation || (suggestion.needsHumanReview ? 'Flagged for Human Review' : 'Standard Validation Track')}
           </div>
         </div>
       </div>
 
-      {/* Suggested Innovation Directions */}
-      {suggestion.suggestedApproach && suggestion.suggestedApproach.length > 0 && (
+      {/* Impact Assessment */}
+      {impact && (
+        <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+          <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+            <Globe2 className="h-3 w-3 text-[#123B2A]" />
+            Impact Assessment
+          </span>
+          <p className="text-[12.5px] text-[#3D4C44] leading-relaxed">
+            {impact}
+          </p>
+        </div>
+      )}
+
+      {/* Innovation Directions */}
+      {innovations.length > 0 && (
         <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
           <span className="text-[11px] font-mono uppercase font-bold text-[#123B2A] flex items-center gap-1">
             <Cpu className="h-3.5 w-3.5 text-[#15803D]" />
-            Suggested Innovation Directions & Technologies
+            Suggested Innovation Directions
           </span>
           <div className="flex flex-wrap gap-1.5">
-            {suggestion.suggestedApproach.map((appr) => (
+            {innovations.map((appr, idx) => (
               <span
-                key={appr}
+                key={idx}
                 className="text-[11.5px] font-mono bg-[#FAF9F5] text-[#1D2522] border border-[#EEEAE1] px-2.5 py-0.5 rounded-md"
               >
                 ✓ {appr}
@@ -137,27 +176,42 @@ export function AIAssistPanel({
         </div>
       )}
 
-      {/* Required Expertise & Stakeholders */}
+      {/* Technologies & Keywords */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {suggestion.requiredExpertise && suggestion.requiredExpertise.length > 0 && (
-          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
-            <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] block">
-              Required Disciplines & Expertise
+        {technologies.length > 0 && (
+          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
+            <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
+              <FileCheck className="h-3 w-3 text-[#123B2A]" />
+              Relevant Technologies & Methods
             </span>
-            <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
-              {suggestion.requiredExpertise.join(', ')}
+            <div className="flex flex-wrap gap-1">
+              {technologies.map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="text-[11px] font-mono bg-[#F2FBF5] text-[#123B2A] border border-[#BBF7D0] px-2 py-0.5 rounded"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
         )}
 
-        {suggestion.affectedStakeholders && suggestion.affectedStakeholders.length > 0 && (
-          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1">
+        {keywords.length > 0 && (
+          <div className="p-3 rounded-xl bg-white border border-[#123B2A]/15 space-y-1.5">
             <span className="text-[10.5px] font-mono uppercase font-bold text-[#6B5845] flex items-center gap-1">
-              <Users2 className="h-3 w-3 text-[#6B5845]" />
-              Identified Stakeholders
+              <Tag className="h-3 w-3 text-[#6B5845]" />
+              Detected Keywords
             </span>
-            <div className="text-[12.5px] text-[#1D2522] font-medium leading-relaxed">
-              {suggestion.affectedStakeholders.join(', ')}
+            <div className="flex flex-wrap gap-1">
+              {keywords.map((kw, idx) => (
+                <span
+                  key={idx}
+                  className="text-[11px] font-mono bg-[#FAF9F5] text-[#6B5845] border border-[#EEEAE1] px-2 py-0.5 rounded"
+                >
+                  #{kw}
+                </span>
+              ))}
             </div>
           </div>
         )}
@@ -166,7 +220,7 @@ export function AIAssistPanel({
       {/* Action Bar */}
       <div className="flex items-center justify-between pt-2 border-t border-[#123B2A]/15 flex-wrap gap-3">
         <span className="text-[11.5px] text-[#6B5845]">
-          AI recommendations do not modify your submission. You retain complete human control.
+          AI recommendations do not modify your submission without your approval.
         </span>
 
         <div className="flex items-center gap-2.5">

@@ -114,23 +114,31 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
 
     setIsAnalyzing(true);
     setAnalyzeError(null);
+    setLocalSuggestion(null); // Clear previous suggestion immediately to prevent stale UX
     try {
-      const res = await analyzeDescription(formData.description, formData.title, formData.district);
+      const res = await analyzeDescription(
+        formData.description,
+        formData.title,
+        formData.district,
+        undefined,
+        formData.category !== 'Not sure — Help me identify it' ? formData.category : undefined,
+      );
       if (res) {
         setLocalSuggestion(res);
         setIsApplied(false);
       }
     } catch (err: any) {
-      setAnalyzeError(err?.message || 'Unable to complete AI analysis right now.');
+      setAnalyzeError(err?.message || 'Unable to complete AI analysis right now. Please try again.');
     } finally {
       setIsAnalyzing(false);
     }
   };
 
   const handleApplyAISuggestions = (sug: AIAssistSuggestion) => {
+    const domain = sug.suggestedDomain || sug.suggestedCategory;
     onChange({
       aiSuggestions: sug,
-      category: sug.suggestedCategory,
+      category: domain,
     });
     setIsApplied(true);
   };
@@ -236,15 +244,49 @@ export function ProblemStep({ formData, onChange, errors = {} }: ProblemStepProp
         </div>
 
         {analyzeError && (
-          <p className="text-[12px] font-medium text-[#BE123C] flex items-center gap-1 pt-1">
-            <AlertCircle className="h-3.5 w-3.5" />
-            <span>{analyzeError}</span>
-          </p>
+          <div className="p-3 rounded-xl bg-[#FFF1F2] border border-[#FECDD3] text-[12.5px] text-[#BE123C] flex items-center justify-between gap-3 animate-in fade-in">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>{analyzeError}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleTriggerAI}
+              className="px-2.5 py-1 rounded-md bg-[#BE123C] text-white text-[11.5px] font-bold hover:bg-[#9F1239] transition-all cursor-pointer shrink-0"
+            >
+              Retry
+            </button>
+          </div>
         )}
       </div>
 
+      {/* Loading Skeleton while AI analysis is running */}
+      {isAnalyzing && (
+        <div className="rounded-2xl border-2 border-[#123B2A]/20 bg-[#F2FBF5]/80 p-5 sm:p-6 text-left space-y-4 animate-pulse">
+          <div className="flex items-center justify-between border-b border-[#123B2A]/10 pb-3">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-md bg-[#123B2A]/20 flex items-center justify-center">
+                <Loader2 className="h-4 w-4 animate-spin text-[#123B2A]" />
+              </div>
+              <div className="space-y-1">
+                <div className="h-3 w-36 bg-[#123B2A]/20 rounded" />
+                <div className="h-4 w-56 bg-[#123B2A]/15 rounded" />
+              </div>
+            </div>
+            <div className="h-5 w-24 bg-[#123B2A]/10 rounded" />
+          </div>
+          <div className="h-16 bg-white/70 rounded-xl border border-[#123B2A]/10" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="h-20 bg-white rounded-xl border border-[#123B2A]/10" />
+            <div className="h-20 bg-white rounded-xl border border-[#123B2A]/10" />
+            <div className="h-20 bg-white rounded-xl border border-[#123B2A]/10" />
+          </div>
+          <div className="h-12 bg-white rounded-xl border border-[#123B2A]/10" />
+        </div>
+      )}
+
       {/* Early AI Assistance Panel if triggered */}
-      {localSuggestion && (
+      {!isAnalyzing && localSuggestion && (
         <AIAssistPanel
           suggestion={localSuggestion}
           onApply={handleApplyAISuggestions}

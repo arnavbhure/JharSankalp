@@ -8,7 +8,7 @@ const router = Router();
  * POST /api/ai/analyze-challenge
  * Analyzes a civic challenge submission with AI-assisted problem structuring.
  */
-router.post('/analyze-challenge', async (req, res, next) => {
+router.post('/analyze-challenge', async (req, res) => {
   try {
     const { title, description, district, affectedPopulation } = req.body;
 
@@ -68,8 +68,16 @@ router.post('/analyze-challenge', async (req, res, next) => {
     });
 
     sendSuccess(res, analysis, 200, req);
-  } catch (error) {
-    next(error);
+  } catch (error: any) {
+    console.error('AI analysis endpoint error:', error?.message || error);
+    sendError(
+      res,
+      502,
+      'AI_SERVICE_ERROR',
+      'AI analysis service is temporarily unavailable. Please try again or select category manually.',
+      undefined,
+      req,
+    );
   }
 });
 

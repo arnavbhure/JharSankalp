@@ -11,38 +11,82 @@ export async function analyzeDescription(
   title?: string,
   district?: string,
   affectedPopulation?: number,
+  category?: string,
 ): Promise<AIAssistSuggestion | null> {
   if (!text || text.trim().length < 15) {
     return null;
   }
 
   const data = await api.post<any>('/ai/analyze-challenge', {
-    title: title && title.trim().length >= 3 ? title : 'Community Challenge Report',
+    title: title && title.trim().length >= 3 ? title.trim() : 'Community Challenge Report',
     description: text.trim(),
     district,
     affectedPopulation,
+    category,
   });
 
   if (!data) {
     throw new Error('AI analysis service returned an empty response.');
   }
 
+  const domain = data.suggestedDomain || data.domain || data.suggestedCategory || 'General';
+  const subdomain =
+    data.suggestedSubdomain || data.suggestedSubcategory || data.subDomain || 'Civic Issue';
+  const priority = data.priority || data.suggestedPriority || 'Medium';
+  const summary = data.summary || data.analysisSummary || text.slice(0, 150);
+  const priorityReason = data.priorityReason || summary;
+  const impactAssessment =
+    data.impactAssessment || 'Community impact to be evaluated during administrative review.';
+  const reviewRecommendation =
+    data.reviewRecommendation ||
+    `Submit to ${domain} innovation committee for priority review.`;
+  const innovationDirections: string[] =
+    Array.isArray(data.innovationDirections) && data.innovationDirections.length > 0
+      ? data.innovationDirections
+      : Array.isArray(data.suggestedApproach)
+        ? data.suggestedApproach
+        : [];
+  const technologies: string[] =
+    Array.isArray(data.technologies) && data.technologies.length > 0
+      ? data.technologies
+      : Array.isArray(data.requiredExpertise)
+        ? data.requiredExpertise
+        : [];
+  const keywords: string[] =
+    Array.isArray(data.keywords) && data.keywords.length > 0
+      ? data.keywords
+      : Array.isArray(data.detectedKeywords)
+        ? data.detectedKeywords
+        : [domain];
+
   return {
-    suggestedCategory: data.suggestedDomain || data.domain || 'Water Management',
-    subDomain: data.suggestedSubcategory || data.subDomain,
-    relatedThemes: data.keywords || data.suggestedApproach || [],
+    summary,
+    suggestedDomain: domain,
+    suggestedSubdomain: subdomain,
+    priority,
+    priorityReason,
+    impactAssessment,
+    reviewRecommendation,
+    innovationDirections,
+    technologies,
+    keywords,
+
+    // Compatibility fields
+    suggestedCategory: domain,
+    subDomain: subdomain,
+    relatedThemes: keywords,
     potentialDuplicatesCount: 0,
-    suggestedPriority: data.suggestedPriority || 'HIGH',
-    priorityReason: data.priorityReason || data.summary,
-    analysisSummary: data.summary,
-    detectedKeywords: data.keywords || [],
-    affectedStakeholders: data.suggestedStakeholders || data.affectedStakeholders || [],
+    suggestedPriority: typeof priority === 'string' ? priority.toUpperCase() : 'MEDIUM',
+    analysisSummary: summary,
+    detectedKeywords: keywords,
+    affectedStakeholders:
+      data.suggestedStakeholders || data.affectedStakeholders || [`${domain} Department`],
     possibleRootCauses: data.possibleRootCauses,
-    suggestedApproach: data.suggestedApproach || data.potentialImpactAreas,
-    requiredExpertise: data.keywords || data.requiredExpertise,
+    suggestedApproach: innovationDirections,
+    requiredExpertise: technologies,
     estimatedImpactLevel: data.estimatedImpactLevel || 'LOCAL',
-    confidence: data.confidence || 0.92,
-    needsHumanReview: data.needsHumanReview ?? false,
+    confidence: typeof data.confidence === 'number' ? data.confidence : 0.92,
+    needsHumanReview: data.needsHumanReview ?? (priority === 'Critical' || priority === 'CRITICAL'),
   };
 }
 
