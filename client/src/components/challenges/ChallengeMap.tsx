@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Layers, MapPin, ArrowRight } from 'lucide-react';
 import { ChallengeItem } from '../../types/challenges';
-import { CATEGORY_METADATA } from '../../data/challengesData';
+import { getCategoryMeta } from '../../data/challengesData';
 
 interface ChallengeMapProps {
   challenges: ChallengeItem[];
@@ -235,7 +235,7 @@ export function ChallengeMap({ challenges, onSelectChallenge }: ChallengeMapProp
 
           {/* Interactive Challenge Location Pins */}
           {challenges.map((c) => {
-            const meta = CATEGORY_METADATA[c.category];
+            const meta = getCategoryMeta(c.category);
             const isSelected = activeChallenge?.id === c.id;
 
             return (

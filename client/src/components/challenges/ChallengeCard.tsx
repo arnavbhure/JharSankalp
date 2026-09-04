@@ -10,15 +10,15 @@ import {
   Lightbulb,
   ArrowRight,
 } from 'lucide-react';
-import { ChallengeItem, ChallengeCategory } from '../../types/challenges';
-import { CATEGORY_METADATA } from '../../data/challengesData';
+import { ChallengeItem } from '../../types/challenges';
+import { getCategoryMeta } from '../../data/challengesData';
 
 interface ChallengeCardProps {
   challenge: ChallengeItem;
   onViewDetails: (challenge: ChallengeItem) => void;
 }
 
-function getCategoryIcon(category: ChallengeCategory) {
+function getCategoryIcon(category?: string) {
   switch (category) {
     case 'Water Management':
       return Droplets;
@@ -39,46 +39,60 @@ function getCategoryIcon(category: ChallengeCategory) {
   }
 }
 
-function getStatusIndicator(status: ChallengeItem['status']) {
+function getStatusIndicator(status?: string) {
   switch (status) {
     case 'Open for Collaboration':
+    case 'ACTIVE':
+    case 'OPEN':
       return {
-        label: 'Open for Collaboration',
+        label: status === 'ACTIVE' || status === 'OPEN' ? 'Open for Collaboration' : status,
         dot: 'bg-[#15803D]',
         text: 'text-[#15803D]',
         bg: 'bg-[#F0FDF4]',
         border: 'border-[#BBF7D0]',
       };
     case 'In Discussion':
+    case 'UNDER_REVIEW':
       return {
-        label: 'In Discussion',
+        label: status === 'UNDER_REVIEW' ? 'In Discussion' : status,
         dot: 'bg-[#B45309]',
         text: 'text-[#B45309]',
         bg: 'bg-[#FEF6E9]',
         border: 'border-[#F8CCA5]',
       };
     case 'Solution in Development':
+    case 'IN_PROGRESS':
       return {
-        label: 'Solution in Development',
+        label: status === 'IN_PROGRESS' ? 'Solution in Development' : status,
         dot: 'bg-[#0284C7]',
         text: 'text-[#0284C7]',
         bg: 'bg-[#F0F7FF]',
         border: 'border-[#CCE2FF]',
       };
     case 'Implemented':
+    case 'COMPLETED':
+    case 'RESOLVED':
       return {
-        label: 'Implemented',
+        label: status === 'COMPLETED' || status === 'RESOLVED' ? 'Implemented' : status,
         dot: 'bg-[#123B2A]',
         text: 'text-[#123B2A]',
         bg: 'bg-[#EBF3EE]',
         border: 'border-[#25593F]/30',
+      };
+    default:
+      return {
+        label: typeof status === 'string' ? status.replace(/_/g, ' ') : 'Active',
+        dot: 'bg-[#15803D]',
+        text: 'text-[#15803D]',
+        bg: 'bg-[#F0FDF4]',
+        border: 'border-[#BBF7D0]',
       };
   }
 }
 
 export function ChallengeCard({ challenge, onViewDetails }: ChallengeCardProps) {
   const Icon = getCategoryIcon(challenge.category);
-  const meta = CATEGORY_METADATA[challenge.category];
+  const meta = getCategoryMeta(challenge.category);
   const statusInfo = getStatusIndicator(challenge.status);
 
   return (

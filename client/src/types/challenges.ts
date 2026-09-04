@@ -5,7 +5,9 @@ export type ChallengeCategory =
   | 'Education'
   | 'Healthcare'
   | 'Environment'
-  | 'Livelihoods';
+  | 'Livelihoods'
+  | 'Urban Development'
+  | (string & {});
 
 export type ChallengeStatusType =
   'Open for Collaboration' | 'In Discussion' | 'Solution in Development' | 'Implemented';

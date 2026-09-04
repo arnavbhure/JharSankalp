@@ -82,7 +82,33 @@ export const CATEGORY_METADATA: Record<ChallengeCategory, CategoryMeta> = {
     iconColor: 'text-[#6B5845]',
     hoverBorder: 'hover:border-[#6B5845]/50',
   },
+  'Urban Development': {
+    name: 'Urban Development',
+    accent: '#0284C7',
+    badgeBg: 'bg-[#F0F7FF]',
+    badgeText: 'text-[#0284C7]',
+    borderColor: 'border-[#CCE2FF]',
+    iconBg: 'bg-[#E0F2FE]',
+    iconColor: 'text-[#0284C7]',
+    hoverBorder: 'hover:border-[#0284C7]/50',
+  },
 };
+
+export const DEFAULT_CATEGORY_META: CategoryMeta = {
+  name: 'Water Management',
+  accent: '#123B2A',
+  badgeBg: 'bg-[#EBF3EE]',
+  badgeText: 'text-[#123B2A]',
+  borderColor: 'border-[#25593F]/20',
+  iconBg: 'bg-[#EBF5ED]',
+  iconColor: 'text-[#123B2A]',
+  hoverBorder: 'hover:border-[#123B2A]/50',
+};
+
+export function getCategoryMeta(category?: string): CategoryMeta {
+  if (!category) return DEFAULT_CATEGORY_META;
+  return (CATEGORY_METADATA as Record<string, CategoryMeta>)[category] || DEFAULT_CATEGORY_META;
+}
 
 export const JHARKHAND_DISTRICTS = [
   'All Districts',
