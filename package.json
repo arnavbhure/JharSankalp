@@ -29,9 +29,9 @@
     "schema": "prisma/schema.prisma",
     "seed": "tsx prisma/seed.ts"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
+ "engines": {
+  "node": "22.x"
+},
   "devDependencies": {
     "@types/node": "^26.4.1",
     "concurrently": "^9.1.2",
