@@ -135,6 +135,9 @@ router.get('/:id', async (req, res, next) => {
             impactMetrics: true,
           },
         },
+        submittedBy: {
+          select: { id: true, name: true, role: true },
+        },
       },
     });
 

@@ -22,11 +22,15 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* ── LEFT: Detailed Problem Dossier (7 Cols) ── */}
         <div className="lg:col-span-7 space-y-8 max-w-2xl text-[15px] leading-relaxed text-[#1D2522]/90">
-          {/* Background */}
+            {/* Background */}
           <div className="space-y-2">
             <h3 className="text-[1.15rem] font-extrabold text-[#123B2A] font-sans flex items-center gap-2">
               <span className="text-[#F5A623] font-mono">01.</span>
-              <span>Geological & Historical Background</span>
+              <span>
+                {challenge.category === 'Mining Safety'
+                  ? 'Geological & Historical Background'
+                  : 'Context & Background'}
+              </span>
             </h3>
             <p className="text-[#1D2522]/85 leading-relaxed">{challenge.problem.background}</p>
           </div>
@@ -61,7 +65,7 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
             </div>
             <p>
               Data logged in JharSankalp case files reflects field-verified observations submitted
-              by municipal ward committees and technical researchers.
+              by community stakeholders and technical researchers.
             </p>
           </div>
         </div>
@@ -151,21 +155,21 @@ export function ProblemStatement({ challenge }: ProblemStatementProps) {
                     points="18,32 30,16 54,12 70,22 84,24 88,40 82,54 84,72 70,86 52,90 32,88 22,76 14,56 12,42"
                     strokeWidth="1.5"
                   />
-                  {/* Dhanbad marker */}
-                  <circle cx="74" cy="44" r="4.5" fill="#F5A623" stroke="#123B2A" strokeWidth="1" />
+                  {/* Dynamic District marker */}
+                  <circle cx="50" cy="50" r="4.5" fill="#F5A623" stroke="#123B2A" strokeWidth="1" />
                   <text
-                    x="74"
-                    y="38"
+                    x="50"
+                    y="42"
                     fill="#123B2A"
                     fontSize="4.5"
                     fontWeight="bold"
                     textAnchor="middle"
                   >
-                    Dhanbad
+                    {challenge.profile.district}
                   </text>
                 </svg>
                 <div className="absolute bottom-2 left-2.5 text-[10px] font-mono text-[#6B5845]">
-                  Jharia Coalfield Sector 4
+                  {challenge.profile.district} · {challenge.subLocation}
                 </div>
               </div>
             </div>

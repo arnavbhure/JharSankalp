@@ -39,8 +39,7 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
               Residents Potentially Affected
             </div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Directly living in the immediate subsidence subsidence buffer zones across Jharia
-              Sector 4.
+              Directly affected residents and households in {challenge.subLocation || challenge.district}.
             </p>
           </div>
 
@@ -53,8 +52,7 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
               High-Risk Locations Identified
             </div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Critical structural fissures and localized sinkhole formations verified by
-              geotechnical teams.
+              Identified priority sectors and community clusters in {challenge.district} requiring intervention.
             </p>
           </div>
 
@@ -65,8 +63,7 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
             </div>
             <div className="text-[15px] font-bold text-white/95">Local Communities Involved</div>
             <p className="text-[13px] text-white/70 leading-relaxed max-w-xs">
-              Gram panchayats, labor cooperatives, and ward citizen action committees actively
-              participating.
+              Local gram panchayats, citizen committees, and community observers participating in validation.
             </p>
           </div>
         </div>
@@ -77,8 +74,7 @@ export function ImpactAtAGlance({ challenge }: ImpactAtAGlanceProps) {
             &ldquo;{challenge.impactMetrics.statement}&rdquo;
           </p>
           <div className="mt-3 text-[12px] font-mono text-[#F8F6F1]/60">
-            Dhanbad District Civil Administration & State Disaster Management Authority Consensus
-            Note
+            {challenge.district} District Administration & Departmental Review Desk Consensus Note
           </div>
         </div>
       </div>

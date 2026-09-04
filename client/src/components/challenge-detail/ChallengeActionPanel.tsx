@@ -66,9 +66,11 @@ export function ChallengeActionPanel({
             </div>
             <div>
               <span className="text-[9.5px] font-mono font-bold uppercase text-[#6B5845] block">
-                TIME LEFT
+                PRIORITY
               </span>
-              <span className="text-[12px] font-mono font-bold text-[#F5A623] block">18 Days</span>
+              <span className="text-[12px] font-mono font-bold text-[#F5A623] block">
+                {challenge.impactPriority.split(' ')[0]}
+              </span>
             </div>
           </div>
 
@@ -98,35 +100,30 @@ export function ChallengeActionPanel({
               ) : (
                 <>
                   <Users className="h-4 w-4 text-[#123B2A]" />
-                  <span>Join Challenge</span>
+                  <span>Join Working Group</span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Secondary Actions: Save Challenge & Share */}
-          <div className="space-y-1.5 pt-2 border-t border-[#EEEAE1] text-[12.5px]">
+          {/* Auxiliary Actions (Save, Share) */}
+          <div className="pt-2 border-t border-[#EEEAE1] grid grid-cols-2 gap-2">
             <button
               onClick={onToggleSave}
-              className="w-full flex items-center justify-between p-2 rounded-lg text-[#1D2522] hover:bg-[#FAF9F5] transition-colors cursor-pointer font-medium"
+              className="p-2.5 rounded-lg border border-[#EEEAE1] hover:bg-[#FAF9F5] text-[12px] font-medium text-[#1D2522] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
-              <span className="flex items-center gap-2">
-                <Bookmark
-                  className={`h-4 w-4 ${isSaved ? 'fill-[#123B2A] text-[#123B2A]' : 'text-[#6B5845]'}`}
-                />
-                <span>{isSaved ? 'Challenge Saved' : 'Save Challenge'}</span>
-              </span>
-              <span className="text-[11px] font-mono text-[#6B5845]">
-                {isSaved ? 'Saved in Dashboard' : 'Bookmark'}
-              </span>
+              <Bookmark
+                className={`h-3.5 w-3.5 ${isSaved ? 'fill-[#123B2A] text-[#123B2A]' : 'text-[#6B5845]'}`}
+              />
+              <span>{isSaved ? 'Saved' : 'Save'}</span>
             </button>
 
             <button
               onClick={handleShare}
-              className="w-full flex items-center justify-between p-2 rounded-lg text-[#1D2522] hover:bg-[#FAF9F5] transition-colors cursor-pointer font-medium"
+              className="p-2.5 rounded-lg border border-[#EEEAE1] hover:bg-[#FAF9F5] text-[12px] font-medium text-[#1D2522] flex items-center justify-between px-3 transition-colors cursor-pointer"
             >
-              <span className="flex items-center gap-2">
-                <Share2 className="h-4 w-4 text-[#6B5845]" />
+              <span className="flex items-center gap-1.5">
+                <Share2 className="h-3.5 w-3.5 text-[#6B5845]" />
                 <span>Share Case File</span>
               </span>
               <span className="text-[11px] font-mono text-[#15803D]">
@@ -140,8 +137,7 @@ export function ChallengeActionPanel({
         <div className="p-4 rounded-xl bg-[#FAF9F5] border border-[#EEEAE1] text-[12px] text-[#6B5845] space-y-1">
           <div className="font-bold text-[#123B2A]">Direct Institution Escalation</div>
           <p>
-            Submissions are reviewed directly by the Department of Mines and the IIT (ISM) technical
-            consortium coordinator.
+            Submissions are reviewed directly by {challenge.profile.adminDepartment.split(',')[0]} and matched academic consortium coordinators.
           </p>
         </div>
       </div>

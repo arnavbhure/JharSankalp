@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { getChallengeDetail } from '../data/challengeDetailData';
+import { ChevronRight, ArrowLeft, CheckCircle2, Loader2 } from 'lucide-react';
+import { getChallengeDetail, mapDbChallengeToDetailData } from '../data/challengeDetailData';
 import { fetchChallengeById } from '../services/api/challenges';
 import { ChallengeDetailData } from '../types/challengeDetail';
 import { DetailHero } from '../components/challenge-detail/DetailHero';
@@ -23,54 +23,36 @@ export function ChallengeDetail() {
   const { challengeId } = useParams<{ challengeId: string }>();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [challenge, setChallenge] = useState<ChallengeDetailData>(() =>
     getChallengeDetail(challengeId),
   );
 
   useEffect(() => {
     let isMounted = true;
+    setIsLoading(true);
+
     fetchChallengeById(challengeId || '')
       .then((res) => {
         if (!isMounted) return;
         if (res && res.id) {
-          setChallenge((prev) => ({
-            ...prev,
-            id: res.publicId || res.challengeCode || res.id,
-            title: res.title || prev.title,
-            category: (res.domain || prev.category) as any,
-            district: res.district?.name || res.district || prev.district,
-            subLocation: res.block || prev.subLocation,
-            summary: res.description || prev.summary,
-            status: res.status ? res.status.toUpperCase() : prev.status,
-            impactPriority: `${res.priority || 'High'} Impact Priority`,
-            stats: {
-              collaboratorsCount:
-                res._count?.collaborations ||
-                res.collaborations?.length ||
-                prev.stats.collaboratorsCount,
-              ideasCount: res._count?.ideas || res.ideas?.length || prev.stats.ideasCount,
-              followersCount: prev.stats.followersCount,
-            },
-            profile: {
-              ...prev.profile,
-              district: res.district?.name || res.district || prev.profile.district,
-              focusArea: res.domain || prev.profile.focusArea,
-              dateSubmitted: res.createdAt
-                ? new Date(res.createdAt).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })
-                : prev.profile.dateSubmitted,
-              trackingId: res.publicId || res.challengeCode || prev.profile.trackingId,
-            },
-            evidenceFiles:
-              res.evidence && res.evidence.length > 0 ? res.evidence : prev.evidenceFiles,
-          }));
+          // Construct 100% dynamic, domain-aware detail data from DB and AI analysis
+          const dynamicData = mapDbChallengeToDetailData(res);
+          setChallenge(dynamicData);
+        } else {
+          setChallenge(getChallengeDetail(challengeId));
         }
       })
       .catch((err) => {
-        console.warn('Using local fallback for challenge detail:', err);
+        console.warn('Using fallback for challenge detail:', err);
+        if (isMounted) {
+          setChallenge(getChallengeDetail(challengeId));
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       });
 
     return () => {
@@ -138,8 +120,9 @@ export function ChallengeDetail() {
               Challenges
             </Link>
             <ChevronRight className="h-3.5 w-3.5 text-[#6B5845]/50" />
-            <span className="text-[#123B2A] font-bold truncate max-w-[200px] sm:max-w-xs">
-              {challenge.title}
+            <span className="text-[#123B2A] font-bold truncate max-w-[200px] sm:max-w-xs inline-flex items-center gap-1.5">
+              {isLoading && <Loader2 className="h-3 w-3 animate-spin text-[#123B2A] shrink-0" />}
+              <span className="truncate">{challenge.title}</span>
             </span>
           </div>
 

@@ -130,10 +130,10 @@ export function DetailHero({
               <div className="relative z-10 flex items-center justify-between border-b border-white/20 pb-3">
                 <div className="flex items-center gap-2 text-[11px] font-mono font-bold text-[#F8F6F1]/90 uppercase tracking-wider">
                   <Activity className="h-3.5 w-3.5 text-[#F5A623] animate-pulse" />
-                  <span>SEISMIC TELEMETRY RADAR</span>
+                  <span>{challenge.category.toUpperCase()} INTELLIGENCE RADAR</span>
                 </div>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-[#F5A623] text-[10px] font-mono font-bold">
-                  LIVE GRID
+                  {challenge.status}
                 </span>
               </div>
 
@@ -151,25 +151,25 @@ export function DetailHero({
                 {/* Subsurface Sensor Vector Box */}
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/15 space-y-2 text-[12px] text-left">
                   <div className="flex items-center justify-between text-white/80">
-                    <span>Geological Strata:</span>
-                    <span className="font-mono text-white font-bold">Barakar Coal Measures</span>
+                    <span>Domain Focus:</span>
+                    <span className="font-mono text-white font-bold">{challenge.category}</span>
                   </div>
                   <div className="flex items-center justify-between text-white/80">
-                    <span>Subterranean Depth:</span>
-                    <span className="font-mono text-white font-bold">60m – 140m Voids</span>
+                    <span>Target Sublocation:</span>
+                    <span className="font-mono text-white font-bold truncate max-w-[160px]">{challenge.subLocation}</span>
                   </div>
                   <div className="flex items-center justify-between text-white/80">
-                    <span>Telemetry Status:</span>
-                    <span className="font-mono text-[#F5A623] font-bold">
-                      Acoustic Extensometer Pilot
+                    <span>Review Desk:</span>
+                    <span className="font-mono text-[#F5A623] font-bold truncate max-w-[170px]">
+                      {challenge.profile.adminDepartment.split(',')[0]}
                     </span>
                   </div>
                 </div>
 
-                {/* Warning Banner */}
+                {/* Status Callout Banner */}
                 <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-[#F5A623]/20 border border-[#F5A623]/40 text-[#F8F6F1] text-[11.5px]">
                   <AlertTriangle className="h-4 w-4 text-[#F5A623] shrink-0" />
-                  <span>Active seam fire thermal acceleration documented in Sector 4.</span>
+                  <span>{challenge.impactPriority}: Active civic problem logged in {challenge.district}.</span>
                 </div>
               </div>
 

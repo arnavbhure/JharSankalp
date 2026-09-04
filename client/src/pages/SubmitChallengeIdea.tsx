@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -10,7 +10,9 @@ import {
   AlertCircle,
   Send,
 } from 'lucide-react';
-import { getChallengeDetail } from '../data/challengeDetailData';
+import { getChallengeDetail, mapDbChallengeToDetailData } from '../data/challengeDetailData';
+import { fetchChallengeById } from '../services/api/challenges';
+import { ChallengeDetailData } from '../types/challengeDetail';
 import { useInnovationStore } from '../stores/innovationStore';
 import { Footer } from '../components/layout/Footer';
 
@@ -25,7 +27,20 @@ const COLLAB_OPTIONS = [
 export function SubmitChallengeIdea() {
   const { challengeId } = useParams<{ challengeId: string }>();
   const navigate = useNavigate();
-  const challenge = useMemo(() => getChallengeDetail(challengeId), [challengeId]);
+  const [challenge, setChallenge] = useState<ChallengeDetailData>(() =>
+    getChallengeDetail(challengeId),
+  );
+
+  useEffect(() => {
+    if (!challengeId) return;
+    fetchChallengeById(challengeId)
+      .then((res) => {
+        if (res && res.id) {
+          setChallenge(mapDbChallengeToDetailData(res));
+        }
+      })
+      .catch(() => {});
+  }, [challengeId]);
 
   const { submitIdea, saveDraftIdea } = useInnovationStore();
 

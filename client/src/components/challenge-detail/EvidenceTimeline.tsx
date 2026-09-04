@@ -102,52 +102,62 @@ export function EvidenceTimeline({ challenge }: EvidenceTimelineProps) {
         </div>
       )}
 
-      {/* Structured Vertical Timeline */}
-      <div className="relative border-l-2 border-[#123B2A]/25 pl-6 sm:pl-8 ml-3 sm:ml-4 space-y-8 max-w-3xl">
-        {challenge.evidenceTimeline.map((item, index) => (
-          <div key={item.docketId || index} className="relative group">
-            {/* Timeline Node Ring */}
-            <div className="absolute -left-[31px] sm:-left-[39px] top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#123B2A] text-white ring-4 ring-[#F8F6F1]">
-              <span className="h-2 w-2 rounded-full bg-[#F5A623]" />
-            </div>
+      {/* Structured Vertical Timeline or Empty State */}
+      {challenge.evidenceTimeline && challenge.evidenceTimeline.length > 0 ? (
+        <div className="relative border-l-2 border-[#123B2A]/25 pl-6 sm:pl-8 ml-3 sm:ml-4 space-y-8 max-w-3xl">
+          {challenge.evidenceTimeline.map((item, index) => (
+            <div key={item.docketId || index} className="relative group">
+              {/* Timeline Node Ring */}
+              <div className="absolute -left-[31px] sm:-left-[39px] top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#123B2A] text-white ring-4 ring-[#F8F6F1]">
+                <span className="h-2 w-2 rounded-full bg-[#F5A623]" />
+              </div>
 
-            {/* Evidence Card */}
-            <div className="rounded-xl border border-[#EEEAE1] bg-white p-5 shadow-2xs space-y-2.5 transition-all group-hover:border-[#123B2A]/40 group-hover:shadow-xs">
-              <div className="flex items-center justify-between gap-2 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-[#123B2A]/10 text-[#123B2A] text-[12px] font-mono font-bold">
-                    {item.year}
-                  </span>
-                  <span className="text-[12.5px] font-medium text-[#6B5845]">{item.dateStr}</span>
+              {/* Evidence Card */}
+              <div className="rounded-xl border border-[#EEEAE1] bg-white p-5 shadow-2xs space-y-2.5 transition-all group-hover:border-[#123B2A]/40 group-hover:shadow-xs">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#123B2A]/10 text-[#123B2A] text-[12px] font-mono font-bold">
+                      {item.year}
+                    </span>
+                    <span className="text-[12.5px] font-medium text-[#6B5845]">{item.dateStr}</span>
+                  </div>
+
+                  {item.docketId && (
+                    <span className="text-[11px] font-mono text-[#6B5845] bg-[#F8F6F1] px-2 py-0.5 rounded border border-[#EEEAE1]">
+                      Ref: {item.docketId}
+                    </span>
+                  )}
                 </div>
 
-                {item.docketId && (
-                  <span className="text-[11px] font-mono text-[#6B5845] bg-[#F8F6F1] px-2 py-0.5 rounded border border-[#EEEAE1]">
-                    Ref: {item.docketId}
+                {/* Observation Content */}
+                <p className="text-[14.5px] font-semibold text-[#1D2522] leading-snug">
+                  {item.observation}
+                </p>
+
+                {/* Source Attribution */}
+                <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between text-[12px] text-[#6B5845]">
+                  <span className="flex items-center gap-1.5">
+                    <FileText className="h-3.5 w-3.5 text-[#123B2A]" />
+                    <span>Source: {item.sourceType}</span>
                   </span>
-                )}
-              </div>
-
-              {/* Observation Content */}
-              <p className="text-[14.5px] font-semibold text-[#1D2522] leading-snug">
-                {item.observation}
-              </p>
-
-              {/* Source Attribution */}
-              <div className="pt-2 border-t border-[#EEEAE1] flex items-center justify-between text-[12px] text-[#6B5845]">
-                <span className="flex items-center gap-1.5">
-                  <FileText className="h-3.5 w-3.5 text-[#123B2A]" />
-                  <span>Source: {item.sourceType}</span>
-                </span>
-                <span className="hidden sm:inline-flex items-center gap-1 text-[#15803D] font-medium">
-                  <CheckCircle className="h-3 w-3" />
-                  Verified
-                </span>
+                  <span className="hidden sm:inline-flex items-center gap-1 text-[#15803D] font-medium">
+                    <CheckCircle className="h-3 w-3" />
+                    Verified
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-xl border border-dashed border-[#EEEAE1] bg-white p-8 text-center space-y-2 max-w-3xl">
+          <FileText className="h-6 w-6 text-[#123B2A] mx-auto opacity-40" />
+          <h4 className="text-[14px] font-bold text-[#1D2522]">No Additional Field Logs Logged Yet</h4>
+          <p className="text-[12.5px] text-[#6B5845] max-w-md mx-auto">
+            Audit milestones and verified ground observations will be appended here as district field inspections proceed.
+          </p>
+        </div>
+      )}
 
       {/* Demo Data Transparency Note */}
       <div className="mt-8 flex items-center gap-2 text-[12px] font-mono text-[#6B5845]/70 bg-[#FAF9F5] p-3 rounded-lg border border-[#EEEAE1] max-w-3xl">

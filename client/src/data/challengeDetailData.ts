@@ -1,4 +1,10 @@
-import { ChallengeDetailData } from '../types/challengeDetail';
+import {
+  ChallengeDetailData,
+  StakeholderCategory,
+  EvidenceItem,
+  SolutionApproach,
+  LifecycleStageItem,
+} from '../types/challengeDetail';
 import { CHALLENGES_DATA } from './challengesData';
 
 export const DHANBAD_MINING_DETAIL: ChallengeDetailData = {
@@ -306,7 +312,32 @@ export const KHUNTI_WATER_DETAIL: ChallengeDetailData = {
       potentialPartners: ['BIT Mesra', 'JharSankalp Water Consortium'],
     },
   ],
-  stakeholders: DHANBAD_MINING_DETAIL.stakeholders,
+  stakeholders: [
+    {
+      categoryName: 'Universities & Academic Labs',
+      description: 'Water resources engineering, hydrology, and embedded telemetry laboratories',
+      partners: [
+        {
+          name: 'BIT Mesra',
+          role: 'Department of Civil & Environmental Engineering',
+          organizationType: 'University',
+          contributionArea: 'Acoustic piezoelectric telemetry calibration and pump failure prediction',
+        },
+      ],
+    },
+    {
+      categoryName: 'Community Stakeholders & Civil Society',
+      description: 'Gram panchayats, Jal Sahiyas, and village water user committees',
+      partners: [
+        {
+          name: 'Murhu Jal Sahiya Collective',
+          role: 'Panchayat Drinking Water Cadre',
+          organizationType: 'Community',
+          contributionArea: 'Field ground-truth reporting and sensor collar maintenance logs',
+        },
+      ],
+    },
+  ],
   lifecycleStages: [
     {
       stage: 'Identify',
@@ -347,11 +378,518 @@ export const KHUNTI_WATER_DETAIL: ChallengeDetailData = {
   relatedChallengeIds: ['JS-2024-00003', 'JS-2026-00005', 'JS-2026-00015'],
 };
 
+export const DOMAIN_DEPARTMENT_MAP: Record<string, string> = {
+  'Water Management': 'Dept. of Drinking Water & Sanitation, Govt. of Jharkhand',
+  Agriculture: 'Dept. of Agriculture, Animal Husbandry & Co-operative, Govt. of Jharkhand',
+  'Mining Safety': 'Dept. of Mines & Geology, Govt. of Jharkhand',
+  Healthcare: 'Dept. of Health, Medical Education & Family Welfare, Govt. of Jharkhand',
+  Education: 'Dept. of School Education & Literacy, Govt. of Jharkhand',
+  Environment: 'Dept. of Forest, Environment & Climate Change, Govt. of Jharkhand',
+  Infrastructure: 'Road Construction & Rural Works Dept., Govt. of Jharkhand',
+  'Roads & Infrastructure': 'Road Construction Dept., Govt. of Jharkhand',
+  Energy: 'Dept. of Energy / JREDA, Govt. of Jharkhand',
+  'Urban Development': 'Urban Development & Housing Dept., Govt. of Jharkhand',
+  Sanitation: 'Dept. of Drinking Water & Sanitation, Govt. of Jharkhand',
+  'Rural Livelihoods': 'Rural Development Dept. (JSLPS), Govt. of Jharkhand',
+  'Disaster Management': 'Disaster Management Division, Dept. of Home, Govt. of Jharkhand',
+  'Technology & Ethics': 'Dept. of Information Technology & e-Governance, Govt. of Jharkhand',
+  General: 'State Innovation Council, Govt. of Jharkhand',
+};
+
+export const DOMAIN_STAKEHOLDER_MAP: Record<string, StakeholderCategory[]> = {
+  'Water Management': [
+    {
+      categoryName: 'Academic & Engineering Labs',
+      description: 'Water resources engineering, hydrology, and sensor telemetry',
+      partners: [
+        {
+          name: 'BIT Mesra',
+          role: 'Civil & Environmental Engineering',
+          organizationType: 'University',
+          contributionArea: 'Groundwater hydrology and automated sensor telemetry',
+        },
+      ],
+    },
+    {
+      categoryName: 'Community & Field Collectives',
+      description: 'Village water committees, Jal Sahiyas, and grassroots field observers',
+      partners: [
+        {
+          name: 'Jal Sahiya Collective',
+          role: 'Community Water Vanguard',
+          organizationType: 'Community',
+          contributionArea: 'Ground truth logging, pump status monitoring, and village outreach',
+        },
+      ],
+    },
+  ],
+  Agriculture: [
+    {
+      categoryName: 'Agricultural Research Institutions',
+      description: 'Agronomy faculty, soil scientists, and cold chain researchers',
+      partners: [
+        {
+          name: 'Birsa Agricultural University (BAU)',
+          role: 'Department of Agronomy',
+          organizationType: 'University',
+          contributionArea: 'Soil testing protocols and post-harvest preservation research',
+        },
+      ],
+    },
+    {
+      categoryName: 'Field Extension & Farmer Groups',
+      description: 'Krishi Vigyan Kendras, Farmer Producer Organizations (FPOs)',
+      partners: [
+        {
+          name: 'Krishi Vigyan Kendra (KVK)',
+          role: 'District Extension Unit',
+          organizationType: 'Government',
+          contributionArea: 'Field trials, farmer demonstration, and localized advisory',
+        },
+      ],
+    },
+  ],
+  Infrastructure: [
+    {
+      categoryName: 'Technical & Civil Engineering Labs',
+      description: 'Transportation engineering, material durability, and all-weather pavement design',
+      partners: [
+        {
+          name: 'BIT Sindri',
+          role: 'Department of Civil Engineering',
+          organizationType: 'University',
+          contributionArea: 'Geotechnical soil stabilization and all-weather pavement prototyping',
+        },
+      ],
+    },
+    {
+      categoryName: 'Community Infrastructure Committees',
+      description: 'Gram panchayat road committees and rural transport associations',
+      partners: [
+        {
+          name: 'Gram Panchayat Infrastructure Committee',
+          role: 'Ground Monitoring Cell',
+          organizationType: 'Community',
+          contributionArea: 'Road bottleneck mapping and localized flood drainage reporting',
+        },
+      ],
+    },
+  ],
+  Healthcare: [
+    {
+      categoryName: 'Medical Research & Healthcare Labs',
+      description: 'Public health researchers, tele-diagnostics, and clinical outreach units',
+      partners: [
+        {
+          name: 'RIMS Ranchi',
+          role: 'Department of Community Medicine',
+          organizationType: 'University',
+          contributionArea: 'Diagnostic protocols and maternal healthcare outreach',
+        },
+      ],
+    },
+    {
+      categoryName: 'Frontline Health Workers',
+      description: 'ASHA workers, ANMs, and community health networks',
+      partners: [
+        {
+          name: 'District ASHA Collective',
+          role: 'Frontline Care Network',
+          organizationType: 'Community',
+          contributionArea: 'Field health surveys and rapid response coordination',
+        },
+      ],
+    },
+  ],
+  Environment: [
+    {
+      categoryName: 'Environmental Research Labs',
+      description: 'Forest ecology, pollution telemetry, and biodiversity monitoring',
+      partners: [
+        {
+          name: 'Institute of Forest Productivity (IFP Ranchi)',
+          role: 'Ecology & Agroforestry Lab',
+          organizationType: 'University',
+          contributionArea: 'Ecological impact assessment and sustainable reclamation',
+        },
+      ],
+    },
+  ],
+  'Mining Safety': DHANBAD_MINING_DETAIL.stakeholders,
+};
+
+/**
+ * Creates a domain-aware, dynamic ChallengeDetailData object from a database Challenge record.
+ * GUARANTEE: Never falls back to Dhanbad/Jharia mining content for unrelated challenges.
+ */
+export function mapDbChallengeToDetailData(raw: any): ChallengeDetailData {
+  if (!raw) {
+    return createGenericPendingDetail();
+  }
+
+  // If this specifically is the seeded Dhanbad challenge ID, return DHANBAD_MINING_DETAIL
+  if (raw.id === 'JS-2024-00003' || raw.publicId === 'JS-2024-00003') {
+    return DHANBAD_MINING_DETAIL;
+  }
+
+  // If this specifically is the seeded Khunti challenge ID, return KHUNTI_WATER_DETAIL
+  if (raw.id === 'JS-2026-00024' || raw.publicId === 'JS-2026-00024') {
+    return KHUNTI_WATER_DETAIL;
+  }
+
+  const id = raw.publicId || raw.challengeCode || raw.id || 'JS-PENDING';
+  const title = raw.title || 'Untitled Civic Challenge';
+  const domain = (raw.domain || raw.category || 'General') as any;
+  const district = raw.district?.name || (typeof raw.district === 'string' ? raw.district : 'Jharkhand');
+  const subLocation = raw.block || raw.panchayatOrUlb || raw.subLocation || 'District Sector';
+  const description = raw.description || raw.summary || '';
+  const ai = raw.aiAnalysis || null;
+
+  const lat = raw.latitude || (raw.district?.latitude ? Number(raw.district.latitude) : 23.34);
+  const lon = raw.longitude || (raw.district?.longitude ? Number(raw.district.longitude) : 85.31);
+
+  // Dynamic problem dossier
+  const background =
+    ai?.priorityReason ||
+    ai?.summary ||
+    `This challenge was officially documented and submitted by local stakeholders in ${district}, highlighting key operational and infrastructural bottlenecks requiring multi-sector intervention.`;
+
+  const currentSituation =
+    `${description}${raw.affectedPopulation ? ` Currently, approximately ${Number(raw.affectedPopulation).toLocaleString()}+ residents are directly impacted.` : ''}${raw.panchayatOrUlb ? ` Reports have been verified across ${raw.panchayatOrUlb}.` : ''}`.trim();
+
+  let whyExistingApproachesNotEnough = '';
+  if (ai?.possibleRootCauses && Array.isArray(ai.possibleRootCauses) && ai.possibleRootCauses.length > 0) {
+    whyExistingApproachesNotEnough = `Key systemic constraints identified include: ${ai.possibleRootCauses.join('; ')}. Standard administrative or manual interventions face delays without dedicated technical and collaborative approaches.`;
+  } else if (ai?.impactAssessment) {
+    whyExistingApproachesNotEnough = `${ai.impactAssessment}. Conventional routine oversight has proved insufficient without continuous stakeholder collaboration and dedicated technical intervention.`;
+  } else {
+    whyExistingApproachesNotEnough = `Conventional reporting and fragmented response mechanisms experience operational delays. A structured, data-driven collaboration between technical institutions and district administration is needed to implement lasting solutions.`;
+  }
+
+  // Dynamic Impact Metrics
+  const affectedResidents = raw.affectedPopulation
+    ? `${Number(raw.affectedPopulation).toLocaleString()}+`
+    : 'Community-wide';
+  const highRiskLocations = raw.block ? `${raw.block} Block` : `${district} Sector`;
+  const communitiesInvolved = raw.panchayatOrUlb || `${district} Wards`;
+  const statement =
+    ai?.impactAssessment ||
+    description ||
+    `Resolving this challenge addresses critical public infrastructure and community welfare in ${district}.`;
+
+  // Dynamic Stakeholders for profile
+  const primaryStakeholders =
+    ai?.affectedStakeholders && Array.isArray(ai.affectedStakeholders) && ai.affectedStakeholders.length > 0
+      ? ai.affectedStakeholders
+      : ['Local Communities', `${district} Administration`, 'Technical Specialists'];
+
+  // Admin Department
+  const adminDepartment =
+    DOMAIN_DEPARTMENT_MAP[domain] || 'State Innovation Council, Govt. of Jharkhand';
+
+  // Dynamic Evidence Timeline
+  const evidenceTimeline: EvidenceItem[] = [];
+  if (raw.createdAt) {
+    const createdDate = new Date(raw.createdAt);
+    const dateStr = createdDate.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+    const yearStr = String(createdDate.getFullYear());
+
+    evidenceTimeline.push({
+      year: yearStr,
+      dateStr,
+      observation: `Challenge officially registered by citizen in JharSankalp repository for ${district}.`,
+      sourceType: `${raw.sourceType || 'Citizen'} Intake Docket`,
+      verified: true,
+      docketId: `DOC-${id.slice(-6).toUpperCase()}`,
+    });
+
+    if (raw.aiAnalyzedAt || ai) {
+      const aiDate = raw.aiAnalyzedAt ? new Date(raw.aiAnalyzedAt) : createdDate;
+      evidenceTimeline.push({
+        year: String(aiDate.getFullYear()),
+        dateStr: aiDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        observation: `Civic intelligence engine analyzed submission: classified as ${domain} (${raw.priority || 'High'} Priority).`,
+        sourceType: `JharSankalp Civic Engine · ${raw.aiModelVersion || 'v1.0'}`,
+        verified: true,
+        docketId: `AI-${id.slice(-6).toUpperCase()}`,
+      });
+    }
+
+    evidenceTimeline.push({
+      year: yearStr,
+      dateStr: 'Current',
+      observation: `Challenge status: ${(raw.status || 'SUBMITTED').toUpperCase()}. Open for multi-sector consortium proposals.`,
+      sourceType: 'State Innovation Clearinghouse',
+      verified: true,
+    });
+  }
+
+  // Dynamic Solution Approaches (from real ideas or AI directions)
+  const solutionApproaches: SolutionApproach[] = [];
+  if (raw.ideas && Array.isArray(raw.ideas) && raw.ideas.length > 0) {
+    raw.ideas.forEach((idea: any, idx: number) => {
+      solutionApproaches.push({
+        number: `Approach 0${idx + 1}`,
+        title: idea.title,
+        description: idea.description,
+        status: idea.status === 'APPROVED' ? 'Under Discussion' : 'Research Needed',
+        feasibilityNotes: `Submitted by ${idea.submittedBy?.name || 'Registered Contributor'} (${idea.submittedBy?.role || 'Innovator'}).`,
+        potentialPartners: [`${domain} Solvers`, `${district} Taskforce`],
+      });
+    });
+  } else if (ai?.suggestedApproach && Array.isArray(ai.suggestedApproach) && ai.suggestedApproach.length > 0) {
+    ai.suggestedApproach.forEach((appr: string, idx: number) => {
+      solutionApproaches.push({
+        number: `Direction 0${idx + 1}`,
+        title: appr.length > 45 ? `${appr.slice(0, 42)}...` : appr,
+        description: appr,
+        status: 'Research Needed',
+        feasibilityNotes: 'Identified by civic intelligence engine as a high-potential intervention direction.',
+        potentialPartners: [
+          ai?.requiredExpertise?.[idx] || `${domain} Engineering Labs`,
+          `${district} Taskforce`,
+        ],
+      });
+    });
+  } else if (ai?.innovationDirections && Array.isArray(ai.innovationDirections) && ai.innovationDirections.length > 0) {
+    ai.innovationDirections.forEach((dir: string, idx: number) => {
+      solutionApproaches.push({
+        number: `Direction 0${idx + 1}`,
+        title: dir.length > 45 ? `${dir.slice(0, 42)}...` : dir,
+        description: dir,
+        status: 'Research Needed',
+        feasibilityNotes: 'Identified by civic intelligence engine as a high-potential intervention direction.',
+        potentialPartners: [`${domain} Specialists`],
+      });
+    });
+  }
+
+  // Dynamic Stakeholders (from real collaborations or domain defaults)
+  let stakeholders: StakeholderCategory[] = [];
+  if (raw.collaborations && Array.isArray(raw.collaborations) && raw.collaborations.length > 0) {
+    const partners = raw.collaborations.flatMap((collab: any) =>
+      (collab.members || []).map((m: any) => ({
+        name: m.user?.name || m.name || 'Collaborator',
+        role: m.role || 'Contributor',
+        organizationType: (m.organizationType || 'University') as any,
+        contributionArea: m.contributionArea || 'Solution Co-Development',
+      })),
+    );
+    if (partners.length > 0) {
+      stakeholders = [
+        {
+          categoryName: 'Active Working Group Members',
+          description: 'Registered collaborators engaged on this challenge',
+          partners,
+        },
+      ];
+    }
+  }
+
+  if (stakeholders.length === 0 && DOMAIN_STAKEHOLDER_MAP[domain]) {
+    stakeholders = DOMAIN_STAKEHOLDER_MAP[domain];
+  }
+
+  // Dynamic Lifecycle Stages
+  const rawStatus = (raw.status || 'SUBMITTED').toUpperCase();
+  const lifecycleStages: LifecycleStageItem[] = [
+    {
+      stage: 'Identify',
+      status: 'completed',
+      label: 'Identify',
+      summary: `Citizen problem logged and corroborated by ${district} local stakeholders.`,
+      completedDate: raw.createdAt ? new Date(raw.createdAt).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : undefined,
+    },
+    {
+      stage: 'Validate',
+      status: rawStatus === 'SUBMITTED' ? 'current' : 'completed',
+      label: 'Validate',
+      summary: `Civic domain verified as ${domain} with ${raw.priority || 'High'} Impact Priority.`,
+    },
+    {
+      stage: 'Research',
+      status: ['UNDER_REVIEW', 'MATCHING', 'VALIDATED'].includes(rawStatus) ? 'current' : ['ACTIVE', 'IN_PROGRESS', 'RESOLVED'].includes(rawStatus) ? 'completed' : 'upcoming',
+      label: 'Research & Solution Exploration',
+      summary: `Consortium matching active with academic and technical research partners.`,
+    },
+    {
+      stage: 'Build',
+      status: ['ACTIVE', 'IN_PROGRESS'].includes(rawStatus) ? 'current' : rawStatus === 'RESOLVED' ? 'completed' : 'upcoming',
+      label: 'Build Prototype',
+      summary: 'Prototyping intervention models and field pilot specifications.',
+    },
+    {
+      stage: 'Pilot',
+      status: rawStatus === 'FIELD_PILOT' ? 'current' : rawStatus === 'RESOLVED' ? 'completed' : 'upcoming',
+      label: 'Field Pilot',
+      summary: `Controlled field deployment and validation in ${subLocation}.`,
+    },
+    {
+      stage: 'Impact',
+      status: rawStatus === 'RESOLVED' ? 'completed' : 'upcoming',
+      label: 'Scale & Policy',
+      summary: `District-wide rollout across ${district} with departmental sponsorship.`,
+    },
+  ];
+
+  return {
+    id,
+    title,
+    category: domain,
+    district,
+    subLocation,
+    locationCoordinates: {
+      lat,
+      lon,
+      formatted: `${lat.toFixed(2)}° N · ${lon.toFixed(2)}° E`,
+      zoneName: `${district.toUpperCase()} · ${subLocation.toUpperCase()}`,
+    },
+    status: (raw.status || 'OPEN FOR COLLABORATION').toUpperCase(),
+    impactPriority: `${raw.priority ? raw.priority.charAt(0).toUpperCase() + raw.priority.slice(1).toLowerCase() : 'High'} Impact Priority`,
+    summary: description,
+    problem: {
+      background,
+      currentSituation,
+      whyExistingApproachesNotEnough,
+    },
+    profile: {
+      district,
+      focusArea: domain,
+      primaryStakeholders,
+      dateSubmitted: raw.createdAt
+        ? new Date(raw.createdAt).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })
+        : 'Recent Submission',
+      adminDepartment,
+      trackingId: id,
+    },
+    impactMetrics: {
+      affectedResidents,
+      highRiskLocations,
+      communitiesInvolved,
+      statement,
+    },
+    evidenceTimeline,
+    solutionApproaches,
+    stakeholders,
+    lifecycleStages,
+    stats: {
+      collaboratorsCount:
+        raw._count?.collaborations || raw.collaborations?.length || 0,
+      ideasCount: raw._count?.ideas || raw.ideas?.length || solutionApproaches.length,
+      followersCount: 30 + (raw._count?.collaborations || 0) * 8,
+    },
+    relatedChallengeIds: [],
+    evidenceFiles: raw.evidence || [],
+  };
+}
+
+/**
+ * Creates a clean generic pending detail without any Jharia/Mining data.
+ */
+function createGenericPendingDetail(id?: string): ChallengeDetailData {
+  return {
+    id: id || 'JS-PENDING',
+    title: 'Loading Challenge Details...',
+    category: 'General',
+    district: 'Jharkhand',
+    subLocation: 'District Sector',
+    locationCoordinates: {
+      lat: 23.34,
+      lon: 85.31,
+      formatted: '23.34° N · 85.31° E',
+      zoneName: 'JHARKHAND · DISTRICT SECTOR',
+    },
+    status: 'UNDER REVIEW',
+    impactPriority: 'High Impact Priority',
+    summary: 'Retrieving challenge record from JharSankalp state repository...',
+    problem: {
+      background: 'Retrieving contextual problem background from repository...',
+      currentSituation: 'Fetching latest ground situation observations...',
+      whyExistingApproachesNotEnough: 'Analyzing existing approaches and operational constraints...',
+    },
+    profile: {
+      district: 'Jharkhand',
+      focusArea: 'General',
+      primaryStakeholders: ['Local Communities', 'District Administration'],
+      dateSubmitted: 'Pending',
+      adminDepartment: 'State Innovation Council, Govt. of Jharkhand',
+      trackingId: id || 'JS-PENDING',
+    },
+    impactMetrics: {
+      affectedResidents: 'Analyzing...',
+      highRiskLocations: 'Analyzing...',
+      communitiesInvolved: 'Pending...',
+      statement: 'Analyzing community impact and priority indicators...',
+    },
+    evidenceTimeline: [],
+    solutionApproaches: [],
+    stakeholders: [],
+    lifecycleStages: [
+      {
+        stage: 'Identify',
+        status: 'completed',
+        label: 'Identify',
+        summary: 'Challenge logged in state repository.',
+      },
+      {
+        stage: 'Validate',
+        status: 'current',
+        label: 'Validate',
+        summary: 'Verifying domain and impact level.',
+      },
+      {
+        stage: 'Research',
+        status: 'upcoming',
+        label: 'Research & Solution Exploration',
+        summary: 'Consortium matching in progress.',
+      },
+      {
+        stage: 'Build',
+        status: 'upcoming',
+        label: 'Build Prototype',
+        summary: 'Prototyping intervention models.',
+      },
+      {
+        stage: 'Pilot',
+        status: 'upcoming',
+        label: 'Field Pilot',
+        summary: 'Field deployment testing.',
+      },
+      {
+        stage: 'Impact',
+        status: 'upcoming',
+        label: 'Scale & Policy',
+        summary: 'Statewide implementation.',
+      },
+    ],
+    stats: {
+      collaboratorsCount: 0,
+      ideasCount: 0,
+      followersCount: 0,
+    },
+    relatedChallengeIds: [],
+    evidenceFiles: [],
+  };
+}
+
 /**
  * Returns structured challenge detail data for a given challenge ID.
+ * GUARANTEE: Never falls back to DHANBAD_MINING_DETAIL for non-mining challenges!
  */
 export function getChallengeDetail(id?: string): ChallengeDetailData {
-  if (!id || id === 'JS-2024-00003') {
+  if (!id) {
+    return createGenericPendingDetail();
+  }
+
+  if (id === 'JS-2024-00003') {
     return DHANBAD_MINING_DETAIL;
   }
 
@@ -359,40 +897,10 @@ export function getChallengeDetail(id?: string): ChallengeDetailData {
     return KHUNTI_WATER_DETAIL;
   }
 
-  // Find in CANONICAL_CHALLENGES or CHALLENGES_DATA
   const baseChallenge = CHALLENGES_DATA.find((c) => c.id === id);
-
-  if (!baseChallenge) {
-    return id.includes('00024') ? KHUNTI_WATER_DETAIL : DHANBAD_MINING_DETAIL;
+  if (baseChallenge) {
+    return mapDbChallengeToDetailData(baseChallenge);
   }
 
-  return {
-    ...DHANBAD_MINING_DETAIL,
-    id: baseChallenge.id,
-    title: baseChallenge.title,
-    category: baseChallenge.category,
-    district: baseChallenge.district,
-    subLocation: baseChallenge.block,
-    summary: baseChallenge.description,
-    locationCoordinates: {
-      lat: 23.34 + (baseChallenge.coordinates.y - 50) * 0.05,
-      lon: 85.31 + (baseChallenge.coordinates.x - 50) * 0.05,
-      formatted: `${(23.34 + (baseChallenge.coordinates.y - 50) * 0.05).toFixed(2)}° N · ${(85.31 + (baseChallenge.coordinates.x - 50) * 0.05).toFixed(2)}° E`,
-      zoneName: `${baseChallenge.district.toUpperCase()} · ${baseChallenge.block.toUpperCase()}`,
-    },
-    status: baseChallenge.status.toUpperCase(),
-    impactPriority: `${baseChallenge.impactLevel} Priority`,
-    stats: {
-      collaboratorsCount: baseChallenge.collaboratorsCount,
-      ideasCount: baseChallenge.ideasCount,
-      followersCount: 85 + baseChallenge.collaboratorsCount * 4,
-    },
-    profile: {
-      ...DHANBAD_MINING_DETAIL.profile,
-      district: baseChallenge.district,
-      focusArea: baseChallenge.category,
-      dateSubmitted: baseChallenge.dateReported,
-      trackingId: `JS-CASE-${baseChallenge.district.substring(0, 3).toUpperCase()}-${baseChallenge.id.substring(baseChallenge.id.length - 4)}`,
-    },
-  };
+  return createGenericPendingDetail(id);
 }
