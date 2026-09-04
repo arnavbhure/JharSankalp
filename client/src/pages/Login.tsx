@@ -227,14 +227,14 @@ export function Login({ initialMode }: LoginProps) {
     <div className="min-h-screen bg-[#F0EDE6] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans text-neutral-800">
       {/* ── Main Master Card Container ── */}
       <div className="w-full max-w-[1180px] bg-white rounded-[24px] sm:rounded-[32px] shadow-[0_25px_70px_-15px_rgba(18,59,42,0.18)] border border-[#E3DFD5] overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[680px]">
-        
+
         {/* ─────────────────────────────────────────────────────────────
             LEFT PANEL: Exact Thematic Artwork (Waterfall, Youth, Stats)
            ───────────────────────────────────────────────────────────── */}
         <div className="lg:col-span-6 relative bg-[#123B2A] text-white flex flex-col justify-between overflow-hidden select-none min-h-[460px] lg:min-h-[700px]">
           {/* Background Artwork Layer */}
           <img
-            src="/images/auth_left_banner.jpg"
+            src="/images/auth_left_banner.png"
             alt="JharSankalp Landscape & Innovation Journey"
             className="absolute inset-0 w-full h-full object-cover object-left-top"
           />
@@ -283,8 +283,8 @@ export function Login({ initialMode }: LoginProps) {
                 {mode === 'signup'
                   ? 'Join JharSankalp to report challenges and co-create solutions'
                   : mode === 'otp'
-                  ? 'Enter the 6-digit code sent to your email'
-                  : 'Sign in to continue your journey with JharSankalp'}
+                    ? 'Enter the 6-digit code sent to your email'
+                    : 'Sign in to continue your journey with JharSankalp'}
               </p>
             </div>
 
@@ -294,11 +294,10 @@ export function Login({ initialMode }: LoginProps) {
                 <button
                   type="button"
                   onClick={() => setMode('signin')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                    mode === 'signin'
+                  className={`flex-1 py-2 px-3 rounded-lg text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${mode === 'signin'
                       ? 'bg-[#123B2A] text-white shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
-                  }`}
+                    }`}
                 >
                   <User className="h-3.5 w-3.5" />
                   <span>Sign In</span>
@@ -307,11 +306,10 @@ export function Login({ initialMode }: LoginProps) {
                 <button
                   type="button"
                   onClick={() => setMode('signup')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                    mode === 'signup'
+                  className={`flex-1 py-2 px-3 rounded-lg text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${mode === 'signup'
                       ? 'bg-[#123B2A] text-white shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
-                  }`}
+                    }`}
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   <span>Create Account</span>
@@ -340,11 +338,10 @@ export function Login({ initialMode }: LoginProps) {
                         key={demo.email}
                         type="button"
                         onClick={() => fillDemoAccount(demo)}
-                        className={`p-1.5 rounded-lg border text-left transition-all cursor-pointer truncate ${
-                          isSelected
+                        className={`p-1.5 rounded-lg border text-left transition-all cursor-pointer truncate ${isSelected
                             ? 'border-[#123B2A] bg-[#123B2A]/10 ring-1 ring-[#123B2A]'
                             : 'border-[#EEEAE1] bg-white hover:bg-[#FAF9F5]'
-                        }`}
+                          }`}
                       >
                         <div className="text-[11px] font-bold text-[#1D2522] truncate">
                           {demo.label.split(' ')[0]}
@@ -447,11 +444,10 @@ export function Login({ initialMode }: LoginProps) {
                       key={r.id}
                       type="button"
                       onClick={() => setSignupRole(r.id)}
-                      className={`py-1.5 px-2 rounded-lg border text-center text-[12px] font-bold transition-all cursor-pointer ${
-                        signupRole === r.id
+                      className={`py-1.5 px-2 rounded-lg border text-center text-[12px] font-bold transition-all cursor-pointer ${signupRole === r.id
                           ? 'border-[#123B2A] bg-[#123B2A]/10 text-[#123B2A] ring-1 ring-[#123B2A]'
                           : 'border-neutral-200 text-neutral-600 hover:bg-neutral-50'
-                      }`}
+                        }`}
                     >
                       {r.title}
                     </button>
