@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: jharsankalp-server
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build --workspace=@jharsankalp/server
+    startCommand: npm run start --workspace=@jharsankalp/server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
