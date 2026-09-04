@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import { DashboardRole } from '../../types/dashboard';
 import {
   LayoutDashboard,
@@ -11,6 +12,9 @@ import {
   Settings,
   LogOut,
   X,
+  GraduationCap,
+  Sparkles,
+  Shield,
 } from 'lucide-react';
 
 interface DashboardSidebarProps {
@@ -28,26 +32,84 @@ export function DashboardSidebar({
 }: DashboardSidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
 
-  const MAIN_LINKS = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Challenges', path: '/dashboard/challenges', icon: Zap },
-    { label: 'Ideas', path: '/dashboard/ideas', icon: Lightbulb },
-    { label: 'Projects', path: '/dashboard/projects', icon: CheckCircle2 },
-    { label: 'Solutions', path: '/dashboard/solutions', icon: Award },
-    { label: 'Collaborations', path: '/dashboard/collaborations', icon: Users },
-  ];
+  // Generate role-specific navigation links strictly tailored to authenticated user role
+  const getNavLinks = (role: DashboardRole) => {
+    switch (role) {
+      case 'institution':
+        return {
+          main: [
+            { label: 'R&D Overview', path: '/dashboard', icon: LayoutDashboard },
+            { label: 'Research Ideas', path: '/dashboard/ideas', icon: Lightbulb },
+            { label: 'Field Projects', path: '/dashboard/projects', icon: CheckCircle2 },
+            { label: 'Developed Solutions', path: '/dashboard/solutions', icon: Award },
+            { label: 'Academic Consortia', path: '/dashboard/collaborations', icon: Users },
+            { label: 'University Portal', path: '/university/dashboard', icon: GraduationCap },
+          ],
+          personal: [
+            { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
+            { label: 'Institutional Impact', path: '/dashboard/impact', icon: Award },
+            { label: 'Settings', path: '/dashboard/settings', icon: Settings },
+          ],
+        };
 
-  const PERSONAL_LINKS = [
-    { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
-    { label: 'My Impact', path: '/dashboard/impact', icon: Award },
-    { label: 'Settings', path: '/dashboard/settings', icon: Settings },
-  ];
+      case 'expert':
+        return {
+          main: [
+            { label: 'Industry Overview', path: '/dashboard', icon: LayoutDashboard },
+            { label: 'Sponsored Projects', path: '/dashboard/projects', icon: CheckCircle2 },
+            { label: 'Verified Solutions', path: '/dashboard/solutions', icon: Award },
+            { label: 'Partnership Network', path: '/dashboard/collaborations', icon: Users },
+            { label: 'Industry Portal', path: '/industry/dashboard', icon: Sparkles },
+          ],
+          personal: [
+            { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
+            { label: 'CSR Impact', path: '/dashboard/impact', icon: Award },
+            { label: 'Settings', path: '/dashboard/settings', icon: Settings },
+          ],
+        };
+
+      case 'admin':
+        return {
+          main: [
+            { label: 'Directorate Overview', path: '/dashboard', icon: LayoutDashboard },
+            { label: 'Civic Challenges', path: '/dashboard/challenges', icon: Zap },
+            { label: 'Sanctioned Projects', path: '/dashboard/projects', icon: CheckCircle2 },
+            { label: 'State Impact Registry', path: '/dashboard/impact', icon: Award },
+            { label: 'Official Command Center', path: '/government/dashboard', icon: Shield },
+          ],
+          personal: [
+            { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
+            { label: 'Administrative Settings', path: '/dashboard/settings', icon: Settings },
+          ],
+        };
+
+      case 'citizen':
+      default:
+        return {
+          main: [
+            { label: 'Overview', path: '/dashboard', icon: LayoutDashboard },
+            { label: 'My Challenges', path: '/dashboard/challenges', icon: Zap },
+            { label: 'My Ideas', path: '/dashboard/ideas', icon: Lightbulb },
+            { label: 'Community Solutions', path: '/dashboard/solutions', icon: Award },
+            { label: 'Collaborations', path: '/dashboard/collaborations', icon: Users },
+          ],
+          personal: [
+            { label: 'Notifications', path: '/dashboard/notifications', icon: Bell, badge: 2 },
+            { label: 'My Impact', path: '/dashboard/impact', icon: Award },
+            { label: 'Settings', path: '/dashboard/settings', icon: Settings },
+          ],
+        };
+    }
+  };
+
+  const navLinks = getNavLinks(currentRole);
 
   const roleDisplayNames: Record<DashboardRole, string> = {
     citizen: 'Citizen Innovator',
-    institution: 'University R&D',
-    expert: 'Technical Reviewer',
+    institution: 'University R&D Cell',
+    expert: 'Industry / CSR Partner',
     admin: 'State Directorate',
   };
 
@@ -104,7 +166,7 @@ export function DashboardSidebar({
               MAIN
             </div>
             <nav className="space-y-0.5">
-              {MAIN_LINKS.map((link) => {
+              {navLinks.main.map((link) => {
                 const Icon = link.icon;
                 const isActive =
                   link.path === '/dashboard'
@@ -144,7 +206,7 @@ export function DashboardSidebar({
               PERSONAL
             </div>
             <nav className="space-y-0.5">
-              {PERSONAL_LINKS.map((link) => {
+              {navLinks.personal.map((link) => {
                 const Icon = link.icon;
                 const isActive = location.pathname === link.path;
 
@@ -209,9 +271,12 @@ export function DashboardSidebar({
 
           <button
             type="button"
-            onClick={() => navigate('/')}
+            onClick={async () => {
+              await logout();
+              navigate('/login');
+            }}
             className="text-white/60 hover:text-white p-1.5 rounded-lg hover:bg-[#1E5A3A] transition-colors cursor-pointer"
-            title="Sign out / Exit"
+            title="Sign out"
           >
             <LogOut className="h-4 w-4" />
           </button>

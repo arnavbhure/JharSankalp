@@ -47,7 +47,7 @@ const NAV_LINKS = [
 
 export function Header({}: HeaderProps) {
   const { user, isAuthenticated, logout } = useAuth();
-  const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -56,7 +56,7 @@ export function Header({}: HeaderProps) {
   // Close mobile drawer on route transition
   useEffect(() => {
     setMobileMenuOpen(false);
-    setShowRoleSwitcher(false);
+    setShowUserMenu(false);
   }, [location.pathname]);
 
   // Global search shortcut (Ctrl+K)
@@ -71,26 +71,35 @@ export function Header({}: HeaderProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const userRoleStr = (user?.role || '').toUpperCase();
+  const isGov =
+    userRoleStr.includes('GOV') ||
+    userRoleStr.includes('OFFICER') ||
+    userRoleStr.includes('STATE') ||
+    userRoleStr.includes('ADMIN');
+  const isUni =
+    userRoleStr.includes('UNI') ||
+    userRoleStr.includes('FACULTY') ||
+    userRoleStr.includes('STUDENT');
+  const isInd =
+    userRoleStr.includes('IND') ||
+    userRoleStr.includes('STARTUP') ||
+    userRoleStr.includes('MSME') ||
+    userRoleStr.includes('CSR');
+  const isCit = !isGov && !isUni && !isInd;
+
   const getDashboardPath = () => {
-    if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
-      return '/government/dashboard';
-    } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
-      return '/university/dashboard';
-    } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
-      return '/industry/dashboard';
-    }
+    if (isGov) return '/government/dashboard';
+    if (isUni) return '/university/dashboard';
+    if (isInd) return '/industry/dashboard';
     return '/dashboard';
   };
 
   const getDashboardLabel = () => {
-    if (user?.role === UserRole.GOVERNMENT_OFFICER || user?.role === UserRole.STATE_ADMIN) {
-      return 'Command Center ↗';
-    } else if (user?.role === UserRole.UNIVERSITY_ADMIN || user?.role === UserRole.FACULTY) {
-      return 'University Workspace ↗';
-    } else if (user?.role === UserRole.INDUSTRY || user?.role === UserRole.STARTUP) {
-      return 'Industry Workspace ↗';
-    }
-    return 'Dashboard ↗';
+    if (isGov) return 'Command Center ↗';
+    if (isUni) return 'University Portal ↗';
+    if (isInd) return 'Industry Portal ↗';
+    return 'Innovator Dashboard ↗';
   };
 
   return (
@@ -180,9 +189,9 @@ export function Header({}: HeaderProps) {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+                  onClick={() => setShowUserMenu(!showUserMenu)}
                   className="flex items-center gap-2 rounded-lg border border-[#EEEAE1] bg-white px-3 py-1.5 text-[12.5px] font-semibold text-[#1D2522] hover:bg-[#F8F6F1] transition-colors shadow-2xs cursor-pointer"
-                  aria-expanded={showRoleSwitcher}
+                  aria-expanded={showUserMenu}
                 >
                   <div className="h-6 w-6 rounded-full bg-[#123B2A] text-white flex items-center justify-center text-[11px] font-bold">
                     {user.name ? user.name[0] : 'U'}
@@ -193,17 +202,17 @@ export function Header({}: HeaderProps) {
                   <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
                 </button>
 
-                {showRoleSwitcher && (
+                {showUserMenu && (
                   <>
                     <div
                       className="fixed inset-0 z-40"
-                      onClick={() => setShowRoleSwitcher(false)}
+                      onClick={() => setShowUserMenu(false)}
                     />
                     <div className="absolute right-0 top-full mt-1.5 z-50 w-64 rounded-xl border border-[#EEEAE1] bg-white p-3 shadow-lg text-left">
                       <div className="border-b border-[#EEEAE1] pb-2.5 mb-2">
                         <div className="font-bold text-[13.5px] text-[#1D2522]">{user.name}</div>
                         <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user.email}</div>
-                        <div className="mt-1.5 inline-block text-[10.5px] font-bold uppercase tracking-wider bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
+                        <div className="mt-1.5 inline-block text-[10.5px] font-mono font-bold uppercase tracking-wider bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
                           {getRoleLabel(user.role)}
                         </div>
                       </div>
@@ -211,31 +220,127 @@ export function Header({}: HeaderProps) {
                       <div className="space-y-1">
                         <Link
                           to={getDashboardPath()}
-                          onClick={() => setShowRoleSwitcher(false)}
+                          onClick={() => setShowUserMenu(false)}
                           className="block px-2.5 py-1.5 text-[13px] font-semibold text-neutral-800 hover:bg-[#FAF9F5] rounded-md transition-colors"
                         >
-                          My Portal Workspace ↗
+                          {isGov
+                            ? 'State Command Center ↗'
+                            : isUni
+                            ? 'University R&D Portal ↗'
+                            : isInd
+                            ? 'Industry CSR Portal ↗'
+                            : 'Innovator Dashboard ↗'}
                         </Link>
-                        <Link
-                          to="/my-challenges"
-                          onClick={() => setShowRoleSwitcher(false)}
-                          className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
-                        >
-                          My Challenges
-                        </Link>
-                        <Link
-                          to="/my-ideas"
-                          onClick={() => setShowRoleSwitcher(false)}
-                          className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
-                        >
-                          My Solution Ideas
-                        </Link>
+
+                        {isCit && (
+                          <>
+                            <Link
+                              to="/dashboard/challenges"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              My Challenges
+                            </Link>
+                            <Link
+                              to="/dashboard/ideas"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              My Solution Ideas
+                            </Link>
+                            <Link
+                              to="/dashboard/impact"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              My Civic Impact
+                            </Link>
+                          </>
+                        )}
+
+                        {isGov && (
+                          <>
+                            <Link
+                              to="/challenges"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Civic Challenges Review
+                            </Link>
+                            <Link
+                              to="/projects"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Sanctioned Projects
+                            </Link>
+                            <Link
+                              to="/impact"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              State Telemetry & Impact
+                            </Link>
+                          </>
+                        )}
+
+                        {isUni && (
+                          <>
+                            <Link
+                              to="/challenges"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              R&D Problem Statements
+                            </Link>
+                            <Link
+                              to="/projects"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Consortia Projects
+                            </Link>
+                            <Link
+                              to="/collaborations"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Academic Network
+                            </Link>
+                          </>
+                        )}
+
+                        {isInd && (
+                          <>
+                            <Link
+                              to="/challenges"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              CSR Focus Challenges
+                            </Link>
+                            <Link
+                              to="/projects"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Sponsored Projects
+                            </Link>
+                            <Link
+                              to="/collaborations"
+                              onClick={() => setShowUserMenu(false)}
+                              className="block px-2.5 py-1.5 text-[13px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
+                            >
+                              Industry Network
+                            </Link>
+                          </>
+                        )}
 
                         <div className="border-t border-[#EEEAE1] pt-1 mt-1">
                           <button
                             type="button"
                             onClick={async () => {
-                              setShowRoleSwitcher(false);
+                              setShowUserMenu(false);
                               await logout();
                               navigate('/login');
                             }}
@@ -305,15 +410,28 @@ export function Header({}: HeaderProps) {
               <ArrowRight className="h-3.5 w-3.5" />
             </button>
 
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                navigate('/login');
-              }}
-              className="flex items-center justify-center py-2 text-[13px] font-semibold text-[#6B5845] hover:text-[#123B2A]"
-            >
-              Sign In to Your Account
-            </button>
+            {isAuthenticated ? (
+              <button
+                onClick={async () => {
+                  setMobileMenuOpen(false);
+                  await logout();
+                  navigate('/login');
+                }}
+                className="flex items-center justify-center py-2 text-[13px] font-semibold text-rose-600 hover:bg-rose-50 rounded-lg"
+              >
+                Sign Out ({user?.name?.split(' ')[0] || 'User'})
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate('/login');
+                }}
+                className="flex items-center justify-center py-2 text-[13px] font-semibold text-[#6B5845] hover:text-[#123B2A]"
+              >
+                Sign In to Your Account
+              </button>
+            )}
           </div>
         </div>
       )}

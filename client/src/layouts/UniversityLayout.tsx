@@ -5,18 +5,18 @@ import { GlobalSearchModal } from '../components/common/GlobalSearchModal';
 import { useAuth } from '../hooks/useAuth';
 import {
   GraduationCap,
-  FileText,
   FolderKanban,
   Users,
   ChevronDown,
   ExternalLink,
   Search,
+  BookOpen,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export function UniversityLayout() {
   const { user, logout } = useAuth();
-  const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
 
@@ -32,10 +32,10 @@ export function UniversityLayout() {
   }, []);
 
   const navItems = [
-    { label: 'Campus Command', href: '/university/dashboard', icon: GraduationCap },
-    { label: 'Recommended Challenges', href: '/challenges', icon: FileText },
-    { label: 'Projects Portfolio', href: '/projects', icon: FolderKanban },
-    { label: 'Ecosystem Consortia', href: '/collaborations', icon: Users },
+    { label: 'R&D Center', href: '/university/dashboard', icon: GraduationCap },
+    { label: 'Challenges Pool', href: '/challenges', icon: BookOpen, external: false },
+    { label: 'Consortia Projects', href: '/projects', icon: FolderKanban, external: false },
+    { label: 'Academic Network', href: '/collaborations', icon: Users, external: false },
   ];
 
   return (
@@ -44,7 +44,7 @@ export function UniversityLayout() {
       <header className="sticky top-0 z-50 border-b border-[#EEEAE1] bg-white shadow-xs select-none">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            {/* Left Brand Identity */}
+            {/* Left Brand Identity with Institutional Focus */}
             <div className="flex items-center gap-3.5">
               <Link to="/university/dashboard" className="flex items-center gap-3 group">
                 <BrandMark size="sm" variant="forest" />
@@ -53,28 +53,30 @@ export function UniversityLayout() {
                     <span className="text-[1.15rem] font-extrabold text-[#123B2A] tracking-tight leading-none group-hover:text-[#1F5A3D] transition-colors font-sans">
                       JharSankalp
                     </span>
-                    <span className="text-[10px] font-mono font-bold uppercase bg-[#4C1E4F] text-[#FEE1C7] px-2 py-0.5 rounded">
-                      UNIVERSITY WORKSPACE
+                    <span className="text-[10px] font-mono font-bold uppercase bg-[#123B2A] text-[#F5A623] px-2 py-0.5 rounded">
+                      ACADEMIC & R&D PORTAL
                     </span>
                   </div>
                   <span className="text-[10px] font-semibold text-[#6B5845] tracking-wider uppercase mt-1">
-                    BIT Mesra Innovation Cell · Academic Research Partner
+                    State University Research & Innovation Network · Jharkhand
                   </span>
                 </div>
               </Link>
             </div>
 
-            {/* Right Actions */}
+            {/* Right Actions & Researcher Profile */}
             <div className="flex items-center gap-3">
+              {/* Global Search Trigger */}
               <button
                 type="button"
                 onClick={() => setShowSearch(true)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-[#FAF9F5] text-[#1D2522] hover:bg-white hover:border-[#4C1E4F] transition-colors shadow-xs cursor-pointer"
-                title="Search initiatives (Ctrl+K)"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EEEAE1] bg-[#FAF9F5] text-[#1D2522] hover:bg-white hover:border-[#123B2A] transition-colors shadow-xs cursor-pointer"
+                title="Search research initiatives (Ctrl+K)"
               >
-                <Search className="h-4 w-4 text-[#4C1E4F]" />
+                <Search className="h-4 w-4 text-[#123B2A]" />
               </button>
 
+              {/* Public Platform Link */}
               <Link
                 to="/"
                 className="hidden md:inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#6B5845] hover:text-[#123B2A] transition-colors"
@@ -87,7 +89,7 @@ export function UniversityLayout() {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center gap-2 rounded-lg border border-[#EEEAE1] bg-[#FAF9F5] px-3 py-1.5 text-[12.5px] font-semibold text-[#1D2522] hover:bg-white transition-colors shadow-xs cursor-pointer"
                 >
                   <div className="h-6 w-6 rounded-full bg-[#123B2A] text-white flex items-center justify-center text-[11px] font-bold">
@@ -99,40 +101,49 @@ export function UniversityLayout() {
                   <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
                 </button>
 
-                {showRoleSwitcher && (
+                {showProfileMenu && (
                   <>
                     <div
                       className="fixed inset-0 z-40"
-                      onClick={() => setShowRoleSwitcher(false)}
+                      onClick={() => setShowProfileMenu(false)}
                     />
                     <div className="absolute right-0 top-full mt-1.5 z-50 w-64 rounded-xl border border-[#EEEAE1] bg-white p-3 shadow-lg text-left">
                       <div className="border-b border-[#EEEAE1] pb-2 mb-2">
                         <div className="font-bold text-[13px] text-[#1D2522]">{user?.name}</div>
                         <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user?.email}</div>
-                        <div className="mt-1 inline-block text-[10px] font-bold uppercase bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
-                          {user?.role || 'UNIVERSITY'}
+                        <div className="mt-1 inline-block text-[10px] font-mono font-bold uppercase bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
+                          {user?.role || 'UNIVERSITY RESEARCHER'}
                         </div>
                       </div>
 
                       <div className="space-y-1">
                         <Link
-                          to="/dashboard"
-                          onClick={() => setShowRoleSwitcher(false)}
+                          to="/university/dashboard"
+                          onClick={() => setShowProfileMenu(false)}
+                          className="block px-2.5 py-1.5 text-[12.5px] font-semibold text-[#123B2A] hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          University R&D Portal
+                        </Link>
+                        <Link
+                          to="/"
+                          onClick={() => setShowProfileMenu(false)}
                           className="block px-2.5 py-1.5 text-[12.5px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
                         >
-                          Citizen Workspace
+                          Public Platform ↗
                         </Link>
-                        <button
-                          type="button"
-                          onClick={async () => {
-                            setShowRoleSwitcher(false);
-                            await logout();
-                            navigate('/login');
-                          }}
-                          className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
-                        >
-                          Sign Out
-                        </button>
+                        <div className="border-t border-[#EEEAE1] pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={async () => {
+                              setShowProfileMenu(false);
+                              await logout();
+                              navigate('/login');
+                            }}
+                            className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </>

@@ -8,15 +8,8 @@ import { useAuth } from '../hooks/useAuth';
 export interface DashboardOutletContext {
   currentRole: DashboardRole;
   userName: string;
-  onRoleChange: (role: DashboardRole) => void;
+  onRoleChange?: (role: DashboardRole) => void;
 }
-
-const ROLE_USER_NAMES: Record<DashboardRole, string> = {
-  citizen: 'Innovator',
-  institution: 'BIT Mesra Innovation Cell',
-  expert: 'Technical Reviewer',
-  admin: 'Mission Directorate',
-};
 
 const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string }> = {
   citizen: {
@@ -37,13 +30,28 @@ const ROLE_GREETINGS: Record<DashboardRole, { greeting: string; subtitle: string
   },
 };
 
+export function resolveDashboardRole(userRole?: string): DashboardRole {
+  const r = (userRole || '').toUpperCase();
+  if (r.includes('GOV') || r.includes('ADMIN') || r.includes('OFFICER') || r.includes('STATE')) {
+    return 'admin';
+  }
+  if (r.includes('UNI') || r.includes('FACULTY') || r.includes('STUDENT')) {
+    return 'institution';
+  }
+  if (r.includes('IND') || r.includes('STARTUP') || r.includes('MSME') || r.includes('CSR')) {
+    return 'expert';
+  }
+  return 'citizen';
+}
+
 export function DashboardLayout() {
   const { user } = useAuth();
-  const [currentRole, setCurrentRole] = useState<DashboardRole>('citizen');
+  // Role is strictly derived from authenticated session, never manually switchable
+  const currentRole = resolveDashboardRole(user?.role);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const userName = user?.name ? user.name.split(' ')[0] : (ROLE_USER_NAMES[currentRole] || 'Innovator');
+  const userName = user?.name ? user.name.split(' ')[0] : 'Innovator';
   const greeting = user?.name
     ? `Welcome back, ${user.name.split(' ')[0]} 👋`
     : ROLE_GREETINGS[currentRole].greeting;
@@ -128,13 +136,12 @@ export function DashboardLayout() {
               greeting={headerInfo.greeting}
               subtitle={headerInfo.subtitle}
               currentRole={currentRole}
-              onRoleChange={(r) => setCurrentRole(r)}
               onOpenMobileMenu={() => setMobileMenuOpen(true)}
             />
 
             {/* Main Active Route View */}
             <main className="w-full">
-              <Outlet context={{ currentRole, userName, onRoleChange: setCurrentRole }} />
+              <Outlet context={{ currentRole, userName }} />
             </main>
           </div>
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WorkspaceContext } from '../../types/workspace';
 import { ProjectHealthIndicator } from '../projects/ProjectHealthIndicator';
-import { ArrowLeft, ExternalLink, Settings, Radio, X, Check } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Settings, Radio, X } from 'lucide-react';
 
 interface ProjectContextHeaderProps {
   context: WorkspaceContext;
@@ -11,16 +11,6 @@ interface ProjectContextHeaderProps {
 export function ProjectContextHeader({ context }: ProjectContextHeaderProps) {
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [leadRole, setLeadRole] = useState(context.currentUserRole);
-  const [settingsSaved, setSettingsSaved] = useState(false);
-
-  const handleSaveSettings = () => {
-    setSettingsSaved(true);
-    setTimeout(() => {
-      setSettingsSaved(false);
-      setSettingsOpen(false);
-    }, 1200);
-  };
 
   return (
     <header className="border-b border-[#EEEAE1] bg-white sticky top-16 z-20 shadow-2xs text-left">
@@ -127,21 +117,14 @@ export function ProjectContextHeader({ context }: ProjectContextHeaderProps) {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono font-bold uppercase text-[#123B2A] block">
-                  Active Contributor Role (Simulation)
+                <label className="text-[11px] font-mono font-bold uppercase text-[#6B5845] block">
+                  Assigned Contributor Role (Read-Only)
                 </label>
-                <select
-                  value={leadRole}
-                  onChange={(e) => setLeadRole(e.target.value as any)}
-                  className="w-full h-10 px-3 rounded-xl border border-[#EEEAE1] bg-white text-[12.5px] text-[#1D2522] focus:outline-none focus:border-[#123B2A] cursor-pointer"
-                >
-                  <option value="project_lead">Project Lead (Full Permissions)</option>
-                  <option value="faculty_mentor">Faculty Mentor</option>
-                  <option value="researcher">Researcher / Hardware Engineer</option>
-                  <option value="student_contributor">Student Contributor</option>
-                  <option value="government_partner">District Administration Partner</option>
-                  <option value="viewer">Viewer (Read Only)</option>
-                </select>
+                <div className="w-full h-10 px-3.5 rounded-xl border border-[#EEEAE1] bg-[#FAF9F5] text-[12.5px] font-mono font-semibold text-[#123B2A] flex items-center select-none">
+                  {context.currentUserRole
+                    ? context.currentUserRole.replace('_', ' ').toUpperCase()
+                    : 'PROJECT CONTRIBUTOR'}
+                </div>
               </div>
             </div>
 
@@ -149,23 +132,9 @@ export function ProjectContextHeader({ context }: ProjectContextHeaderProps) {
               <button
                 type="button"
                 onClick={() => setSettingsOpen(false)}
-                className="px-4 py-2 rounded-xl text-[12.5px] font-semibold text-[#6B5845] hover:bg-[#FAF9F5] cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#123B2A] text-white text-[12.5px] font-bold shadow-xs cursor-pointer hover:bg-[#0D2B1E]"
               >
-                Close
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveSettings}
-                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#123B2A] text-white text-[12.5px] font-bold shadow-xs cursor-pointer"
-              >
-                {settingsSaved ? (
-                  <>
-                    <Check className="h-4 w-4 text-[#4ADE80]" />
-                    <span>Saved!</span>
-                  </>
-                ) : (
-                  <span>Apply Settings</span>
-                )}
+                Done
               </button>
             </div>
           </div>

@@ -6,7 +6,6 @@ import {
   Search,
   Bell,
   Menu,
-  ChevronDown,
   UserCheck,
   Shield,
   GraduationCap,
@@ -17,7 +16,7 @@ interface DashboardTopHeaderProps {
   greeting: string;
   subtitle: string;
   currentRole: DashboardRole;
-  onRoleChange: (role: DashboardRole) => void;
+  onRoleChange?: (role: DashboardRole) => void;
   onOpenMobileMenu: () => void;
 }
 
@@ -25,12 +24,10 @@ export function DashboardTopHeader({
   greeting,
   subtitle,
   currentRole,
-  onRoleChange,
   onOpenMobileMenu,
 }: DashboardTopHeaderProps) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
@@ -139,57 +136,10 @@ export function DashboardTopHeader({
           )}
         </div>
 
-        {/* Role Switcher Dropdown (Strategic Stakeholder Architecture) */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-            className="h-10 px-3.5 rounded-2xl bg-white border border-[#EEEAE1] hover:border-[#123B2A]/40 flex items-center gap-2 text-[12px] font-mono font-bold text-[#123B2A] shadow-2xs transition-colors cursor-pointer"
-          >
-            <span className="h-2 w-2 rounded-full bg-[#15803D]" />
-            <span>Role: {activeRoleObj.label}</span>
-            <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
-          </button>
-
-          {roleDropdownOpen && (
-            <div className="absolute right-0 top-12 z-30 w-72 rounded-2xl bg-white p-2 shadow-2xl border border-[#EEEAE1] space-y-1 text-left animate-in fade-in duration-150">
-              <div className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase text-[#6B5845] border-b border-[#EEEAE1]">
-                SWITCH DASHBOARD PERSPECTIVE
-              </div>
-              {ROLES_LIST.map((r) => {
-                const Icon = r.icon;
-                const isSelected = r.id === currentRole;
-
-                return (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => {
-                      onRoleChange(r.id);
-                      setRoleDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-start gap-2.5 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
-                      isSelected
-                        ? 'bg-[#123B2A] text-white font-bold'
-                        : 'text-[#1D2522] hover:bg-[#FAF9F5]'
-                    }`}
-                  >
-                    <Icon
-                      className={`h-4 w-4 mt-0.5 shrink-0 ${isSelected ? 'text-[#F5A623]' : 'text-[#123B2A]'}`}
-                    />
-                    <div className="space-y-0.5 min-w-0">
-                      <span className="text-[12px] font-bold block leading-tight">{r.label}</span>
-                      <span
-                        className={`text-[10.5px] block line-clamp-1 ${isSelected ? 'text-white/80' : 'text-[#6B5845]'}`}
-                      >
-                        {r.desc}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+        {/* Authenticated Account Role Indicator (Strictly Read-Only) */}
+        <div className="h-10 px-3.5 rounded-2xl bg-white border border-[#EEEAE1] flex items-center gap-2 text-[12px] font-mono font-bold text-[#123B2A] shadow-2xs select-none">
+          <span className="h-2 w-2 rounded-full bg-[#15803D]" />
+          <span>Role: {activeRoleObj.label}</span>
         </div>
 
         {/* User Profile Avatar Dropdown */}

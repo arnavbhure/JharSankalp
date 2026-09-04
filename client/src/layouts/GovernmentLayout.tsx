@@ -16,7 +16,7 @@ import { cn } from '../lib/utils';
 
 export function GovernmentLayout() {
   const { user, logout } = useAuth();
-  const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ export function GovernmentLayout() {
               </Link>
             </div>
 
-            {/* Right Action & Perspective Switches */}
+            {/* Right Actions & Officer Profile */}
             <div className="flex items-center gap-3">
               {/* Global Search Trigger */}
               <button
@@ -89,7 +89,7 @@ export function GovernmentLayout() {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center gap-2 rounded-lg border border-[#EEEAE1] bg-[#FAF9F5] px-3 py-1.5 text-[12.5px] font-semibold text-[#1D2522] hover:bg-white transition-colors shadow-xs cursor-pointer"
                 >
                   <div className="h-6 w-6 rounded-full bg-[#4C1E4F] text-white flex items-center justify-center text-[11px] font-bold">
@@ -101,40 +101,49 @@ export function GovernmentLayout() {
                   <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
                 </button>
 
-                {showRoleSwitcher && (
+                {showProfileMenu && (
                   <>
                     <div
                       className="fixed inset-0 z-40"
-                      onClick={() => setShowRoleSwitcher(false)}
+                      onClick={() => setShowProfileMenu(false)}
                     />
                     <div className="absolute right-0 top-full mt-1.5 z-50 w-64 rounded-xl border border-[#EEEAE1] bg-white p-3 shadow-lg text-left">
                       <div className="border-b border-[#EEEAE1] pb-2 mb-2">
                         <div className="font-bold text-[13px] text-[#1D2522]">{user?.name}</div>
                         <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user?.email}</div>
-                        <div className="mt-1 inline-block text-[10px] font-bold uppercase bg-[#4C1E4F]/10 text-[#4C1E4F] px-2 py-0.5 rounded">
-                          {user?.role || 'GOVERNMENT'}
+                        <div className="mt-1 inline-block text-[10px] font-mono font-bold uppercase bg-[#4C1E4F]/10 text-[#4C1E4F] px-2 py-0.5 rounded">
+                          {user?.role || 'GOVERNMENT OFFICIAL'}
                         </div>
                       </div>
 
                       <div className="space-y-1">
                         <Link
-                          to="/dashboard"
-                          onClick={() => setShowRoleSwitcher(false)}
+                          to="/government/dashboard"
+                          onClick={() => setShowProfileMenu(false)}
+                          className="block px-2.5 py-1.5 text-[12.5px] font-semibold text-[#4C1E4F] hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          State Command Center
+                        </Link>
+                        <Link
+                          to="/"
+                          onClick={() => setShowProfileMenu(false)}
                           className="block px-2.5 py-1.5 text-[12.5px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
                         >
-                          Citizen Portal
+                          Public Platform ↗
                         </Link>
-                        <button
-                          type="button"
-                          onClick={async () => {
-                            setShowRoleSwitcher(false);
-                            await logout();
-                            navigate('/login');
-                          }}
-                          className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
-                        >
-                          Sign Out
-                        </button>
+                        <div className="border-t border-[#EEEAE1] pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={async () => {
+                              setShowProfileMenu(false);
+                              await logout();
+                              navigate('/login');
+                            }}
+                            className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </>

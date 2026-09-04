@@ -7,16 +7,16 @@ import {
   Briefcase,
   FolderKanban,
   Users,
-  ShieldCheck,
   ChevronDown,
   ExternalLink,
   Search,
+  FileText,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export function IndustryLayout() {
   const { user, logout } = useAuth();
-  const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
 
@@ -32,10 +32,10 @@ export function IndustryLayout() {
   }, []);
 
   const navItems = [
-    { label: 'Partner Command', href: '/industry/dashboard', icon: Briefcase },
-    { label: 'Project Opportunities', href: '/projects', icon: FolderKanban },
-    { label: 'Consortia Exchange', href: '/collaborations', icon: Users },
-    { label: 'Verified Impact', href: '/impact', icon: ShieldCheck },
+    { label: 'CSR Command', href: '/industry/dashboard', icon: Briefcase },
+    { label: 'CSR Priorities', href: '/challenges', icon: FileText, external: false },
+    { label: 'Sponsored Projects', href: '/projects', icon: FolderKanban, external: false },
+    { label: 'Strategic Network', href: '/collaborations', icon: Users, external: false },
   ];
 
   return (
@@ -53,18 +53,19 @@ export function IndustryLayout() {
                     <span className="text-[1.15rem] font-extrabold text-[#123B2A] tracking-tight leading-none group-hover:text-[#1F5A3D] transition-colors font-sans">
                       JharSankalp
                     </span>
-                    <span className="text-[10px] font-mono font-bold uppercase bg-[#123B2A] text-[#FFD8A8] px-2 py-0.5 rounded">
-                      INDUSTRY WORKSPACE
+                    <span className="text-[10px] font-mono font-bold uppercase bg-[#123B2A] text-[#F5A623] px-2 py-0.5 rounded">
+                      INDUSTRY & CSR PORTAL
                     </span>
                   </div>
                   <span className="text-[10px] font-semibold text-[#6B5845] tracking-wider uppercase mt-1">
-                    Innovation Partner Network · Prototyping & Co-Funding
+                    Corporate CSR & Industrial Innovation Exchange · Jharkhand
                   </span>
                 </div>
               </Link>
             </div>
-            {/* Right Actions */}
+            {/* Right Actions & Industry Partner Profile */}
             <div className="flex items-center gap-3">
+              {/* Global Search Trigger */}
               <button
                 type="button"
                 onClick={() => setShowSearch(true)}
@@ -74,6 +75,7 @@ export function IndustryLayout() {
                 <Search className="h-4 w-4 text-[#123B2A]" />
               </button>
 
+              {/* Public Platform Link */}
               <Link
                 to="/"
                 className="hidden md:inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#6B5845] hover:text-[#123B2A] transition-colors"
@@ -86,7 +88,7 @@ export function IndustryLayout() {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowRoleSwitcher(!showRoleSwitcher)}
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center gap-2 rounded-lg border border-[#EEEAE1] bg-[#FAF9F5] px-3 py-1.5 text-[12.5px] font-semibold text-[#1D2522] hover:bg-white transition-colors shadow-xs cursor-pointer"
                 >
                   <div className="h-6 w-6 rounded-full bg-[#123B2A] text-white flex items-center justify-center text-[11px] font-bold">
@@ -98,40 +100,49 @@ export function IndustryLayout() {
                   <ChevronDown className="h-3.5 w-3.5 text-[#6B5845]" />
                 </button>
 
-                {showRoleSwitcher && (
+                {showProfileMenu && (
                   <>
                     <div
                       className="fixed inset-0 z-40"
-                      onClick={() => setShowRoleSwitcher(false)}
+                      onClick={() => setShowProfileMenu(false)}
                     />
                     <div className="absolute right-0 top-full mt-1.5 z-50 w-64 rounded-xl border border-[#EEEAE1] bg-white p-3 shadow-lg text-left">
                       <div className="border-b border-[#EEEAE1] pb-2 mb-2">
                         <div className="font-bold text-[13px] text-[#1D2522]">{user?.name}</div>
                         <div className="text-[11.5px] text-neutral-500 font-mono truncate">{user?.email}</div>
-                        <div className="mt-1 inline-block text-[10px] font-bold uppercase bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
-                          {user?.role || 'INDUSTRY'}
+                        <div className="mt-1 inline-block text-[10px] font-mono font-bold uppercase bg-[#123B2A]/10 text-[#123B2A] px-2 py-0.5 rounded">
+                          {user?.role || 'INDUSTRY PARTNER'}
                         </div>
                       </div>
 
                       <div className="space-y-1">
                         <Link
-                          to="/dashboard"
-                          onClick={() => setShowRoleSwitcher(false)}
+                          to="/industry/dashboard"
+                          onClick={() => setShowProfileMenu(false)}
+                          className="block px-2.5 py-1.5 text-[12.5px] font-semibold text-[#123B2A] hover:bg-[#FAF9F5] rounded-md transition-colors"
+                        >
+                          Industry & CSR Portal
+                        </Link>
+                        <Link
+                          to="/"
+                          onClick={() => setShowProfileMenu(false)}
                           className="block px-2.5 py-1.5 text-[12.5px] text-neutral-700 hover:bg-[#FAF9F5] rounded-md transition-colors"
                         >
-                          Citizen Workspace
+                          Public Platform ↗
                         </Link>
-                        <button
-                          type="button"
-                          onClick={async () => {
-                            setShowRoleSwitcher(false);
-                            await logout();
-                            navigate('/login');
-                          }}
-                          className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
-                        >
-                          Sign Out
-                        </button>
+                        <div className="border-t border-[#EEEAE1] pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={async () => {
+                              setShowProfileMenu(false);
+                              await logout();
+                              navigate('/login');
+                            }}
+                            className="w-full text-left px-2.5 py-1.5 text-[12.5px] font-semibold text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DashboardRole, DashboardRoleData } from '../types/dashboard';
+import { DashboardRoleData } from '../types/dashboard';
 import { getDashboardData } from '../services/dashboardApi';
 import { DashboardSidebar } from '../components/dashboard-v2/DashboardSidebar';
 import { DashboardTopHeader } from '../components/dashboard-v2/DashboardTopHeader';
@@ -10,9 +10,11 @@ import { FeaturedChallengePanel } from '../components/dashboard-v2/FeaturedChall
 import { RecentActivitySection } from '../components/dashboard-v2/RecentActivitySection';
 import { useAuth } from '../hooks/useAuth';
 
+import { resolveDashboardRole } from '../layouts/DashboardLayout';
+
 export function Dashboard() {
   const { user } = useAuth();
-  const [currentRole, setCurrentRole] = useState<DashboardRole>('citizen');
+  const currentRole = resolveDashboardRole(user?.role);
   const [data, setData] = useState<DashboardRoleData | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -49,7 +51,6 @@ export function Dashboard() {
             greeting={greeting}
             subtitle={data?.subtitle || 'See how your ideas are creating change across Jharkhand.'}
             currentRole={currentRole}
-            onRoleChange={(r) => setCurrentRole(r)}
             onOpenMobileMenu={() => setMobileMenuOpen(true)}
           />
 
