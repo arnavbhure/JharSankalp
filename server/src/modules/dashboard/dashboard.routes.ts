@@ -163,7 +163,7 @@ async function getGovernmentDashboard(req: Request, res: Response, next: NextFun
           avgResolutionTime: '18 Days',
         },
         urgentChallenges,
-        domainBreakdown: projectsByDomain.map((d) => ({
+        domainBreakdown: projectsByDomain.map((d: any) => ({
           domain: d.domain || 'General',
           count: d._count.id,
         })),
@@ -356,17 +356,17 @@ async function getCitizenDashboard(req: AppRequest, res: Response, next: NextFun
 
     const totalSubmitted = userChallenges.length;
     const underReview = userChallenges.filter(
-      (c) => c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW' || c.status === 'UNDER_VALIDATION',
+      (c: any) => c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW' || c.status === 'UNDER_VALIDATION',
     ).length;
     const inCollaboration = userChallenges.filter(
-      (c) =>
+      (c: any) =>
         c.status === 'ACTIVE' ||
         c.status === 'VALIDATED' ||
         c.status === 'MATCHING' ||
         c.status === 'CONSORTIUM_FORMED',
     ).length;
     const actionRequired = userChallenges.filter(
-      (c) => c.status === 'DRAFT' || c.verificationStatus === 'NEEDS_INFO',
+      (c: any) => c.status === 'DRAFT' || c.verificationStatus === 'NEEDS_INFO',
     ).length;
 
     sendSuccess(
