@@ -52,7 +52,11 @@ const IND_ROLES = ['INDUSTRY', 'STARTUP', 'MSME', 'CSR'];
 export const router = createBrowserRouter([
   {
     path: '/login',
-    element: <Login />,
+    element: <Login initialMode="signin" />,
+  },
+  {
+    path: '/signup',
+    element: <Login initialMode="signup" />,
   },
   {
     path: '/dashboard',
